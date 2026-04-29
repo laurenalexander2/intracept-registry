@@ -1,0 +1,7 @@
+# tools/mono-shlib-cop.toml — Mono shared library usage checker
+
+[[command]]
+path = "mono-shlib-cop"
+translation = "Check a .NET assembly for incorrect or suspicious shared library references."
+verdict = "allow"
+rationale = "Read-only analysis of assembly metadata; produces only diagnostic output."

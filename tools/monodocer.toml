@@ -1,0 +1,28 @@
+# tools/monodocer.toml — Mono documentation generator
+
+[[command]]
+path = "monodocer"
+translation = "Generate or update XML documentation files from .NET assembly metadata."
+verdict = "allow"
+rationale = "Creates or updates local documentation XML files; does not modify the assembly."
+
+[[flag]]
+applies_to = "monodocer"
+flag = "--delete"
+translation_modifier = "deleting documentation entries for members that no longer exist in the assembly"
+verdict = "allow"
+rationale = "Removes XML documentation files for removed members, which may discard manually written content."
+
+[[flag]]
+applies_to = "monodocer"
+flag = "--preserve"
+translation_modifier = "marking removed members as preserved instead of deleting them"
+verdict = "allow"
+rationale = "Prevents deletion of documentation for removed members."
+
+[[flag]]
+applies_to = "monodocer"
+flag = "-o"
+translation_modifier = "writing to a specified output directory"
+verdict = "allow"
+rationale = "Sets the documentation output directory; no additional risk."

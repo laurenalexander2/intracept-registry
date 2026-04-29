@@ -1,0 +1,7 @@
+# tools/bsdtar.toml
+
+[[command]]
+path = "bsdtar"
+translation = "Create or extract archive files using the BSD tar implementation."
+verdict = "allow"
+rationale = "Extracts files that may overwrite existing files at the destination."

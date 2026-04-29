@@ -1,0 +1,7 @@
+# tools/pg_verifybackup-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_verifybackup-17"
+translation = "Verify the integrity of a PostgreSQL base backup."
+verdict = "allow"
+rationale = "Read-only verification that checks backup files against their manifest."

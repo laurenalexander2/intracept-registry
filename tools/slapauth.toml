@@ -1,0 +1,7 @@
+# tools/slapauth.toml
+
+[[command]]
+path = "slapauth"
+translation = "Test authentication and authorization mappings for an LDAP database."
+verdict = "allow"
+rationale = "Read-only testing of auth mappings; does not modify the database."

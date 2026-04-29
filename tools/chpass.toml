@@ -1,0 +1,7 @@
+# tools/chpass.toml
+
+[[command]]
+path = "chpass"
+translation = "Change user account information."
+verdict = "require_approval"
+rationale = "Modifies user account details in the system directory."

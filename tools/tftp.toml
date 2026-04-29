@@ -1,0 +1,7 @@
+# tools/tftp.toml
+
+[[command]]
+path = "tftp"
+translation = "Transfer files using the Trivial File Transfer Protocol."
+verdict = "allow"
+rationale = "Sends and receives files over the network without authentication; files can be overwritten on the remote or local side."

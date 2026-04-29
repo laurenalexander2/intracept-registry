@@ -1,0 +1,568 @@
+# tools/gcloud.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud"
+translation = "Run the Google Cloud command-line tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Global flags ─────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "gcloud"
+flag = "--quiet"
+translation_modifier = "without interactive prompts, using defaults for all choices"
+verdict = "allow"
+rationale = "Disables confirmation prompts, allowing destructive operations to proceed without user verification."
+
+[[flag]]
+applies_to = "gcloud"
+flag = "--project"
+translation_modifier = "targeting a specific Google Cloud project"
+verdict = "allow"
+rationale = "Overrides the default project; does not change what operations are available."
+
+[[flag]]
+applies_to = "gcloud"
+flag = "--impersonate-service-account"
+translation_modifier = "acting as a specified service account"
+verdict = "allow"
+rationale = "Runs commands with the permissions of another identity, which may have broader access."
+
+[[flag]]
+applies_to = "gcloud"
+flag = "--format"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output format (JSON, YAML, table, etc.); read-only display change."
+
+# ── Auth ─────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud auth"
+translation = "Manage authentication for the Google Cloud CLI."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gcloud auth login"
+translation = "Log in to a Google Cloud account."
+verdict = "allow"
+rationale = "Stores credentials locally; does not modify cloud resources."
+
+[[command]]
+path = "gcloud auth revoke"
+translation = "Revoke credentials for a Google Cloud account."
+verdict = "allow"
+rationale = "Removes stored credentials, which may break automated workflows that depend on them."
+
+[[command]]
+path = "gcloud auth application-default login"
+translation = "Set up application default credentials for local development."
+verdict = "allow"
+rationale = "Stores credentials locally for use by client libraries."
+
+[[command]]
+path = "gcloud auth list"
+translation = "List the accounts currently authenticated with the CLI."
+verdict = "allow"
+rationale = "Read-only listing of authenticated accounts."
+
+# ── Config ───────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud config set"
+translation = "Set a Google Cloud CLI configuration property."
+verdict = "allow"
+rationale = "Changes local CLI behavior; does not modify cloud resources."
+
+[[command]]
+path = "gcloud config get"
+translation = "Display the value of a CLI configuration property."
+verdict = "allow"
+rationale = "Read-only display of a configuration value."
+
+[[command]]
+path = "gcloud config list"
+translation = "List all properties in the active CLI configuration."
+verdict = "allow"
+rationale = "Read-only display of current configuration."
+
+[[command]]
+path = "gcloud config unset"
+translation = "Remove a CLI configuration property."
+verdict = "allow"
+rationale = "Resets a property to its default; only affects local CLI behavior."
+
+# ── Projects ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud projects list"
+translation = "List all Google Cloud projects accessible by the active account."
+verdict = "allow"
+rationale = "Read-only listing of projects."
+
+[[command]]
+path = "gcloud projects describe"
+translation = "Show metadata for a Google Cloud project."
+verdict = "allow"
+rationale = "Read-only display of project details."
+
+[[command]]
+path = "gcloud projects create"
+translation = "Create a new Google Cloud project."
+verdict = "require_approval"
+rationale = "Creates a new project that may incur billing and consume organizational quota."
+
+[[command]]
+path = "gcloud projects delete"
+translation = "Mark a Google Cloud project for deletion."
+verdict = "require_approval"
+rationale = "Schedules the project and all its resources for permanent deletion after a grace period."
+
+# ── Compute Engine instances ─────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud compute instances list"
+translation = "List Compute Engine virtual machine instances."
+verdict = "allow"
+rationale = "Read-only listing of instances."
+
+[[command]]
+path = "gcloud compute instances describe"
+translation = "Show details about a Compute Engine instance."
+verdict = "allow"
+rationale = "Read-only display of instance metadata."
+
+[[command]]
+path = "gcloud compute instances create"
+translation = "Create a new Compute Engine virtual machine instance."
+verdict = "require_approval"
+rationale = "Provisions a billable VM that consumes project resources."
+
+[[command]]
+path = "gcloud compute instances start"
+translation = "Start a stopped Compute Engine instance."
+verdict = "allow"
+rationale = "Resumes a VM that will begin incurring compute charges."
+
+[[command]]
+path = "gcloud compute instances stop"
+translation = "Stop a running Compute Engine instance."
+verdict = "require_approval"
+rationale = "Shuts down the VM, interrupting any running workloads."
+
+[[command]]
+path = "gcloud compute instances delete"
+translation = "Delete one or more Compute Engine virtual machine instances."
+verdict = "require_approval"
+rationale = "Permanently removes VMs and by default their boot disks; data on non-persistent disks is lost."
+
+[[flag]]
+applies_to = "gcloud compute instances delete"
+flag = "--delete-disks"
+translation_modifier = "also deleting the specified type of attached disks"
+verdict = "require_approval"
+rationale = "Permanently destroys attached persistent disks, which may contain irreplaceable data."
+
+[[flag]]
+applies_to = "gcloud compute instances delete"
+flag = "--keep-disks"
+translation_modifier = "preserving the specified type of attached disks"
+verdict = "allow"
+rationale = "Prevents disk deletion, reducing the blast radius of the instance deletion."
+
+[[command]]
+path = "gcloud compute instances reset"
+translation = "Hard-reset a Compute Engine instance."
+verdict = "require_approval"
+rationale = "Performs an ungraceful restart that may cause data loss in unflushed buffers."
+
+[[command]]
+path = "gcloud compute instances ssh"
+translation = "Open an SSH session to a Compute Engine instance."
+verdict = "allow"
+rationale = "Establishes a remote shell connection; does not modify the instance configuration."
+
+# ── Compute disks ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud compute disks list"
+translation = "List Compute Engine persistent disks."
+verdict = "allow"
+rationale = "Read-only listing of disks."
+
+[[command]]
+path = "gcloud compute disks create"
+translation = "Create a new Compute Engine persistent disk."
+verdict = "require_approval"
+rationale = "Creates a billable storage resource."
+
+[[command]]
+path = "gcloud compute disks delete"
+translation = "Delete one or more Compute Engine persistent disks."
+verdict = "require_approval"
+rationale = "Permanently destroys disk data with no undo; recovery requires snapshots or backups."
+
+[[command]]
+path = "gcloud compute disks snapshot"
+translation = "Create a snapshot of a Compute Engine persistent disk."
+verdict = "allow"
+rationale = "Creates a backup copy; does not modify the source disk."
+
+# ── Compute firewall ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud compute firewall-rules list"
+translation = "List Compute Engine firewall rules."
+verdict = "allow"
+rationale = "Read-only listing of firewall rules."
+
+[[command]]
+path = "gcloud compute firewall-rules create"
+translation = "Create a new Compute Engine firewall rule."
+verdict = "require_approval"
+rationale = "Opens network access paths that may expose services to unauthorized traffic."
+
+[[command]]
+path = "gcloud compute firewall-rules delete"
+translation = "Delete a Compute Engine firewall rule."
+verdict = "require_approval"
+rationale = "Removes a network access control, which may block legitimate traffic or expose previously filtered services."
+
+[[command]]
+path = "gcloud compute firewall-rules update"
+translation = "Modify an existing Compute Engine firewall rule."
+verdict = "require_approval"
+rationale = "Changes network access controls that affect traffic flow to running services."
+
+# ── Cloud SQL ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud sql instances list"
+translation = "List Cloud SQL database instances."
+verdict = "allow"
+rationale = "Read-only listing of database instances."
+
+[[command]]
+path = "gcloud sql instances describe"
+translation = "Show details about a Cloud SQL instance."
+verdict = "allow"
+rationale = "Read-only display of instance metadata."
+
+[[command]]
+path = "gcloud sql instances create"
+translation = "Create a new Cloud SQL database instance."
+verdict = "require_approval"
+rationale = "Provisions a billable database instance."
+
+[[command]]
+path = "gcloud sql instances delete"
+translation = "Delete a Cloud SQL database instance."
+verdict = "require_approval"
+rationale = "Permanently destroys the database instance and all its data unless a final backup is taken."
+
+[[command]]
+path = "gcloud sql instances restart"
+translation = "Restart a Cloud SQL instance."
+verdict = "require_approval"
+rationale = "Temporarily interrupts database availability during the restart."
+
+[[command]]
+path = "gcloud sql instances patch"
+translation = "Update settings on a Cloud SQL instance."
+verdict = "require_approval"
+rationale = "Modifies database configuration, which may cause a restart or affect availability."
+
+[[command]]
+path = "gcloud sql databases list"
+translation = "List databases in a Cloud SQL instance."
+verdict = "allow"
+rationale = "Read-only listing of databases."
+
+[[command]]
+path = "gcloud sql databases create"
+translation = "Create a new database in a Cloud SQL instance."
+verdict = "require_approval"
+rationale = "Adds a database to the instance."
+
+[[command]]
+path = "gcloud sql databases delete"
+translation = "Delete a database from a Cloud SQL instance."
+verdict = "require_approval"
+rationale = "Permanently removes the database and all its data from the instance."
+
+# ── Cloud Storage ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud storage ls"
+translation = "List Cloud Storage buckets or objects."
+verdict = "allow"
+rationale = "Read-only listing of storage resources."
+
+[[command]]
+path = "gcloud storage cp"
+translation = "Upload, download, or copy Cloud Storage objects."
+verdict = "require_approval"
+rationale = "Transfers data to or from Cloud Storage, potentially overwriting existing objects."
+
+[[flag]]
+applies_to = "gcloud storage cp"
+flag = "--recursive"
+translation_modifier = "including all files in subdirectories"
+verdict = "allow"
+rationale = "Copies entire directory trees, increasing the scope of the transfer."
+
+[[command]]
+path = "gcloud storage rm"
+translation = "Delete Cloud Storage objects or buckets."
+verdict = "require_approval"
+rationale = "Permanently removes objects from Cloud Storage."
+
+[[flag]]
+applies_to = "gcloud storage rm"
+flag = "--recursive"
+translation_modifier = "deleting all objects under the specified path and any empty buckets"
+verdict = "require_approval"
+rationale = "Removes all objects recursively, which can wipe an entire bucket's contents."
+
+[[flag]]
+applies_to = "gcloud storage rm"
+flag = "--all-versions"
+translation_modifier = "including all object versions, not just live versions"
+verdict = "require_approval"
+rationale = "Deletes versioned objects as well, removing the ability to recover previous versions."
+
+[[command]]
+path = "gcloud storage buckets create"
+translation = "Create a new Cloud Storage bucket."
+verdict = "require_approval"
+rationale = "Creates a new storage resource that will incur costs."
+
+[[command]]
+path = "gcloud storage buckets delete"
+translation = "Delete one or more Cloud Storage buckets."
+verdict = "require_approval"
+rationale = "Permanently removes the bucket; must be empty first but the bucket name may not be reusable."
+
+[[command]]
+path = "gcloud storage buckets list"
+translation = "List Cloud Storage buckets."
+verdict = "allow"
+rationale = "Read-only listing of buckets."
+
+[[command]]
+path = "gcloud storage cat"
+translation = "Output the contents of a Cloud Storage object to the terminal."
+verdict = "allow"
+rationale = "Read-only display of object contents."
+
+# ── GKE / Container ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud container clusters list"
+translation = "List Google Kubernetes Engine clusters."
+verdict = "allow"
+rationale = "Read-only listing of clusters."
+
+[[command]]
+path = "gcloud container clusters describe"
+translation = "Show details about a GKE cluster."
+verdict = "allow"
+rationale = "Read-only display of cluster metadata."
+
+[[command]]
+path = "gcloud container clusters create"
+translation = "Create a new GKE cluster."
+verdict = "require_approval"
+rationale = "Provisions billable compute and networking infrastructure."
+
+[[command]]
+path = "gcloud container clusters delete"
+translation = "Delete a GKE cluster and its node instances."
+verdict = "require_approval"
+rationale = "Destroys the cluster, all running workloads, and associated resources; persistent data may be lost."
+
+[[command]]
+path = "gcloud container clusters resize"
+translation = "Change the number of nodes in a GKE cluster node pool."
+verdict = "require_approval"
+rationale = "Scaling down removes nodes and evicts running workloads, potentially disrupting services."
+
+[[command]]
+path = "gcloud container clusters update"
+translation = "Update settings on a GKE cluster."
+verdict = "require_approval"
+rationale = "Modifies cluster configuration, which may trigger node restarts or affect availability."
+
+[[command]]
+path = "gcloud container clusters get-credentials"
+translation = "Fetch cluster credentials and configure kubectl to use them."
+verdict = "allow"
+rationale = "Updates the local kubeconfig file; does not modify the cluster."
+
+# ── Cloud Run ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud run deploy"
+translation = "Create or update a Cloud Run service with a new container image."
+verdict = "require_approval"
+rationale = "Deploys code to a live service that may receive production traffic."
+
+[[flag]]
+applies_to = "gcloud run deploy"
+flag = "--allow-unauthenticated"
+translation_modifier = "allowing anyone on the internet to invoke the service"
+verdict = "require_approval"
+rationale = "Makes the service publicly accessible without authentication."
+
+[[flag]]
+applies_to = "gcloud run deploy"
+flag = "--no-traffic"
+translation_modifier = "without routing any traffic to the new revision"
+verdict = "allow"
+rationale = "Deploys a new revision that does not receive traffic until explicitly routed."
+
+[[command]]
+path = "gcloud run services list"
+translation = "List Cloud Run services."
+verdict = "allow"
+rationale = "Read-only listing of services."
+
+[[command]]
+path = "gcloud run services describe"
+translation = "Show details about a Cloud Run service."
+verdict = "allow"
+rationale = "Read-only display of service metadata."
+
+[[command]]
+path = "gcloud run services delete"
+translation = "Delete a Cloud Run service."
+verdict = "require_approval"
+rationale = "Permanently removes the service and all its revisions; incoming traffic will return errors."
+
+# ── Cloud Functions ──────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud functions list"
+translation = "List Google Cloud Functions."
+verdict = "allow"
+rationale = "Read-only listing of functions."
+
+[[command]]
+path = "gcloud functions deploy"
+translation = "Deploy a Google Cloud Function."
+verdict = "require_approval"
+rationale = "Deploys code that will execute in response to events or HTTP requests."
+
+[[command]]
+path = "gcloud functions delete"
+translation = "Delete a Google Cloud Function."
+verdict = "require_approval"
+rationale = "Permanently removes the function; any triggers pointing to it will stop working."
+
+[[command]]
+path = "gcloud functions call"
+translation = "Invoke a Google Cloud Function directly."
+verdict = "require_approval"
+rationale = "Triggers function execution, which may have side effects depending on the function's logic."
+
+[[command]]
+path = "gcloud functions logs read"
+translation = "Display log entries for a Cloud Function."
+verdict = "allow"
+rationale = "Read-only display of function logs."
+
+# ── IAM ──────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud iam service-accounts list"
+translation = "List IAM service accounts in a project."
+verdict = "allow"
+rationale = "Read-only listing of service accounts."
+
+[[command]]
+path = "gcloud iam service-accounts create"
+translation = "Create a new IAM service account."
+verdict = "require_approval"
+rationale = "Creates a new identity that can be granted permissions to cloud resources."
+
+[[command]]
+path = "gcloud iam service-accounts delete"
+translation = "Delete an IAM service account."
+verdict = "require_approval"
+rationale = "Removes the service account; applications using it will lose access to cloud resources."
+
+[[command]]
+path = "gcloud iam service-accounts keys create"
+translation = "Create a new key for an IAM service account."
+verdict = "require_approval"
+rationale = "Generates a credential file that grants access to cloud resources; must be securely stored."
+
+[[command]]
+path = "gcloud iam service-accounts keys delete"
+translation = "Delete a key from an IAM service account."
+verdict = "require_approval"
+rationale = "Revokes a credential; applications using it will lose authentication."
+
+# ── App Engine ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud app deploy"
+translation = "Deploy an application to Google App Engine."
+verdict = "require_approval"
+rationale = "Publishes code to a live service that may receive production traffic."
+
+[[flag]]
+applies_to = "gcloud app deploy"
+flag = "--promote"
+translation_modifier = "routing all traffic to the new version immediately"
+verdict = "allow"
+rationale = "Sends live traffic to the new version, which may affect users if the deployment is faulty."
+
+[[flag]]
+applies_to = "gcloud app deploy"
+flag = "--no-promote"
+translation_modifier = "without routing traffic to the new version"
+verdict = "allow"
+rationale = "Deploys the version without directing traffic to it, allowing safe testing."
+
+[[command]]
+path = "gcloud app browse"
+translation = "Open the deployed App Engine application in a browser."
+verdict = "allow"
+rationale = "Opens a URL; does not modify the application."
+
+[[command]]
+path = "gcloud app logs read"
+translation = "Display log entries for an App Engine application."
+verdict = "allow"
+rationale = "Read-only display of application logs."
+
+# ── Init and components ──────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud init"
+translation = "Set up the Google Cloud CLI with a project, account, and default settings."
+verdict = "allow"
+rationale = "Configures local CLI settings; does not create or modify cloud resources."
+
+[[command]]
+path = "gcloud info"
+translation = "Display information about the current gcloud environment."
+verdict = "allow"
+rationale = "Read-only display of CLI installation details."
+
+[[command]]
+path = "gcloud components install"
+translation = "Install a new component of the Google Cloud CLI."
+verdict = "allow"
+rationale = "Downloads and installs a CLI component locally."
+
+[[command]]
+path = "gcloud components update"
+translation = "Update all installed Google Cloud CLI components to the latest version."
+verdict = "allow"
+rationale = "Updates local CLI binaries; does not affect cloud resources."

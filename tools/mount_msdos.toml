@@ -1,0 +1,7 @@
+# tools/mount_msdos.toml — FAT filesystem mount
+
+[[command]]
+path = "mount_msdos"
+translation = "Mount a FAT12, FAT16, or FAT32 filesystem."
+verdict = "allow"
+rationale = "Attaches a read-write filesystem to the directory tree; files on the volume can be modified."

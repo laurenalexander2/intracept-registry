@@ -1,0 +1,7 @@
+# tools/mono-api-html.toml — Mono API difference report generator
+
+[[command]]
+path = "mono-api-html"
+translation = "Generate an HTML or Markdown report showing differences between two Mono API snapshots."
+verdict = "allow"
+rationale = "Read-only comparison of XML files; produces only a report."

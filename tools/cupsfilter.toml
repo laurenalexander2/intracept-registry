@@ -1,0 +1,7 @@
+# tools/cupsfilter.toml
+
+[[command]]
+path = "cupsfilter"
+translation = "Convert files using CUPS filter chain."
+verdict = "allow"
+rationale = "Processes files through print filters; outputs to the terminal."

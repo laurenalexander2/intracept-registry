@@ -1,0 +1,42 @@
+# tools/system_profiler.toml
+
+[[command]]
+path = "system_profiler"
+translation = "Report detailed hardware and software configuration of the system."
+verdict = "allow"
+rationale = "Read-only system information gathering; modifies nothing."
+
+[[flag]]
+applies_to = "system_profiler"
+flag = "-xml"
+translation_modifier = "generating the report in XML format"
+verdict = "allow"
+rationale = "Changes output format; no state modification."
+
+[[flag]]
+applies_to = "system_profiler"
+flag = "-json"
+translation_modifier = "generating the report in JSON format"
+verdict = "allow"
+rationale = "Changes output format; no state modification."
+
+[[flag]]
+applies_to = "system_profiler"
+flag = "-detailLevel"
+translation_modifier = "specifying the level of detail in the report"
+verdict = "allow"
+rationale = "Controls report verbosity; no state modification."
+
+[[flag]]
+applies_to = "system_profiler"
+flag = "-listDataTypes"
+translation_modifier = "listing available data types that can be queried"
+verdict = "allow"
+rationale = "Read-only listing of available report categories."
+
+[[flag]]
+applies_to = "system_profiler"
+flag = "-timeout"
+translation_modifier = "limiting the time to wait for results to a specified number of seconds"
+verdict = "allow"
+rationale = "Controls how long to wait before returning partial results; no state modification."

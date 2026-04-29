@@ -1,0 +1,7 @@
+# tools/AssetCacheLocatorUtil.toml
+
+[[command]]
+path = "AssetCacheLocatorUtil"
+translation = "Locate content caching servers on the network."
+verdict = "allow"
+rationale = "Read-only network discovery of caching services."

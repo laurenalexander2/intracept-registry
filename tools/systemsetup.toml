@@ -1,0 +1,203 @@
+# tools/systemsetup.toml
+
+[[command]]
+path = "systemsetup"
+translation = "Configure machine-level settings such as date, time, sleep, and remote access."
+verdict = "require_approval"
+rationale = "Modifies system preferences that affect sleep, time, startup, and remote access; all settings are reversible."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getdate"
+translation_modifier = "displaying the current system date"
+verdict = "allow"
+rationale = "Read-only display of the current date."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setdate"
+translation_modifier = "setting the system date"
+verdict = "allow"
+rationale = "Incorrect dates can break certificate validation, authentication, and time-sensitive operations."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-gettime"
+translation_modifier = "displaying the current system time"
+verdict = "allow"
+rationale = "Read-only display of the current time."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-settime"
+translation_modifier = "setting the system time"
+verdict = "allow"
+rationale = "Incorrect time can break authentication and time-sensitive operations."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-gettimezone"
+translation_modifier = "displaying the current time zone"
+verdict = "allow"
+rationale = "Read-only display of the current time zone."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-settimezone"
+translation_modifier = "setting the system time zone"
+verdict = "allow"
+rationale = "Changes how times are interpreted; reversible by resetting."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getusingnetworktime"
+translation_modifier = "displaying whether network time synchronization is enabled"
+verdict = "allow"
+rationale = "Read-only display of network time status."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setusingnetworktime"
+translation_modifier = "enabling or disabling automatic network time synchronization"
+verdict = "allow"
+rationale = "Disabling may cause clock drift; enabling syncs to a time server."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setnetworktimeserver"
+translation_modifier = "setting the network time server address"
+verdict = "allow"
+rationale = "Changes which server provides the system clock reference."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getcomputersleep"
+translation_modifier = "displaying the idle time before the computer sleeps"
+verdict = "allow"
+rationale = "Read-only display of sleep timer setting."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setcomputersleep"
+translation_modifier = "setting the idle time before the computer sleeps"
+verdict = "allow"
+rationale = "Changes sleep behavior; a sleeping server becomes unreachable remotely."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getdisplaysleep"
+translation_modifier = "displaying the idle time before the display sleeps"
+verdict = "allow"
+rationale = "Read-only display of display sleep timer."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setdisplaysleep"
+translation_modifier = "setting the idle time before the display sleeps"
+verdict = "allow"
+rationale = "Only affects display power; the system continues running."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getharddisksleep"
+translation_modifier = "displaying the idle time before the hard disk sleeps"
+verdict = "allow"
+rationale = "Read-only display of disk sleep timer."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setharddisksleep"
+translation_modifier = "setting the idle time before the hard disk sleeps"
+verdict = "allow"
+rationale = "May cause brief delays when accessing disk after sleep; reversible."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getremotelogin"
+translation_modifier = "displaying whether SSH remote login is enabled"
+verdict = "allow"
+rationale = "Read-only display of remote login status."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setremotelogin"
+translation_modifier = "enabling or disabling SSH remote login"
+verdict = "require_approval"
+rationale = "Enables or disables remote SSH access to the machine; enabling exposes the system to network access."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getremoteappleevents"
+translation_modifier = "displaying whether remote Apple events are enabled"
+verdict = "allow"
+rationale = "Read-only display of remote events status."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setremoteappleevents"
+translation_modifier = "enabling or disabling remote Apple events"
+verdict = "require_approval"
+rationale = "Enables remote control of the machine via Apple events; enabling exposes the system to network commands."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getcomputername"
+translation_modifier = "displaying the computer name"
+verdict = "allow"
+rationale = "Read-only display of the computer name."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setcomputername"
+translation_modifier = "setting the computer name"
+verdict = "allow"
+rationale = "Changes the display name used on the network; easily reversible."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-getstartupdisk"
+translation_modifier = "displaying the current startup disk"
+verdict = "allow"
+rationale = "Read-only display of the startup disk."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setstartupdisk"
+translation_modifier = "setting the startup disk for next boot"
+verdict = "require_approval"
+rationale = "Changes which volume the system boots from; incorrect settings may prevent boot."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-liststartupdisks"
+translation_modifier = "listing all valid startup disks"
+verdict = "allow"
+rationale = "Read-only listing of available startup disks."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setrestartpowerfailure"
+translation_modifier = "enabling or disabling automatic restart after power failure"
+verdict = "allow"
+rationale = "Controls power recovery behavior; reversible."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setrestartfreeze"
+translation_modifier = "enabling or disabling automatic restart after a system freeze"
+verdict = "allow"
+rationale = "Controls whether the system recovers automatically from freezes."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setwakeonnetworkaccess"
+translation_modifier = "enabling or disabling wake on network access"
+verdict = "allow"
+rationale = "Controls whether the system wakes from sleep when a network packet arrives."
+
+[[flag]]
+applies_to = "systemsetup"
+flag = "-setallowpowerbuttontosleepcomputer"
+translation_modifier = "enabling or disabling the power button sleep function"
+verdict = "allow"
+rationale = "Controls whether the power button can put the computer to sleep; easily reversible."

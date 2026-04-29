@@ -1,0 +1,35 @@
+# tools/seq.toml
+
+[[command]]
+path = "seq"
+translation = "Print a sequence of numbers."
+verdict = "allow"
+rationale = "Outputs numbers to standard output; modifies nothing."
+
+[[flag]]
+applies_to = "seq"
+flag = "-w"
+translation_modifier = "padding numbers with leading zeros to equalize width"
+verdict = "allow"
+rationale = "Cosmetic formatting change; no state modification."
+
+[[flag]]
+applies_to = "seq"
+flag = "-f"
+translation_modifier = "using a specified printf-style format"
+verdict = "allow"
+rationale = "Changes number formatting; no state modification."
+
+[[flag]]
+applies_to = "seq"
+flag = "-s"
+translation_modifier = "using a specified string as the separator between numbers"
+verdict = "allow"
+rationale = "Changes output delimiter; no state modification."
+
+[[flag]]
+applies_to = "seq"
+flag = "-t"
+translation_modifier = "using a specified string as the sequence terminator"
+verdict = "allow"
+rationale = "Changes the ending string; no state modification."

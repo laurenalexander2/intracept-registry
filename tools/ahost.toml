@@ -1,0 +1,7 @@
+# tools/ahost.toml
+
+[[command]]
+path = "ahost"
+translation = "Perform DNS lookups for hostnames and addresses."
+verdict = "allow"
+rationale = "Read-only DNS resolution tool."

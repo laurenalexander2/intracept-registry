@@ -1,0 +1,140 @@
+# tools/rg.toml
+
+[[command]]
+path = "rg"
+translation = "Search file contents for lines matching a pattern using ripgrep."
+verdict = "allow"
+rationale = "Read-only search that displays matching lines without modifying any files."
+
+[[flag]]
+applies_to = "rg"
+flag = "-i"
+translation_modifier = "matching case-insensitively"
+verdict = "allow"
+rationale = "Broadens matches to ignore case; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-l"
+translation_modifier = "showing only the names of files that contain a match"
+verdict = "allow"
+rationale = "Changes output to filenames only; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-c"
+translation_modifier = "showing only the count of matching lines per file"
+verdict = "allow"
+rationale = "Changes output to counts; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "--hidden"
+translation_modifier = "including hidden files and directories in the search"
+verdict = "allow"
+rationale = "Extends search scope to dotfiles; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-g"
+translation_modifier = "filtering files by a glob pattern"
+verdict = "allow"
+rationale = "Limits which files are searched; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-t"
+translation_modifier = "searching only files of a specified type"
+verdict = "allow"
+rationale = "Limits search to specific file types; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "--replace"
+translation_modifier = "replacing matched text in the output display"
+verdict = "allow"
+rationale = "Only changes what is printed to the terminal; files on disk are not modified."
+
+[[flag]]
+applies_to = "rg"
+flag = "-w"
+translation_modifier = "matching only whole words"
+verdict = "allow"
+rationale = "Narrows matches to word boundaries; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-v"
+translation_modifier = "showing only lines that do not match the pattern"
+verdict = "allow"
+rationale = "Inverts matching to display non-matching lines; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-n"
+translation_modifier = "showing line numbers alongside each match"
+verdict = "allow"
+rationale = "Adds line numbers to output; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-A"
+translation_modifier = "including a specified number of lines after each match"
+verdict = "allow"
+rationale = "Shows additional context lines after matches; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-B"
+translation_modifier = "including a specified number of lines before each match"
+verdict = "allow"
+rationale = "Shows additional context lines before matches; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-C"
+translation_modifier = "including a specified number of lines before and after each match"
+verdict = "allow"
+rationale = "Shows additional context lines around matches; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-F"
+translation_modifier = "treating the pattern as a literal string instead of a regular expression"
+verdict = "allow"
+rationale = "Changes how the pattern is interpreted; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "--no-ignore"
+translation_modifier = "searching files that would normally be skipped by ignore rules"
+verdict = "allow"
+rationale = "Expands search scope to include ignored files; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-m"
+translation_modifier = "limiting the number of matches shown per file"
+verdict = "allow"
+rationale = "Caps the number of results per file; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-o"
+translation_modifier = "showing only the matched portion of each line"
+verdict = "allow"
+rationale = "Changes output to show only matched text; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "-U"
+translation_modifier = "allowing patterns to match across multiple lines"
+verdict = "allow"
+rationale = "Enables multiline matching; still read-only."
+
+[[flag]]
+applies_to = "rg"
+flag = "--type-not"
+translation_modifier = "excluding files of a specified type from the search"
+verdict = "allow"
+rationale = "Narrows the set of files searched; still read-only."

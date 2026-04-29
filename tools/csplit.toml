@@ -1,0 +1,35 @@
+# tools/csplit.toml
+
+[[command]]
+path = "csplit"
+translation = "Split a file into separate pieces based on line patterns or line numbers."
+verdict = "allow"
+rationale = "Creates new files on disk from the split sections; does not modify the original file."
+
+[[flag]]
+applies_to = "csplit"
+flag = "-f"
+translation_modifier = "using a custom prefix for the output file names"
+verdict = "allow"
+rationale = "Only changes the naming of output files; does not affect what is split."
+
+[[flag]]
+applies_to = "csplit"
+flag = "-n"
+translation_modifier = "using a custom number of digits in the output file names"
+verdict = "allow"
+rationale = "Only changes the naming of output files; does not affect what is split."
+
+[[flag]]
+applies_to = "csplit"
+flag = "-k"
+translation_modifier = "keeping already-created files if an error occurs"
+verdict = "allow"
+rationale = "Prevents cleanup of partial output, which is safer than the default behavior of deleting them."
+
+[[flag]]
+applies_to = "csplit"
+flag = "-s"
+translation_modifier = "suppressing the display of output file sizes"
+verdict = "allow"
+rationale = "Only hides informational output; does not change what files are created."

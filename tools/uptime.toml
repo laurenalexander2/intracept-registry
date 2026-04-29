@@ -1,0 +1,7 @@
+# tools/uptime.toml
+
+[[command]]
+path = "uptime"
+translation = "Display how long the system has been running and the current load averages."
+verdict = "allow"
+rationale = "Read-only display of system uptime; modifies nothing."

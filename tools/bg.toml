@@ -1,0 +1,7 @@
+# tools/bg.toml
+
+[[command]]
+path = "bg"
+translation = "Resume a paused job and let it continue running in the background."
+verdict = "allow"
+rationale = "Continues an already-running process in the background; does not create or destroy anything."

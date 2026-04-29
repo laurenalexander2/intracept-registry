@@ -1,0 +1,270 @@
+# tools/pip3.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3"
+translation = "Run the Python package installer."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Installing ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 install"
+translation = "Download and install Python packages and their dependencies."
+verdict = "require_approval"
+rationale = "Downloads and runs code from PyPI that may execute setup scripts with system access."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--upgrade"
+translation_modifier = "upgrading already-installed packages to the latest version"
+verdict = "allow"
+rationale = "Replaces existing packages with newer versions that may introduce breaking changes."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "-U"
+translation_modifier = "upgrading already-installed packages to the latest version"
+verdict = "allow"
+rationale = "Alias for --upgrade; replaces existing packages with newer versions that may introduce breaking changes."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--force-reinstall"
+translation_modifier = "reinstalling packages even if they are already up to date"
+verdict = "allow"
+rationale = "Forces re-download and reinstallation, which re-runs setup scripts."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--no-deps"
+translation_modifier = "without installing package dependencies"
+verdict = "allow"
+rationale = "Reduces the scope of installation; may leave packages non-functional but limits what is installed."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--user"
+translation_modifier = "installing to the user site-packages directory instead of system-wide"
+verdict = "allow"
+rationale = "Limits the installation to the current user's directory, avoiding system-wide changes."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--pre"
+translation_modifier = "including pre-release and development versions"
+verdict = "allow"
+rationale = "Pre-release versions may be unstable and introduce regressions or breaking changes."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "-r"
+translation_modifier = "installing all packages listed in a requirements file"
+verdict = "allow"
+rationale = "Installs potentially many packages at once based on file contents, widening the scope."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "-e"
+translation_modifier = "installing a local project in editable mode so changes take effect immediately"
+verdict = "allow"
+rationale = "Links a local directory into site-packages; changes to source files are reflected without reinstalling."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--dry-run"
+translation_modifier = "simulating the installation without actually installing anything"
+verdict = "allow"
+rationale = "No packages are installed; only shows what would be done."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "-t"
+translation_modifier = "installing packages into a specific target directory"
+verdict = "allow"
+rationale = "Directs installation to a custom directory instead of the default site-packages."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--break-system-packages"
+translation_modifier = "allowing modifications to a system-managed Python installation"
+verdict = "require_approval"
+rationale = "Overrides the externally-managed environment guard, which may corrupt the system Python installation."
+
+[[flag]]
+applies_to = "pip3 install"
+flag = "--no-cache-dir"
+translation_modifier = "without using or saving to the local cache"
+verdict = "allow"
+rationale = "Skips the download cache; forces fresh downloads but does not introduce additional risk."
+
+# ── Uninstalling ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 uninstall"
+translation = "Remove installed Python packages."
+verdict = "allow"
+rationale = "Removes packages that other packages or scripts may depend on."
+
+[[flag]]
+applies_to = "pip3 uninstall"
+flag = "-y"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Bypasses the confirmation prompt, increasing the chance of accidental removal."
+
+[[flag]]
+applies_to = "pip3 uninstall"
+flag = "-r"
+translation_modifier = "removing all packages listed in a requirements file"
+verdict = "allow"
+rationale = "Uninstalls potentially many packages at once based on file contents."
+
+[[flag]]
+applies_to = "pip3 uninstall"
+flag = "--break-system-packages"
+translation_modifier = "allowing removal from a system-managed Python installation"
+verdict = "require_approval"
+rationale = "Overrides the externally-managed environment guard, which may corrupt the system Python installation."
+
+# ── Inspecting ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 list"
+translation = "List installed Python packages."
+verdict = "allow"
+rationale = "Read-only listing of installed packages."
+
+[[flag]]
+applies_to = "pip3 list"
+flag = "--outdated"
+translation_modifier = "showing only packages with newer versions available"
+verdict = "allow"
+rationale = "Read-only display filtered to outdated packages."
+
+[[flag]]
+applies_to = "pip3 list"
+flag = "--uptodate"
+translation_modifier = "showing only packages already at the latest version"
+verdict = "allow"
+rationale = "Read-only display filtered to up-to-date packages."
+
+[[command]]
+path = "pip3 show"
+translation = "Display detailed information about an installed Python package."
+verdict = "allow"
+rationale = "Read-only display of package metadata."
+
+[[command]]
+path = "pip3 freeze"
+translation = "Output installed packages and versions in requirements file format."
+verdict = "allow"
+rationale = "Read-only output of package versions suitable for piping to a file."
+
+[[command]]
+path = "pip3 check"
+translation = "Verify that installed packages have compatible dependencies."
+verdict = "allow"
+rationale = "Read-only dependency compatibility check."
+
+[[command]]
+path = "pip3 inspect"
+translation = "Show detailed information about the current Python environment."
+verdict = "allow"
+rationale = "Read-only inspection of the Python environment and installed packages."
+
+# ── Downloading ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 download"
+translation = "Download Python packages to a directory without installing them."
+verdict = "allow"
+rationale = "Downloads package files to disk without installation or script execution."
+
+# ── Searching ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 search"
+translation = "Search the Python Package Index for packages."
+verdict = "allow"
+rationale = "Read-only search of the package repository."
+
+[[command]]
+path = "pip3 index"
+translation = "Inspect information available from package indexes."
+verdict = "allow"
+rationale = "Read-only inspection of package index metadata."
+
+# ── Cache management ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 cache"
+translation = "Inspect and manage the pip download cache."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "pip3 cache purge"
+translation = "Remove all items from the pip download cache."
+verdict = "allow"
+rationale = "Deletes cached packages; they will be re-downloaded on next install."
+
+[[command]]
+path = "pip3 cache list"
+translation = "List packages stored in the pip download cache."
+verdict = "allow"
+rationale = "Read-only listing of cached package files."
+
+[[command]]
+path = "pip3 cache info"
+translation = "Show information about the pip download cache."
+verdict = "allow"
+rationale = "Read-only display of cache location and size."
+
+[[command]]
+path = "pip3 cache remove"
+translation = "Remove specific packages from the pip download cache."
+verdict = "allow"
+rationale = "Deletes individual cached packages; they will be re-downloaded if needed."
+
+# ── Configuration ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 config"
+translation = "View or modify pip configuration settings."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "pip3 config list"
+translation = "Display the current pip configuration values."
+verdict = "allow"
+rationale = "Read-only display of configuration."
+
+[[command]]
+path = "pip3 config set"
+translation = "Set a pip configuration value."
+verdict = "allow"
+rationale = "Changes pip behavior for future commands, such as default index URL or trusted hosts."
+
+[[command]]
+path = "pip3 config unset"
+translation = "Remove a pip configuration value."
+verdict = "allow"
+rationale = "Restores a single configuration key to its default; easily re-set."
+
+# ── Building ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pip3 wheel"
+translation = "Build wheel archives from package requirements."
+verdict = "allow"
+rationale = "Creates wheel files on disk; does not install anything."
+
+[[command]]
+path = "pip3 hash"
+translation = "Compute the hash of a package archive file."
+verdict = "allow"
+rationale = "Read-only computation of file hashes."

@@ -1,0 +1,7 @@
+# tools/systemextensionsctl.toml
+
+[[command]]
+path = "systemextensionsctl"
+translation = "Manage system extensions on macOS."
+verdict = "allow"
+rationale = "Can list, reset, or uninstall system extensions which provide kernel-level functionality."

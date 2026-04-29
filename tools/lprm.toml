@@ -1,0 +1,35 @@
+# tools/lprm.toml
+
+[[command]]
+path = "lprm"
+translation = "Cancel pending print jobs."
+verdict = "allow"
+rationale = "Removes print jobs from the queue; the job must be resubmitted if still needed."
+
+[[flag]]
+applies_to = "lprm"
+flag = "-P"
+translation_modifier = "canceling jobs on a specific printer"
+verdict = "allow"
+rationale = "Targets a specific printer queue for job cancellation."
+
+[[flag]]
+applies_to = "lprm"
+flag = "-"
+translation_modifier = "canceling all print jobs"
+verdict = "require_approval"
+rationale = "Removes every pending print job from the queue."
+
+[[flag]]
+applies_to = "lprm"
+flag = "-E"
+translation_modifier = "using an encrypted connection to the print server"
+verdict = "allow"
+rationale = "Only changes connection security; does not affect which jobs are canceled."
+
+[[flag]]
+applies_to = "lprm"
+flag = "-U"
+translation_modifier = "connecting as a specific user"
+verdict = "allow"
+rationale = "Only changes the username used for authentication."

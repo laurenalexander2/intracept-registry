@@ -1,0 +1,14 @@
+# tools/msgpre.toml — GNU gettext message preprocessor
+
+[[command]]
+path = "msgpre"
+translation = "Preprocess a translation catalog file."
+verdict = "allow"
+rationale = "Processes PO files and writes output; source files are not modified."
+
+[[flag]]
+applies_to = "msgpre"
+flag = "--force"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing output files."

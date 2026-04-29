@@ -1,0 +1,7 @@
+# tools/streamzip.toml
+
+[[command]]
+path = "streamzip"
+translation = "Create a zip archive from piped input."
+verdict = "allow"
+rationale = "Reads input and writes a zip file; does not modify existing files."

@@ -1,0 +1,35 @@
+# tools/nvram.toml — Firmware NVRAM variable manager
+
+[[command]]
+path = "nvram"
+translation = "Read or modify firmware NVRAM variables that control boot behavior and hardware settings."
+verdict = "require_approval"
+rationale = "Changes to NVRAM variables affect boot configuration and hardware behavior."
+
+[[flag]]
+applies_to = "nvram"
+flag = "-p"
+translation_modifier = "printing all firmware variables"
+verdict = "allow"
+rationale = "Read-only display of all NVRAM variables."
+
+[[flag]]
+applies_to = "nvram"
+flag = "-d"
+translation_modifier = "deleting a specified firmware variable"
+verdict = "require_approval"
+rationale = "Removes a firmware variable, which could change boot behavior or hardware configuration."
+
+[[flag]]
+applies_to = "nvram"
+flag = "-c"
+translation_modifier = "deleting all firmware variables"
+verdict = "require_approval"
+rationale = "Wipes all NVRAM settings, which can render the system unbootable or reset all hardware configuration."
+
+[[flag]]
+applies_to = "nvram"
+flag = "-f"
+translation_modifier = "setting variables from a file"
+verdict = "allow"
+rationale = "Bulk-sets NVRAM variables from a file, changing multiple boot and hardware settings at once."

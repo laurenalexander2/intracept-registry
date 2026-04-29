@@ -1,0 +1,7 @@
+# tools/asa.toml
+
+[[command]]
+path = "asa"
+translation = "Interpret ASA carriage control characters in files."
+verdict = "allow"
+rationale = "Converts file format for display; outputs to the terminal."

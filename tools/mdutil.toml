@@ -1,0 +1,77 @@
+# tools/mdutil.toml
+
+[[command]]
+path = "mdutil"
+translation = "Manage the macOS Spotlight metadata index for mounted volumes."
+verdict = "allow"
+rationale = "Can enable, disable, or erase the Spotlight index on volumes."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-i"
+translation_modifier = "turning Spotlight indexing on or off for a volume"
+verdict = "allow"
+rationale = "Enables or disables metadata indexing, affecting search functionality."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-d"
+translation_modifier = "disabling Spotlight searches on the specified volume"
+verdict = "allow"
+rationale = "Prevents Spotlight from searching the volume until re-enabled."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-E"
+translation_modifier = "erasing and rebuilding the Spotlight index"
+verdict = "allow"
+rationale = "Deletes the existing index, which temporarily disables Spotlight search until rebuilding completes."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-s"
+translation_modifier = "displaying the indexing status of volumes"
+verdict = "allow"
+rationale = "Read-only display of current indexing state."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-X"
+translation_modifier = "removing the Spotlight index directory from a volume"
+verdict = "require_approval"
+rationale = "Deletes the index directory; Spotlight will not function until the index is rebuilt."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-a"
+translation_modifier = "applying the command to all volumes"
+verdict = "allow"
+rationale = "Widens the scope to every mounted volume."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-p"
+translation_modifier = "flushing local Spotlight caches to the network device"
+verdict = "allow"
+rationale = "Pushes cached index data to the network; no data is deleted."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-t"
+translation_modifier = "resolving files from file IDs"
+verdict = "allow"
+rationale = "Read-only lookup that resolves file identifiers to paths."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output verbosity; does not change behavior."
+
+[[flag]]
+applies_to = "mdutil"
+flag = "-L"
+translation_modifier = "listing the contents of the Spotlight index directory"
+verdict = "allow"
+rationale = "Read-only directory listing of the index."

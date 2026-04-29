@@ -1,0 +1,7 @@
+# tools/sha256sum.toml
+
+[[command]]
+path = "sha256sum"
+translation = "Compute or verify SHA-256 checksums in GNU-compatible format."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."

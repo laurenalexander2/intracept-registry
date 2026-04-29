@@ -1,0 +1,25 @@
+# tools/pwd.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pwd"
+translation = "Print the full path of the current working directory."
+verdict = "allow"
+rationale = "Read-only display of the current directory path."
+
+# ── Flags ─────────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "pwd"
+flag = "-L"
+translation_modifier = "showing the logical path including symbolic link names"
+verdict = "allow"
+rationale = "Displays the path as stored in the environment, preserving symbolic link names; still read-only."
+
+[[flag]]
+applies_to = "pwd"
+flag = "-P"
+translation_modifier = "showing the physical path with all symbolic links resolved"
+verdict = "allow"
+rationale = "Resolves every symbolic link to show the true filesystem path; still read-only."

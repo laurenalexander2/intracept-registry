@@ -1,0 +1,196 @@
+# tools/curl.toml
+
+[[command]]
+path = "curl"
+translation = "Transfer data to or from a server using a URL."
+verdict = "require_approval"
+rationale = "Performs network requests that send or receive data from remote servers."
+
+[[flag]]
+applies_to = "curl"
+flag = "-o"
+translation_modifier = "saving the response to a specified local file"
+verdict = "allow"
+rationale = "Writes remote content to the local filesystem, which could overwrite existing files."
+
+[[flag]]
+applies_to = "curl"
+flag = "-O"
+translation_modifier = "saving the response to a file named by the remote server"
+verdict = "allow"
+rationale = "Writes to a filename controlled by the remote server, which could overwrite unexpected local files."
+
+[[flag]]
+applies_to = "curl"
+flag = "-X"
+translation_modifier = "using a specified HTTP method"
+verdict = "allow"
+rationale = "Changes the HTTP verb but does not inherently increase risk beyond the base command."
+
+[[flag]]
+applies_to = "curl"
+flag = "-d"
+translation_modifier = "sending data in an HTTP request body"
+verdict = "require_approval"
+rationale = "Transmits data to a remote server, which may include sensitive information."
+
+[[flag]]
+applies_to = "curl"
+flag = "-H"
+translation_modifier = "including a custom HTTP header"
+verdict = "allow"
+rationale = "Adds a header to the request; may carry authentication tokens but does not change the operation's scope."
+
+[[flag]]
+applies_to = "curl"
+flag = "-k"
+translation_modifier = "skipping TLS certificate verification"
+verdict = "require_approval"
+rationale = "Disables server identity verification, exposing the connection to interception or man-in-the-middle attacks."
+
+[[flag]]
+applies_to = "curl"
+flag = "--insecure"
+translation_modifier = "skipping TLS certificate verification"
+verdict = "require_approval"
+rationale = "Long form of -k; disables server identity verification, exposing the connection to interception or man-in-the-middle attacks."
+
+[[flag]]
+applies_to = "curl"
+flag = "-L"
+translation_modifier = "following HTTP redirects automatically"
+verdict = "allow"
+rationale = "Follows server-issued redirects, which is standard behavior for most web requests."
+
+[[flag]]
+applies_to = "curl"
+flag = "--location-trusted"
+translation_modifier = "following HTTP redirects automatically while sending credentials to every redirected host"
+verdict = "require_approval"
+rationale = "Sends the username and password to all hosts in the redirect chain, which may leak credentials to unintended servers."
+
+[[flag]]
+applies_to = "curl"
+flag = "-u"
+translation_modifier = "authenticating with a username and password"
+verdict = "allow"
+rationale = "Sends credentials to the server; may expose them if the connection is not encrypted."
+
+[[flag]]
+applies_to = "curl"
+flag = "-T"
+translation_modifier = "uploading a local file to the server"
+verdict = "require_approval"
+rationale = "Sends local file contents to a remote destination, which may expose sensitive data."
+
+[[flag]]
+applies_to = "curl"
+flag = "-s"
+translation_modifier = "hiding progress output and error messages"
+verdict = "allow"
+rationale = "Suppresses informational output but does not change the operation's behavior or scope."
+
+[[flag]]
+applies_to = "curl"
+flag = "-f"
+translation_modifier = "failing silently on HTTP server errors"
+verdict = "allow"
+rationale = "Suppresses error document output on failure; does not change what data is sent or received."
+
+[[flag]]
+applies_to = "curl"
+flag = "-v"
+translation_modifier = "showing verbose connection and transfer details"
+verdict = "allow"
+rationale = "Increases output detail for debugging; does not change the operation."
+
+[[flag]]
+applies_to = "curl"
+flag = "-I"
+translation_modifier = "fetching only the HTTP headers without the body"
+verdict = "allow"
+rationale = "Reduces the amount of data retrieved; does not increase risk."
+
+[[flag]]
+applies_to = "curl"
+flag = "-F"
+translation_modifier = "sending data as a multipart form upload"
+verdict = "require_approval"
+rationale = "Transmits form data including file contents to a remote server."
+
+[[flag]]
+applies_to = "curl"
+flag = "-b"
+translation_modifier = "sending cookies with the request"
+verdict = "allow"
+rationale = "Includes cookie data in the request; does not change the operation's scope."
+
+[[flag]]
+applies_to = "curl"
+flag = "-c"
+translation_modifier = "saving received cookies to a file"
+verdict = "allow"
+rationale = "Writes cookie data to a local file; low risk as cookies are small metadata."
+
+[[flag]]
+applies_to = "curl"
+flag = "--data-binary"
+translation_modifier = "sending data exactly as specified without any processing"
+verdict = "require_approval"
+rationale = "Transmits raw binary data to a remote server, which may include sensitive content."
+
+[[flag]]
+applies_to = "curl"
+flag = "-x"
+translation_modifier = "routing the request through a specified proxy server"
+verdict = "allow"
+rationale = "Redirects traffic through a proxy; does not change what data is sent."
+
+[[flag]]
+applies_to = "curl"
+flag = "--retry"
+translation_modifier = "retrying the request a specified number of times on failure"
+verdict = "allow"
+rationale = "Repeats the request on transient failures; does not change the operation's scope."
+
+[[flag]]
+applies_to = "curl"
+flag = "-w"
+translation_modifier = "displaying specified transfer metrics after completion"
+verdict = "allow"
+rationale = "Only adds informational output; does not change the operation."
+
+[[flag]]
+applies_to = "curl"
+flag = "--connect-timeout"
+translation_modifier = "limiting the time allowed to establish a connection"
+verdict = "allow"
+rationale = "Sets a timeout; does not change what data is sent or received."
+
+[[flag]]
+applies_to = "curl"
+flag = "-m"
+translation_modifier = "limiting the total time allowed for the entire operation"
+verdict = "allow"
+rationale = "Sets a maximum duration; does not change the operation's scope."
+
+[[flag]]
+applies_to = "curl"
+flag = "--create-dirs"
+translation_modifier = "creating any missing local directories needed by the output path"
+verdict = "allow"
+rationale = "Creates intermediate directories for -o output; does not change what data is transferred."
+
+[[flag]]
+applies_to = "curl"
+flag = "--no-clobber"
+translation_modifier = "skipping the download if the output file already exists"
+verdict = "allow"
+rationale = "Prevents overwriting existing files, reducing the risk of accidental data loss."
+
+[[flag]]
+applies_to = "curl"
+flag = "--compressed"
+translation_modifier = "requesting a compressed response and automatically decompressing it"
+verdict = "allow"
+rationale = "Negotiates transfer compression for efficiency; does not change what data is sent or received."

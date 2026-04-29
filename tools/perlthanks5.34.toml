@@ -1,0 +1,7 @@
+# tools/perlthanks5.34.toml — Perl 5.34 thank-you message sender
+
+[[command]]
+path = "perlthanks5.34"
+translation = "Send a thank-you message to the Perl 5.34 developers."
+verdict = "allow"
+rationale = "Composes an email; sends only with user confirmation."

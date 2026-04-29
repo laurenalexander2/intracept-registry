@@ -1,0 +1,7 @@
+# tools/audit.toml
+
+[[command]]
+path = "audit"
+translation = "Control the BSM audit subsystem."
+verdict = "require_approval"
+rationale = "Manages system auditing, which affects security logging."

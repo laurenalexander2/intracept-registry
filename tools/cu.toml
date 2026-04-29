@@ -1,0 +1,7 @@
+# tools/cu.toml
+
+[[command]]
+path = "cu"
+translation = "Connect to a remote system over a serial line."
+verdict = "allow"
+rationale = "Opens a serial communication session with a remote device."

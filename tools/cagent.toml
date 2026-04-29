@@ -1,0 +1,7 @@
+# tools/cagent.toml
+
+[[command]]
+path = "cagent"
+translation = "Run the configuration agent."
+verdict = "allow"
+rationale = "System service helper; minimal user interaction."

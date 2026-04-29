@@ -1,0 +1,7 @@
+# tools/xzdiff.toml
+
+[[command]]
+path = "xzdiff"
+translation = "Compare XZ-compressed files showing differences."
+verdict = "allow"
+rationale = "Read-only comparison; modifies nothing."

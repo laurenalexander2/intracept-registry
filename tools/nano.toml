@@ -1,0 +1,21 @@
+# tools/nano.toml
+
+[[command]]
+path = "nano"
+translation = "Open a file in the nano text editor."
+verdict = "allow"
+rationale = "Opens files for editing; changes are written when the user saves."
+
+[[flag]]
+applies_to = "nano"
+flag = "-v"
+translation_modifier = "opening the file in read-only view mode"
+verdict = "allow"
+rationale = "Prevents any modifications to the file."
+
+[[flag]]
+applies_to = "nano"
+flag = "-B"
+translation_modifier = "creating a backup of the file before saving changes"
+verdict = "allow"
+rationale = "Preserves the original file as a backup; a safety-enhancing option."

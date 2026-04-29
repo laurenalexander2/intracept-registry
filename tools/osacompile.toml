@@ -1,0 +1,21 @@
+# tools/osacompile.toml — AppleScript compiler
+
+[[command]]
+path = "osacompile"
+translation = "Compile AppleScript or other Open Scripting Architecture language source files into a compiled script or application."
+verdict = "allow"
+rationale = "Produces a compiled script file; does not execute the script."
+
+[[flag]]
+applies_to = "osacompile"
+flag = "-x"
+translation_modifier = "saving as execute-only so the source cannot be recovered"
+verdict = "allow"
+rationale = "Strips source from the compiled output; no additional risk."
+
+[[flag]]
+applies_to = "osacompile"
+flag = "-o"
+translation_modifier = "writing the output to a specified file"
+verdict = "allow"
+rationale = "Sets the output file name; defaults to a.scpt."

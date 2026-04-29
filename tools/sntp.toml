@@ -1,0 +1,7 @@
+# tools/sntp.toml
+
+[[command]]
+path = "sntp"
+translation = "Query a network time server for the current time."
+verdict = "allow"
+rationale = "Read-only time query; does not modify the system clock by default."

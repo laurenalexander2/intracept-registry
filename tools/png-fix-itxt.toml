@@ -1,0 +1,7 @@
+# tools/png-fix-itxt.toml
+
+[[command]]
+path = "png-fix-itxt"
+translation = "Fix invalid iTXt chunks in PNG image files."
+verdict = "allow"
+rationale = "Repairs metadata in PNG files; the image data itself is not affected."

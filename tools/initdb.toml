@@ -1,0 +1,77 @@
+# tools/initdb.toml
+
+[[command]]
+path = "initdb"
+translation = "Create a new PostgreSQL database cluster."
+verdict = "allow"
+rationale = "Creates database directories and system tables; does not destroy existing data unless pointed at an occupied directory."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-D"
+translation_modifier = "in a specified data directory"
+verdict = "allow"
+rationale = "Specifies the target directory for the new cluster; the directory must be empty or nonexistent."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-E"
+translation_modifier = "using a specified character encoding"
+verdict = "allow"
+rationale = "Sets the default character encoding for the cluster; a configuration choice with no destructive impact."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-U"
+translation_modifier = "setting the superuser account name"
+verdict = "allow"
+rationale = "Names the bootstrap superuser; a configuration choice during initialization."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-W"
+translation_modifier = "prompting for a superuser password during setup"
+verdict = "allow"
+rationale = "Adds password-based authentication for the superuser; a security-enhancing option."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-A"
+translation_modifier = "using a specified default authentication method"
+verdict = "allow"
+rationale = "Sets the authentication method in pg_hba.conf; choosing 'trust' allows unauthenticated access to the database."
+
+[[flag]]
+applies_to = "initdb"
+flag = "--locale"
+translation_modifier = "using a specified locale for the cluster"
+verdict = "allow"
+rationale = "Sets the default locale; a configuration choice with no destructive impact."
+
+[[flag]]
+applies_to = "initdb"
+flag = "-k"
+translation_modifier = "enabling data checksums on all pages"
+verdict = "allow"
+rationale = "Adds data integrity verification; a safety-enhancing option that may slightly reduce performance."
+
+[[flag]]
+applies_to = "initdb"
+flag = "--waldir"
+translation_modifier = "storing write-ahead log files in a specified directory"
+verdict = "allow"
+rationale = "Separates write-ahead log storage from the data directory; a layout configuration choice."
+
+[[flag]]
+applies_to = "initdb"
+flag = "--no-sync"
+translation_modifier = "without waiting for files to be written safely to disk"
+verdict = "require_approval"
+rationale = "Skips flushing data to disk, which can leave the cluster corrupt if the system crashes during or shortly after initialization."
+
+[[flag]]
+applies_to = "initdb"
+flag = "--data-checksums"
+translation_modifier = "enabling data checksums on all pages"
+verdict = "allow"
+rationale = "Adds data integrity verification; a safety-enhancing option that may slightly reduce performance."

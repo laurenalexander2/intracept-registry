@@ -1,0 +1,91 @@
+# tools/mysql.toml
+
+[[command]]
+path = "mysql"
+translation = "Connect to a MySQL database."
+verdict = "allow"
+rationale = "Connects to a live database where any SQL statement can be executed, including destructive operations."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-e"
+translation_modifier = "executing a single SQL statement and then exiting"
+verdict = "require_approval"
+rationale = "Runs arbitrary SQL directly, including destructive statements like DROP or DELETE, without an interactive session."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-u"
+translation_modifier = "connecting as a specified database user"
+verdict = "allow"
+rationale = "Specifies the authentication identity; does not change what operations are available."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-p"
+translation_modifier = "prompting for a password before connecting"
+verdict = "allow"
+rationale = "Adds an explicit authentication step before connecting."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-h"
+translation_modifier = "connecting to a specified database server host"
+verdict = "allow"
+rationale = "Specifies which server to connect to; does not change what operations can be performed."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-D"
+translation_modifier = "connecting to a specified database"
+verdict = "allow"
+rationale = "Selects which database to operate on; does not change what operations can be performed."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--batch"
+translation_modifier = "formatting output for non-interactive use without column borders"
+verdict = "allow"
+rationale = "Changes output formatting only; does not affect what queries are executed."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--safe-updates"
+translation_modifier = "blocking bulk update and delete statements that lack a filter condition"
+verdict = "allow"
+rationale = "Prevents accidental bulk modifications; a safety-enhancing option."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--force"
+translation_modifier = "continuing execution even after SQL errors"
+verdict = "allow"
+rationale = "Suppresses error-based stopping, which may allow partially destructive scripts to continue."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--skip-column-names"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output formatting only; omits column headers from query results."
+
+[[flag]]
+applies_to = "mysql"
+flag = "-P"
+translation_modifier = "connecting on a specified TCP port"
+verdict = "allow"
+rationale = "Specifies which port to connect on; does not change what operations can be performed."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--ssl-mode"
+translation_modifier = "using a specified SSL encryption mode for the connection"
+verdict = "allow"
+rationale = "Controls connection encryption; does not affect query capabilities."
+
+[[flag]]
+applies_to = "mysql"
+flag = "--local-infile"
+translation_modifier = "allowing the database to import data directly from files on the client machine"
+verdict = "require_approval"
+rationale = "Enables reading arbitrary files from the client filesystem into the database, which may expose sensitive data."

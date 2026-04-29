@@ -1,0 +1,63 @@
+# tools/postfix.toml
+
+[[command]]
+path = "postfix"
+translation = "Control the Postfix mail server system."
+verdict = "allow"
+rationale = "Starts, stops, and manages the mail server, which affects email delivery for the system."
+
+[[flag]]
+applies_to = "postfix"
+flag = "start"
+translation_modifier = "starting the mail server"
+verdict = "allow"
+rationale = "Begins accepting and delivering mail."
+
+[[flag]]
+applies_to = "postfix"
+flag = "stop"
+translation_modifier = "stopping the mail server"
+verdict = "allow"
+rationale = "Halts mail delivery; queued messages wait until restart."
+
+[[flag]]
+applies_to = "postfix"
+flag = "reload"
+translation_modifier = "reloading the mail server configuration"
+verdict = "allow"
+rationale = "Applies configuration changes without restarting."
+
+[[flag]]
+applies_to = "postfix"
+flag = "flush"
+translation_modifier = "flushing the mail queue to attempt immediate delivery"
+verdict = "allow"
+rationale = "Triggers delivery attempts for all queued messages at once."
+
+[[flag]]
+applies_to = "postfix"
+flag = "check"
+translation_modifier = "checking the configuration for errors without making changes"
+verdict = "allow"
+rationale = "Read-only validation of configuration files and directory permissions."
+
+[[flag]]
+applies_to = "postfix"
+flag = "status"
+translation_modifier = "showing whether the mail server is running"
+verdict = "allow"
+rationale = "Read-only status check; nothing is modified."
+
+[[flag]]
+applies_to = "postfix"
+flag = "set-permissions"
+translation_modifier = "resetting file ownership and permissions to their correct values"
+verdict = "allow"
+rationale = "Changes file permissions across the Postfix installation directories."
+
+[[flag]]
+applies_to = "postfix"
+flag = "upgrade-configuration"
+translation_modifier = "updating configuration files to the current Postfix version format"
+verdict = "allow"
+rationale = "Modifies configuration files, which could change mail behavior if the upgrade introduces new defaults."

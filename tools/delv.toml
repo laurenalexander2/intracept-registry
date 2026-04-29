@@ -1,0 +1,7 @@
+# tools/delv.toml
+
+[[command]]
+path = "delv"
+translation = "Perform DNS security-validated lookups."
+verdict = "allow"
+rationale = "Read-only DNS query tool with DNS security validation."

@@ -1,0 +1,7 @@
+# tools/pl.toml
+
+[[command]]
+path = "pl"
+translation = "Run the PropertyList programming environment for exploring Objective-C objects interactively."
+verdict = "allow"
+rationale = "Interactive exploration tool; does not modify files."

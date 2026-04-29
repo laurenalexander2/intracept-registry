@@ -1,0 +1,7 @@
+# tools/ao.toml
+
+[[command]]
+path = "ao"
+translation = "Run the ao command-line tool."
+verdict = "allow"
+rationale = "Insufficient documentation to determine the tool's purpose."

@@ -1,0 +1,7 @@
+# tools/cvfsck.toml
+
+[[command]]
+path = "cvfsck"
+translation = "Check and repair an Xsan filesystem."
+verdict = "require_approval"
+rationale = "Modifies filesystem metadata to repair inconsistencies."

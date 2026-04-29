@@ -1,0 +1,7 @@
+# tools/agvtool.toml
+
+[[command]]
+path = "agvtool"
+translation = "Manage Xcode project version numbers."
+verdict = "allow"
+rationale = "Modifies version numbers in Xcode project files."

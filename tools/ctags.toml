@@ -1,0 +1,7 @@
+# tools/ctags.toml
+
+[[command]]
+path = "ctags"
+translation = "Generate tag files for source code navigation."
+verdict = "allow"
+rationale = "Creates index files for editor navigation; does not modify source code."

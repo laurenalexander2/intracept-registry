@@ -1,0 +1,37 @@
+# tools/apachectl.toml
+
+[[command]]
+path = "apachectl"
+translation = "Control the Apache HTTP web server."
+verdict = "allow"
+rationale = "Starts, stops, or restarts the web server, affecting network service availability."
+
+[[command]]
+path = "apachectl start"
+translation = "Start the Apache web server."
+verdict = "allow"
+rationale = "Starts a network-facing service that listens for HTTP connections."
+
+[[command]]
+path = "apachectl stop"
+translation = "Stop the Apache web server."
+verdict = "allow"
+rationale = "Stops the web server, interrupting any active connections."
+
+[[command]]
+path = "apachectl restart"
+translation = "Restart the Apache web server."
+verdict = "allow"
+rationale = "Briefly interrupts the web server during the restart."
+
+[[command]]
+path = "apachectl graceful"
+translation = "Gracefully restart the Apache web server without dropping active connections."
+verdict = "allow"
+rationale = "Reloads configuration without interrupting existing connections."
+
+[[command]]
+path = "apachectl configtest"
+translation = "Check the Apache configuration for syntax errors."
+verdict = "allow"
+rationale = "Read-only validation of the server configuration."

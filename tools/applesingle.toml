@@ -1,0 +1,14 @@
+# tools/applesingle.toml
+
+[[command]]
+path = "applesingle"
+translation = "Encode or decode AppleSingle format files."
+verdict = "allow"
+rationale = "Converts file format without modifying the original."
+
+[[flag]]
+applies_to = "applesingle"
+flag = "--overwrite"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Replaces existing files without prompting."

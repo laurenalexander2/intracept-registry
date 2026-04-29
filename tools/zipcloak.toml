@@ -1,0 +1,7 @@
+# tools/zipcloak.toml
+
+[[command]]
+path = "zipcloak"
+translation = "Encrypt or decrypt entries in a zip archive."
+verdict = "allow"
+rationale = "Modifies the zip archive in place by adding or removing encryption."

@@ -1,0 +1,7 @@
+# tools/true.toml
+
+[[command]]
+path = "true"
+translation = "Return a successful exit status."
+verdict = "allow"
+rationale = "Does nothing except exit with status zero."

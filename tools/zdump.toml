@@ -1,0 +1,7 @@
+# tools/zdump.toml
+
+[[command]]
+path = "zdump"
+translation = "Display current time in specified time zones."
+verdict = "allow"
+rationale = "Read-only time zone query; modifies nothing."

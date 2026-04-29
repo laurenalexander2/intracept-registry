@@ -1,0 +1,14 @@
+# tools/xsanctl.toml
+
+[[command]]
+path = "xsanctl"
+translation = "Control and configure Xsan storage area network volumes."
+verdict = "require_approval"
+rationale = "Manages storage area network volumes and configuration; incorrect changes can disrupt shared storage access."
+
+[[flag]]
+applies_to = "xsanctl"
+flag = "--force"
+translation_modifier = "forcing the operation without safety checks"
+verdict = "require_approval"
+rationale = "Bypasses safety checks on storage area network operations; may cause data loss on shared storage."

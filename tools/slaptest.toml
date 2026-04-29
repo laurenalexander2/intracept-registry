@@ -1,0 +1,7 @@
+# tools/slaptest.toml
+
+[[command]]
+path = "slaptest"
+translation = "Test the validity of an LDAP server configuration."
+verdict = "allow"
+rationale = "Validates configuration syntax without starting the server or modifying data."

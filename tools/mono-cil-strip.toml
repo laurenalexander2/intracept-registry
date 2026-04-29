@@ -1,0 +1,7 @@
+# tools/mono-cil-strip.toml — Mono CIL method body stripper
+
+[[command]]
+path = "mono-cil-strip"
+translation = "Remove method bodies from a .NET assembly, keeping only metadata."
+verdict = "allow"
+rationale = "Modifies an assembly file by emptying method bodies; the original is overwritten unless an output file is specified."

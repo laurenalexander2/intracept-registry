@@ -1,0 +1,7 @@
+# tools/db_stat.toml
+
+[[command]]
+path = "db_stat"
+translation = "Display Berkeley DB statistics."
+verdict = "allow"
+rationale = "Read-only display of database statistics."

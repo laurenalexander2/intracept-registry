@@ -1,0 +1,7 @@
+# tools/pg_config-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_config-17"
+translation = "Display information about the installed version of PostgreSQL."
+verdict = "allow"
+rationale = "Read-only output of build configuration values."

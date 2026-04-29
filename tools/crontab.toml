@@ -1,0 +1,35 @@
+# tools/crontab.toml
+
+[[command]]
+path = "crontab"
+translation = "View or edit the current user's table of scheduled recurring tasks."
+verdict = "require_approval"
+rationale = "Modifies the schedule of automatically recurring tasks, which can add, change, or remove jobs that run without supervision."
+
+[[flag]]
+applies_to = "crontab"
+flag = "-l"
+translation_modifier = "listing all currently scheduled tasks"
+verdict = "allow"
+rationale = "Read-only display of scheduled tasks; modifies nothing."
+
+[[flag]]
+applies_to = "crontab"
+flag = "-e"
+translation_modifier = "opening the task schedule in a text editor for changes"
+verdict = "allow"
+rationale = "Allows editing scheduled tasks that take effect immediately after saving."
+
+[[flag]]
+applies_to = "crontab"
+flag = "-r"
+translation_modifier = "removing all scheduled tasks without asking for confirmation"
+verdict = "require_approval"
+rationale = "Deletes every scheduled task at once with no confirmation prompt; recovery requires manually recreating each entry."
+
+[[flag]]
+applies_to = "crontab"
+flag = "-u"
+translation_modifier = "targeting a specific user's task schedule instead of your own"
+verdict = "allow"
+rationale = "Operates on another user's scheduled tasks, which may affect services or jobs that user depends on."

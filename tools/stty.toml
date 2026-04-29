@@ -1,0 +1,21 @@
+# tools/stty.toml
+
+[[command]]
+path = "stty"
+translation = "Display or set terminal device options."
+verdict = "allow"
+rationale = "Changes terminal settings for the current session; settings reset on terminal close."
+
+[[flag]]
+applies_to = "stty"
+flag = "-a"
+translation_modifier = "displaying all current terminal settings"
+verdict = "allow"
+rationale = "Read-only display of settings."
+
+[[flag]]
+applies_to = "stty"
+flag = "-g"
+translation_modifier = "displaying settings in a format suitable for restoring later"
+verdict = "allow"
+rationale = "Read-only display in machine-readable format."

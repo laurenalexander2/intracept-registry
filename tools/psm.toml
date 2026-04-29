@@ -1,0 +1,7 @@
+# tools/psm.toml
+
+[[command]]
+path = "psm"
+translation = "Run the macOS persistent storage manager utility."
+verdict = "allow"
+rationale = "System utility for storage management diagnostics."

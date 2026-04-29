@@ -1,0 +1,7 @@
+# tools/syspolicy_check.toml
+
+[[command]]
+path = "syspolicy_check"
+translation = "Check system policy compliance for applications and bundles."
+verdict = "allow"
+rationale = "Read-only policy evaluation; does not modify files or system state."

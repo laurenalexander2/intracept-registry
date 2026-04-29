@@ -1,0 +1,194 @@
+# tools/tree.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "tree"
+translation = "Display the contents of a directory in a tree-like format."
+verdict = "allow"
+rationale = "Read-only directory listing that modifies nothing."
+
+# ── Filtering ────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "tree"
+flag = "-d"
+translation_modifier = "showing only directories, not files"
+verdict = "allow"
+rationale = "Restricts the listing to directories; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-a"
+translation_modifier = "including hidden files and directories"
+verdict = "allow"
+rationale = "Shows dotfiles in the listing; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-L"
+translation_modifier = "limiting the display to a specified number of directory levels"
+verdict = "allow"
+rationale = "Restricts traversal depth; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-P"
+translation_modifier = "showing only files matching a wildcard pattern"
+verdict = "allow"
+rationale = "Filters displayed files by pattern; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-I"
+translation_modifier = "excluding files matching a wildcard pattern"
+verdict = "allow"
+rationale = "Filters out files by pattern; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "--prune"
+translation_modifier = "hiding empty directories from the output"
+verdict = "allow"
+rationale = "Removes empty directories from the display; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "--dirsfirst"
+translation_modifier = "listing directories before files at each level"
+verdict = "allow"
+rationale = "Changes sort order; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "--filelimit"
+translation_modifier = "skipping directories that contain more than the specified number of entries"
+verdict = "allow"
+rationale = "Limits output for large directories; still read-only."
+
+# ── Display options ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "tree"
+flag = "-f"
+translation_modifier = "showing the full path prefix for each file"
+verdict = "allow"
+rationale = "Changes output format to include full paths; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-s"
+translation_modifier = "showing the size of each file in bytes"
+verdict = "allow"
+rationale = "Adds file size to the display; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-h"
+translation_modifier = "showing file sizes in human-readable units"
+verdict = "allow"
+rationale = "Formats file sizes with K/M/G suffixes; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-p"
+translation_modifier = "showing file permissions for each entry"
+verdict = "allow"
+rationale = "Displays permission bits alongside filenames; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-u"
+translation_modifier = "showing the owner of each file"
+verdict = "allow"
+rationale = "Displays file ownership; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-g"
+translation_modifier = "showing the group of each file"
+verdict = "allow"
+rationale = "Displays file group ownership; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-D"
+translation_modifier = "showing the last modification date of each file"
+verdict = "allow"
+rationale = "Adds modification timestamps to the display; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-i"
+translation_modifier = "without indentation lines, printing plain filenames"
+verdict = "allow"
+rationale = "Changes output format; still read-only."
+
+# ── Sorting ──────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "tree"
+flag = "-t"
+translation_modifier = "sorting files by last modification time"
+verdict = "allow"
+rationale = "Changes sort order; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-r"
+translation_modifier = "reversing the sort order"
+verdict = "allow"
+rationale = "Reverses the listing order; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-U"
+translation_modifier = "listing files in the order they appear on disk, unsorted"
+verdict = "allow"
+rationale = "Disables sorting; still read-only."
+
+# ── Output format ────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "tree"
+flag = "-J"
+translation_modifier = "outputting the tree as JSON"
+verdict = "allow"
+rationale = "Changes output to JSON format; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-X"
+translation_modifier = "outputting the tree as XML"
+verdict = "allow"
+rationale = "Changes output to XML format; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-H"
+translation_modifier = "outputting the tree as an HTML page"
+verdict = "allow"
+rationale = "Changes output to HTML format; still read-only."
+
+[[flag]]
+applies_to = "tree"
+flag = "-o"
+translation_modifier = "writing the output to a file instead of the terminal"
+verdict = "allow"
+rationale = "Creates or overwrites a file with the listing output; the tree content itself is still read-only."
+
+# ── Symlink handling ─────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "tree"
+flag = "-l"
+translation_modifier = "following symbolic links as if they were directories"
+verdict = "allow"
+rationale = "Follows symlinks during traversal; still a read-only listing."
+
+[[flag]]
+applies_to = "tree"
+flag = "--noreport"
+translation_modifier = "without printing the file and directory count summary"
+verdict = "allow"
+rationale = "Suppresses the summary line; still read-only."

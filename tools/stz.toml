@@ -1,0 +1,7 @@
+# tools/stz.toml
+
+[[command]]
+path = "stz"
+translation = "Run the Xsan storage pool configuration tool."
+verdict = "allow"
+rationale = "Limited public documentation; appears to manage Xsan storage configuration."

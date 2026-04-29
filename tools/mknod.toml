@@ -1,0 +1,35 @@
+# tools/mknod.toml — Device special file creator
+
+[[command]]
+path = "mknod"
+translation = "Create a device special file or named pipe in the filesystem."
+verdict = "allow"
+rationale = "Creates device nodes that interact with kernel drivers; incorrect usage could affect device access."
+
+[[flag]]
+applies_to = "mknod"
+flag = "-r"
+translation_modifier = "replacing an existing file if its type is incorrect"
+verdict = "allow"
+rationale = "Overwrites an existing file entry, which could disrupt processes using the original device node."
+
+[[flag]]
+applies_to = "mknod"
+flag = "-R"
+translation_modifier = "replacing an existing file and correcting its mode, user, and group"
+verdict = "allow"
+rationale = "Overwrites an existing file and changes ownership, which could affect access permissions."
+
+[[flag]]
+applies_to = "mknod"
+flag = "-m"
+translation_modifier = "with specific file permission bits"
+verdict = "allow"
+rationale = "Sets permissions on the new node; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "mknod"
+flag = "-l"
+translation_modifier = "listing configured device drivers instead of creating a node"
+verdict = "allow"
+rationale = "Read-only listing of kernel device drivers."

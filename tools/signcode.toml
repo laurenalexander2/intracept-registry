@@ -1,0 +1,7 @@
+# tools/signcode.toml
+
+[[command]]
+path = "signcode"
+translation = "Digitally sign a .NET assembly or executable with an Authenticode certificate."
+verdict = "allow"
+rationale = "Modifies a binary file by embedding a digital signature; reversible by re-signing or stripping."

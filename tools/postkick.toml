@@ -1,0 +1,7 @@
+# tools/postkick.toml
+
+[[command]]
+path = "postkick"
+translation = "Send a command to a Postfix service over a local transport channel."
+verdict = "allow"
+rationale = "Internal Postfix utility for inter-process communication."

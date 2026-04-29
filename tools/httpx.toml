@@ -1,0 +1,35 @@
+# tools/httpx.toml
+
+[[command]]
+path = "httpx"
+translation = "Send HTTP requests to a URL and display the response."
+verdict = "allow"
+rationale = "Sends HTTP requests and displays responses; does not modify local files by default."
+
+[[flag]]
+applies_to = "httpx"
+flag = "-m"
+translation_modifier = "using a specific HTTP method"
+verdict = "allow"
+rationale = "Only changes the request method; the server determines what action is taken."
+
+[[flag]]
+applies_to = "httpx"
+flag = "--download"
+translation_modifier = "saving the response body to a file"
+verdict = "allow"
+rationale = "Writes the response content to a local file."
+
+[[flag]]
+applies_to = "httpx"
+flag = "--no-verify"
+translation_modifier = "skipping SSL certificate verification"
+verdict = "allow"
+rationale = "Disables SSL verification, making the connection vulnerable to man-in-the-middle attacks."
+
+[[flag]]
+applies_to = "httpx"
+flag = "--follow-redirects"
+translation_modifier = "automatically following HTTP redirects"
+verdict = "allow"
+rationale = "Only changes how redirects are handled during the request."

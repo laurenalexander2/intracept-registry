@@ -1,0 +1,7 @@
+# tools/usdextract.toml
+
+[[command]]
+path = "usdextract"
+translation = "Extract assets from a Universal Scene Description file."
+verdict = "allow"
+rationale = "Creates extracted files; does not modify the source USD file."

@@ -1,0 +1,7 @@
+# tools/Rez.toml
+
+[[command]]
+path = "Rez"
+translation = "Compile a Rez source file into a resource fork or data fork resource file."
+verdict = "allow"
+rationale = "Creates a compiled resource file; does not modify the source."

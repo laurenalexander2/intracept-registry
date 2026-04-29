@@ -1,0 +1,56 @@
+# tools/gpg-agent.toml
+
+[[command]]
+path = "gpg-agent"
+translation = "Run the GnuPG private key agent to cache passphrases and manage private keys."
+verdict = "allow"
+rationale = "Starts a background agent process; no keys are exposed without explicit requests."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--daemon"
+translation_modifier = "starting as a background service"
+verdict = "allow"
+rationale = "Forks the agent into the background; standard startup mode."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--server"
+translation_modifier = "running in server mode and reading commands from standard input"
+verdict = "allow"
+rationale = "Keeps the agent in the foreground to accept commands; does not modify keys."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--default-cache-ttl"
+translation_modifier = "setting how long cached passphrases remain valid in seconds"
+verdict = "allow"
+rationale = "Controls cache duration; a security-tuning option."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--max-cache-ttl"
+translation_modifier = "setting the maximum time a cached passphrase can be used regardless of access"
+verdict = "allow"
+rationale = "Limits the maximum cache lifetime; a security-enhancing option."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--no-grab"
+translation_modifier = "without grabbing the keyboard during passphrase entry"
+verdict = "allow"
+rationale = "Changes input behavior; does not affect key management."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--allow-preset-passphrase"
+translation_modifier = "allowing passphrases to be set by external programs"
+verdict = "allow"
+rationale = "Lets other programs inject passphrases; reduces the security of passphrase management."
+
+[[flag]]
+applies_to = "gpg-agent"
+flag = "--verbose"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of output displayed."

@@ -1,0 +1,7 @@
+# tools/slogin.toml
+
+[[command]]
+path = "slogin"
+translation = "Open a secure shell connection to a remote host."
+verdict = "allow"
+rationale = "Establishes an SSH session to a remote system; commands executed remotely can modify remote state."

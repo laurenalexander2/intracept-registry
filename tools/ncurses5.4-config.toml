@@ -1,0 +1,7 @@
+# tools/ncurses5.4-config.toml — ncurses build configuration query
+
+[[command]]
+path = "ncurses5.4-config"
+translation = "Display compiler and linker flags needed to build applications against ncurses."
+verdict = "allow"
+rationale = "Read-only output of build configuration values; modifies nothing."

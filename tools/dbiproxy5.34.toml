@@ -1,0 +1,7 @@
+# tools/dbiproxy5.34.toml
+
+[[command]]
+path = "dbiproxy5.34"
+translation = "Proxy DBI database connections for Perl 5.34."
+verdict = "allow"
+rationale = "Opens a network service that forwards database connections."

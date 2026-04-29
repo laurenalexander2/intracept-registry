@@ -1,0 +1,7 @@
+# tools/perl5.34.toml — Perl 5.34 interpreter
+
+[[command]]
+path = "perl5.34"
+translation = "Run the Perl 5.34 programming language interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary Perl code, which could modify files or system state."

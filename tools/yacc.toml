@@ -1,0 +1,7 @@
+# tools/yacc.toml
+
+[[command]]
+path = "yacc"
+translation = "Generate a parser from a grammar specification."
+verdict = "allow"
+rationale = "Creates parser source files from grammar input; does not modify the grammar file."

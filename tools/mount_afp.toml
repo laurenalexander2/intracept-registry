@@ -1,0 +1,28 @@
+# tools/mount_afp.toml — AFP (AppleShare) filesystem mount
+
+[[command]]
+path = "mount_afp"
+translation = "Mount an AFP network share from an AppleShare file server."
+verdict = "allow"
+rationale = "Attaches a remote network share to the local directory tree."
+
+[[flag]]
+applies_to = "mount_afp"
+flag = "-i"
+translation_modifier = "prompting interactively for a password"
+verdict = "allow"
+rationale = "Requests a password at runtime instead of embedding it in the URL."
+
+[[flag]]
+applies_to = "mount_afp"
+flag = "-s"
+translation_modifier = "as a soft mount that times out on network errors"
+verdict = "allow"
+rationale = "Allows the mount to fail gracefully on network problems instead of hanging."
+
+[[flag]]
+applies_to = "mount_afp"
+flag = "-k"
+translation_modifier = "as a hard mount that retries persistently on network errors"
+verdict = "allow"
+rationale = "Keeps retrying on errors, which may cause processes to hang indefinitely."

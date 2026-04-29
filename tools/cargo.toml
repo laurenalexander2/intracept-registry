@@ -1,0 +1,369 @@
+# tools/cargo.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo"
+translation = "Run the Rust package manager and build system."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Building and checking ────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo build"
+translation = "Compile the current Rust package and its dependencies."
+verdict = "allow"
+rationale = "Compiles code locally; does not execute it or modify source files."
+
+[[flag]]
+applies_to = "cargo build"
+flag = "--release"
+translation_modifier = "with optimizations enabled for a production build"
+verdict = "allow"
+rationale = "Produces an optimized binary; only changes the build profile."
+
+[[flag]]
+applies_to = "cargo build"
+flag = "--workspace"
+translation_modifier = "for all packages in the workspace"
+verdict = "allow"
+rationale = "Extends the build to every package in the workspace; still a local compilation."
+
+[[flag]]
+applies_to = "cargo build"
+flag = "--target"
+translation_modifier = "for a specific platform target instead of the host"
+verdict = "allow"
+rationale = "Cross-compiles for another platform; does not change what is modified."
+
+[[command]]
+path = "cargo check"
+translation = "Analyze the current Rust package for errors without producing binaries."
+verdict = "allow"
+rationale = "Read-only compilation check; faster than a full build."
+
+[[command]]
+path = "cargo clippy"
+translation = "Run the Clippy linter to catch common mistakes in Rust code."
+verdict = "allow"
+rationale = "Static analysis that reports warnings; does not modify source files."
+
+[[flag]]
+applies_to = "cargo clippy"
+flag = "--fix"
+translation_modifier = "automatically applying suggested fixes to the source code"
+verdict = "allow"
+rationale = "Modifies source files in place to apply lint fixes; changes may be incorrect."
+
+[[command]]
+path = "cargo fix"
+translation = "Automatically apply compiler-suggested fixes to the Rust source code."
+verdict = "allow"
+rationale = "Modifies source files in place based on compiler suggestions; changes may need review."
+
+[[flag]]
+applies_to = "cargo fix"
+flag = "--allow-dirty"
+translation_modifier = "even if the working directory has uncommitted changes"
+verdict = "require_approval"
+rationale = "Bypasses the clean working directory check, risking loss of uncommitted edits if fixes overlap."
+
+[[flag]]
+applies_to = "cargo fix"
+flag = "--allow-staged"
+translation_modifier = "even if there are staged changes in the repository"
+verdict = "allow"
+rationale = "Bypasses the staged-changes check; auto-fixes may conflict with staged modifications."
+
+# ── Running and testing ──────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo run"
+translation = "Compile and execute the current Rust package's binary."
+verdict = "allow"
+rationale = "Builds and runs the program, which may perform any action depending on the code."
+
+[[flag]]
+applies_to = "cargo run"
+flag = "--release"
+translation_modifier = "with optimizations enabled for a production build"
+verdict = "allow"
+rationale = "Only changes the build profile; does not change what the program does."
+
+[[command]]
+path = "cargo test"
+translation = "Run the tests for the current Rust package."
+verdict = "allow"
+rationale = "Compiles and runs test code; test binaries are local and isolated."
+
+[[flag]]
+applies_to = "cargo test"
+flag = "--no-run"
+translation_modifier = "compiling the tests without actually running them"
+verdict = "allow"
+rationale = "Only compiles; no test code is executed."
+
+[[flag]]
+applies_to = "cargo test"
+flag = "--no-fail-fast"
+translation_modifier = "running all tests even if some fail"
+verdict = "allow"
+rationale = "Changes test runner behavior; does not affect what is modified."
+
+[[flag]]
+applies_to = "cargo test"
+flag = "--workspace"
+translation_modifier = "for all packages in the workspace"
+verdict = "allow"
+rationale = "Extends testing to every package in the workspace; still a local operation."
+
+[[flag]]
+applies_to = "cargo test"
+flag = "--release"
+translation_modifier = "with optimizations enabled"
+verdict = "allow"
+rationale = "Only changes the build profile used for test compilation."
+
+[[command]]
+path = "cargo bench"
+translation = "Run the benchmarks for the current Rust package."
+verdict = "allow"
+rationale = "Compiles and executes benchmark code locally."
+
+# ── Documentation ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo doc"
+translation = "Build documentation for the current Rust package and its dependencies."
+verdict = "allow"
+rationale = "Generates HTML documentation files locally."
+
+[[flag]]
+applies_to = "cargo doc"
+flag = "--open"
+translation_modifier = "opening the documentation in a web browser after building"
+verdict = "allow"
+rationale = "Opens a local HTML file; no additional files are modified."
+
+[[flag]]
+applies_to = "cargo doc"
+flag = "--no-deps"
+translation_modifier = "only for this package, excluding dependencies"
+verdict = "allow"
+rationale = "Reduces the scope of documentation generated; still a local operation."
+
+# ── Creating packages ────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo new"
+translation = "Create a new Rust package in a new directory."
+verdict = "allow"
+rationale = "Creates a new directory with template files; does not modify existing files."
+
+[[command]]
+path = "cargo init"
+translation = "Create a new Rust package in the current directory."
+verdict = "allow"
+rationale = "Adds template files to the current directory; does not overwrite existing files."
+
+# ── Dependencies ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo add"
+translation = "Add a dependency to the Cargo.toml manifest."
+verdict = "allow"
+rationale = "Modifies Cargo.toml; the dependency is not downloaded until the next build."
+
+[[flag]]
+applies_to = "cargo add"
+flag = "--dev"
+translation_modifier = "as a development-only dependency"
+verdict = "allow"
+rationale = "Marks the dependency for development use only; still just modifies Cargo.toml."
+
+[[flag]]
+applies_to = "cargo add"
+flag = "--build"
+translation_modifier = "as a build-time dependency"
+verdict = "allow"
+rationale = "Marks the dependency for use during compilation only; still just modifies Cargo.toml."
+
+[[command]]
+path = "cargo remove"
+translation = "Remove a dependency from the Cargo.toml manifest."
+verdict = "allow"
+rationale = "Modifies Cargo.toml; does not delete any source code."
+
+[[command]]
+path = "cargo update"
+translation = "Update the versions of dependencies in Cargo.lock."
+verdict = "allow"
+rationale = "Changes locked dependency versions, which may introduce breaking changes."
+
+[[flag]]
+applies_to = "cargo update"
+flag = "--dry-run"
+translation_modifier = "simulating the update without actually changing the lock file"
+verdict = "allow"
+rationale = "No files are modified; only shows what would change."
+
+[[command]]
+path = "cargo fetch"
+translation = "Download the dependencies of the current package from the network."
+verdict = "allow"
+rationale = "Downloads dependencies into the local cache; does not modify source files."
+
+[[command]]
+path = "cargo vendor"
+translation = "Copy all dependencies into a local directory within the project."
+verdict = "allow"
+rationale = "Creates a vendor directory with dependency source code; does not modify existing files."
+
+[[command]]
+path = "cargo tree"
+translation = "Display a tree of all dependencies for the current package."
+verdict = "allow"
+rationale = "Read-only display of the dependency graph."
+
+# ── Build artifacts ──────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo clean"
+translation = "Remove the target directory containing build artifacts."
+verdict = "allow"
+rationale = "Deletes only the build cache; source code is untouched and artifacts are rebuilt on next build."
+
+[[command]]
+path = "cargo package"
+translation = "Assemble the current package into a distributable archive."
+verdict = "allow"
+rationale = "Creates a .crate file locally without uploading anything."
+
+# ── Installing binaries ──────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo install"
+translation = "Install a Rust binary from a crate on the registry or a local path."
+verdict = "require_approval"
+rationale = "Downloads, compiles, and installs a binary that may execute arbitrary code during build."
+
+[[flag]]
+applies_to = "cargo install"
+flag = "--force"
+translation_modifier = "overwriting an existing installation of the same binary"
+verdict = "allow"
+rationale = "Replaces a previously installed binary without confirmation."
+
+[[command]]
+path = "cargo uninstall"
+translation = "Remove a previously installed Rust binary."
+verdict = "allow"
+rationale = "Deletes an installed binary; can be reinstalled."
+
+# ── Publishing ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo publish"
+translation = "Upload the current package to a Rust registry."
+verdict = "require_approval"
+rationale = "Publishes the package to crates.io or another registry; published versions cannot be fully removed."
+
+[[flag]]
+applies_to = "cargo publish"
+flag = "--dry-run"
+translation_modifier = "simulating the upload without actually publishing"
+verdict = "allow"
+rationale = "No package is uploaded; only performs validation checks."
+
+[[flag]]
+applies_to = "cargo publish"
+flag = "--no-verify"
+translation_modifier = "skipping the build verification step"
+verdict = "allow"
+rationale = "Bypasses the pre-publish build check, risking publication of a broken package."
+
+[[flag]]
+applies_to = "cargo publish"
+flag = "--allow-dirty"
+translation_modifier = "allowing publication from a working directory with uncommitted changes"
+verdict = "allow"
+rationale = "Bypasses the clean working directory check, risking publication of unintended changes."
+
+[[command]]
+path = "cargo yank"
+translation = "Mark a published crate version as yanked so new projects cannot depend on it."
+verdict = "require_approval"
+rationale = "Prevents new downloads of the specified version; existing users are not affected but the version becomes unavailable."
+
+[[flag]]
+applies_to = "cargo yank"
+flag = "--undo"
+translation_modifier = "reversing a previous yank to make the version available again"
+verdict = "allow"
+rationale = "Restores availability of a previously yanked version; a corrective action."
+
+[[command]]
+path = "cargo login"
+translation = "Save a registry authentication token to the local credential store."
+verdict = "allow"
+rationale = "Stores credentials locally; does not publish or modify any packages."
+
+[[command]]
+path = "cargo logout"
+translation = "Remove a saved registry authentication token from the local credential store."
+verdict = "allow"
+rationale = "Removes stored credentials; can be re-authenticated with cargo login."
+
+[[command]]
+path = "cargo owner"
+translation = "Manage the owners of a crate on the registry."
+verdict = "require_approval"
+rationale = "Adding or removing owners changes who can publish new versions of the crate."
+
+# ── Code quality ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo fmt"
+translation = "Format the Rust source code in the current package."
+verdict = "allow"
+rationale = "Modifies source files cosmetically; does not change program behavior."
+
+[[flag]]
+applies_to = "cargo fmt"
+flag = "--check"
+translation_modifier = "only checking whether code is formatted without making changes"
+verdict = "allow"
+rationale = "Reports formatting issues without modifying any files."
+
+# ── Inspection ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cargo search"
+translation = "Search for crates on the Rust registry."
+verdict = "allow"
+rationale = "Read-only search of the registry."
+
+[[command]]
+path = "cargo metadata"
+translation = "Output dependency and package information in machine-readable format."
+verdict = "allow"
+rationale = "Read-only output of project metadata."
+
+[[command]]
+path = "cargo rustc"
+translation = "Compile the current package and pass extra options to the Rust compiler."
+verdict = "allow"
+rationale = "Compiles code locally with additional compiler flags; does not execute the result."
+
+[[command]]
+path = "cargo rustdoc"
+translation = "Build documentation for the current package with extra options passed to the documentation generator."
+verdict = "allow"
+rationale = "Generates documentation locally with additional flags; does not execute code."
+
+[[command]]
+path = "cargo generate-lockfile"
+translation = "Create or regenerate the Cargo.lock file for the current package."
+verdict = "allow"
+rationale = "Creates or updates the lock file; dependency versions may change but source code is untouched."

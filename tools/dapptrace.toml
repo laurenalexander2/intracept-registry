@@ -1,0 +1,7 @@
+# tools/dapptrace.toml
+
+[[command]]
+path = "dapptrace"
+translation = "Trace application function calls using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of application behavior."

@@ -1,0 +1,7 @@
+# tools/dropuser-17.toml
+
+[[command]]
+path = "dropuser-17"
+translation = "Delete a PostgreSQL 17 user role."
+verdict = "require_approval"
+rationale = "Permanently removes the role; objects owned by it may become inaccessible."

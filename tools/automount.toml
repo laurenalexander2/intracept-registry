@@ -1,0 +1,7 @@
+# tools/automount.toml
+
+[[command]]
+path = "automount"
+translation = "Automatically mount network filesystems."
+verdict = "allow"
+rationale = "Mounts filesystems based on configuration, making remote data accessible."

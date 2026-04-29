@@ -1,0 +1,7 @@
+# tools/postcat.toml
+
+[[command]]
+path = "postcat"
+translation = "Display the contents of a Postfix queue file."
+verdict = "allow"
+rationale = "Read-only display of mail queue file contents."

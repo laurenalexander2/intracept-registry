@@ -1,0 +1,7 @@
+# tools/tops.toml
+
+[[command]]
+path = "tops"
+translation = "Perform scripted API conversions in Objective-C source files."
+verdict = "allow"
+rationale = "Modifies source code files in place to update API usage; original code is overwritten."

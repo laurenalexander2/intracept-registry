@@ -1,0 +1,7 @@
+# tools/splain.toml
+
+[[command]]
+path = "splain"
+translation = "Display verbose explanations for Perl warning and error messages."
+verdict = "allow"
+rationale = "Read-only diagnostic tool that explains Perl messages; modifies nothing."

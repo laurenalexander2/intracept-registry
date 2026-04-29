@@ -1,0 +1,14 @@
+# tools/nice.toml — Process priority adjuster
+
+[[command]]
+path = "nice"
+translation = "Run a command with an adjusted scheduling priority."
+verdict = "allow"
+rationale = "Changes the priority of a single process; does not affect system stability."
+
+[[flag]]
+applies_to = "nice"
+flag = "-n"
+translation_modifier = "with a specified priority increment"
+verdict = "allow"
+rationale = "Sets the priority offset; negative values require root privileges."

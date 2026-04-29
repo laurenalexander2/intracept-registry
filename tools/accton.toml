@@ -1,0 +1,7 @@
+# tools/accton.toml
+
+[[command]]
+path = "accton"
+translation = "Enable or disable process accounting."
+verdict = "require_approval"
+rationale = "Modifies kernel-level process accounting, which is a system-wide setting."

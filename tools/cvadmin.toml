@@ -1,0 +1,7 @@
+# tools/cvadmin.toml
+
+[[command]]
+path = "cvadmin"
+translation = "Administer Xsan volumes."
+verdict = "require_approval"
+rationale = "Manages shared storage volumes that may affect multiple users."

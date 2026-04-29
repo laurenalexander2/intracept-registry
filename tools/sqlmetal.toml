@@ -1,0 +1,7 @@
+# tools/sqlmetal.toml
+
+[[command]]
+path = "sqlmetal"
+translation = "Generate .NET data context code from a database schema."
+verdict = "allow"
+rationale = "Reads database schema and generates source code files; does not modify the database."

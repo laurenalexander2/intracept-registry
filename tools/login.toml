@@ -1,0 +1,42 @@
+# tools/login.toml
+
+[[command]]
+path = "login"
+translation = "Start a new login session on the system."
+verdict = "allow"
+rationale = "Authenticates a user and starts a shell session with that user's privileges."
+
+[[flag]]
+applies_to = "login"
+flag = "-f"
+translation_modifier = "skipping password authentication"
+verdict = "require_approval"
+rationale = "Bypasses authentication, granting immediate access to the specified user's account."
+
+[[flag]]
+applies_to = "login"
+flag = "-p"
+translation_modifier = "preserving the current environment instead of resetting it"
+verdict = "allow"
+rationale = "Only changes whether environment variables are carried over to the new session."
+
+[[flag]]
+applies_to = "login"
+flag = "-l"
+translation_modifier = "without marking the session as a login session and without changing to the home directory"
+verdict = "allow"
+rationale = "Only changes how the shell is initialized; does not affect authentication or privileges."
+
+[[flag]]
+applies_to = "login"
+flag = "-q"
+translation_modifier = "suppressing the login messages and last-login notice"
+verdict = "allow"
+rationale = "Only hides informational messages; does not affect authentication or session behavior."
+
+[[flag]]
+applies_to = "login"
+flag = "-h"
+translation_modifier = "specifying the remote host the connection came from"
+verdict = "allow"
+rationale = "Only sets metadata about the connection source; restricted to the superuser."

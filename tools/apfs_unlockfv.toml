@@ -1,0 +1,7 @@
+# tools/apfs_unlockfv.toml
+
+[[command]]
+path = "apfs_unlockfv"
+translation = "Unlock a FileVault-encrypted APFS volume."
+verdict = "allow"
+rationale = "Unlocks encrypted volumes for access."

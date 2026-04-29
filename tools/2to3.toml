@@ -1,0 +1,7 @@
+# tools/2to3.toml
+
+[[command]]
+path = "2to3"
+translation = "Convert Python 2 source code to Python 3."
+verdict = "allow"
+rationale = "Outputs converted code to the terminal by default; source files unchanged without -w flag."

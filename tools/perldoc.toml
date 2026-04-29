@@ -1,0 +1,7 @@
+# tools/perldoc.toml — Perl documentation viewer
+
+[[command]]
+path = "perldoc"
+translation = "Look up and display Perl documentation in Pod format."
+verdict = "allow"
+rationale = "Read-only display of Perl documentation; does not modify anything."

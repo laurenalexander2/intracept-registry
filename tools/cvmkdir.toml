@@ -1,0 +1,7 @@
+# tools/cvmkdir.toml
+
+[[command]]
+path = "cvmkdir"
+translation = "Create directories on Xsan volumes with affinity."
+verdict = "allow"
+rationale = "Creates directories with storage affinity attributes."

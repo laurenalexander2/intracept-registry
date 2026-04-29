@@ -1,0 +1,161 @@
+# tools/defaults.toml
+
+[[command]]
+path = "defaults"
+translation = "Read or write macOS application preferences."
+verdict = "allow"
+rationale = "Modifies application settings stored in preference files, which may change application behavior."
+
+[[command]]
+path = "defaults read"
+translation = "Display the current value of a macOS application preference."
+verdict = "allow"
+rationale = "Read-only display of a preference value."
+
+[[command]]
+path = "defaults write"
+translation = "Set a macOS application preference value."
+verdict = "allow"
+rationale = "Changes application configuration that takes effect on next launch."
+
+[[command]]
+path = "defaults delete"
+translation = "Remove a macOS application preference."
+verdict = "allow"
+rationale = "Deletes a preference, reverting it to the application's built-in default."
+
+[[command]]
+path = "defaults read-type"
+translation = "Display the data type of a macOS application preference value."
+verdict = "allow"
+rationale = "Read-only display of a preference's type."
+
+[[command]]
+path = "defaults rename"
+translation = "Rename a macOS application preference key."
+verdict = "allow"
+rationale = "Changes the name of a stored preference, which may cause the application to lose track of the setting."
+
+[[command]]
+path = "defaults domains"
+translation = "List all macOS application preference domains."
+verdict = "allow"
+rationale = "Read-only listing of preference domains."
+
+[[command]]
+path = "defaults find"
+translation = "Search macOS application preferences for a given word."
+verdict = "allow"
+rationale = "Read-only search across preference names, keys, and values."
+
+[[flag]]
+applies_to = "defaults read"
+flag = "-app"
+translation_modifier = "looking up the application by name instead of its preference domain"
+verdict = "allow"
+rationale = "Only changes how the application is identified; still a read-only operation."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-app"
+translation_modifier = "looking up the application by name instead of its preference domain"
+verdict = "allow"
+rationale = "Only changes how the application is identified; does not affect the value being written."
+
+[[flag]]
+applies_to = "defaults delete"
+flag = "-app"
+translation_modifier = "looking up the application by name instead of its preference domain"
+verdict = "allow"
+rationale = "Only changes how the application is identified; does not affect the deletion."
+
+[[flag]]
+applies_to = "defaults read"
+flag = "-g"
+translation_modifier = "reading from the global preferences shared by all applications"
+verdict = "allow"
+rationale = "Only changes which preference domain is read; still a read-only operation."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-g"
+translation_modifier = "writing to the global preferences shared by all applications"
+verdict = "allow"
+rationale = "Changes a global preference that affects all applications, widening the blast radius."
+
+[[flag]]
+applies_to = "defaults delete"
+flag = "-g"
+translation_modifier = "deleting from the global preferences shared by all applications"
+verdict = "require_approval"
+rationale = "Removes a global preference that affects all applications, which may cause widespread behavior changes."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-bool"
+translation_modifier = "setting the value as a true-or-false type"
+verdict = "allow"
+rationale = "Only specifies the data type of the value; does not change the scope of the write."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-int"
+translation_modifier = "setting the value as a whole number type"
+verdict = "allow"
+rationale = "Only specifies the data type of the value; does not change the scope of the write."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-float"
+translation_modifier = "setting the value as a decimal number type"
+verdict = "allow"
+rationale = "Only specifies the data type of the value; does not change the scope of the write."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-string"
+translation_modifier = "setting the value as a text type"
+verdict = "allow"
+rationale = "Only specifies the data type of the value; does not change the scope of the write."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-array"
+translation_modifier = "setting the value as a list, replacing any existing list"
+verdict = "allow"
+rationale = "Overwrites the entire list value for the key, which could discard existing entries."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-array-add"
+translation_modifier = "adding items to the end of an existing list value"
+verdict = "allow"
+rationale = "Appends to the existing list without removing current entries."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-dict"
+translation_modifier = "setting the value as a set of key-value pairs, replacing any existing set"
+verdict = "allow"
+rationale = "Overwrites the entire set of key-value pairs, which could discard existing entries."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-dict-add"
+translation_modifier = "adding key-value pairs to an existing set without removing current entries"
+verdict = "allow"
+rationale = "Merges new pairs into the existing set without discarding current data."
+
+[[flag]]
+applies_to = "defaults read"
+flag = "-currentHost"
+translation_modifier = "limited to preferences for the current computer only"
+verdict = "allow"
+rationale = "Only narrows which preferences are read; still a read-only operation."
+
+[[flag]]
+applies_to = "defaults write"
+flag = "-currentHost"
+translation_modifier = "limited to preferences for the current computer only"
+verdict = "allow"
+rationale = "Narrows the scope of the write to the current computer, reducing blast radius."

@@ -1,0 +1,7 @@
+# tools/actool.toml
+
+[[command]]
+path = "actool"
+translation = "Compile asset catalogs for Xcode projects."
+verdict = "allow"
+rationale = "Build tool that processes asset files; part of the Xcode toolchain."

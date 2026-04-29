@@ -1,0 +1,7 @@
+# tools/mount_hfs.toml — HFS/HFS+ filesystem mount
+
+[[command]]
+path = "mount_hfs"
+translation = "Mount an HFS or HFS Plus filesystem."
+verdict = "allow"
+rationale = "Attaches a read-write filesystem to the directory tree; files on the volume can be modified."

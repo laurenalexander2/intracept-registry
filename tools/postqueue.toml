@@ -1,0 +1,49 @@
+# tools/postqueue.toml
+
+[[command]]
+path = "postqueue"
+translation = "View or flush the Postfix mail queue."
+verdict = "allow"
+rationale = "Lists queued mail or triggers delivery; does not delete messages."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-f"
+translation_modifier = "flushing the queue to attempt immediate delivery of all queued mail"
+verdict = "allow"
+rationale = "Triggers delivery attempts for all queued messages at once."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-p"
+translation_modifier = "listing the mail queue in a readable format"
+verdict = "allow"
+rationale = "Read-only display of queued messages."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-j"
+translation_modifier = "listing the mail queue in JSON format"
+verdict = "allow"
+rationale = "Read-only display of queued messages in a machine-readable format."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-i"
+translation_modifier = "scheduling immediate delivery of a specific queued message"
+verdict = "allow"
+rationale = "Only triggers delivery of one specific message; does not modify or delete it."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-s"
+translation_modifier = "scheduling immediate delivery of all mail queued for a specific destination"
+verdict = "allow"
+rationale = "Triggers delivery attempts for all messages destined to one site at once."
+
+[[flag]]
+applies_to = "postqueue"
+flag = "-v"
+translation_modifier = "showing detailed processing information"
+verdict = "allow"
+rationale = "Only increases output verbosity for troubleshooting."

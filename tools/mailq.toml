@@ -1,0 +1,7 @@
+# tools/mailq.toml
+
+[[command]]
+path = "mailq"
+translation = "Display the contents of the mail queue."
+verdict = "allow"
+rationale = "Read-only listing of queued mail messages and their delivery status."

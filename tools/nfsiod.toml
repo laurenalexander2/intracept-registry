@@ -1,0 +1,7 @@
+# tools/nfsiod.toml — NFS asynchronous I/O daemon
+
+[[command]]
+path = "nfsiod"
+translation = "Run the NFS asynchronous I/O server to handle background read-ahead and write-behind requests."
+verdict = "allow"
+rationale = "A helper background service for NFS performance; does not expose or modify files."

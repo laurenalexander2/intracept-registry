@@ -1,0 +1,70 @@
+# tools/pg_dump.toml
+
+[[command]]
+path = "pg_dump"
+translation = "Export a PostgreSQL database to a file or standard output."
+verdict = "allow"
+rationale = "Read-only operation that exports data without modifying the database."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-F"
+translation_modifier = "using a specified output format"
+verdict = "allow"
+rationale = "Changes the output format but does not affect the database."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-f"
+translation_modifier = "writing output to a specified file"
+verdict = "allow"
+rationale = "Directs output to a file; may overwrite an existing file at that path."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-t"
+translation_modifier = "only for the specified table"
+verdict = "allow"
+rationale = "Limits the dump scope to a single table."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-s"
+translation_modifier = "exporting only the schema definitions, not the data"
+verdict = "allow"
+rationale = "Limits the dump to schema only; no data is exported."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-a"
+translation_modifier = "exporting only the data, not the schema definitions"
+verdict = "allow"
+rationale = "Limits the dump to data only; no schema is exported."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-c"
+translation_modifier = "including DROP commands before CREATE commands in the output"
+verdict = "allow"
+rationale = "The output file will contain destructive DROP statements that delete objects before recreating them."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-C"
+translation_modifier = "including commands to create the database itself in the output"
+verdict = "allow"
+rationale = "Adds a CREATE DATABASE statement to the dump output."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "-j"
+translation_modifier = "using multiple parallel jobs for faster dumping"
+verdict = "allow"
+rationale = "Increases dump speed with parallelism; does not change the output content."
+
+[[flag]]
+applies_to = "pg_dump"
+flag = "--clean"
+translation_modifier = "including SQL commands to drop existing objects before recreating them"
+verdict = "allow"
+rationale = "Adds DROP statements to the dump output; applying the dump will delete existing database objects."

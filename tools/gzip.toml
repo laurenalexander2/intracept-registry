@@ -1,0 +1,98 @@
+# tools/gzip.toml
+
+[[command]]
+path = "gzip"
+translation = "Compress files using the gzip algorithm."
+verdict = "allow"
+rationale = "Compresses files in place, replacing the original with a .gz file by default."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-d"
+translation_modifier = "decompressing instead of compressing"
+verdict = "allow"
+rationale = "Decompresses .gz files in place, replacing them with the original content."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-k"
+translation_modifier = "keeping the original file instead of replacing it"
+verdict = "allow"
+rationale = "Preserves the source file; a safety-enhancing option."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Compresses or decompresses all files in a directory tree."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-f"
+translation_modifier = "overwriting existing files without prompting"
+verdict = "allow"
+rationale = "Forces compression even if the output file already exists."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-l"
+translation_modifier = "listing compression statistics without modifying files"
+verdict = "allow"
+rationale = "Read-only display of compression information."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-t"
+translation_modifier = "testing the integrity of compressed files without decompressing"
+verdict = "allow"
+rationale = "Read-only operation that verifies compressed file integrity."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-c"
+translation_modifier = "writing output to standard output and keeping the original file"
+verdict = "allow"
+rationale = "Leaves the original file intact; output goes to standard output."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Displays compression ratio for each file; does not change behavior."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-n"
+translation_modifier = "without saving the original filename and timestamp in the compressed file"
+verdict = "allow"
+rationale = "Changes metadata storage only; does not affect file content."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-N"
+translation_modifier = "restoring the original filename and timestamp when decompressing"
+verdict = "allow"
+rationale = "Uses stored metadata to name the output file; does not add destructive capability."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-9"
+translation_modifier = "using maximum compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-1"
+translation_modifier = "using fastest compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "gzip"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses warning messages; does not change behavior."

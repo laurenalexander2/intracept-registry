@@ -1,0 +1,7 @@
+# tools/xmllint.toml
+
+[[command]]
+path = "xmllint"
+translation = "Parse, validate, and reformat XML documents."
+verdict = "allow"
+rationale = "Reads and validates XML; writes formatted output to the terminal by default."

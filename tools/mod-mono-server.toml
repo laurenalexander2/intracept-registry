@@ -1,0 +1,56 @@
+# tools/mod-mono-server.toml — Mono ASP.NET server for mod_mono
+
+[[command]]
+path = "mod-mono-server"
+translation = "Run an embedded ASP.NET web server for use with the Apache mod_mono module."
+verdict = "allow"
+rationale = "Starts a network-facing web server that serves ASP.NET applications."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--port"
+translation_modifier = "listening on a specified TCP port"
+verdict = "allow"
+rationale = "Binds the server to a TCP port, exposing it to network connections."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--address"
+translation_modifier = "listening on a specified IP address"
+verdict = "allow"
+rationale = "Controls which network interface the server binds to."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--applications"
+translation_modifier = "serving specified virtual-to-physical directory mappings"
+verdict = "allow"
+rationale = "Defines which directories are served as web applications."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--terminate"
+translation_modifier = "gracefully stopping a running server instance instead of starting one"
+verdict = "allow"
+rationale = "Shuts down a running server, interrupting any active requests."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--master"
+translation_modifier = "running as a master instance that creates applications on demand"
+verdict = "allow"
+rationale = "Allows mod_mono to dynamically create ASP.NET applications through this instance."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--nonstop"
+translation_modifier = "running without stopping on console input"
+verdict = "allow"
+rationale = "Prevents accidental shutdown via console input; a background service mode convenience flag."
+
+[[flag]]
+applies_to = "mod-mono-server"
+flag = "--root"
+translation_modifier = "using a specified root directory for file operations"
+verdict = "allow"
+rationale = "Sets the base directory for application paths."

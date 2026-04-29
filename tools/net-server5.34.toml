@@ -1,0 +1,7 @@
+# tools/net-server5.34.toml — Perl 5.34 Net::Server launcher
+
+[[command]]
+path = "net-server5.34"
+translation = "Start a Perl network server using the Net::Server framework with Perl 5.34."
+verdict = "allow"
+rationale = "Starts a network-facing server process that listens for and handles connections."

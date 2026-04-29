@@ -1,0 +1,42 @@
+# tools/xcode-select.toml
+
+[[command]]
+path = "xcode-select"
+translation = "Manage the active Xcode developer tools installation path."
+verdict = "allow"
+rationale = "Changes which Xcode installation provides developer tools; affects all build operations on the system."
+
+[[flag]]
+applies_to = "xcode-select"
+flag = "-s"
+translation_modifier = "switching the active developer directory to a specified path"
+verdict = "allow"
+rationale = "Changes which Xcode toolchain is used system-wide; may affect builds that depend on a specific version."
+
+[[flag]]
+applies_to = "xcode-select"
+flag = "-p"
+translation_modifier = "printing the path to the currently active developer directory"
+verdict = "allow"
+rationale = "Read-only display of the current developer directory path."
+
+[[flag]]
+applies_to = "xcode-select"
+flag = "--reset"
+translation_modifier = "resetting the active developer directory to the default"
+verdict = "allow"
+rationale = "Changes the active Xcode toolchain; may affect builds that depend on a specific version."
+
+[[flag]]
+applies_to = "xcode-select"
+flag = "--install"
+translation_modifier = "opening a dialog to install the command line developer tools"
+verdict = "allow"
+rationale = "Downloads and installs developer tools, which modifies system files."
+
+[[flag]]
+applies_to = "xcode-select"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Prints version information; read-only."

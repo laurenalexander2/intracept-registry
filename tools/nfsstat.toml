@@ -1,0 +1,28 @@
+# tools/nfsstat.toml — NFS statistics display
+
+[[command]]
+path = "nfsstat"
+translation = "Display NFS client and server activity statistics."
+verdict = "allow"
+rationale = "Read-only display of NFS protocol statistics."
+
+[[flag]]
+applies_to = "nfsstat"
+flag = "-z"
+translation_modifier = "zeroing the statistics counters"
+verdict = "allow"
+rationale = "Resets NFS statistics, losing historical performance data."
+
+[[flag]]
+applies_to = "nfsstat"
+flag = "-m"
+translation_modifier = "showing NFS mount information"
+verdict = "allow"
+rationale = "Read-only display of mount details."
+
+[[flag]]
+applies_to = "nfsstat"
+flag = "-e"
+translation_modifier = "showing exported directory statistics"
+verdict = "allow"
+rationale = "Read-only display of export information."

@@ -1,0 +1,28 @@
+# tools/mkextunpack.toml — Kernel extension archive extractor (deprecated)
+
+[[command]]
+path = "mkextunpack"
+translation = "Extract or list the contents of a kernel extension archive file."
+verdict = "allow"
+rationale = "Reads an archive and extracts files to a specified directory; does not modify system state."
+
+[[flag]]
+applies_to = "mkextunpack"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Enables verbose output; no behavioral change."
+
+[[flag]]
+applies_to = "mkextunpack"
+flag = "-a"
+translation_modifier = "for a specific CPU architecture"
+verdict = "allow"
+rationale = "Selects which architecture to extract; still a local extraction operation."
+
+[[flag]]
+applies_to = "mkextunpack"
+flag = "-d"
+translation_modifier = "into a specified output directory"
+verdict = "allow"
+rationale = "Sets the extraction destination; the directory must already exist."

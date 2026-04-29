@@ -1,0 +1,28 @@
+# tools/w.toml
+
+[[command]]
+path = "w"
+translation = "Display who is logged in and what they are doing."
+verdict = "allow"
+rationale = "Read-only display of login and process information; modifies nothing."
+
+[[flag]]
+applies_to = "w"
+flag = "-h"
+translation_modifier = "hiding the column headings"
+verdict = "allow"
+rationale = "Only changes output formatting; read-only operation."
+
+[[flag]]
+applies_to = "w"
+flag = "-i"
+translation_modifier = "sorting the output by idle time"
+verdict = "allow"
+rationale = "Only changes the display order; read-only operation."
+
+[[flag]]
+applies_to = "w"
+flag = "-n"
+translation_modifier = "showing network addresses instead of resolving hostnames"
+verdict = "allow"
+rationale = "Only changes how host information is displayed; read-only operation."

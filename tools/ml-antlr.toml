@@ -1,0 +1,21 @@
+# tools/ml-antlr.toml — SML/NJ LL(k) parser generator
+
+[[command]]
+path = "ml-antlr"
+translation = "Generate a predictive parser in Standard ML from a grammar specification file."
+verdict = "allow"
+rationale = "Generates source code files locally; does not modify system state."
+
+[[flag]]
+applies_to = "ml-antlr"
+flag = "--dot"
+translation_modifier = "also generating a graph diagram of the grammar"
+verdict = "allow"
+rationale = "Produces an additional output file; no risk beyond the base command."
+
+[[flag]]
+applies_to = "ml-antlr"
+flag = "--unit-actions"
+translation_modifier = "ignoring action code and returning unit for every production"
+verdict = "allow"
+rationale = "Simplifies generated output; no additional risk."

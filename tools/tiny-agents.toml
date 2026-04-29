@@ -1,0 +1,7 @@
+# tools/tiny-agents.toml
+
+[[command]]
+path = "tiny-agents"
+translation = "Run lightweight AI agents from the Hugging Face ecosystem."
+verdict = "allow"
+rationale = "Executes AI agent code that may perform actions based on model output; behavior depends on agent configuration."

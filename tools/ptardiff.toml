@@ -1,0 +1,7 @@
+# tools/ptardiff.toml
+
+[[command]]
+path = "ptardiff"
+translation = "Show differences between a tar archive and the current filesystem."
+verdict = "allow"
+rationale = "Read-only comparison that displays differences."

@@ -1,0 +1,84 @@
+# tools/sharing.toml
+
+[[command]]
+path = "sharing"
+translation = "Manage SMB file sharing share points on macOS."
+verdict = "require_approval"
+rationale = "Creates and modifies network share points which expose directories to other users on the network."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-a"
+translation_modifier = "adding a new share point for a specified directory"
+verdict = "allow"
+rationale = "Exposes a directory over the network via SMB; reversible by removing the share."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-e"
+translation_modifier = "editing an existing share point's settings"
+verdict = "allow"
+rationale = "Modifies share configuration; reversible by re-editing."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-r"
+translation_modifier = "removing a share point"
+verdict = "allow"
+rationale = "Stops sharing a directory; the directory and its contents remain intact."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-l"
+translation_modifier = "listing all existing share points"
+verdict = "allow"
+rationale = "Read-only listing of configured shares."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-S"
+translation_modifier = "setting a custom SMB share name"
+verdict = "allow"
+rationale = "Changes only the display name of the share; no access change."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-s"
+translation_modifier = "enabling or disabling SMB sharing for the share point"
+verdict = "allow"
+rationale = "Controls whether the share point is active on the network."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-g"
+translation_modifier = "configuring guest access for the share"
+verdict = "allow"
+rationale = "Enables or disables unauthenticated access; affects who can reach shared files."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-n"
+translation_modifier = "setting a custom record name for the share point"
+verdict = "allow"
+rationale = "Changes only the internal record name; does not affect access."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-R"
+translation_modifier = "making the share read-only"
+verdict = "allow"
+rationale = "Restricts write access; reduces risk by limiting what network users can do."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-E"
+translation_modifier = "enabling or disabling SMB v3 encryption for the share"
+verdict = "allow"
+rationale = "Controls whether file transfers are encrypted; improves security when enabled."
+
+[[flag]]
+applies_to = "sharing"
+flag = "-f"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output format; does not modify share configuration."

@@ -1,0 +1,7 @@
+# tools/[.toml
+
+[[command]]
+path = "["
+translation = "Evaluate a conditional expression."
+verdict = "allow"
+rationale = "Shell built-in that tests conditions; read-only evaluation."

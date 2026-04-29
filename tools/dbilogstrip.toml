@@ -1,0 +1,7 @@
+# tools/dbilogstrip.toml
+
+[[command]]
+path = "dbilogstrip"
+translation = "Strip timestamps from DBI log files."
+verdict = "allow"
+rationale = "Text processing tool that outputs to the terminal."

@@ -1,0 +1,7 @@
+# tools/pg_combinebackup.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_combinebackup"
+translation = "Combine an incremental PostgreSQL backup with its base to produce a full backup."
+verdict = "allow"
+rationale = "Creates a new full backup from incremental pieces; does not modify the source backups."

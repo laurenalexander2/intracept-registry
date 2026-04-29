@@ -1,0 +1,473 @@
+# exemplars/terraform.toml — Terraform IaC exemplar
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform"
+translation = "Run the Terraform infrastructure-as-code tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Core workflow ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform init"
+translation = "Initialize a Terraform working directory by downloading providers and modules."
+verdict = "allow"
+rationale = "Sets up local state and downloads dependencies; safe to run repeatedly."
+
+[[command]]
+path = "terraform validate"
+translation = "Check whether the Terraform configuration files are syntactically valid."
+verdict = "allow"
+rationale = "Read-only validation that does not contact remote services or modify state."
+
+[[command]]
+path = "terraform fmt"
+translation = "Reformat Terraform configuration files to the standard style."
+verdict = "allow"
+rationale = "Modifies only whitespace and formatting in local files; semantics are unchanged."
+
+[[command]]
+path = "terraform plan"
+translation = "Generate an execution plan showing what changes Terraform would make to infrastructure."
+verdict = "allow"
+rationale = "Read-only operation that queries providers but does not modify any infrastructure."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-destroy"
+translation_modifier = "planning the destruction of all managed resources instead of the usual changes"
+verdict = "allow"
+rationale = "Only generates a destroy plan; no infrastructure is actually destroyed."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-target"
+translation_modifier = "limited to a specific resource and its dependencies"
+verdict = "allow"
+rationale = "Narrows the plan scope; still read-only."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-refresh-only"
+translation_modifier = "only updating the state file to match real infrastructure without planning changes"
+verdict = "allow"
+rationale = "Read-only reconciliation of state; no infrastructure is modified."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-var"
+translation_modifier = "with a specific input variable value"
+verdict = "allow"
+rationale = "Passes a variable; no infrastructure is modified during plan."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-var-file"
+translation_modifier = "using input variable values from a specified file"
+verdict = "allow"
+rationale = "Loads variables from a file; no infrastructure is modified during plan."
+
+[[command]]
+path = "terraform apply"
+translation = "Create or update infrastructure to match the Terraform configuration."
+verdict = "require_approval"
+rationale = "Modifies live cloud infrastructure, which may cause service disruption and incur costs."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-auto-approve"
+translation_modifier = "without asking for interactive confirmation"
+verdict = "require_approval"
+rationale = "Skips the confirmation prompt, immediately applying potentially destructive changes."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-target"
+translation_modifier = "limited to a specific resource and its dependencies"
+verdict = "allow"
+rationale = "Narrows the scope of the apply; reduces blast radius but may leave state inconsistent."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-var"
+translation_modifier = "with a specific input variable value"
+verdict = "allow"
+rationale = "Passes an input variable; the risk is in what the apply does, not in setting a variable."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-var-file"
+translation_modifier = "using input variable values from a specified file"
+verdict = "allow"
+rationale = "Loads variables from a file; the risk is in what the apply does, not in loading variables."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent modifications, which can corrupt the state file."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-destroy"
+translation_modifier = "destroying all managed infrastructure instead of creating or updating"
+verdict = "require_approval"
+rationale = "Equivalent to terraform destroy; removes all managed resources."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-refresh-only"
+translation_modifier = "only updating the state file to match real infrastructure without making changes"
+verdict = "allow"
+rationale = "Reconciles state with reality; may cause future plans to show unexpected changes."
+
+# ── Destruction ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform destroy"
+translation = "Destroy all infrastructure managed by the current Terraform configuration."
+verdict = "require_approval"
+rationale = "Permanently deletes all managed resources including compute, databases, and networking."
+
+[[flag]]
+applies_to = "terraform destroy"
+flag = "-auto-approve"
+translation_modifier = "without asking for interactive confirmation"
+verdict = "require_approval"
+rationale = "Immediately destroys all managed infrastructure without a confirmation prompt."
+
+[[flag]]
+applies_to = "terraform destroy"
+flag = "-target"
+translation_modifier = "limited to a specific resource and its dependencies"
+verdict = "require_approval"
+rationale = "Limits destruction scope but can leave state inconsistent."
+
+# ── Import ────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform import"
+translation = "Bring an existing infrastructure resource under Terraform management."
+verdict = "allow"
+rationale = "Modifies the state file to track an existing resource; does not change infrastructure."
+
+[[flag]]
+applies_to = "terraform import"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications, which can corrupt the state file."
+
+# ── State management ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform state"
+translation = "Perform advanced operations on the Terraform state file."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "terraform state list"
+translation = "List all resources tracked in the Terraform state."
+verdict = "allow"
+rationale = "Read-only listing of state entries."
+
+[[command]]
+path = "terraform state show"
+translation = "Display the attributes of a single resource in the Terraform state."
+verdict = "allow"
+rationale = "Read-only display of resource details."
+
+[[command]]
+path = "terraform state mv"
+translation = "Move a resource to a different address in the Terraform state."
+verdict = "require_approval"
+rationale = "Renames or restructures resources in state; incorrect moves can cause resources to be recreated."
+
+[[flag]]
+applies_to = "terraform state mv"
+flag = "-dry-run"
+translation_modifier = "simulating the move without actually changing the state"
+verdict = "allow"
+rationale = "No state changes are made; only shows what would be moved."
+
+[[flag]]
+applies_to = "terraform state mv"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications, which can corrupt the state file."
+
+[[command]]
+path = "terraform state rm"
+translation = "Remove a resource from Terraform state without destroying the real infrastructure."
+verdict = "require_approval"
+rationale = "Terraform forgets the resource, which means it will no longer be managed or protected from drift."
+
+[[flag]]
+applies_to = "terraform state rm"
+flag = "-dry-run"
+translation_modifier = "simulating the removal without actually changing the state"
+verdict = "allow"
+rationale = "No state changes are made; only shows what would be removed."
+
+[[flag]]
+applies_to = "terraform state rm"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications, which can corrupt the state file."
+
+[[command]]
+path = "terraform state pull"
+translation = "Download the current remote state and print it to standard output."
+verdict = "allow"
+rationale = "Read-only retrieval of the state file."
+
+[[command]]
+path = "terraform state push"
+translation = "Upload a local state file to the configured remote backend."
+verdict = "require_approval"
+rationale = "Overwrites the remote state, which can cause other users to lose track of managed resources."
+
+[[flag]]
+applies_to = "terraform state push"
+flag = "-force"
+translation_modifier = "even if the state lineage or serial number does not match"
+verdict = "require_approval"
+rationale = "Bypasses safety checks that prevent overwriting divergent state, risking total state corruption."
+
+# ── Resource lifecycle ────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform taint"
+translation = "Mark a resource instance as degraded so it will be recreated on the next apply."
+verdict = "allow"
+rationale = "Does not destroy the resource immediately, but the next apply will replace it."
+
+[[command]]
+path = "terraform untaint"
+translation = "Remove the tainted status from a resource instance so it will not be recreated."
+verdict = "allow"
+rationale = "Removes the taint mark; prevents unnecessary destruction on the next apply."
+
+[[command]]
+path = "terraform refresh"
+translation = "Update the Terraform state to match the current real-world infrastructure."
+verdict = "allow"
+rationale = "Modifies the state file, which may cause future plans to show unexpected changes."
+
+[[flag]]
+applies_to = "terraform refresh"
+flag = "-target"
+translation_modifier = "limited to a specific resource and its dependencies"
+verdict = "allow"
+rationale = "Narrows the refresh scope but may leave state partially updated."
+
+[[flag]]
+applies_to = "terraform refresh"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications, which can corrupt the state file."
+
+# ── Output and graph ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform output"
+translation = "Display the output values defined in the Terraform configuration."
+verdict = "allow"
+rationale = "Read-only display of output values from the state."
+
+[[command]]
+path = "terraform graph"
+translation = "Generate a visual dependency graph of Terraform resources."
+verdict = "allow"
+rationale = "Read-only graph generation that does not modify state or infrastructure."
+
+[[command]]
+path = "terraform providers"
+translation = "Show the providers required by the current configuration."
+verdict = "allow"
+rationale = "Read-only display of provider dependencies."
+
+# ── Locking ───────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform force-unlock"
+translation = "Manually release a stuck state lock."
+verdict = "require_approval"
+rationale = "Forcibly removes the lock, which may allow conflicting operations to corrupt the state."
+
+[[flag]]
+applies_to = "terraform force-unlock"
+flag = "-force"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Skips the confirmation prompt; the risk is in the base command, not the prompt bypass."
+
+# ── Workspaces ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform workspace"
+translation = "Manage Terraform workspaces for isolating state environments."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "terraform workspace list"
+translation = "List all available Terraform workspaces."
+verdict = "allow"
+rationale = "Read-only listing of workspaces."
+
+[[command]]
+path = "terraform workspace show"
+translation = "Display the name of the currently selected workspace."
+verdict = "allow"
+rationale = "Read-only display of the current workspace."
+
+[[command]]
+path = "terraform workspace new"
+translation = "Create a new Terraform workspace."
+verdict = "allow"
+rationale = "Creates a new isolated state environment; does not affect existing workspaces."
+
+[[command]]
+path = "terraform workspace select"
+translation = "Switch to a different Terraform workspace."
+verdict = "allow"
+rationale = "Changes which state file subsequent commands operate on; the wrong workspace may target production."
+
+[[command]]
+path = "terraform workspace delete"
+translation = "Delete a Terraform workspace and its state."
+verdict = "require_approval"
+rationale = "Permanently removes the workspace state; resources tracked in it become unmanaged."
+
+# ── Authentication ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform login"
+translation = "Authenticate with a remote Terraform service and save the credentials locally."
+verdict = "allow"
+rationale = "Stores authentication credentials on disk, which could be exposed if the machine is compromised."
+
+# ── Missing commands ────────────────────────────────────────────────────────
+
+[[command]]
+path = "terraform show"
+translation = "Display the current state or a saved plan in human-readable form."
+verdict = "allow"
+rationale = "Read-only display of state or plan data."
+
+[[command]]
+path = "terraform console"
+translation = "Open an interactive console for evaluating Terraform expressions."
+verdict = "allow"
+rationale = "Interactive evaluation environment; does not modify state or infrastructure."
+
+[[command]]
+path = "terraform test"
+translation = "Run integration tests defined for Terraform modules."
+verdict = "allow"
+rationale = "Executes test assertions against the configuration; may create temporary infrastructure in test mode."
+
+[[command]]
+path = "terraform get"
+translation = "Download and update the modules referenced in the configuration."
+verdict = "allow"
+rationale = "Downloads module source code; does not modify state or infrastructure."
+
+[[command]]
+path = "terraform logout"
+translation = "Remove locally stored credentials for a remote Terraform service."
+verdict = "allow"
+rationale = "Deletes local authentication tokens; does not affect remote infrastructure."
+
+[[command]]
+path = "terraform state replace-provider"
+translation = "Replace the provider recorded in the state for existing resources."
+verdict = "require_approval"
+rationale = "Changes which provider manages resources in state; incorrect replacement may cause resources to be recreated."
+
+[[flag]]
+applies_to = "terraform state replace-provider"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications, which can corrupt the state file."
+
+# ── Missing flags on existing commands ──────────────────────────────────────
+
+[[flag]]
+applies_to = "terraform init"
+flag = "-upgrade"
+translation_modifier = "upgrading provider plugins and modules to the latest allowed versions"
+verdict = "allow"
+rationale = "May introduce breaking changes from newer provider versions."
+
+[[flag]]
+applies_to = "terraform init"
+flag = "-backend=false"
+translation_modifier = "skipping backend configuration"
+verdict = "allow"
+rationale = "Initializes without configuring the backend; useful for module development."
+
+[[flag]]
+applies_to = "terraform init"
+flag = "-reconfigure"
+translation_modifier = "reconfiguring the backend and ignoring any saved configuration"
+verdict = "allow"
+rationale = "Discards existing backend configuration, which may disconnect from the current state."
+
+[[flag]]
+applies_to = "terraform init"
+flag = "-migrate-state"
+translation_modifier = "migrating existing state to the newly configured backend"
+verdict = "require_approval"
+rationale = "Moves state between backends; errors during migration can leave state in an inconsistent location."
+
+[[flag]]
+applies_to = "terraform plan"
+flag = "-out"
+translation_modifier = "saving the plan to a file for later execution"
+verdict = "allow"
+rationale = "Writes a plan file; no infrastructure is modified."
+
+[[flag]]
+applies_to = "terraform apply"
+flag = "-parallelism"
+translation_modifier = "limiting the number of concurrent resource operations"
+verdict = "allow"
+rationale = "Controls concurrency; lower values are safer but slower."
+
+[[flag]]
+applies_to = "terraform destroy"
+flag = "-lock=false"
+translation_modifier = "without acquiring a state lock"
+verdict = "require_approval"
+rationale = "Allows concurrent state modifications during destroy, risking state corruption."
+
+[[flag]]
+applies_to = "terraform fmt"
+flag = "-check"
+translation_modifier = "only checking if files need formatting without modifying them"
+verdict = "allow"
+rationale = "Read-only check; no files are modified."
+
+[[flag]]
+applies_to = "terraform fmt"
+flag = "-recursive"
+translation_modifier = "processing files in subdirectories as well"
+verdict = "allow"
+rationale = "Extends formatting to subdirectories; only modifies whitespace."
+
+[[flag]]
+applies_to = "terraform validate"
+flag = "-json"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output format to JSON; still a read-only validation."

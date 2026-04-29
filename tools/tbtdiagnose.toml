@@ -1,0 +1,7 @@
+# tools/tbtdiagnose.toml
+
+[[command]]
+path = "tbtdiagnose"
+translation = "Collect diagnostic information about Thunderbolt connections."
+verdict = "allow"
+rationale = "Read-only diagnostic data collection; does not modify hardware or system state."

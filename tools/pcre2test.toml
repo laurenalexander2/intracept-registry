@@ -1,0 +1,7 @@
+# tools/pcre2test.toml — PCRE2 regex tester
+
+[[command]]
+path = "pcre2test"
+translation = "Test regular expression patterns against input strings using the PCRE2 library."
+verdict = "allow"
+rationale = "Read-only regex testing tool; does not modify any files."

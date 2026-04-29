@@ -1,0 +1,7 @@
+# tools/pgbench-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pgbench-17"
+translation = "Run a benchmark test against a PostgreSQL database."
+verdict = "allow"
+rationale = "Creates test tables and generates load on the database, which can affect performance of other queries."

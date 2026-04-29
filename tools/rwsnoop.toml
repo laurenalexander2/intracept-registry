@@ -1,0 +1,7 @@
+# tools/rwsnoop.toml
+
+[[command]]
+path = "rwsnoop"
+translation = "Trace read and write system calls in real time using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of I/O system calls."

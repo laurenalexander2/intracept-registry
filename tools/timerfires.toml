@@ -1,0 +1,7 @@
+# tools/timerfires.toml
+
+[[command]]
+path = "timerfires"
+translation = "Report timer firings and their associated processes."
+verdict = "allow"
+rationale = "Read-only monitoring of system timer events; modifies nothing."

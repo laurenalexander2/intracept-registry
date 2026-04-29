@@ -1,0 +1,7 @@
+# tools/talk.toml
+
+[[command]]
+path = "talk"
+translation = "Open an interactive chat session with another user on the system."
+verdict = "allow"
+rationale = "Text-based communication between users; does not modify files or system state."

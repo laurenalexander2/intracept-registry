@@ -1,0 +1,7 @@
+# tools/znew.toml
+
+[[command]]
+path = "znew"
+translation = "Recompress .Z files into gzip format."
+verdict = "allow"
+rationale = "Replaces .Z compressed files with .gz equivalents; the original .Z file is removed."

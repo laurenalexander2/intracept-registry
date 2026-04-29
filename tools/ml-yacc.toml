@@ -1,0 +1,7 @@
+# tools/ml-yacc.toml — SML/NJ LALR(1) parser generator
+
+[[command]]
+path = "ml-yacc"
+translation = "Generate a table-driven parser in Standard ML from a grammar specification file."
+verdict = "allow"
+rationale = "Generates source code files locally; does not modify system state."

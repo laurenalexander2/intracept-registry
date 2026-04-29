@@ -1,0 +1,7 @@
+# tools/wall.toml
+
+[[command]]
+path = "wall"
+translation = "Broadcast a message to all logged-in users."
+verdict = "allow"
+rationale = "Sends a text message to terminals; does not modify files or system state."

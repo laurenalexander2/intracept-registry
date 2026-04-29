@@ -1,0 +1,7 @@
+# tools/sgen.toml
+
+[[command]]
+path = "sgen"
+translation = "Generate XML serialization assemblies for .NET types."
+verdict = "allow"
+rationale = "Creates serialization helper assemblies; does not modify existing files."

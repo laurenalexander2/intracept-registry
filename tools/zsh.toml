@@ -1,0 +1,7 @@
+# tools/zsh.toml
+
+[[command]]
+path = "zsh"
+translation = "Run the Z shell command interpreter."
+verdict = "allow"
+rationale = "Launches an interactive shell; the shell itself is just an interpreter."

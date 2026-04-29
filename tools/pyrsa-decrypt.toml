@@ -1,0 +1,7 @@
+# tools/pyrsa-decrypt.toml
+
+[[command]]
+path = "pyrsa-decrypt"
+translation = "Decrypt data using an RSA private key."
+verdict = "allow"
+rationale = "Read-only decryption that writes plaintext to the terminal."

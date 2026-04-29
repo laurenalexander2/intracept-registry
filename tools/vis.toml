@@ -1,0 +1,7 @@
+# tools/vis.toml
+
+[[command]]
+path = "vis"
+translation = "Encode non-printable characters in a file into a visible representation."
+verdict = "allow"
+rationale = "Text encoding filter that writes to the terminal; does not modify input files."

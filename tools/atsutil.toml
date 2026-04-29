@@ -1,0 +1,7 @@
+# tools/atsutil.toml
+
+[[command]]
+path = "atsutil"
+translation = "Manage the Apple Type Services font registry."
+verdict = "allow"
+rationale = "Can modify the font database and restart the font server."

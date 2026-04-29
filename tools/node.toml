@@ -1,0 +1,124 @@
+# tools/node.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "node"
+translation = "Run the Node.js JavaScript runtime."
+verdict = "allow"
+rationale = "Executes arbitrary JavaScript code with full access to the filesystem and network."
+
+# ── Execution modes ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "node"
+flag = "-e"
+translation_modifier = "evaluating a string of JavaScript passed as an argument"
+verdict = "allow"
+rationale = "Runs inline code directly; the risk depends on what the code does."
+
+[[flag]]
+applies_to = "node"
+flag = "-p"
+translation_modifier = "evaluating a JavaScript expression and printing the result"
+verdict = "allow"
+rationale = "Executes inline code and outputs the return value; same risk as -e."
+
+[[flag]]
+applies_to = "node"
+flag = "--check"
+translation_modifier = "only checking the script for syntax errors without executing it"
+verdict = "allow"
+rationale = "Validates syntax without running the code; no side effects."
+
+[[flag]]
+applies_to = "node"
+flag = "--input-type"
+translation_modifier = "treating the input as a specific module type"
+verdict = "allow"
+rationale = "Changes how the input is parsed; does not affect what code is executed."
+
+# ── Debugging ────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "node"
+flag = "--inspect"
+translation_modifier = "enabling the debugger on the default port"
+verdict = "allow"
+rationale = "Opens a debug port for local inspection; does not change program behavior."
+
+[[flag]]
+applies_to = "node"
+flag = "--inspect-brk"
+translation_modifier = "enabling the debugger and pausing before the first line executes"
+verdict = "allow"
+rationale = "Opens a debug port and pauses execution; does not change program behavior."
+
+# ── Security and permissions ─────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "node"
+flag = "--experimental-permission"
+translation_modifier = "enabling the permission model to restrict filesystem and child process access"
+verdict = "allow"
+rationale = "Adds security restrictions; a safety-enhancing option."
+
+[[flag]]
+applies_to = "node"
+flag = "--allow-fs-read"
+translation_modifier = "granting read access to specified filesystem paths under the permission model"
+verdict = "allow"
+rationale = "Opens a specific read permission; still more restrictive than default unrestricted mode."
+
+[[flag]]
+applies_to = "node"
+flag = "--allow-fs-write"
+translation_modifier = "granting write access to specified filesystem paths under the permission model"
+verdict = "allow"
+rationale = "Opens write permission to specific paths; less restrictive than blocking all writes."
+
+[[flag]]
+applies_to = "node"
+flag = "--allow-child-process"
+translation_modifier = "allowing the script to spawn child processes under the permission model"
+verdict = "allow"
+rationale = "Permits spawning subprocesses, which could execute arbitrary commands."
+
+[[flag]]
+applies_to = "node"
+flag = "--disallow-code-generation-from-strings"
+translation_modifier = "preventing the use of eval and similar dynamic code execution"
+verdict = "allow"
+rationale = "Restricts dynamic code execution; a safety-enhancing option."
+
+# ── Module and loading ───────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "node"
+flag = "--require"
+translation_modifier = "preloading a specified module before the main script runs"
+verdict = "allow"
+rationale = "Loads and executes a module before the main script; the preloaded module may have side effects."
+
+[[flag]]
+applies_to = "node"
+flag = "--import"
+translation_modifier = "preloading an ES module before the main script runs"
+verdict = "allow"
+rationale = "Loads and executes an ES module before the main script; the preloaded module may have side effects."
+
+# ── Resource limits ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "node"
+flag = "--max-old-space-size"
+translation_modifier = "setting the maximum memory available for the JavaScript heap in megabytes"
+verdict = "allow"
+rationale = "Adjusts a resource limit; does not change what code is executed."
+
+[[flag]]
+applies_to = "node"
+flag = "--abort-on-uncaught-exception"
+translation_modifier = "crashing with a core dump on unhandled errors instead of exiting gracefully"
+verdict = "allow"
+rationale = "Changes error handling behavior; may produce a core dump file but does not affect normal execution."

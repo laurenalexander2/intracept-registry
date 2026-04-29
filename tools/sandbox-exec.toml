@@ -1,0 +1,7 @@
+# tools/sandbox-exec.toml
+
+[[command]]
+path = "sandbox-exec"
+translation = "Execute a command within a macOS sandbox with restricted permissions."
+verdict = "allow"
+rationale = "Restricts the executed command to a sandbox, reducing rather than increasing risk."

@@ -1,0 +1,7 @@
+# tools/binhex.pl.toml
+
+[[command]]
+path = "binhex.pl"
+translation = "Encode or decode BinHex format files using Perl."
+verdict = "allow"
+rationale = "Converts file format; outputs to the terminal by default."

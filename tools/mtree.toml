@@ -1,0 +1,105 @@
+# tools/mtree.toml — Directory hierarchy mapper and verifier
+
+[[command]]
+path = "mtree"
+translation = "Compare a directory hierarchy against a specification or generate a specification from a directory."
+verdict = "allow"
+rationale = "By default, compares a directory to a specification and reports differences; read-only."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-c"
+translation_modifier = "generating a specification from the directory hierarchy instead of comparing"
+verdict = "allow"
+rationale = "Read-only operation that outputs a specification to the terminal."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-r"
+translation_modifier = "removing files not described in the specification"
+verdict = "require_approval"
+rationale = "Deletes files that are not listed in the specification, which may cause data loss."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-U"
+translation_modifier = "updating file ownership, permissions, and timestamps to match the specification"
+verdict = "allow"
+rationale = "Modifies file metadata and creates missing directories to match the specification."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-u"
+translation_modifier = "updating file attributes to match the specification and reporting mismatches as errors"
+verdict = "allow"
+rationale = "Same as -U but returns an error status if the hierarchy did not match."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-p"
+translation_modifier = "rooted at a specified directory path"
+verdict = "allow"
+rationale = "Changes the target directory; no additional risk."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-f"
+translation_modifier = "reading the specification from a specified file instead of the terminal"
+verdict = "allow"
+rationale = "Only changes where the specification is read from."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-d"
+translation_modifier = "ignoring everything except directories"
+verdict = "allow"
+rationale = "Narrows scope to only directory entries."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-e"
+translation_modifier = "without complaining about files present on disk but missing from the specification"
+verdict = "allow"
+rationale = "Suppresses warnings about extra files; no data modification."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-i"
+translation_modifier = "indenting the output by directory depth"
+verdict = "allow"
+rationale = "Only changes output formatting."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-x"
+translation_modifier = "without descending into other mounted filesystems"
+verdict = "allow"
+rationale = "Restricts scope to a single filesystem; reduces what is processed."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-L"
+translation_modifier = "following symbolic links"
+verdict = "allow"
+rationale = "Changes how links are handled during comparison or specification generation."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-X"
+translation_modifier = "excluding files matching patterns in a specified file"
+verdict = "allow"
+rationale = "Narrows scope by skipping matched files."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-K"
+translation_modifier = "adding specified keywords to the set of attributes checked"
+verdict = "allow"
+rationale = "Expands which file attributes are compared; no data modification."
+
+[[flag]]
+applies_to = "mtree"
+flag = "-k"
+translation_modifier = "checking only the specified keywords instead of all default attributes"
+verdict = "allow"
+rationale = "Changes which attributes are compared; no data modification."

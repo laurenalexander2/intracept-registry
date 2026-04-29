@@ -1,0 +1,91 @@
+# tools/ld.toml
+
+[[command]]
+path = "ld"
+translation = "Link object files and libraries into an executable or library."
+verdict = "allow"
+rationale = "Produces output files from object files; does not execute the result."
+
+[[flag]]
+applies_to = "ld"
+flag = "-o"
+translation_modifier = "writing the output to a specific file"
+verdict = "allow"
+rationale = "Only changes the output destination."
+
+[[flag]]
+applies_to = "ld"
+flag = "-r"
+translation_modifier = "producing a relocatable object file instead of a final executable"
+verdict = "allow"
+rationale = "Merges object files without creating an executable."
+
+[[flag]]
+applies_to = "ld"
+flag = "-dylib"
+translation_modifier = "producing a dynamic shared library"
+verdict = "allow"
+rationale = "Only changes the output file type."
+
+[[flag]]
+applies_to = "ld"
+flag = "-L"
+translation_modifier = "adding a directory to the library search path"
+verdict = "allow"
+rationale = "Only changes where the linker looks for libraries."
+
+[[flag]]
+applies_to = "ld"
+flag = "-l"
+translation_modifier = "linking against a specific library"
+verdict = "allow"
+rationale = "Adds a library dependency to the output."
+
+[[flag]]
+applies_to = "ld"
+flag = "-framework"
+translation_modifier = "linking against a macOS framework"
+verdict = "allow"
+rationale = "Adds a framework dependency to the output."
+
+[[flag]]
+applies_to = "ld"
+flag = "-static"
+translation_modifier = "producing a statically linked executable that does not use shared libraries"
+verdict = "allow"
+rationale = "Only changes how libraries are included; does not execute anything."
+
+[[flag]]
+applies_to = "ld"
+flag = "-arch"
+translation_modifier = "targeting a specific processor architecture"
+verdict = "allow"
+rationale = "Selects the output architecture; does not change program logic."
+
+[[flag]]
+applies_to = "ld"
+flag = "-all_load"
+translation_modifier = "including all members from every static library"
+verdict = "allow"
+rationale = "Changes which object files are included in the output; may increase binary size."
+
+[[flag]]
+applies_to = "ld"
+flag = "-F"
+translation_modifier = "adding a directory to the framework search path"
+verdict = "allow"
+rationale = "Only changes where the linker looks for frameworks."
+
+[[flag]]
+applies_to = "ld"
+flag = "-bundle"
+translation_modifier = "producing a loadable plugin bundle"
+verdict = "allow"
+rationale = "Only changes the output file type."
+
+[[flag]]
+applies_to = "ld"
+flag = "-dead_strip"
+translation_modifier = "removing unused code and data from the output"
+verdict = "allow"
+rationale = "Reduces binary size by stripping unreferenced symbols; does not change program logic."

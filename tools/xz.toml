@@ -1,0 +1,49 @@
+# tools/xz.toml
+
+[[command]]
+path = "xz"
+translation = "Compress files using the xz algorithm."
+verdict = "allow"
+rationale = "Compresses files in place, replacing the original with a .xz file by default."
+
+[[flag]]
+applies_to = "xz"
+flag = "-d"
+translation_modifier = "decompressing instead of compressing"
+verdict = "allow"
+rationale = "Decompresses .xz files in place, replacing them with the original content."
+
+[[flag]]
+applies_to = "xz"
+flag = "-k"
+translation_modifier = "keeping the original file instead of replacing it"
+verdict = "allow"
+rationale = "Preserves the source file; a safety-enhancing option."
+
+[[flag]]
+applies_to = "xz"
+flag = "-f"
+translation_modifier = "overwriting existing files without prompting"
+verdict = "allow"
+rationale = "Forces operation even if the output file already exists."
+
+[[flag]]
+applies_to = "xz"
+flag = "-l"
+translation_modifier = "listing compression information without modifying files"
+verdict = "allow"
+rationale = "Read-only display of compression statistics."
+
+[[flag]]
+applies_to = "xz"
+flag = "-t"
+translation_modifier = "testing the integrity of compressed files without decompressing"
+verdict = "allow"
+rationale = "Read-only operation that verifies compressed file integrity without decompressing or modifying the file."
+
+[[flag]]
+applies_to = "xz"
+flag = "--force"
+translation_modifier = "overwriting existing output files without prompting"
+verdict = "allow"
+rationale = "Overwrites existing output files without confirmation; recoverable from backups."

@@ -1,0 +1,7 @@
+# tools/syscallbypid.d.toml
+
+[[command]]
+path = "syscallbypid.d"
+translation = "Trace system calls grouped by process ID using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of system call activity; modifies nothing."

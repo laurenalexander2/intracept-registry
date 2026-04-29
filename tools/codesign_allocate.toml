@@ -1,0 +1,7 @@
+# tools/codesign_allocate.toml
+
+[[command]]
+path = "codesign_allocate"
+translation = "Allocate space for code signatures in Apple platform binaries."
+verdict = "allow"
+rationale = "Modifies binary files to add signature space."

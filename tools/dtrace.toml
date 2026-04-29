@@ -1,0 +1,77 @@
+# tools/dtrace.toml
+
+[[command]]
+path = "dtrace"
+translation = "Trace and monitor system and application activity in real time."
+verdict = "allow"
+rationale = "Attaches to running processes and the kernel to observe behavior; read-only by default but can run destructive actions with -w."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-n"
+translation_modifier = "tracing events that match a specific probe name"
+verdict = "allow"
+rationale = "Specifies which events to observe; read-only tracing."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-p"
+translation_modifier = "attaching to a specific running process by its process ID"
+verdict = "allow"
+rationale = "Observes a single process; does not modify it by default."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-c"
+translation_modifier = "running a command and tracing it until it exits"
+verdict = "allow"
+rationale = "Executes the specified command and traces it; the risk depends on what the command does."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-s"
+translation_modifier = "running a tracing script from a file"
+verdict = "allow"
+rationale = "Executes a D script, which may include complex tracing logic or destructive actions if -w is also set."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-l"
+translation_modifier = "listing available probes instead of tracing"
+verdict = "allow"
+rationale = "Read-only listing of probes; no tracing or modification occurs."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-w"
+translation_modifier = "allowing destructive actions such as stopping processes or modifying memory"
+verdict = "require_approval"
+rationale = "Enables actions that can kill processes or modify system state; not permitted when System Integrity Protection is enabled."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-q"
+translation_modifier = "suppressing informational output and headers"
+verdict = "allow"
+rationale = "Only changes output formatting; does not affect tracing behavior."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-e"
+translation_modifier = "compiling the script and exiting without actually tracing"
+verdict = "allow"
+rationale = "Validates the script without enabling any probes; a dry-run mode."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-o"
+translation_modifier = "writing trace output to a file instead of the screen"
+verdict = "allow"
+rationale = "Only redirects output; does not change what is traced."
+
+[[flag]]
+applies_to = "dtrace"
+flag = "-Z"
+translation_modifier = "allowing probe descriptions that match zero probes"
+verdict = "allow"
+rationale = "Suppresses an error when no probes match; does not change tracing behavior."

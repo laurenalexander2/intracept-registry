@@ -1,0 +1,70 @@
+# tools/id.toml
+
+[[command]]
+path = "id"
+translation = "Display the user and group IDs of the current user or a specified user."
+verdict = "allow"
+rationale = "Read-only display of user identity information."
+
+[[flag]]
+applies_to = "id"
+flag = "-u"
+translation_modifier = "showing only the effective user ID"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "id"
+flag = "-g"
+translation_modifier = "showing only the effective group ID"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "id"
+flag = "-G"
+translation_modifier = "showing all group IDs"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "id"
+flag = "-n"
+translation_modifier = "showing names instead of numeric IDs"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "id"
+flag = "-r"
+translation_modifier = "showing the real ID instead of the effective ID"
+verdict = "allow"
+rationale = "Only changes which ID value is displayed."
+
+[[flag]]
+applies_to = "id"
+flag = "-A"
+translation_modifier = "showing process audit properties"
+verdict = "allow"
+rationale = "Only displays audit information; read-only operation."
+
+[[flag]]
+applies_to = "id"
+flag = "-F"
+translation_modifier = "showing the full name of the user"
+verdict = "allow"
+rationale = "Only displays the user's full name; read-only operation."
+
+[[flag]]
+applies_to = "id"
+flag = "-P"
+translation_modifier = "showing the output as a password file entry"
+verdict = "allow"
+rationale = "Only changes the output format to resemble a password file record."
+
+[[flag]]
+applies_to = "id"
+flag = "-p"
+translation_modifier = "showing the output in a human-readable format"
+verdict = "allow"
+rationale = "Only changes the output to a more readable layout."

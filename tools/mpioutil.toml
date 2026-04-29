@@ -1,0 +1,45 @@
+# tools/mpioutil.toml — Multipath I/O utility
+
+[[command]]
+path = "mpioutil"
+translation = "Manage multiple paths to storage device logical units."
+verdict = "allow"
+rationale = "The bare command prints help text."
+
+[[command]]
+path = "mpioutil list"
+translation = "List all multipathed logical units."
+verdict = "allow"
+rationale = "Read-only listing of multipath storage devices."
+
+[[command]]
+path = "mpioutil info"
+translation = "Display information about a multipathed logical unit."
+verdict = "allow"
+rationale = "Read-only display of device details."
+
+[[command]]
+path = "mpioutil modify lun"
+translation = "Change the load-balancing algorithm for a multipathed logical unit."
+verdict = "allow"
+rationale = "Changes how I/O is distributed across paths, which can affect storage performance."
+
+[[command]]
+path = "mpioutil modify path"
+translation = "Enable or disable a specific path to a multipathed logical unit."
+verdict = "allow"
+rationale = "Disabling a path reduces redundancy; enabling restores it."
+
+[[flag]]
+applies_to = "mpioutil modify path"
+flag = "--disable"
+translation_modifier = "disabling the specified path"
+verdict = "allow"
+rationale = "Reduces path redundancy, which may cause I/O failures if other paths are unavailable."
+
+[[flag]]
+applies_to = "mpioutil modify path"
+flag = "--enable"
+translation_modifier = "enabling the specified path"
+verdict = "allow"
+rationale = "Restores a previously disabled path, increasing redundancy."

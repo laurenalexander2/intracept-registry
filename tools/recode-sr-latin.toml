@@ -1,0 +1,7 @@
+# tools/recode-sr-latin.toml
+
+[[command]]
+path = "recode-sr-latin"
+translation = "Convert Serbian text from Cyrillic to Latin script."
+verdict = "allow"
+rationale = "Read-only text conversion that writes to the terminal."

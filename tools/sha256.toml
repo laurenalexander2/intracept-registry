@@ -1,0 +1,28 @@
+# tools/sha256.toml
+
+[[command]]
+path = "sha256"
+translation = "Compute SHA-256 message digests for files."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."
+
+[[flag]]
+applies_to = "sha256"
+flag = "-s"
+translation_modifier = "computing the digest of a specified string"
+verdict = "allow"
+rationale = "Hashes a string argument; no state modification."
+
+[[flag]]
+applies_to = "sha256"
+flag = "-c"
+translation_modifier = "verifying a digest against a specified checksum string"
+verdict = "allow"
+rationale = "Read-only comparison; no state modification."
+
+[[flag]]
+applies_to = "sha256"
+flag = "-q"
+translation_modifier = "outputting only the digest without the filename"
+verdict = "allow"
+rationale = "Cosmetic output change; no state modification."

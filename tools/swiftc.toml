@@ -1,0 +1,28 @@
+# tools/swiftc.toml
+
+[[command]]
+path = "swiftc"
+translation = "Compile Swift source code into an executable or library."
+verdict = "allow"
+rationale = "Compiles code locally; does not execute it or modify existing files beyond the output."
+
+[[flag]]
+applies_to = "swiftc"
+flag = "-O"
+translation_modifier = "with optimizations enabled"
+verdict = "allow"
+rationale = "Increases optimization level; does not change the compilation model."
+
+[[flag]]
+applies_to = "swiftc"
+flag = "-g"
+translation_modifier = "including debug information in the output"
+verdict = "allow"
+rationale = "Adds debug symbols; does not change program behavior."
+
+[[flag]]
+applies_to = "swiftc"
+flag = "-parse-as-library"
+translation_modifier = "treating the input as a library module instead of a script"
+verdict = "allow"
+rationale = "Changes the compilation mode; does not affect safety."

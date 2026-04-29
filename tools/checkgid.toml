@@ -1,0 +1,7 @@
+# tools/checkgid.toml
+
+[[command]]
+path = "checkgid"
+translation = "Check group membership for Apache suexec."
+verdict = "allow"
+rationale = "Read-only group membership check."

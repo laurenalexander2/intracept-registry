@@ -1,0 +1,7 @@
+# tools/sleep.toml
+
+[[command]]
+path = "sleep"
+translation = "Pause execution for a specified amount of time."
+verdict = "allow"
+rationale = "Blocks the current shell for the given duration; no files or state are modified."

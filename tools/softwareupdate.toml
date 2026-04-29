@@ -1,0 +1,78 @@
+# tools/softwareupdate.toml
+
+[[command]]
+path = "softwareupdate"
+translation = "Check for and install macOS system software updates."
+verdict = "allow"
+rationale = "The bare command prints help; actual updates require specific subcommands."
+
+[[command]]
+path = "softwareupdate --list"
+translation = "List all available software updates for the system."
+verdict = "allow"
+rationale = "Read-only query of available updates; does not download or install anything."
+
+[[command]]
+path = "softwareupdate --install"
+translation = "Download and install specified software updates."
+verdict = "require_approval"
+rationale = "Modifies system software which may require a restart; incorrect updates can affect system stability."
+
+[[command]]
+path = "softwareupdate --download"
+translation = "Download specified software updates without installing them."
+verdict = "allow"
+rationale = "Downloads update packages to disk; does not modify the running system."
+
+[[command]]
+path = "softwareupdate --list-full-installers"
+translation = "List available macOS full installer versions."
+verdict = "allow"
+rationale = "Read-only listing of available installers."
+
+[[command]]
+path = "softwareupdate --fetch-full-installer"
+translation = "Download a full macOS installer application."
+verdict = "allow"
+rationale = "Downloads a large installer to disk; consumes significant space but does not install."
+
+[[command]]
+path = "softwareupdate --install-rosetta"
+translation = "Install Rosetta 2 for running Intel applications on Apple silicon."
+verdict = "allow"
+rationale = "Installs a system component; reversible but modifies system state."
+
+[[flag]]
+applies_to = "softwareupdate --install"
+flag = "--all"
+translation_modifier = "installing all applicable updates"
+verdict = "require_approval"
+rationale = "Installs every available update without selection; broad scope increases risk of unintended changes."
+
+[[flag]]
+applies_to = "softwareupdate --install"
+flag = "--recommended"
+translation_modifier = "installing only recommended updates"
+verdict = "require_approval"
+rationale = "Installs a curated set of updates; still modifies system software."
+
+[[flag]]
+applies_to = "softwareupdate --install"
+flag = "--restart"
+translation_modifier = "automatically restarting if required to complete installation"
+verdict = "require_approval"
+rationale = "Triggers an automatic system restart which terminates all running applications."
+
+[[flag]]
+applies_to = "softwareupdate --install"
+flag = "--force"
+translation_modifier = "forcing a reboot even if users are logged in"
+verdict = "require_approval"
+rationale = "Forces immediate restart regardless of logged-in users; unsaved work in all sessions is lost."
+
+[[flag]]
+applies_to = "softwareupdate --install"
+flag = "--os-only"
+translation_modifier = "installing only macOS updates"
+verdict = "require_approval"
+rationale = "Limits scope to OS updates but still modifies core system software."

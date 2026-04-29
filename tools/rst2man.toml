@@ -1,0 +1,7 @@
+# tools/rst2man.toml
+
+[[command]]
+path = "rst2man"
+translation = "Convert reStructuredText documents to Unix manual page format."
+verdict = "allow"
+rationale = "Converts reStructuredText markup to manual page format; does not modify the source file."

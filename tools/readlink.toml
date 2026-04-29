@@ -1,0 +1,21 @@
+# tools/readlink.toml
+
+[[command]]
+path = "readlink"
+translation = "Show where a shortcut link points to."
+verdict = "allow"
+rationale = "Read-only display that resolves and prints a link target without modifying anything."
+
+[[flag]]
+applies_to = "readlink"
+flag = "-f"
+translation_modifier = "resolving the full absolute path by following every link in the path"
+verdict = "allow"
+rationale = "Follows all links recursively to determine the final real path; still read-only."
+
+[[flag]]
+applies_to = "readlink"
+flag = "-n"
+translation_modifier = "without printing a trailing newline"
+verdict = "allow"
+rationale = "Cosmetic change that omits the newline character at the end of output."

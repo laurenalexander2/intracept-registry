@@ -1,0 +1,14 @@
+# tools/pg_receivewal-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_receivewal-17"
+translation = "Stream write-ahead log records from a PostgreSQL server to a local directory."
+verdict = "allow"
+rationale = "Receives and stores WAL files locally for backup purposes; does not modify the server."
+
+[[flag]]
+applies_to = "pg_receivewal-17"
+flag = "--drop"
+translation_modifier = "dropping the replication slot before starting"
+verdict = "require_approval"
+rationale = "Destroys an existing replication slot, which may break replication."

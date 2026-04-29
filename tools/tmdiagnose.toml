@@ -1,0 +1,7 @@
+# tools/tmdiagnose.toml
+
+[[command]]
+path = "tmdiagnose"
+translation = "Collect diagnostic information about Time Machine for troubleshooting."
+verdict = "allow"
+rationale = "Gathers logs and state into a diagnostic archive; does not modify backup configuration."

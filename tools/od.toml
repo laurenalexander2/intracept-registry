@@ -1,0 +1,70 @@
+# tools/od.toml
+
+[[command]]
+path = "od"
+translation = "Display the raw contents of a file as numbers or characters."
+verdict = "allow"
+rationale = "Read-only display of file contents in various numeric formats."
+
+[[flag]]
+applies_to = "od"
+flag = "-A"
+translation_modifier = "using the specified numbering system for addresses"
+verdict = "allow"
+rationale = "Changes the display format of byte positions; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-c"
+translation_modifier = "showing bytes as printable characters with special characters escaped"
+verdict = "allow"
+rationale = "Changes display to character mode; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-x"
+translation_modifier = "showing bytes in two-byte hexadecimal groups"
+verdict = "allow"
+rationale = "Changes display to hexadecimal format; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-b"
+translation_modifier = "showing each byte as a three-digit octal number"
+verdict = "allow"
+rationale = "Changes display to octal byte format; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-j"
+translation_modifier = "skipping the specified number of bytes before displaying"
+verdict = "allow"
+rationale = "Starts display at a byte offset; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-N"
+translation_modifier = "limiting the display to the specified number of bytes"
+verdict = "allow"
+rationale = "Restricts how much data is shown; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-v"
+translation_modifier = "showing all data including repeated lines"
+verdict = "allow"
+rationale = "Prevents collapsing duplicate lines into a star; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-a"
+translation_modifier = "showing bytes as named characters"
+verdict = "allow"
+rationale = "Changes display to named-character format; read-only output."
+
+[[flag]]
+applies_to = "od"
+flag = "-t"
+translation_modifier = "using a custom output format type"
+verdict = "allow"
+rationale = "Selects the display format for bytes; read-only output."

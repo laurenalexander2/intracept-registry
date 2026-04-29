@@ -1,0 +1,119 @@
+# tools/installer.toml
+
+[[command]]
+path = "installer"
+translation = "Install macOS software packages from the command line."
+verdict = "require_approval"
+rationale = "Installs system-level software packages that can modify system files, install services, and run scripts."
+
+[[flag]]
+applies_to = "installer"
+flag = "-pkg"
+translation_modifier = "specifying the package file to install"
+verdict = "require_approval"
+rationale = "Designates which package to install; the package may contain arbitrary scripts."
+
+[[flag]]
+applies_to = "installer"
+flag = "-target"
+translation_modifier = "specifying the destination volume for installation"
+verdict = "require_approval"
+rationale = "Determines which disk or volume receives the installed files."
+
+[[flag]]
+applies_to = "installer"
+flag = "-dumplog"
+translation_modifier = "displaying detailed installation log output"
+verdict = "allow"
+rationale = "Only adds verbose logging to error output."
+
+[[flag]]
+applies_to = "installer"
+flag = "-allowUntrusted"
+translation_modifier = "allowing packages signed by untrusted or expired certificates"
+verdict = "require_approval"
+rationale = "Bypasses certificate trust verification, allowing potentially malicious packages to install."
+
+[[flag]]
+applies_to = "installer"
+flag = "-pkginfo"
+translation_modifier = "displaying package information instead of installing"
+verdict = "allow"
+rationale = "Read-only query that displays package contents without installing."
+
+[[flag]]
+applies_to = "installer"
+flag = "-volinfo"
+translation_modifier = "listing available installation volumes instead of installing"
+verdict = "allow"
+rationale = "Read-only query that lists valid target volumes."
+
+[[flag]]
+applies_to = "installer"
+flag = "-dominfo"
+translation_modifier = "listing available installation domains instead of installing"
+verdict = "allow"
+rationale = "Read-only query that lists valid installation domains."
+
+[[flag]]
+applies_to = "installer"
+flag = "-verbose"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output detail; does not change installation behavior."
+
+[[flag]]
+applies_to = "installer"
+flag = "-verboseR"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Formats verbose output for machine parsing; does not change installation behavior."
+
+[[flag]]
+applies_to = "installer"
+flag = "-plist"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Formats output as XML property list; does not change installation behavior."
+
+[[flag]]
+applies_to = "installer"
+flag = "-config"
+translation_modifier = "saving the installation arguments to a configuration file instead of installing"
+verdict = "allow"
+rationale = "No installation is performed; only writes a configuration file."
+
+[[flag]]
+applies_to = "installer"
+flag = "-showChoicesXML"
+translation_modifier = "displaying installable package choices in XML format instead of installing"
+verdict = "allow"
+rationale = "Read-only query that lists available install choices."
+
+[[flag]]
+applies_to = "installer"
+flag = "-applyChoiceChangesXML"
+translation_modifier = "customizing which package components to install"
+verdict = "require_approval"
+rationale = "Modifies which parts of a package are installed, potentially skipping important components."
+
+[[flag]]
+applies_to = "installer"
+flag = "-store"
+translation_modifier = "installing the package as if it came from the Mac App Store"
+verdict = "require_approval"
+rationale = "Installs using App Store conventions; the package may modify system files."
+
+[[flag]]
+applies_to = "installer"
+flag = "-lang"
+translation_modifier = "setting the language for the installed system"
+verdict = "allow"
+rationale = "Only relevant for OS installs; sets the default language preference."
+
+[[flag]]
+applies_to = "installer"
+flag = "-file"
+translation_modifier = "reading installation parameters from a configuration file"
+verdict = "require_approval"
+rationale = "Applies pre-configured installation settings; behavior depends on the file contents."

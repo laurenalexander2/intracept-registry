@@ -1,0 +1,14 @@
+# tools/brctl.toml
+
+[[command]]
+path = "brctl"
+translation = "Manage iCloud Drive file provider."
+verdict = "allow"
+rationale = "Controls iCloud Drive sync and file management."
+
+[[flag]]
+applies_to = "brctl"
+flag = "--all"
+translation_modifier = "including all available cloud documents"
+verdict = "allow"
+rationale = "Displays information about all iCloud Drive documents."

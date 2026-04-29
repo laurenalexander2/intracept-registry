@@ -1,0 +1,7 @@
+# tools/mp2bug.toml — mod_perl bug report generator
+
+[[command]]
+path = "mp2bug"
+translation = "Generate a mod_perl bug report template with system information."
+verdict = "allow"
+rationale = "Collects system information and prints a template; does not modify anything."

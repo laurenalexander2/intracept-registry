@@ -1,0 +1,14 @@
+# tools/net-snmp-create-v3-user.toml — SNMPv3 user creator
+
+[[command]]
+path = "net-snmp-create-v3-user"
+translation = "Create a new SNMPv3 user in the Net-SNMP configuration file."
+verdict = "allow"
+rationale = "Modifies the SNMP configuration to add a user with authentication credentials."
+
+[[flag]]
+applies_to = "net-snmp-create-v3-user"
+flag = "-ro"
+translation_modifier = "with read-only access permissions"
+verdict = "allow"
+rationale = "Restricts the new user to read-only access, limiting potential impact."

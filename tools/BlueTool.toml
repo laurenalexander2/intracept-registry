@@ -1,0 +1,7 @@
+# tools/BlueTool.toml
+
+[[command]]
+path = "BlueTool"
+translation = "Test and configure Bluetooth hardware on macOS."
+verdict = "allow"
+rationale = "Interacts with Bluetooth hardware for diagnostics."

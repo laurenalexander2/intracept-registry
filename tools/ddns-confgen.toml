@@ -1,0 +1,7 @@
+# tools/ddns-confgen.toml
+
+[[command]]
+path = "ddns-confgen"
+translation = "Generate authentication keys for Dynamic DNS."
+verdict = "allow"
+rationale = "Creates cryptographic keys used for DNS update authentication."

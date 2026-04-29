@@ -1,0 +1,25 @@
+# tools/sso_util.toml
+
+[[command]]
+path = "sso_util"
+translation = "Configure and manage Kerberos Single Sign On settings."
+verdict = "allow"
+rationale = "Modifies Kerberos service configurations; incorrect changes can break authentication."
+
+[[command]]
+path = "sso_util info"
+translation = "Display information about the current Kerberos Single Sign On environment."
+verdict = "allow"
+rationale = "Read-only query of Kerberos configuration."
+
+[[command]]
+path = "sso_util configure"
+translation = "Configure Kerberos services on the local machine for a specified realm."
+verdict = "require_approval"
+rationale = "Creates service principals and modifies Kerberos database; affects authentication infrastructure."
+
+[[command]]
+path = "sso_util useconfig"
+translation = "Apply a secure configuration record to set up Kerberos on a server."
+verdict = "require_approval"
+rationale = "Configures the server using an encrypted config record; changes authentication infrastructure."

@@ -1,0 +1,7 @@
+# tools/net-server.toml — Perl Net::Server launcher
+
+[[command]]
+path = "net-server"
+translation = "Start a Perl network server using the Net::Server framework."
+verdict = "allow"
+rationale = "Starts a network-facing server process that listens for and handles connections."

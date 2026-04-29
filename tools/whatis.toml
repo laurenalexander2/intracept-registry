@@ -1,0 +1,7 @@
+# tools/whatis.toml
+
+[[command]]
+path = "whatis"
+translation = "Display one-line manual page descriptions for commands."
+verdict = "allow"
+rationale = "Read-only search of man page database; modifies nothing."

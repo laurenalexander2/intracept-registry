@@ -1,0 +1,7 @@
+# tools/system-override.toml
+
+[[command]]
+path = "system-override"
+translation = "Manage system configuration overrides for testing and development."
+verdict = "allow"
+rationale = "Modifies system behavior overrides; incorrect use can affect system stability."

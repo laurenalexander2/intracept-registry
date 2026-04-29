@@ -1,0 +1,7 @@
+# tools/pango-segmentation.toml — Pango text segmentation tool
+
+[[command]]
+path = "pango-segmentation"
+translation = "Analyze and display text segmentation boundaries using the Pango library."
+verdict = "allow"
+rationale = "Read-only text analysis; produces only diagnostic output."

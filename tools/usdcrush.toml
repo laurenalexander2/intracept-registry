@@ -1,0 +1,7 @@
+# tools/usdcrush.toml
+
+[[command]]
+path = "usdcrush"
+translation = "Compress textures in a Universal Scene Description file."
+verdict = "allow"
+rationale = "Modifies the USD file by compressing embedded textures; original texture quality is reduced."

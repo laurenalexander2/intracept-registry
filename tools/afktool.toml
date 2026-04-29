@@ -1,0 +1,7 @@
+# tools/afktool.toml
+
+[[command]]
+path = "afktool"
+translation = "Query the AppleFirmwareKit registry."
+verdict = "allow"
+rationale = "Read-only firmware information display."

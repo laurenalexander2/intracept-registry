@@ -1,0 +1,7 @@
+# tools/ocspd.toml — OCSP and CRL caching daemon
+
+[[command]]
+path = "ocspd"
+translation = "Run the certificate revocation checking background service that caches OCSP responses and CRLs."
+verdict = "allow"
+rationale = "A system background service managed by launchd; not intended to be invoked directly."

@@ -1,0 +1,42 @@
+# tools/mono.toml — Mono runtime
+
+[[command]]
+path = "mono"
+translation = "Run a .NET application using the Mono runtime."
+verdict = "allow"
+rationale = "Executes arbitrary managed code, which could modify files or system state."
+
+[[flag]]
+applies_to = "mono"
+flag = "--aot"
+translation_modifier = "compiling the assembly to native code ahead of time"
+verdict = "allow"
+rationale = "Produces a native code cache file; does not execute the application."
+
+[[flag]]
+applies_to = "mono"
+flag = "--debug"
+translation_modifier = "with debugging support enabled"
+verdict = "allow"
+rationale = "Enables debug symbols and diagnostics; no additional risk."
+
+[[flag]]
+applies_to = "mono"
+flag = "--profile"
+translation_modifier = "with a profiler module attached"
+verdict = "allow"
+rationale = "Collects performance data; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "mono"
+flag = "--arch"
+translation_modifier = "using a specific CPU architecture mode"
+verdict = "allow"
+rationale = "Selects 32-bit or 64-bit execution mode; no additional risk."
+
+[[flag]]
+applies_to = "mono"
+flag = "--gc"
+translation_modifier = "using a specified garbage collector implementation"
+verdict = "allow"
+rationale = "Selects the garbage collection engine; no additional risk."

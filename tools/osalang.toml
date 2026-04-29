@@ -1,0 +1,7 @@
+# tools/osalang.toml — OSA language lister
+
+[[command]]
+path = "osalang"
+translation = "List the installed Open Scripting Architecture scripting languages available on the system."
+verdict = "allow"
+rationale = "Read-only display of installed language components."

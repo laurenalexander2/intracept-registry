@@ -1,0 +1,70 @@
+# tools/ldapwhoami.toml
+
+[[command]]
+path = "ldapwhoami"
+translation = "Display the identity of the current LDAP connection."
+verdict = "allow"
+rationale = "Read-only operation that only reports the authenticated identity."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-n"
+translation_modifier = "simulating the operation without actually contacting the server"
+verdict = "allow"
+rationale = "No network request is made; only shows what would happen."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases diagnostic output to the terminal."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-x"
+translation_modifier = "using simple authentication instead of advanced authentication"
+verdict = "allow"
+rationale = "Only changes the authentication method used."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-H"
+translation_modifier = "connecting to a specific LDAP server address"
+verdict = "allow"
+rationale = "Only changes which server is contacted."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-D"
+translation_modifier = "authenticating with a specific identity"
+verdict = "allow"
+rationale = "Only specifies which account to bind as."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-W"
+translation_modifier = "prompting for a password"
+verdict = "allow"
+rationale = "Safer than passing a password on the command line."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-w"
+translation_modifier = "using a password provided on the command line"
+verdict = "allow"
+rationale = "Specifies authentication credentials; the password may be visible in process listings."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-Z"
+translation_modifier = "requesting an encrypted connection"
+verdict = "allow"
+rationale = "Enables transport encryption, which improves security."
+
+[[flag]]
+applies_to = "ldapwhoami"
+flag = "-ZZ"
+translation_modifier = "requiring an encrypted connection and failing if encryption is unavailable"
+verdict = "allow"
+rationale = "Enforces transport encryption; fails safely if the server does not support it."

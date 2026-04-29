@@ -1,0 +1,7 @@
+# tools/cert-sync.toml
+
+[[command]]
+path = "cert-sync"
+translation = "Synchronize Mono certificate store with the system store."
+verdict = "allow"
+rationale = "Updates the Mono trusted certificate list from the system certificates."

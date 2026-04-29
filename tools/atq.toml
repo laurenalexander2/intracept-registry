@@ -1,0 +1,7 @@
+# tools/atq.toml
+
+[[command]]
+path = "atq"
+translation = "Display the queue of scheduled at jobs."
+verdict = "allow"
+rationale = "Read-only listing of pending at jobs."

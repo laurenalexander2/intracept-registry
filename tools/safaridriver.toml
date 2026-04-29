@@ -1,0 +1,7 @@
+# tools/safaridriver.toml
+
+[[command]]
+path = "safaridriver"
+translation = "Run the Safari WebDriver server for automated browser testing."
+verdict = "allow"
+rationale = "Controls Safari browser programmatically, navigating to URLs and interacting with web pages."

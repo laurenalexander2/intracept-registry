@@ -1,0 +1,7 @@
+# tools/postgres-17.toml
+
+[[command]]
+path = "postgres-17"
+translation = "Run the PostgreSQL 17 database server."
+verdict = "allow"
+rationale = "Starts the database server process; typically managed by pg_ctl rather than invoked directly."

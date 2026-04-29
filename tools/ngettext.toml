@@ -1,0 +1,7 @@
+# tools/ngettext.toml — GNU gettext plural form translator
+
+[[command]]
+path = "ngettext"
+translation = "Look up the correct plural form of a translated message based on a count."
+verdict = "allow"
+rationale = "Read-only translation lookup; produces only text output."

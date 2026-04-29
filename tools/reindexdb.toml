@@ -1,0 +1,14 @@
+# tools/reindexdb.toml
+
+[[command]]
+path = "reindexdb"
+translation = "Rebuild indexes in a PostgreSQL database."
+verdict = "allow"
+rationale = "Rebuilds indexes, which temporarily locks tables and uses additional disk space."
+
+[[flag]]
+applies_to = "reindexdb"
+flag = "--all"
+translation_modifier = "operating on all databases in the cluster"
+verdict = "allow"
+rationale = "Affects every database in the PostgreSQL cluster, greatly increasing blast radius."

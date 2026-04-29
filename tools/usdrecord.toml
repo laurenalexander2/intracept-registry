@@ -1,0 +1,7 @@
+# tools/usdrecord.toml
+
+[[command]]
+path = "usdrecord"
+translation = "Render a Universal Scene Description file to an image."
+verdict = "allow"
+rationale = "Creates a rendered image file; does not modify the source USD file."

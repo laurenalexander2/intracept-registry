@@ -1,0 +1,7 @@
+# tools/trash.toml
+
+[[command]]
+path = "trash"
+translation = "Move files and directories to the user's trash folder."
+verdict = "allow"
+rationale = "Moves items to Trash rather than permanently deleting; recoverable from Trash until emptied."

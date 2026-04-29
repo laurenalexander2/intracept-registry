@@ -1,0 +1,77 @@
+# tools/mount.toml
+
+[[command]]
+path = "mount"
+translation = "Attach a storage volume to the directory tree, or list all currently attached volumes."
+verdict = "allow"
+rationale = "Attaching a volume changes the directory structure visible to all programs; with no arguments it is read-only."
+
+[[flag]]
+applies_to = "mount"
+flag = "-a"
+translation_modifier = "attaching all volumes listed in the system's volume table"
+verdict = "allow"
+rationale = "Mounts multiple volumes at once, increasing the scope of changes to the directory tree."
+
+[[flag]]
+applies_to = "mount"
+flag = "-r"
+translation_modifier = "as read-only, preventing any changes to the volume's contents"
+verdict = "allow"
+rationale = "Restricts access to read-only, which reduces risk compared to the default."
+
+[[flag]]
+applies_to = "mount"
+flag = "-w"
+translation_modifier = "as read-write, allowing changes to the volume's contents"
+verdict = "allow"
+rationale = "Allows writing to the mounted volume."
+
+[[flag]]
+applies_to = "mount"
+flag = "-u"
+translation_modifier = "updating the options of an already attached volume"
+verdict = "allow"
+rationale = "Changes settings on a live volume, which could affect running programs."
+
+[[flag]]
+applies_to = "mount"
+flag = "-f"
+translation_modifier = "forcibly revoking write access when switching a volume to read-only"
+verdict = "allow"
+rationale = "Forces removal of write access, which can interrupt programs that have open files."
+
+[[flag]]
+applies_to = "mount"
+flag = "-t"
+translation_modifier = "for a specific volume type"
+verdict = "allow"
+rationale = "Filters or specifies the volume type; does not add risk by itself."
+
+[[flag]]
+applies_to = "mount"
+flag = "-d"
+translation_modifier = "simulating the attach without actually performing it"
+verdict = "allow"
+rationale = "Dry run that does everything except the actual attach operation."
+
+[[flag]]
+applies_to = "mount"
+flag = "-v"
+translation_modifier = "showing detailed information about what is being done"
+verdict = "allow"
+rationale = "Increases output verbosity; does not change what is mounted."
+
+[[flag]]
+applies_to = "mount"
+flag = "-o"
+translation_modifier = "with specified options controlling access and behavior"
+verdict = "allow"
+rationale = "Passes additional options that can change permissions, caching, and access rules on the volume."
+
+[[flag]]
+applies_to = "mount"
+flag = "-k"
+translation_modifier = "without following shortcuts in the target directory path"
+verdict = "allow"
+rationale = "Prevents shortcut traversal during the mount; a minor safety measure."

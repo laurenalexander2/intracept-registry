@@ -1,0 +1,21 @@
+# tools/nettop.toml — Network activity monitor
+
+[[command]]
+path = "nettop"
+translation = "Display a live-updating view of network connection and route activity."
+verdict = "allow"
+rationale = "Read-only monitoring of network connections; modifies nothing."
+
+[[flag]]
+applies_to = "nettop"
+flag = "-m"
+translation_modifier = "monitoring only a specific protocol type"
+verdict = "allow"
+rationale = "Filters the display to a specific protocol; still read-only."
+
+[[flag]]
+applies_to = "nettop"
+flag = "-p"
+translation_modifier = "monitoring only a specific process"
+verdict = "allow"
+rationale = "Filters the display to a specific process; still read-only."

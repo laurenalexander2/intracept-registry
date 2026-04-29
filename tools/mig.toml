@@ -1,0 +1,7 @@
+# tools/mig.toml — Mach Interface Generator
+
+[[command]]
+path = "mig"
+translation = "Generate remote procedure call code for Mach inter-process communication from a specification file."
+verdict = "allow"
+rationale = "Generates source code files locally; does not modify system state or running services."

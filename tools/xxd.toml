@@ -1,0 +1,84 @@
+# tools/xxd.toml
+
+[[command]]
+path = "xxd"
+translation = "Create a hex dump of a file or convert a hex dump back to binary."
+verdict = "allow"
+rationale = "Reads a file and outputs hex representation; reverse mode creates a new file from hex input."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-r"
+translation_modifier = "converting a hex dump back into binary data"
+verdict = "allow"
+rationale = "Creates or overwrites binary output from hex input, which can modify files on disk."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-p"
+translation_modifier = "using plain continuous hex dump format without line numbers or ASCII"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-i"
+translation_modifier = "producing output as a C source code array"
+verdict = "allow"
+rationale = "Only changes the output format to a C include style."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-l"
+translation_modifier = "limiting output to a specified number of bytes"
+verdict = "allow"
+rationale = "Only restricts how much of the file is displayed."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-s"
+translation_modifier = "starting at a specified byte offset"
+verdict = "allow"
+rationale = "Only changes the starting position for the hex dump."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-c"
+translation_modifier = "displaying a specified number of bytes per line"
+verdict = "allow"
+rationale = "Only changes the column width of the output."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-b"
+translation_modifier = "showing binary digits instead of hexadecimal"
+verdict = "allow"
+rationale = "Only changes the output format to binary representation."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-u"
+translation_modifier = "using uppercase letters for hex digits"
+verdict = "allow"
+rationale = "Only changes the letter case in the output."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-g"
+translation_modifier = "grouping bytes with a specified number of bytes per group"
+verdict = "allow"
+rationale = "Only changes whitespace grouping in the output."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-a"
+translation_modifier = "replacing identical lines with a single asterisk"
+verdict = "allow"
+rationale = "Only compresses repeated output lines; no data change."
+
+[[flag]]
+applies_to = "xxd"
+flag = "-e"
+translation_modifier = "displaying bytes in little-endian byte order"
+verdict = "allow"
+rationale = "Only changes the byte order shown in the output."

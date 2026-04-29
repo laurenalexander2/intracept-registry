@@ -1,0 +1,21 @@
+# tools/ed.toml
+
+[[command]]
+path = "ed"
+translation = "Run the line-oriented text editor."
+verdict = "allow"
+rationale = "Edits files in place and can execute shell commands via the ! prefix."
+
+[[flag]]
+applies_to = "ed"
+flag = "-s"
+translation_modifier = "suppressing diagnostic messages"
+verdict = "allow"
+rationale = "Only suppresses output; does not change editing behavior."
+
+[[flag]]
+applies_to = "ed"
+flag = "-p"
+translation_modifier = "using a custom command prompt"
+verdict = "allow"
+rationale = "Only changes the display prompt; no additional risk."

@@ -1,0 +1,77 @@
+# tools/cupsctl.toml
+
+[[command]]
+path = "cupsctl"
+translation = "Configure the CUPS print server."
+verdict = "allow"
+rationale = "Modifies CUPS server settings."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--debug-logging"
+translation_modifier = "enabling detailed logging for troubleshooting"
+verdict = "allow"
+rationale = "Only increases log verbosity; does not change print behavior."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--no-debug-logging"
+translation_modifier = "disabling detailed logging"
+verdict = "allow"
+rationale = "Only reduces log verbosity; does not change print behavior."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--remote-admin"
+translation_modifier = "allowing administration from other computers"
+verdict = "require_approval"
+rationale = "Opens the print server to remote configuration changes, which could be exploited on an untrusted network."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--no-remote-admin"
+translation_modifier = "disabling administration from other computers"
+verdict = "allow"
+rationale = "Restricts administration to the local machine, reducing the attack surface."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--remote-any"
+translation_modifier = "allowing printing from any network address"
+verdict = "require_approval"
+rationale = "Opens the print server to connections from the entire network, including the internet."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--no-remote-any"
+translation_modifier = "restricting printing to local network addresses only"
+verdict = "allow"
+rationale = "Limits who can submit print jobs, reducing exposure."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--share-printers"
+translation_modifier = "sharing local printers with other computers"
+verdict = "allow"
+rationale = "Makes local printers visible and usable on the network."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--no-share-printers"
+translation_modifier = "stopping the sharing of local printers with other computers"
+verdict = "allow"
+rationale = "Hides printers from the network; only affects discoverability."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--user-cancel-any"
+translation_modifier = "allowing users to cancel print jobs owned by other users"
+verdict = "allow"
+rationale = "Lets any user remove another user's print jobs from the queue."
+
+[[flag]]
+applies_to = "cupsctl"
+flag = "--no-user-cancel-any"
+translation_modifier = "preventing users from canceling print jobs owned by other users"
+verdict = "allow"
+rationale = "Restricts job cancellation to the job owner, which is the safer default."

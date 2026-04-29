@@ -1,0 +1,35 @@
+# tools/msgattrib.toml — GNU gettext message attribute filter
+
+[[command]]
+path = "msgattrib"
+translation = "Filter and modify the attributes of messages in a translation catalog file."
+verdict = "allow"
+rationale = "Processes PO files and writes filtered output; source files are not modified unless redirected."
+
+[[flag]]
+applies_to = "msgattrib"
+flag = "--set-fuzzy"
+translation_modifier = "marking all messages as fuzzy"
+verdict = "allow"
+rationale = "Changes translation status flags in the output; no system-level risk."
+
+[[flag]]
+applies_to = "msgattrib"
+flag = "--clear-fuzzy"
+translation_modifier = "clearing the fuzzy flag from all messages"
+verdict = "allow"
+rationale = "Changes translation status flags in the output; no system-level risk."
+
+[[flag]]
+applies_to = "msgattrib"
+flag = "--only-fuzzy"
+translation_modifier = "keeping only fuzzy messages"
+verdict = "allow"
+rationale = "Filters the output; no system-level risk."
+
+[[flag]]
+applies_to = "msgattrib"
+flag = "--force"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing output files."

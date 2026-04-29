@@ -1,0 +1,28 @@
+# tools/passwd.toml
+
+[[command]]
+path = "passwd"
+translation = "Change a user account password."
+verdict = "require_approval"
+rationale = "Modifies authentication credentials; an incorrect password change can lock out the user."
+
+[[flag]]
+applies_to = "passwd"
+flag = "-i"
+translation_modifier = "targeting a specific directory system for the password change"
+verdict = "allow"
+rationale = "Directs the password update to a particular authentication system, which could affect login if misconfigured."
+
+[[flag]]
+applies_to = "passwd"
+flag = "-l"
+translation_modifier = "specifying the directory location to update"
+verdict = "allow"
+rationale = "Changes which password database is modified, such as a remote server or local file."
+
+[[flag]]
+applies_to = "passwd"
+flag = "-u"
+translation_modifier = "authenticating as a different user when making the change"
+verdict = "allow"
+rationale = "Uses alternate credentials for the update, which affects which account authorizes the change."

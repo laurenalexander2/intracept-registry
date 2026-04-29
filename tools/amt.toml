@@ -1,0 +1,7 @@
+# tools/amt.toml
+
+[[command]]
+path = "amt"
+translation = "Manage Apple Memory Test profiles."
+verdict = "allow"
+rationale = "System diagnostic tool for memory testing."

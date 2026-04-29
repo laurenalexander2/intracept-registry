@@ -1,0 +1,197 @@
+# tools/launchctl.toml
+
+[[command]]
+path = "launchctl"
+translation = "Run the macOS service management tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "launchctl bootstrap"
+translation = "Load and register a service so it can run."
+verdict = "require_approval"
+rationale = "Registers and may start a system or user service."
+
+[[command]]
+path = "launchctl bootout"
+translation = "Stop and remove a registered service."
+verdict = "require_approval"
+rationale = "Stops and unregisters a running service, which may interrupt dependent processes."
+
+[[command]]
+path = "launchctl enable"
+translation = "Allow a service to start automatically."
+verdict = "require_approval"
+rationale = "Enables a service to run on demand or at startup; the change persists across restarts."
+
+[[command]]
+path = "launchctl disable"
+translation = "Prevent a service from starting automatically."
+verdict = "require_approval"
+rationale = "Blocks a service from running, which may affect system functionality; the change persists across restarts."
+
+[[command]]
+path = "launchctl kickstart"
+translation = "Force a service to start immediately."
+verdict = "allow"
+rationale = "Starts a service outside its normal trigger conditions."
+
+[[command]]
+path = "launchctl kill"
+translation = "Send a signal to a running service's process."
+verdict = "allow"
+rationale = "May terminate the service process, interrupting whatever it was doing."
+
+[[command]]
+path = "launchctl print"
+translation = "Display detailed information about a service or service domain."
+verdict = "allow"
+rationale = "Read-only display of service status and configuration."
+
+[[command]]
+path = "launchctl list"
+translation = "List all loaded services."
+verdict = "allow"
+rationale = "Read-only listing of services."
+
+[[command]]
+path = "launchctl dumpstate"
+translation = "Display the complete internal state of the service manager."
+verdict = "allow"
+rationale = "Read-only display of internal state."
+
+[[command]]
+path = "launchctl reboot"
+translation = "Initiate a system reboot."
+verdict = "require_approval"
+rationale = "Restarts the entire system, interrupting all running processes and unsaved work."
+
+[[command]]
+path = "launchctl limit"
+translation = "View or set system resource limits for services."
+verdict = "allow"
+rationale = "Changing resource limits may affect system stability or service behavior."
+
+[[command]]
+path = "launchctl load"
+translation = "Load a service configuration file so the service can run."
+verdict = "require_approval"
+rationale = "Registers and may start a service; this command is deprecated in favor of bootstrap."
+
+[[command]]
+path = "launchctl unload"
+translation = "Unload a service configuration file, stopping the service."
+verdict = "require_approval"
+rationale = "Stops and deregisters a service; this command is deprecated in favor of bootout."
+
+[[command]]
+path = "launchctl start"
+translation = "Start a service by its label."
+verdict = "allow"
+rationale = "Manually starts a service, which may launch arbitrary processes."
+
+[[command]]
+path = "launchctl stop"
+translation = "Stop a service by its label."
+verdict = "allow"
+rationale = "Stops a running service, which may interrupt dependent processes."
+
+[[command]]
+path = "launchctl remove"
+translation = "Remove a service by its label."
+verdict = "allow"
+rationale = "Unregisters a service, which prevents it from running until reloaded."
+
+[[command]]
+path = "launchctl blame"
+translation = "Show why a service was started."
+verdict = "allow"
+rationale = "Read-only display of the reason a service is running."
+
+[[command]]
+path = "launchctl config"
+translation = "Set persistent configuration for the service manager."
+verdict = "require_approval"
+rationale = "Changes system-wide service manager settings that persist across restarts and require a reboot to take effect."
+
+[[command]]
+path = "launchctl error"
+translation = "Display a human-readable description of an error code."
+verdict = "allow"
+rationale = "Read-only lookup of error descriptions."
+
+[[command]]
+path = "launchctl version"
+translation = "Print the service manager version."
+verdict = "allow"
+rationale = "Read-only display of version information."
+
+[[flag]]
+applies_to = "launchctl kickstart"
+flag = "-k"
+translation_modifier = "killing the running instance first and then restarting it"
+verdict = "allow"
+rationale = "Terminates the currently running service process before restarting, which interrupts any work in progress."
+
+[[flag]]
+applies_to = "launchctl kickstart"
+flag = "-p"
+translation_modifier = "printing the process ID of the started service"
+verdict = "allow"
+rationale = "Only adds informational output; does not change what happens to the service."
+
+[[flag]]
+applies_to = "launchctl load"
+flag = "-w"
+translation_modifier = "overriding the disabled setting and enabling the service"
+verdict = "require_approval"
+rationale = "Forces a previously disabled service to load and persist that change."
+
+[[flag]]
+applies_to = "launchctl unload"
+flag = "-w"
+translation_modifier = "marking the service as disabled so it will not reload"
+verdict = "allow"
+rationale = "Persistently disables the service, preventing it from starting until re-enabled."
+
+[[flag]]
+applies_to = "launchctl load"
+flag = "-F"
+translation_modifier = "forcing the load regardless of the disabled setting"
+verdict = "require_approval"
+rationale = "Bypasses the disabled check, which may load a service that was intentionally turned off."
+
+[[flag]]
+applies_to = "launchctl unload"
+flag = "-F"
+translation_modifier = "forcing the unload regardless of the disabled setting"
+verdict = "allow"
+rationale = "Bypasses the disabled check when unloading the service."
+
+[[flag]]
+applies_to = "launchctl reboot"
+flag = "userspace"
+translation_modifier = "restarting only the user-level programs without rebooting the hardware"
+verdict = "require_approval"
+rationale = "Tears down and restarts all user-level programs, which may cause data loss in running applications."
+
+[[flag]]
+applies_to = "launchctl reboot"
+flag = "halt"
+translation_modifier = "shutting the system down completely without restarting"
+verdict = "require_approval"
+rationale = "Powers off the system entirely, interrupting all processes and unsaved work with no automatic restart."
+
+[[flag]]
+applies_to = "launchctl reboot"
+flag = "logout"
+translation_modifier = "logging out the current user session without a full reboot"
+verdict = "require_approval"
+rationale = "Forcefully ends the login session without giving applications a chance to save, risking data loss."
+
+[[flag]]
+applies_to = "launchctl reboot"
+flag = "apps"
+translation_modifier = "terminating all user-launched applications without a full reboot"
+verdict = "require_approval"
+rationale = "Forcefully closes all user applications without prompting to save, risking data loss."

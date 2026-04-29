@@ -1,0 +1,7 @@
+# tools/rotatelogs.toml
+
+[[command]]
+path = "rotatelogs"
+translation = "Rotate Apache log files based on time or size without restarting the server."
+verdict = "allow"
+rationale = "Creates new log files on rotation; old files are preserved."

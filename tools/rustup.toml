@@ -1,0 +1,133 @@
+# tools/rustup.toml
+
+[[command]]
+path = "rustup"
+translation = "Run the Rust toolchain installer and manager."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "rustup update"
+translation = "Update installed Rust toolchains and rustup itself."
+verdict = "allow"
+rationale = "Downloads and installs newer toolchain versions locally."
+
+[[command]]
+path = "rustup default"
+translation = "Set the default Rust toolchain."
+verdict = "allow"
+rationale = "Changes which toolchain is used by default; easily reversible."
+
+[[command]]
+path = "rustup show"
+translation = "Show the active and installed Rust toolchains."
+verdict = "allow"
+rationale = "Read-only display of installed toolchains."
+
+[[command]]
+path = "rustup toolchain"
+translation = "Manage Rust toolchain installations."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "rustup toolchain install"
+translation = "Install a specific Rust toolchain."
+verdict = "allow"
+rationale = "Downloads and installs a toolchain locally."
+
+[[command]]
+path = "rustup toolchain uninstall"
+translation = "Remove an installed Rust toolchain."
+verdict = "allow"
+rationale = "Removes a local toolchain; can be reinstalled."
+
+[[command]]
+path = "rustup toolchain list"
+translation = "List installed Rust toolchains."
+verdict = "allow"
+rationale = "Read-only listing of toolchains."
+
+[[command]]
+path = "rustup target"
+translation = "Manage compilation targets for a Rust toolchain."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "rustup target add"
+translation = "Add a compilation target to the active toolchain."
+verdict = "allow"
+rationale = "Downloads target support files; does not modify existing projects."
+
+[[command]]
+path = "rustup target remove"
+translation = "Remove a compilation target from the active toolchain."
+verdict = "allow"
+rationale = "Removes locally installed target files; can be re-added."
+
+[[command]]
+path = "rustup component"
+translation = "Manage components of a Rust toolchain."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "rustup component add"
+translation = "Add a component to the active Rust toolchain."
+verdict = "allow"
+rationale = "Downloads and installs a component locally."
+
+[[command]]
+path = "rustup component remove"
+translation = "Remove a component from the active Rust toolchain."
+verdict = "allow"
+rationale = "Removes a local component; can be re-added."
+
+[[command]]
+path = "rustup override"
+translation = "Manage directory-specific Rust toolchain overrides."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "rustup override set"
+translation = "Set a Rust toolchain override for the current directory."
+verdict = "allow"
+rationale = "Changes which toolchain is used in this directory; easily reversible."
+
+[[command]]
+path = "rustup override unset"
+translation = "Remove the Rust toolchain override for the current directory."
+verdict = "allow"
+rationale = "Restores the default toolchain for this directory."
+
+[[command]]
+path = "rustup self uninstall"
+translation = "Uninstall rustup and all installed Rust toolchains."
+verdict = "require_approval"
+rationale = "Removes the entire Rust installation from the system."
+
+[[command]]
+path = "rustup check"
+translation = "Check for available updates to Rust toolchains and rustup."
+verdict = "allow"
+rationale = "Read-only check that does not install anything."
+
+[[command]]
+path = "rustup run"
+translation = "Run a command with a specific Rust toolchain's environment."
+verdict = "allow"
+rationale = "Executes an arbitrary command in the toolchain environment."
+
+[[command]]
+path = "rustup which"
+translation = "Display the path to the binary that would be run for a given command."
+verdict = "allow"
+rationale = "Read-only display of binary paths."
+
+[[command]]
+path = "rustup doc"
+translation = "Open the Rust documentation in a browser."
+verdict = "allow"
+rationale = "Opens a local documentation page; does not modify anything."

@@ -1,0 +1,7 @@
+# tools/update_dyld_shared_cache.toml
+
+[[command]]
+path = "update_dyld_shared_cache"
+translation = "Rebuild the dynamic linker shared library cache."
+verdict = "require_approval"
+rationale = "Rebuilds the system shared cache; errors can prevent applications from loading correctly."

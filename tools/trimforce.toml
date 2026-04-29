@@ -1,0 +1,19 @@
+# tools/trimforce.toml
+
+[[command]]
+path = "trimforce"
+translation = "Enable or disable TRIM commands on third-party solid-state drives."
+verdict = "require_approval"
+rationale = "Modifies low-level storage behavior; some drives may not handle TRIM correctly, potentially causing data loss."
+
+[[command]]
+path = "trimforce enable"
+translation = "Enable TRIM commands for third-party drives."
+verdict = "require_approval"
+rationale = "Enables TRIM which improves performance but may cause data loss on incompatible drives."
+
+[[command]]
+path = "trimforce disable"
+translation = "Disable TRIM commands for third-party drives."
+verdict = "allow"
+rationale = "Stops sending TRIM commands; a conservative safety measure."

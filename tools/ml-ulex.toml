@@ -1,0 +1,21 @@
+# tools/ml-ulex.toml — SML/NJ Unicode-aware scanner generator
+
+[[command]]
+path = "ml-ulex"
+translation = "Generate a Unicode-aware lexical scanner in Standard ML from a specification file."
+verdict = "allow"
+rationale = "Generates source code files locally; does not modify system state."
+
+[[flag]]
+applies_to = "ml-ulex"
+flag = "--ml-lex-mode"
+translation_modifier = "in ml-lex compatibility mode"
+verdict = "allow"
+rationale = "Changes the input format accepted; no additional risk."
+
+[[flag]]
+applies_to = "ml-ulex"
+flag = "--dot"
+translation_modifier = "also generating a graph diagram of the automaton"
+verdict = "allow"
+rationale = "Produces an additional output file; no additional risk."

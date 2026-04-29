@@ -1,0 +1,7 @@
+# tools/pydoc3.13.toml
+
+[[command]]
+path = "pydoc3.13"
+translation = "Display Python 3.13 documentation for modules, classes, and functions."
+verdict = "allow"
+rationale = "Read-only documentation viewer."

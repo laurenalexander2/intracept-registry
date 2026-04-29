@@ -1,0 +1,7 @@
+# tools/sntpd.toml
+
+[[command]]
+path = "sntpd"
+translation = "Run the Simple Network Time Protocol background service."
+verdict = "allow"
+rationale = "Adjusts the system clock based on network time sources; incorrect time can affect authentication and logging."

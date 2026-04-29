@@ -1,0 +1,21 @@
+# tools/slappasswd.toml
+
+[[command]]
+path = "slappasswd"
+translation = "Generate a hashed password suitable for use in LDAP configurations."
+verdict = "allow"
+rationale = "Produces a password hash on standard output; does not modify any files or databases."
+
+[[flag]]
+applies_to = "slappasswd"
+flag = "-h"
+translation_modifier = "using a specified hashing scheme"
+verdict = "allow"
+rationale = "Selects the hash algorithm; no state modification."
+
+[[flag]]
+applies_to = "slappasswd"
+flag = "-s"
+translation_modifier = "hashing a specified secret from the command line"
+verdict = "allow"
+rationale = "Provides the password inline; note this exposes the secret in process listings."

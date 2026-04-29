@@ -1,0 +1,84 @@
+# tools/vmmap.toml
+
+[[command]]
+path = "vmmap"
+translation = "Display the virtual memory map of a process."
+verdict = "allow"
+rationale = "Read-only inspection of process memory layout; does not modify the target process."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-s"
+translation_modifier = "sorting regions by size instead of address"
+verdict = "allow"
+rationale = "Only changes the output ordering."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-sortBySize"
+translation_modifier = "sorting regions by size instead of address"
+verdict = "allow"
+rationale = "Only changes the output ordering."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-w"
+translation_modifier = "showing full file paths in wide output format"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-wide"
+translation_modifier = "showing full file paths in wide output format"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-v"
+translation_modifier = "showing all available detail including submaps and split libraries"
+verdict = "allow"
+rationale = "Only adds more information to the output."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-verbose"
+translation_modifier = "showing all available detail including submaps and split libraries"
+verdict = "allow"
+rationale = "Only adds more information to the output."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-pages"
+translation_modifier = "showing region sizes in page counts instead of bytes"
+verdict = "allow"
+rationale = "Only changes the unit of measurement in the output."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-interleaved"
+translation_modifier = "printing all regions in ascending address order instead of grouping by type"
+verdict = "allow"
+rationale = "Only changes the output ordering."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-submap"
+translation_modifier = "including information about virtual memory submaps"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-noCoalesce"
+translation_modifier = "showing each memory region separately instead of merging adjacent identical regions"
+verdict = "allow"
+rationale = "Only changes the level of detail in the output."
+
+[[flag]]
+applies_to = "vmmap"
+flag = "-summary"
+translation_modifier = "printing only the summary totals without individual region details"
+verdict = "allow"
+rationale = "Only reduces the information displayed."

@@ -1,0 +1,7 @@
+# tools/corepack.toml
+
+[[command]]
+path = "corepack"
+translation = "Manage Node.js package manager versions."
+verdict = "allow"
+rationale = "Enables or prepares specific versions of npm, yarn, or pnpm."

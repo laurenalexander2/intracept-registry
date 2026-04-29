@@ -1,0 +1,7 @@
+# tools/dseditgroup.toml
+
+[[command]]
+path = "dseditgroup"
+translation = "Edit group records in the Directory Service."
+verdict = "require_approval"
+rationale = "Modifies group membership, which affects access permissions."

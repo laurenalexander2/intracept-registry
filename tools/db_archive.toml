@@ -1,0 +1,7 @@
+# tools/db_archive.toml
+
+[[command]]
+path = "db_archive"
+translation = "List Berkeley DB log files no longer needed."
+verdict = "allow"
+rationale = "Read-only listing of archivable log files."

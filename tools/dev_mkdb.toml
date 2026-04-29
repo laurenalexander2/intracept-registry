@@ -1,0 +1,7 @@
+# tools/dev_mkdb.toml
+
+[[command]]
+path = "dev_mkdb"
+translation = "Build the device database from /dev."
+verdict = "allow"
+rationale = "Rebuilds the device name database."

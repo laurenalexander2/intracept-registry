@@ -1,0 +1,7 @@
+# tools/mono-api-info.toml — Mono assembly API extractor
+
+[[command]]
+path = "mono-api-info"
+translation = "Extract the public API structure of a .NET assembly as XML."
+verdict = "allow"
+rationale = "Read-only inspection of assembly metadata; produces only XML output."

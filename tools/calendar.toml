@@ -1,0 +1,7 @@
+# tools/calendar.toml
+
+[[command]]
+path = "calendar"
+translation = "Display calendar reminders from calendar files."
+verdict = "allow"
+rationale = "Read-only display of upcoming calendar entries."

@@ -1,0 +1,7 @@
+# tools/cpan.toml
+
+[[command]]
+path = "cpan"
+translation = "Install and manage Perl modules from the Comprehensive Perl Archive Network."
+verdict = "allow"
+rationale = "Downloads and installs Perl modules that may execute build scripts."

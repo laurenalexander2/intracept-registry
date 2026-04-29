@@ -1,0 +1,7 @@
+# tools/wrjpgcom.toml
+
+[[command]]
+path = "wrjpgcom"
+translation = "Insert a comment into a JPEG file."
+verdict = "allow"
+rationale = "Modifies JPEG file metadata by adding a comment; the image data is unchanged but the file is rewritten."

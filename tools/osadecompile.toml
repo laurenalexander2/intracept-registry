@@ -1,0 +1,7 @@
+# tools/osadecompile.toml — AppleScript decompiler
+
+[[command]]
+path = "osadecompile"
+translation = "Display the source text of a compiled AppleScript file."
+verdict = "allow"
+rationale = "Read-only decompilation that writes source text to the terminal."

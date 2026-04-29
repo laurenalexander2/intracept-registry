@@ -1,0 +1,7 @@
+# tools/procsystime.toml
+
+[[command]]
+path = "procsystime"
+translation = "Trace the time processes spend in system calls using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of system call timing."

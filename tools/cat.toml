@@ -1,0 +1,56 @@
+# tools/cat.toml
+
+[[command]]
+path = "cat"
+translation = "Display the contents of one or more files."
+verdict = "allow"
+rationale = "Read-only display of file contents to the terminal."
+
+[[flag]]
+applies_to = "cat"
+flag = "-n"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Adds line numbers to output; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-b"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Numbers only non-blank lines; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-s"
+translation_modifier = "squeezing multiple consecutive blank lines into one"
+verdict = "allow"
+rationale = "Reduces repeated blank lines in output; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-v"
+translation_modifier = "showing non-printing characters as visible placeholders"
+verdict = "allow"
+rationale = "Makes control characters visible; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-e"
+translation_modifier = "showing non-printing characters and marking the end of each line"
+verdict = "allow"
+rationale = "Combines -v with end-of-line markers; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-t"
+translation_modifier = "showing non-printing characters and displaying tabs as ^I"
+verdict = "allow"
+rationale = "Combines -v with visible tab characters; still read-only."
+
+[[flag]]
+applies_to = "cat"
+flag = "-u"
+translation_modifier = "with unbuffered output"
+verdict = "allow"
+rationale = "Disables output buffering; still read-only."

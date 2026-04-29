@@ -1,0 +1,7 @@
+# tools/tty.toml
+
+[[command]]
+path = "tty"
+translation = "Print the file name of the terminal connected to standard input."
+verdict = "allow"
+rationale = "Read-only display of terminal device path; modifies nothing."

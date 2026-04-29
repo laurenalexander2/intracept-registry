@@ -1,0 +1,7 @@
+# tools/pg_walsummary.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_walsummary"
+translation = "Display a summary of PostgreSQL write-ahead log records."
+verdict = "allow"
+rationale = "Read-only summary of WAL contents."

@@ -1,0 +1,7 @@
+# tools/syscallbysysc.d.toml
+
+[[command]]
+path = "syscallbysysc.d"
+translation = "Trace system calls grouped by system call type using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of system call activity; modifies nothing."

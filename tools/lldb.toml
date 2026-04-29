@@ -1,0 +1,35 @@
+# tools/lldb.toml
+
+[[command]]
+path = "lldb"
+translation = "Run the LLVM debugger for inspecting and debugging programs."
+verdict = "allow"
+rationale = "Can attach to running processes, inspect memory, and modify program state."
+
+[[flag]]
+applies_to = "lldb"
+flag = "--attach-pid"
+translation_modifier = "attaching to a running process by its process ID"
+verdict = "allow"
+rationale = "Gains debugging control over a running process, which can modify its execution."
+
+[[flag]]
+applies_to = "lldb"
+flag = "--attach-name"
+translation_modifier = "attaching to a running process by its name"
+verdict = "allow"
+rationale = "Gains debugging control over a running process, which can modify its execution."
+
+[[flag]]
+applies_to = "lldb"
+flag = "--batch"
+translation_modifier = "running commands from a script and then exiting"
+verdict = "allow"
+rationale = "Executes debugger commands non-interactively, which may modify process state."
+
+[[flag]]
+applies_to = "lldb"
+flag = "--wait-for"
+translation_modifier = "waiting for a process to launch before attaching"
+verdict = "allow"
+rationale = "Automatically attaches to a process when it starts, gaining debugging control."

@@ -1,0 +1,7 @@
+# tools/perlthanks.toml — Perl thank-you message sender
+
+[[command]]
+path = "perlthanks"
+translation = "Send a thank-you message to the Perl developers."
+verdict = "allow"
+rationale = "Composes an email; sends only with user confirmation."

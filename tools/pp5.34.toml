@@ -1,0 +1,7 @@
+# tools/pp5.34.toml
+
+[[command]]
+path = "pp5.34"
+translation = "Package a Perl 5.34 script and its dependencies into a standalone executable using PAR."
+verdict = "allow"
+rationale = "Creates a packaged executable file; does not modify the source script."

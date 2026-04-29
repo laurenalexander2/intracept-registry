@@ -1,0 +1,7 @@
+# tools/as.toml
+
+[[command]]
+path = "as"
+translation = "Assemble source code into object files."
+verdict = "allow"
+rationale = "Assembles code locally; does not execute the output."

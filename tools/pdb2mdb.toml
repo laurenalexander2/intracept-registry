@@ -1,0 +1,7 @@
+# tools/pdb2mdb.toml — PDB to MDB debug symbol converter
+
+[[command]]
+path = "pdb2mdb"
+translation = "Convert Windows program database debug symbol files to Mono debug format."
+verdict = "allow"
+rationale = "Creates a new debug file alongside the assembly; does not modify the original files."

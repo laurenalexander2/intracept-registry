@@ -1,0 +1,7 @@
+# tools/msginit.toml — GNU gettext new catalog initializer
+
+[[command]]
+path = "msginit"
+translation = "Create a new translation catalog file from a PO template."
+verdict = "allow"
+rationale = "Generates a new PO file from a template; does not modify existing translations."

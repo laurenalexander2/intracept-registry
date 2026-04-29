@@ -1,0 +1,84 @@
+# tools/bzip2.toml
+
+[[command]]
+path = "bzip2"
+translation = "Compress files using the bzip2 algorithm."
+verdict = "allow"
+rationale = "Compresses files in place, replacing the original with a .bz2 file by default."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-d"
+translation_modifier = "decompressing instead of compressing"
+verdict = "allow"
+rationale = "Decompresses .bz2 files in place, replacing them with the original content."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-k"
+translation_modifier = "keeping the original file instead of replacing it"
+verdict = "allow"
+rationale = "Preserves the source file; a safety-enhancing option."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-f"
+translation_modifier = "overwriting existing files without prompting"
+verdict = "allow"
+rationale = "Forces compression even if the output file already exists."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-t"
+translation_modifier = "testing the integrity of compressed files without decompressing"
+verdict = "allow"
+rationale = "Read-only operation that verifies compressed file integrity."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-c"
+translation_modifier = "writing output to standard output and keeping the original file"
+verdict = "allow"
+rationale = "Leaves the original file intact; output goes to standard output."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-z"
+translation_modifier = "forcing compression regardless of how the command was invoked"
+verdict = "allow"
+rationale = "Overrides the default behavior based on invocation name; same risk as normal compression."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Displays compression ratio for each file; does not change behavior."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-s"
+translation_modifier = "using less memory at the cost of slower speed"
+verdict = "allow"
+rationale = "Reduces memory usage; does not change which files are processed."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses warning messages; does not change behavior."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-9"
+translation_modifier = "using maximum compression with a larger block size"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "bzip2"
+flag = "-1"
+translation_modifier = "using fastest compression with a smaller block size"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."

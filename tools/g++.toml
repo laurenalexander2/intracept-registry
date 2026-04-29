@@ -1,0 +1,105 @@
+# tools/g++.toml
+
+[[command]]
+path = "g++"
+translation = "Compile C++ source code into executable programs."
+verdict = "allow"
+rationale = "Compiles source code into object files or executables; does not execute the compiled output."
+
+[[flag]]
+applies_to = "g++"
+flag = "-o"
+translation_modifier = "writing the output to a specific file"
+verdict = "allow"
+rationale = "Only changes the output destination."
+
+[[flag]]
+applies_to = "g++"
+flag = "-c"
+translation_modifier = "compiling to object files without linking"
+verdict = "allow"
+rationale = "Produces object files only; no executable is created."
+
+[[flag]]
+applies_to = "g++"
+flag = "-Wall"
+translation_modifier = "enabling all common compiler warnings"
+verdict = "allow"
+rationale = "Only changes which warnings are displayed during compilation."
+
+[[flag]]
+applies_to = "g++"
+flag = "-Wextra"
+translation_modifier = "enabling additional compiler warnings beyond the common set"
+verdict = "allow"
+rationale = "Only adds more diagnostic messages; does not change the compiled output."
+
+[[flag]]
+applies_to = "g++"
+flag = "-Werror"
+translation_modifier = "treating all warnings as errors that stop compilation"
+verdict = "allow"
+rationale = "Makes compilation stricter but does not change the output when it succeeds."
+
+[[flag]]
+applies_to = "g++"
+flag = "-g"
+translation_modifier = "including debugging information in the output"
+verdict = "allow"
+rationale = "Adds debug symbols; does not change program behavior."
+
+[[flag]]
+applies_to = "g++"
+flag = "-O2"
+translation_modifier = "enabling standard optimization"
+verdict = "allow"
+rationale = "Only changes how the code is optimized during compilation."
+
+[[flag]]
+applies_to = "g++"
+flag = "-O3"
+translation_modifier = "enabling aggressive optimization"
+verdict = "allow"
+rationale = "Maximizes optimization; may change timing behavior but does not affect safety."
+
+[[flag]]
+applies_to = "g++"
+flag = "-std"
+translation_modifier = "compiling for a specific C++ language standard"
+verdict = "allow"
+rationale = "Selects which language features are allowed; does not affect safety."
+
+[[flag]]
+applies_to = "g++"
+flag = "-I"
+translation_modifier = "adding a directory to the header file search path"
+verdict = "allow"
+rationale = "Only changes where the compiler looks for header files."
+
+[[flag]]
+applies_to = "g++"
+flag = "-L"
+translation_modifier = "adding a directory to the library search path"
+verdict = "allow"
+rationale = "Only changes where the linker looks for libraries."
+
+[[flag]]
+applies_to = "g++"
+flag = "-l"
+translation_modifier = "linking against a specific library"
+verdict = "allow"
+rationale = "Adds a library dependency; does not execute anything."
+
+[[flag]]
+applies_to = "g++"
+flag = "-shared"
+translation_modifier = "producing a shared library instead of an executable"
+verdict = "allow"
+rationale = "Only changes the output file type."
+
+[[flag]]
+applies_to = "g++"
+flag = "-E"
+translation_modifier = "only running the preprocessor without compiling"
+verdict = "allow"
+rationale = "Outputs preprocessed source code; no object file or executable is created."

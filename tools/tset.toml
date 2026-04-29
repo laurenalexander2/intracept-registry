@@ -1,0 +1,7 @@
+# tools/tset.toml
+
+[[command]]
+path = "tset"
+translation = "Initialize or reset terminal settings."
+verdict = "allow"
+rationale = "Configures terminal modes for the current session; resets on terminal close."

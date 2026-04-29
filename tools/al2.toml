@@ -1,0 +1,7 @@
+# tools/al2.toml
+
+[[command]]
+path = "al2"
+translation = "Mono assembly linker version 2."
+verdict = "allow"
+rationale = "Links .NET assemblies during compilation."

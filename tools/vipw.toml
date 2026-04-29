@@ -1,0 +1,7 @@
+# tools/vipw.toml
+
+[[command]]
+path = "vipw"
+translation = "Safely edit the system password file."
+verdict = "require_approval"
+rationale = "Modifies /etc/passwd which controls user accounts; errors can lock users out of the system."

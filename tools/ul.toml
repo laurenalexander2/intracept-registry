@@ -1,0 +1,7 @@
+# tools/ul.toml
+
+[[command]]
+path = "ul"
+translation = "Translate underline sequences to the terminal's underline capability."
+verdict = "allow"
+rationale = "Text formatting filter; writes to the terminal without modifying files."

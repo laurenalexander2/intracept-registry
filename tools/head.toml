@@ -1,0 +1,21 @@
+# tools/head.toml
+
+[[command]]
+path = "head"
+translation = "Display the first lines of a file."
+verdict = "allow"
+rationale = "Read-only operation that outputs the beginning of file contents without modifying anything."
+
+[[flag]]
+applies_to = "head"
+flag = "-n"
+translation_modifier = "showing a specified number of lines"
+verdict = "allow"
+rationale = "Controls how many lines are displayed; still read-only."
+
+[[flag]]
+applies_to = "head"
+flag = "-c"
+translation_modifier = "showing a specified number of bytes instead of lines"
+verdict = "allow"
+rationale = "Changes the unit of output from lines to bytes; still read-only."

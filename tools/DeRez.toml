@@ -1,0 +1,7 @@
+# tools/DeRez.toml
+
+[[command]]
+path = "DeRez"
+translation = "Decompile resource forks into Rez source code."
+verdict = "allow"
+rationale = "Read-only extraction of resource data."

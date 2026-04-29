@@ -1,0 +1,56 @@
+# tools/ln.toml
+
+[[command]]
+path = "ln"
+translation = "Create a link that points to an existing file, so the same file can be accessed from multiple locations."
+verdict = "allow"
+rationale = "Creates a new directory entry pointing to an existing file; does not modify the original."
+
+[[flag]]
+applies_to = "ln"
+flag = "-s"
+translation_modifier = "creating a shortcut that refers to the target by path instead of a direct link"
+verdict = "allow"
+rationale = "Creates a shortcut rather than a direct link; does not modify the target file."
+
+[[flag]]
+applies_to = "ln"
+flag = "-f"
+translation_modifier = "overwriting any existing file at the destination without asking"
+verdict = "allow"
+rationale = "Silently replaces an existing file or link at the destination path."
+
+[[flag]]
+applies_to = "ln"
+flag = "-i"
+translation_modifier = "prompting for confirmation before overwriting an existing file"
+verdict = "allow"
+rationale = "Adds an interactive confirmation step before replacing anything; a safety improvement."
+
+[[flag]]
+applies_to = "ln"
+flag = "-v"
+translation_modifier = "showing each link as it is created"
+verdict = "allow"
+rationale = "Prints status messages; does not change behavior."
+
+[[flag]]
+applies_to = "ln"
+flag = "-h"
+translation_modifier = "treating the destination as a regular file even if it is a shortcut to a directory"
+verdict = "allow"
+rationale = "Prevents following a shortcut at the destination; avoids creating the link inside an unintended directory."
+
+[[flag]]
+applies_to = "ln"
+flag = "-F"
+translation_modifier = "removing an existing directory at the destination to make room for the link"
+verdict = "require_approval"
+rationale = "Deletes a directory to replace it with a link, which can cause data loss if the directory contains files."
+
+[[flag]]
+applies_to = "ln"
+flag = "-w"
+translation_modifier = "warning if the target of the shortcut does not currently exist"
+verdict = "allow"
+rationale = "Alerts about broken shortcuts; an informational safety check."

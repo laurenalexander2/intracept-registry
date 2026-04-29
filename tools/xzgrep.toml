@@ -1,0 +1,7 @@
+# tools/xzgrep.toml
+
+[[command]]
+path = "xzgrep"
+translation = "Search for patterns in XZ-compressed files."
+verdict = "allow"
+rationale = "Read-only search; modifies nothing."

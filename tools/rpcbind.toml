@@ -1,0 +1,7 @@
+# tools/rpcbind.toml
+
+[[command]]
+path = "rpcbind"
+translation = "Run the RPC port mapper background service for mapping RPC services to ports."
+verdict = "allow"
+rationale = "System background service that maps RPC program numbers to network ports."

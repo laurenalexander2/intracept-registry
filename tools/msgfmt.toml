@@ -1,0 +1,21 @@
+# tools/msgfmt.toml — GNU gettext message compiler
+
+[[command]]
+path = "msgfmt"
+translation = "Compile a translation catalog from a text PO file into a binary machine object file."
+verdict = "allow"
+rationale = "Generates a binary message catalog file; source files are not modified."
+
+[[flag]]
+applies_to = "msgfmt"
+flag = "--check"
+translation_modifier = "performing additional validation checks on the input"
+verdict = "allow"
+rationale = "Adds stricter validation; still produces the same output."
+
+[[flag]]
+applies_to = "msgfmt"
+flag = "--statistics"
+translation_modifier = "printing translation statistics"
+verdict = "allow"
+rationale = "Adds summary output; no additional risk."

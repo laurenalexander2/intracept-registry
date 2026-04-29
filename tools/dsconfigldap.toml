@@ -1,0 +1,7 @@
+# tools/dsconfigldap.toml
+
+[[command]]
+path = "dsconfigldap"
+translation = "Configure LDAP directory service on macOS."
+verdict = "require_approval"
+rationale = "Modifies directory service configuration that affects authentication."

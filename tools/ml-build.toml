@@ -1,0 +1,7 @@
+# tools/ml-build.toml — SML/NJ command-line build tool
+
+[[command]]
+path = "ml-build"
+translation = "Build a Standard ML program into a heap image using the Standard ML of New Jersey Compilation Manager."
+verdict = "allow"
+rationale = "Compiles source code into a local heap image; does not modify system state."

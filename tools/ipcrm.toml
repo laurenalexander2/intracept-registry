@@ -1,0 +1,28 @@
+# tools/ipcrm.toml
+
+[[command]]
+path = "ipcrm"
+translation = "Remove System V interprocess communication resources."
+verdict = "require_approval"
+rationale = "Permanently removes shared memory segments, message queues, or synchronization locks that may be in use by running processes."
+
+[[flag]]
+applies_to = "ipcrm"
+flag = "-q"
+translation_modifier = "removing a message queue by its ID"
+verdict = "require_approval"
+rationale = "Permanently destroys the message queue and all messages in it."
+
+[[flag]]
+applies_to = "ipcrm"
+flag = "-m"
+translation_modifier = "marking a shared memory segment for removal by its ID"
+verdict = "require_approval"
+rationale = "Marks the shared memory segment for destruction after the last process detaches."
+
+[[flag]]
+applies_to = "ipcrm"
+flag = "-s"
+translation_modifier = "removing a synchronization lock set by its ID"
+verdict = "require_approval"
+rationale = "Permanently destroys the synchronization lock set, which may cause processes relying on it to fail."

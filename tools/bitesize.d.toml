@@ -1,0 +1,7 @@
+# tools/bitesize.d.toml
+
+[[command]]
+path = "bitesize.d"
+translation = "Display disk I/O size distribution using DTrace."
+verdict = "allow"
+rationale = "Read-only system monitoring script."

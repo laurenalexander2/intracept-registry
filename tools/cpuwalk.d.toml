@@ -1,0 +1,7 @@
+# tools/cpuwalk.d.toml
+
+[[command]]
+path = "cpuwalk.d"
+translation = "Display CPU usage distribution using DTrace."
+verdict = "allow"
+rationale = "Read-only system monitoring script."

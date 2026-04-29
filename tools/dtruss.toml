@@ -1,0 +1,84 @@
+# tools/dtruss.toml
+
+[[command]]
+path = "dtruss"
+translation = "Trace system calls of a process using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of system calls for debugging; requires root privileges."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-a"
+translation_modifier = "printing all available details including timestamps and CPU times"
+verdict = "allow"
+rationale = "Only adds more information to the output."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-c"
+translation_modifier = "printing a summary of system call counts instead of individual calls"
+verdict = "allow"
+rationale = "Only changes the output format to a summary view."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-d"
+translation_modifier = "printing relative timestamps for each system call"
+verdict = "allow"
+rationale = "Only adds timing information to the output."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-e"
+translation_modifier = "printing elapsed time for each system call"
+verdict = "allow"
+rationale = "Only adds timing information to the output."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-f"
+translation_modifier = "following child processes as they are created"
+verdict = "allow"
+rationale = "Expands tracing to child processes; still read-only."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-o"
+translation_modifier = "printing CPU time consumed by each system call"
+verdict = "allow"
+rationale = "Only adds timing information to the output."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-s"
+translation_modifier = "printing stack backtraces for each system call"
+verdict = "allow"
+rationale = "Only adds diagnostic information to the output."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-p"
+translation_modifier = "attaching to an already-running process by its process ID"
+verdict = "allow"
+rationale = "Traces an existing process; read-only observation."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-n"
+translation_modifier = "tracing all processes matching a specified name"
+verdict = "allow"
+rationale = "Selects processes by name; still read-only tracing."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-t"
+translation_modifier = "filtering output to only a specified system call"
+verdict = "allow"
+rationale = "Narrows the trace to a single system call type."
+
+[[flag]]
+applies_to = "dtruss"
+flag = "-b"
+translation_modifier = "using a specified buffer size for trace data"
+verdict = "allow"
+rationale = "Only adjusts internal memory allocation for tracing."

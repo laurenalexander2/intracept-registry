@@ -1,0 +1,7 @@
+# tools/soapsuds.toml
+
+[[command]]
+path = "soapsuds"
+translation = "Generate proxy classes for .NET remoting and web service endpoints."
+verdict = "allow"
+rationale = "Generates source code files; does not modify existing code."

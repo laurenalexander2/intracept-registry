@@ -1,0 +1,42 @@
+# tools/mv.toml
+
+[[command]]
+path = "mv"
+translation = "Move or rename files and directories."
+verdict = "allow"
+rationale = "Relocates files, removing them from the original location; silently overwrites the destination by default."
+
+[[flag]]
+applies_to = "mv"
+flag = "-f"
+translation_modifier = "overwriting existing files without prompting"
+verdict = "allow"
+rationale = "Suppresses confirmation prompts, allowing silent overwrite of destination files."
+
+[[flag]]
+applies_to = "mv"
+flag = "-i"
+translation_modifier = "prompting before overwriting existing files"
+verdict = "allow"
+rationale = "Adds an interactive confirmation step, reducing the risk of accidental overwrite."
+
+[[flag]]
+applies_to = "mv"
+flag = "-n"
+translation_modifier = "without overwriting any existing files"
+verdict = "allow"
+rationale = "Prevents overwriting; a safety-enhancing option."
+
+[[flag]]
+applies_to = "mv"
+flag = "-v"
+translation_modifier = "showing each file as it is moved"
+verdict = "allow"
+rationale = "Adds verbose output without changing what is moved."
+
+[[flag]]
+applies_to = "mv"
+flag = "-h"
+translation_modifier = "without following symbolic links at the destination"
+verdict = "allow"
+rationale = "Renames the symbolic link itself instead of moving the file into the linked directory."

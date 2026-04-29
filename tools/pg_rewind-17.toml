@@ -1,0 +1,7 @@
+# tools/pg_rewind-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_rewind-17"
+translation = "Synchronize a PostgreSQL data directory with another copy that has diverged."
+verdict = "require_approval"
+rationale = "Overwrites data files in the target cluster to match the source, discarding divergent changes."

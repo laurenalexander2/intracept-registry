@@ -1,0 +1,7 @@
+# tools/topsyscall.toml
+
+[[command]]
+path = "topsyscall"
+translation = "Display the most frequently called system calls in real time."
+verdict = "allow"
+rationale = "Read-only system call monitoring; modifies nothing."

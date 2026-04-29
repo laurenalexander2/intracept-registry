@@ -1,0 +1,7 @@
+# tools/rustfmt.toml
+
+[[command]]
+path = "rustfmt"
+translation = "Format Rust source code according to standard style guidelines."
+verdict = "allow"
+rationale = "Modifies only whitespace and formatting; program semantics are unchanged."

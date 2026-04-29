@@ -1,0 +1,7 @@
+# tools/snmpgetnext.toml
+
+[[command]]
+path = "snmpgetnext"
+translation = "Retrieve the next SNMP variable in the MIB tree from a network device."
+verdict = "allow"
+rationale = "Read-only SNMP GETNEXT request; does not modify the remote device."

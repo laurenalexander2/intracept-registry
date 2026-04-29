@@ -1,0 +1,7 @@
+# tools/tkcon.toml
+
+[[command]]
+path = "tkcon"
+translation = "Run an enhanced interactive Tcl/Tk console."
+verdict = "allow"
+rationale = "Launches a Tcl interpreter console; risk depends on commands executed within it."

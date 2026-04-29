@@ -1,0 +1,7 @@
+# tools/transformers.toml
+
+[[command]]
+path = "transformers"
+translation = "Run Hugging Face Transformers CLI utilities for model management."
+verdict = "allow"
+rationale = "Provides model download and conversion utilities; does not modify existing models without explicit commands."

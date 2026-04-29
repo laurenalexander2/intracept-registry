@@ -1,0 +1,7 @@
+# tools/xzdec.toml
+
+[[command]]
+path = "xzdec"
+translation = "Decompress XZ files and print the output."
+verdict = "allow"
+rationale = "Read-only decompression to the terminal; does not modify files."

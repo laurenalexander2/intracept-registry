@@ -1,0 +1,14 @@
+# tools/postsuper.toml
+
+[[command]]
+path = "postsuper"
+translation = "Perform maintenance on the Postfix mail queue."
+verdict = "allow"
+rationale = "Can delete, hold, or requeue messages in the mail queue."
+
+[[flag]]
+applies_to = "postsuper"
+flag = "-d"
+translation_modifier = "deleting a message from the queue"
+verdict = "require_approval"
+rationale = "Permanently removes a queued message, which cannot be recovered."

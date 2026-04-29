@@ -1,0 +1,7 @@
+# tools/users.toml
+
+[[command]]
+path = "users"
+translation = "Display the login names of currently logged-in users."
+verdict = "allow"
+rationale = "Read-only display of logged-in users; modifies nothing."

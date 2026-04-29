@@ -1,0 +1,7 @@
+# tools/podchecker.toml
+
+[[command]]
+path = "podchecker"
+translation = "Check Perl Pod documentation files for syntax errors."
+verdict = "allow"
+rationale = "Read-only validation; does not modify files."

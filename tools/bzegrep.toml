@@ -1,0 +1,7 @@
+# tools/bzegrep.toml
+
+[[command]]
+path = "bzegrep"
+translation = "Search bzip2-compressed files using extended regular expressions."
+verdict = "allow"
+rationale = "Read-only search of compressed file contents."

@@ -1,0 +1,7 @@
+# tools/pppd.toml
+
+[[command]]
+path = "pppd"
+translation = "Run the Point-to-Point Protocol background service for establishing network connections."
+verdict = "allow"
+rationale = "Establishes network connections that change routing and interface configuration."

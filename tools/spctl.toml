@@ -1,0 +1,52 @@
+# tools/spctl.toml
+
+[[command]]
+path = "spctl"
+translation = "Manage the system security assessment policy for code execution and installation."
+verdict = "allow"
+rationale = "The bare command prints help; assessment is read-only by default."
+
+[[command]]
+path = "spctl --assess"
+translation = "Assess whether the system policy allows execution or installation of specified files."
+verdict = "allow"
+rationale = "Read-only evaluation of security policy against files."
+
+[[command]]
+path = "spctl --status"
+translation = "Display whether the security assessment subsystem is enabled or disabled."
+verdict = "allow"
+rationale = "Read-only operation that displays whether the system security assessment policy is enabled or disabled."
+
+[[command]]
+path = "spctl --global-enable"
+translation = "Enable the system security assessment subsystem."
+verdict = "allow"
+rationale = "Enables Gatekeeper enforcement; may prevent previously allowed applications from running."
+
+[[command]]
+path = "spctl --global-disable"
+translation = "Reveal the option to allow applications from anywhere in security settings."
+verdict = "require_approval"
+rationale = "Weakens Gatekeeper enforcement by exposing the allow-anywhere option."
+
+[[flag]]
+applies_to = "spctl --assess"
+flag = "-t"
+translation_modifier = "specifying the type of assessment to perform"
+verdict = "allow"
+rationale = "Selects assessment type (execute, install, open); no state modification."
+
+[[flag]]
+applies_to = "spctl --assess"
+flag = "-v"
+translation_modifier = "producing more verbose assessment output"
+verdict = "allow"
+rationale = "Cosmetic output change; no state modification."
+
+[[flag]]
+applies_to = "spctl"
+flag = "--reset-default"
+translation_modifier = "resetting the system policy database to its default state"
+verdict = "require_approval"
+rationale = "Discards all administrator-customized policy rules; requires a reboot to take full effect."

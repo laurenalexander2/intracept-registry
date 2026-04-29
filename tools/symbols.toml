@@ -1,0 +1,7 @@
+# tools/symbols.toml
+
+[[command]]
+path = "symbols"
+translation = "Display symbol information for a binary or running process."
+verdict = "allow"
+rationale = "Read-only analysis of binary symbols; modifies nothing."

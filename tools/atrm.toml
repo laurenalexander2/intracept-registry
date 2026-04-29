@@ -1,0 +1,7 @@
+# tools/atrm.toml
+
+[[command]]
+path = "atrm"
+translation = "Remove a scheduled at job."
+verdict = "allow"
+rationale = "Deletes a pending scheduled task."

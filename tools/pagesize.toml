@@ -1,0 +1,7 @@
+# tools/pagesize.toml — System page size printer
+
+[[command]]
+path = "pagesize"
+translation = "Print the system memory page size in bytes."
+verdict = "allow"
+rationale = "Read-only display of a system constant."

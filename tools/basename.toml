@@ -1,0 +1,21 @@
+# tools/basename.toml
+
+[[command]]
+path = "basename"
+translation = "Extract the file name from a path, removing the directory portion."
+verdict = "allow"
+rationale = "Read-only text manipulation that does not access the filesystem."
+
+[[flag]]
+applies_to = "basename"
+flag = "-a"
+translation_modifier = "processing multiple paths at once instead of just one"
+verdict = "allow"
+rationale = "Allows multiple arguments; still a read-only string operation."
+
+[[flag]]
+applies_to = "basename"
+flag = "-s"
+translation_modifier = "removing a specified suffix from the end of the file name"
+verdict = "allow"
+rationale = "Strips a trailing extension or suffix; still a read-only string operation."

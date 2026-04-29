@@ -1,0 +1,7 @@
+# tools/package-stash-conflicts.toml — Perl Package::Stash conflict checker
+
+[[command]]
+path = "package-stash-conflicts"
+translation = "Check for conflicts between the pure-Perl and native-extension versions of the Package::Stash module."
+verdict = "allow"
+rationale = "Read-only diagnostic that checks module version compatibility."

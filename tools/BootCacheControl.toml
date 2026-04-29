@@ -1,0 +1,7 @@
+# tools/BootCacheControl.toml
+
+[[command]]
+path = "BootCacheControl"
+translation = "Manage the macOS boot cache."
+verdict = "allow"
+rationale = "Modifies the boot cache, which affects startup performance."

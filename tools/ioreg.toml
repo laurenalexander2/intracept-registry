@@ -1,0 +1,77 @@
+# tools/ioreg.toml
+
+[[command]]
+path = "ioreg"
+translation = "Display the I/O Kit device registry as a tree."
+verdict = "allow"
+rationale = "Read-only display of hardware device information; modifies nothing."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-l"
+translation_modifier = "showing all properties for each displayed device"
+verdict = "allow"
+rationale = "Only increases the detail shown; read-only operation."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-c"
+translation_modifier = "filtering to devices of a specific class"
+verdict = "allow"
+rationale = "Only narrows which devices are displayed."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-n"
+translation_modifier = "filtering to devices matching a specific name"
+verdict = "allow"
+rationale = "Only narrows which devices are displayed."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-r"
+translation_modifier = "showing only subtrees rooted at matching devices"
+verdict = "allow"
+rationale = "Only changes the tree display starting point; read-only operation."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-k"
+translation_modifier = "filtering to devices that have a specific property key"
+verdict = "allow"
+rationale = "Only narrows which devices are displayed."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-d"
+translation_modifier = "limiting the tree depth to a specified level"
+verdict = "allow"
+rationale = "Only controls how deep the tree is displayed."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-p"
+translation_modifier = "traversing a specific registry plane instead of the default"
+verdict = "allow"
+rationale = "Only changes which view of the device hierarchy is shown."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-x"
+translation_modifier = "displaying data and numbers in hexadecimal"
+verdict = "allow"
+rationale = "Only changes the output format; no state modification."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-a"
+translation_modifier = "formatting the output as XML"
+verdict = "allow"
+rationale = "Only changes the output format; no state modification."
+
+[[flag]]
+applies_to = "ioreg"
+flag = "-w"
+translation_modifier = "setting the maximum line width for the output"
+verdict = "allow"
+rationale = "Only controls output wrapping; no state modification."

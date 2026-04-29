@@ -1,0 +1,91 @@
+# tools/objdump.toml
+
+[[command]]
+path = "objdump"
+translation = "Display the contents, headers, and disassembly of object files and executables."
+verdict = "allow"
+rationale = "Read-only inspection of binary files; does not modify anything."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-d"
+translation_modifier = "disassembling executable sections"
+verdict = "allow"
+rationale = "Read-only operation that displays disassembled machine code without modifying the binary file."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-D"
+translation_modifier = "disassembling all sections"
+verdict = "allow"
+rationale = "Read-only disassembly of all sections."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-x"
+translation_modifier = "displaying all available headers"
+verdict = "allow"
+rationale = "Read-only display of all header information."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-t"
+translation_modifier = "displaying the symbol table"
+verdict = "allow"
+rationale = "Read-only listing of symbols in the binary."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-h"
+translation_modifier = "displaying section headers"
+verdict = "allow"
+rationale = "Read-only summary of section information."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-r"
+translation_modifier = "displaying relocation entries"
+verdict = "allow"
+rationale = "Read-only listing of relocation information."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-s"
+translation_modifier = "displaying the full contents of each section"
+verdict = "allow"
+rationale = "Read-only hex dump of all section data."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-S"
+translation_modifier = "interleaving source code with the disassembly"
+verdict = "allow"
+rationale = "Read-only display that shows source alongside assembly."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-C"
+translation_modifier = "displaying demangled symbol names"
+verdict = "allow"
+rationale = "Only changes how symbol names are formatted in the output."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-l"
+translation_modifier = "displaying source file line numbers alongside the disassembly"
+verdict = "allow"
+rationale = "Read-only display that maps instructions to source lines."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-f"
+translation_modifier = "displaying the overall file header"
+verdict = "allow"
+rationale = "Read-only display of the file's main header."
+
+[[flag]]
+applies_to = "objdump"
+flag = "-j"
+translation_modifier = "limiting output to a specific section"
+verdict = "allow"
+rationale = "Filters which section is displayed; still read-only."

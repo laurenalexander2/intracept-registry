@@ -1,0 +1,112 @@
+# tools/screencapture.toml
+
+[[command]]
+path = "screencapture"
+translation = "Capture images or video from the screen and save them to a file or clipboard."
+verdict = "allow"
+rationale = "Creates a screenshot file; does not modify existing files or system state."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-c"
+translation_modifier = "sending the capture to the clipboard instead of a file"
+verdict = "allow"
+rationale = "Writes to clipboard; trivially overwritten."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-i"
+translation_modifier = "interactively selecting a region or window"
+verdict = "allow"
+rationale = "Allows user to choose capture area; no additional risk."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-m"
+translation_modifier = "capturing only the main monitor"
+verdict = "allow"
+rationale = "Limits capture scope; no state change."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-C"
+translation_modifier = "including the cursor in the capture"
+verdict = "allow"
+rationale = "Adds cursor to image; purely cosmetic."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-T"
+translation_modifier = "after a specified delay in seconds"
+verdict = "allow"
+rationale = "Adds a timer before capture; no state modification."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-t"
+translation_modifier = "in a specified image format"
+verdict = "allow"
+rationale = "Selects output format; no additional risk."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-v"
+translation_modifier = "recording video instead of a still image"
+verdict = "allow"
+rationale = "Captures video to a file; creates new content without modifying existing state."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-V"
+translation_modifier = "recording video for a specified number of seconds"
+verdict = "allow"
+rationale = "Records a timed video; creates a file without modifying existing state."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-w"
+translation_modifier = "allowing only window selection mode"
+verdict = "allow"
+rationale = "Restricts selection to windows; no additional risk."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-s"
+translation_modifier = "allowing only mouse selection mode"
+verdict = "allow"
+rationale = "Restricts selection to mouse drag; no additional risk."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-R"
+translation_modifier = "capturing only a specified rectangle region"
+verdict = "allow"
+rationale = "Limits capture to a defined area; no state modification."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-o"
+translation_modifier = "without capturing the window shadow"
+verdict = "allow"
+rationale = "Cosmetic change to window capture; no risk."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-x"
+translation_modifier = "without playing the capture sound"
+verdict = "allow"
+rationale = "Suppresses audio feedback; purely cosmetic."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-k"
+translation_modifier = "showing mouse clicks in video recordings"
+verdict = "allow"
+rationale = "Adds click visualization to video; purely cosmetic."
+
+[[flag]]
+applies_to = "screencapture"
+flag = "-g"
+translation_modifier = "including audio from the default input device"
+verdict = "allow"
+rationale = "Adds audio track to video capture; no destructive action."

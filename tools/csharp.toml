@@ -1,0 +1,7 @@
+# tools/csharp.toml
+
+[[command]]
+path = "csharp"
+translation = "Run the Mono C# interactive shell."
+verdict = "allow"
+rationale = "Executes arbitrary C# code with system access."

@@ -1,0 +1,112 @@
+# tools/ls.toml
+
+[[command]]
+path = "ls"
+translation = "List the contents of a directory."
+verdict = "allow"
+rationale = "Read-only operation that displays file and directory names without modifying anything."
+
+[[flag]]
+applies_to = "ls"
+flag = "-l"
+translation_modifier = "showing detailed information including permissions, size, and modification date"
+verdict = "allow"
+rationale = "Changes output format only; still a read-only operation."
+
+[[flag]]
+applies_to = "ls"
+flag = "-a"
+translation_modifier = "including hidden files and directories"
+verdict = "allow"
+rationale = "Shows additional entries but remains a read-only operation."
+
+[[flag]]
+applies_to = "ls"
+flag = "-A"
+translation_modifier = "including hidden files but excluding the current and parent directory entries"
+verdict = "allow"
+rationale = "Shows hidden entries except . and ..; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-R"
+translation_modifier = "recursively listing all subdirectories"
+verdict = "allow"
+rationale = "May produce large output on deep directory trees but remains a read-only operation."
+
+[[flag]]
+applies_to = "ls"
+flag = "-t"
+translation_modifier = "sorted by modification time, newest first"
+verdict = "allow"
+rationale = "Changes sort order; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-r"
+translation_modifier = "in reverse order"
+verdict = "allow"
+rationale = "Reverses the sort order; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-S"
+translation_modifier = "sorted by file size, largest first"
+verdict = "allow"
+rationale = "Changes sort order; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-h"
+translation_modifier = "with file sizes in human-readable units like KB, MB, and GB"
+verdict = "allow"
+rationale = "Changes size display format; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-d"
+translation_modifier = "showing only the directory entry itself, not its contents"
+verdict = "allow"
+rationale = "Shows the directory as a file entry instead of listing its contents; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-1"
+translation_modifier = "with one entry per line"
+verdict = "allow"
+rationale = "Changes output to single-column format; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-F"
+translation_modifier = "appending a symbol to each entry to indicate its type"
+verdict = "allow"
+rationale = "Adds type indicators (/ for directories, * for executables, etc.); still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-i"
+translation_modifier = "showing the inode number of each file"
+verdict = "allow"
+rationale = "Adds inode numbers to output; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-L"
+translation_modifier = "following symbolic links and showing information about the linked target"
+verdict = "allow"
+rationale = "Resolves symbolic links for display; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-p"
+translation_modifier = "appending a slash to directory names"
+verdict = "allow"
+rationale = "Visual indicator for directories; still read-only."
+
+[[flag]]
+applies_to = "ls"
+flag = "-G"
+translation_modifier = "with colorized output"
+verdict = "allow"
+rationale = "Enables color coding by file type; still read-only."

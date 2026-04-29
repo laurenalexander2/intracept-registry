@@ -1,0 +1,14 @@
+# tools/clusterdb-17.toml
+
+[[command]]
+path = "clusterdb-17"
+translation = "Cluster all tables in a PostgreSQL 17 database."
+verdict = "allow"
+rationale = "Rewrites table data on disk for physical ordering, locking tables during the process."
+
+[[flag]]
+applies_to = "clusterdb-17"
+flag = "--all"
+translation_modifier = "operating on all databases in the cluster"
+verdict = "allow"
+rationale = "Affects every database in the PostgreSQL cluster, greatly increasing blast radius."

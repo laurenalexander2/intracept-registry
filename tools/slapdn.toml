@@ -1,0 +1,7 @@
+# tools/slapdn.toml
+
+[[command]]
+path = "slapdn"
+translation = "Test distinguished name normalization for an LDAP database."
+verdict = "allow"
+rationale = "Read-only distinguished name validation; does not modify the database."

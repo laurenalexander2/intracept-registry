@@ -1,0 +1,49 @@
+# tools/md5.toml
+
+[[command]]
+path = "md5"
+translation = "Calculate an MD5 checksum for files or strings."
+verdict = "allow"
+rationale = "Read-only computation that produces a hash digest without modifying files."
+
+[[flag]]
+applies_to = "md5"
+flag = "-s"
+translation_modifier = "computing the checksum of a string instead of a file"
+verdict = "allow"
+rationale = "Only changes the input source."
+
+[[flag]]
+applies_to = "md5"
+flag = "-q"
+translation_modifier = "showing only the checksum without the filename"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "md5"
+flag = "-r"
+translation_modifier = "printing the checksum before the filename instead of after"
+verdict = "allow"
+rationale = "Only changes the order of fields in the output."
+
+[[flag]]
+applies_to = "md5"
+flag = "-p"
+translation_modifier = "echoing input to the terminal and appending the checksum"
+verdict = "allow"
+rationale = "Only adds passthrough output; no state modification."
+
+[[flag]]
+applies_to = "md5"
+flag = "-c"
+translation_modifier = "comparing the computed checksum against a specified string"
+verdict = "allow"
+rationale = "Read-only comparison; only affects the exit status."
+
+[[flag]]
+applies_to = "md5"
+flag = "-t"
+translation_modifier = "running a built-in speed test"
+verdict = "allow"
+rationale = "Only measures computation speed; modifies nothing."

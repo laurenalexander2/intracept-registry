@@ -1,0 +1,7 @@
+# tools/zipnote.toml
+
+[[command]]
+path = "zipnote"
+translation = "Read or write comments in a zip archive."
+verdict = "allow"
+rationale = "Can modify zip archive comments in place; file data is unchanged but the archive is rewritten."

@@ -1,0 +1,21 @@
+# tools/killall.toml
+
+[[command]]
+path = "killall"
+translation = "Send a signal to all processes matching a name."
+verdict = "allow"
+rationale = "Terminates all processes with the given name, which may include unintended processes."
+
+[[flag]]
+applies_to = "killall"
+flag = "-9"
+translation_modifier = "sending immediate termination signal to forcefully terminate all matching processes"
+verdict = "allow"
+rationale = "Immediately kills all matching processes with no chance for graceful shutdown."
+
+[[flag]]
+applies_to = "killall"
+flag = "-i"
+translation_modifier = "prompting for confirmation before signaling each process"
+verdict = "allow"
+rationale = "Adds an interactive confirmation step, reducing the risk of killing the wrong process."

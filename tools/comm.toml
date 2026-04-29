@@ -1,0 +1,35 @@
+# tools/comm.toml
+
+[[command]]
+path = "comm"
+translation = "Compare two sorted files line by line, showing lines unique to each file and lines they share."
+verdict = "allow"
+rationale = "Read-only comparison that writes results to the terminal."
+
+[[flag]]
+applies_to = "comm"
+flag = "-1"
+translation_modifier = "hiding lines that only appear in the first file"
+verdict = "allow"
+rationale = "Only changes which lines are displayed; read-only operation."
+
+[[flag]]
+applies_to = "comm"
+flag = "-2"
+translation_modifier = "hiding lines that only appear in the second file"
+verdict = "allow"
+rationale = "Only changes which lines are displayed; read-only operation."
+
+[[flag]]
+applies_to = "comm"
+flag = "-3"
+translation_modifier = "hiding lines that appear in both files"
+verdict = "allow"
+rationale = "Only changes which lines are displayed; read-only operation."
+
+[[flag]]
+applies_to = "comm"
+flag = "-i"
+translation_modifier = "ignoring case differences"
+verdict = "allow"
+rationale = "Only changes how lines are compared; read-only operation."

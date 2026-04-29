@@ -1,0 +1,7 @@
+# tools/pathchk.toml — Pathname checker
+
+[[command]]
+path = "pathchk"
+translation = "Check whether pathnames are valid and portable."
+verdict = "allow"
+rationale = "Read-only validation of pathname strings; does not create or modify files."

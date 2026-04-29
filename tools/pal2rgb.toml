@@ -1,0 +1,7 @@
+# tools/pal2rgb.toml — TIFF palette to RGB converter
+
+[[command]]
+path = "pal2rgb"
+translation = "Convert a palette-color TIFF image to a full-color RGB TIFF image."
+verdict = "allow"
+rationale = "Reads an input file and writes a new output file; the original is not modified."

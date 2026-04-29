@@ -1,0 +1,7 @@
+# tools/pagestuff.toml — Mach-O file page analysis
+
+[[command]]
+path = "pagestuff"
+translation = "Display how the structure of an Apple platform binary file maps to memory pages."
+verdict = "allow"
+rationale = "Read-only analysis of binary file layout; does not modify anything."

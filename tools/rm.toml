@@ -1,0 +1,77 @@
+# tools/rm.toml
+
+[[command]]
+path = "rm"
+translation = "Delete files."
+verdict = "allow"
+rationale = "Removes a single named file; prompts for confirmation if the file is not writable."
+
+[[flag]]
+applies_to = "rm"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "require_approval"
+rationale = "Deletes entire directory trees, which can cause significant data loss if misapplied."
+
+[[flag]]
+applies_to = "rm"
+flag = "-R"
+translation_modifier = "recursively through all subdirectories"
+verdict = "require_approval"
+rationale = "Equivalent to -r; deletes entire directory trees, which can cause significant data loss if misapplied."
+
+[[flag]]
+applies_to = "rm"
+flag = "-f"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Suppresses confirmation prompts and ignores nonexistent files; on a single file the blast radius is narrow, but it removes a safety check."
+
+[[flag]]
+applies_to = "rm"
+flag = "-rf"
+translation_modifier = "recursively through all subdirectories without asking for confirmation"
+verdict = "require_approval"
+rationale = "Combines recursive traversal with suppressed prompts, enabling irreversible destruction of entire directory trees."
+
+[[flag]]
+applies_to = "rm"
+flag = "-i"
+translation_modifier = "prompting for confirmation before each file"
+verdict = "allow"
+rationale = "Adds an interactive confirmation step before every deletion, reducing the chance of accidental removal."
+
+[[flag]]
+applies_to = "rm"
+flag = "-I"
+translation_modifier = "prompting for confirmation once when deleting more than three files or removing directories recursively"
+verdict = "allow"
+rationale = "Provides a single batch confirmation prompt for bulk operations, offering meaningful protection with less interruption than -i."
+
+[[flag]]
+applies_to = "rm"
+flag = "-d"
+translation_modifier = "including empty directories"
+verdict = "allow"
+rationale = "Allows removal of directories in addition to regular files, expanding the scope of deletion."
+
+[[flag]]
+applies_to = "rm"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Displays each file as it is removed; does not change what is deleted."
+
+[[flag]]
+applies_to = "rm"
+flag = "-W"
+translation_modifier = "attempting to undelete the named files"
+verdict = "allow"
+rationale = "Recovers previously deleted files in a union file system; restores data rather than destroying it."
+
+[[flag]]
+applies_to = "rm"
+flag = "-x"
+translation_modifier = "without crossing filesystem mount points"
+verdict = "allow"
+rationale = "Restricts recursive deletion to the same filesystem, preventing accidental removal of files on mounted volumes."

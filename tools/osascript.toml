@@ -1,0 +1,35 @@
+# tools/osascript.toml — OSA script executor
+
+[[command]]
+path = "osascript"
+translation = "Execute an AppleScript, JavaScript for Automation, or other Open Scripting Architecture language script."
+verdict = "require_approval"
+rationale = "Executes arbitrary scripts that can control applications, modify files, and interact with system services."
+
+[[flag]]
+applies_to = "osascript"
+flag = "-e"
+translation_modifier = "executing a script statement provided on the command line"
+verdict = "require_approval"
+rationale = "Runs inline script code; the risk is in what the script does."
+
+[[flag]]
+applies_to = "osascript"
+flag = "-l"
+translation_modifier = "using a specified scripting language"
+verdict = "allow"
+rationale = "Selects the language for compilation; no additional risk."
+
+[[flag]]
+applies_to = "osascript"
+flag = "-i"
+translation_modifier = "in interactive mode, prompting for one line at a time"
+verdict = "allow"
+rationale = "Opens an interactive scripting session where each command is executed immediately."
+
+[[flag]]
+applies_to = "osascript"
+flag = "-s"
+translation_modifier = "using specified output style flags for how results and errors are displayed"
+verdict = "allow"
+rationale = "Controls output formatting only; does not affect script execution."

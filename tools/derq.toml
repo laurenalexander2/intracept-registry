@@ -1,0 +1,7 @@
+# tools/derq.toml
+
+[[command]]
+path = "derq"
+translation = "Query the device enrollment registry."
+verdict = "allow"
+rationale = "Read-only query of device enrollment status."

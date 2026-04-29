@@ -1,0 +1,7 @@
+# tools/mesg.toml
+
+[[command]]
+path = "mesg"
+translation = "Control whether other users can send messages to your terminal."
+verdict = "allow"
+rationale = "Only changes the write permission on the terminal device."

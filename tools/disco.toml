@@ -1,0 +1,7 @@
+# tools/disco.toml
+
+[[command]]
+path = "disco"
+translation = "Discover Mono web services."
+verdict = "allow"
+rationale = "Read-only web service discovery."

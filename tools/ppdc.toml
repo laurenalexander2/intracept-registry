@@ -1,0 +1,7 @@
+# tools/ppdc.toml
+
+[[command]]
+path = "ppdc"
+translation = "Compile CUPS printer driver information files."
+verdict = "allow"
+rationale = "Generates PPD files from driver info; does not modify printer configuration."

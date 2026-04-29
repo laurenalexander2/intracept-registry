@@ -1,0 +1,7 @@
+# tools/tiffsplit.toml
+
+[[command]]
+path = "tiffsplit"
+translation = "Split a multi-page TIFF into individual single-page TIFF files."
+verdict = "allow"
+rationale = "Creates new files for each page; the original multi-page TIFF is unchanged."

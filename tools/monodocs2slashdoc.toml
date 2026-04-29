@@ -1,0 +1,7 @@
+# tools/monodocs2slashdoc.toml — Mono documentation to Microsoft XML exporter
+
+[[command]]
+path = "monodocs2slashdoc"
+translation = "Export Mono XML documentation into Microsoft XML Documentation format."
+verdict = "allow"
+rationale = "Generates XML files from documentation sources; does not modify the source documentation."

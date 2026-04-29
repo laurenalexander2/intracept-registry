@@ -1,0 +1,28 @@
+# tools/locate.toml
+
+[[command]]
+path = "locate"
+translation = "Search a pre-built database for files matching a pattern."
+verdict = "allow"
+rationale = "Read-only search of the locate database; does not modify any files."
+
+[[flag]]
+applies_to = "locate"
+flag = "-i"
+translation_modifier = "ignoring case differences in the pattern"
+verdict = "allow"
+rationale = "Only changes pattern matching behavior."
+
+[[flag]]
+applies_to = "locate"
+flag = "-l"
+translation_modifier = "limiting the output to a specific number of results"
+verdict = "allow"
+rationale = "Only restricts how many results are displayed."
+
+[[flag]]
+applies_to = "locate"
+flag = "-c"
+translation_modifier = "showing only a count of matching files instead of their paths"
+verdict = "allow"
+rationale = "Only changes the output format."

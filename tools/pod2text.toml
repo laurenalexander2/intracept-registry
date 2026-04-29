@@ -1,0 +1,7 @@
+# tools/pod2text.toml
+
+[[command]]
+path = "pod2text"
+translation = "Convert Perl Pod documentation to plain text."
+verdict = "allow"
+rationale = "Read-only conversion that writes to the terminal."

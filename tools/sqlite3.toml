@@ -1,0 +1,103 @@
+# tools/sqlite3.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "sqlite3"
+translation = "Open and interact with a SQLite database."
+verdict = "allow"
+rationale = "Can create, modify, and delete data in SQLite database files; a new database is created if the file does not exist."
+
+# ── Safety and mode flags ────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-readonly"
+translation_modifier = "opening the database in read-only mode"
+verdict = "allow"
+rationale = "Prevents any modifications to the database; a safety-enhancing option."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-safe"
+translation_modifier = "restricting operations that could access the filesystem or run shell commands"
+verdict = "allow"
+rationale = "Disables dot-commands like .shell, .system, and .import that could modify files outside the database."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-batch"
+translation_modifier = "processing input non-interactively without prompts"
+verdict = "allow"
+rationale = "Changes the I/O mode but does not add destructive capability."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-interactive"
+translation_modifier = "forcing interactive mode even when input is not a terminal"
+verdict = "allow"
+rationale = "Changes the I/O mode to interactive; does not add destructive capability."
+
+# ── Execution flags ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-cmd"
+translation_modifier = "executing a specified SQL or dot-command before reading standard input"
+verdict = "allow"
+rationale = "Runs an arbitrary SQL statement or dot-command that may modify the database or filesystem."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-init"
+translation_modifier = "reading and executing commands from a specified file at startup"
+verdict = "allow"
+rationale = "Executes arbitrary SQL and dot-commands from a file, which may modify the database or filesystem."
+
+# ── File handling flags ──────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-append"
+translation_modifier = "appending the database to the end of the specified file"
+verdict = "allow"
+rationale = "Modifies the target file by appending database content to it."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-nofollow"
+translation_modifier = "refusing to open database files that are symbolic links"
+verdict = "allow"
+rationale = "Prevents following symlinks, reducing the risk of accidentally modifying an unintended file."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-zip"
+translation_modifier = "opening the file as a ZIP archive instead of a database"
+verdict = "allow"
+rationale = "Reads the file as a ZIP archive; does not add destructive capability beyond the base command."
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-deserialize"
+translation_modifier = "loading the entire database into memory before operating on it"
+verdict = "allow"
+rationale = "Reads the full database into memory; changes are not written back unless explicitly saved."
+
+# ── Error handling ───────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-bail"
+translation_modifier = "stopping immediately after the first error"
+verdict = "allow"
+rationale = "Reduces risk by halting execution when an error occurs instead of continuing."
+
+# ── Testing and advanced ─────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-unsafe-testing"
+translation_modifier = "enabling unsafe commands and modes intended only for testing"
+verdict = "require_approval"
+rationale = "Unlocks dangerous internal commands that can corrupt databases or access arbitrary memory."

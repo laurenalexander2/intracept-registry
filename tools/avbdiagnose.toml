@@ -1,0 +1,7 @@
+# tools/avbdiagnose.toml
+
+[[command]]
+path = "avbdiagnose"
+translation = "Diagnose AVB audio/video bridging issues."
+verdict = "allow"
+rationale = "Read-only diagnostic tool for AVB networking."

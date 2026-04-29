@@ -1,0 +1,70 @@
+# tools/shasum.toml
+
+[[command]]
+path = "shasum"
+translation = "Compute or verify SHA checksums for files."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-a"
+translation_modifier = "using a specified SHA algorithm"
+verdict = "allow"
+rationale = "Selects hash algorithm variant; no state modification."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-c"
+translation_modifier = "verifying checksums read from a file"
+verdict = "allow"
+rationale = "Read-only verification against stored checksums."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-b"
+translation_modifier = "reading files in binary mode"
+verdict = "allow"
+rationale = "Changes file read mode; no state modification."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-t"
+translation_modifier = "reading files in text mode"
+verdict = "allow"
+rationale = "Changes file read mode; no state modification."
+
+[[flag]]
+applies_to = "shasum"
+flag = "--tag"
+translation_modifier = "producing output in BSD-style checksum format"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-s"
+translation_modifier = "suppressing all output and reporting only via exit status"
+verdict = "allow"
+rationale = "Only changes what is displayed; no state modification."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-w"
+translation_modifier = "warning about improperly formatted checksum lines"
+verdict = "allow"
+rationale = "Only adds warning messages to the output."
+
+[[flag]]
+applies_to = "shasum"
+flag = "--ignore-missing"
+translation_modifier = "skipping missing files instead of reporting errors"
+verdict = "allow"
+rationale = "Only affects error reporting during verification; no state modification."
+
+[[flag]]
+applies_to = "shasum"
+flag = "-q"
+translation_modifier = "suppressing the success message for each verified file"
+verdict = "allow"
+rationale = "Only reduces output verbosity during verification."

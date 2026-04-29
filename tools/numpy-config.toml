@@ -1,0 +1,7 @@
+# tools/numpy-config.toml — NumPy build configuration query
+
+[[command]]
+path = "numpy-config"
+translation = "Display build configuration and compiler flags for the NumPy library."
+verdict = "allow"
+rationale = "Read-only output of build configuration values; modifies nothing."

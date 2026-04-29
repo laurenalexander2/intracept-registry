@@ -1,0 +1,7 @@
+# tools/spit.toml
+
+[[command]]
+path = "spit"
+translation = "Write raw data patterns directly to storage devices for benchmarking."
+verdict = "require_approval"
+rationale = "Writes directly to block devices, overwriting all existing data; recovery is impossible without backups."

@@ -1,0 +1,14 @@
+# tools/pg_resetwal.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_resetwal"
+translation = "Reset the write-ahead log and other control information of a PostgreSQL database cluster."
+verdict = "require_approval"
+rationale = "Forcibly resets WAL state, which can cause data loss and corruption if used on a functioning cluster."
+
+[[flag]]
+applies_to = "pg_resetwal"
+flag = "--force"
+translation_modifier = "proceeding even when the operation could cause data corruption"
+verdict = "require_approval"
+rationale = "Forces WAL reset even when unsafe; can cause irrecoverable data corruption."

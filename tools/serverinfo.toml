@@ -1,0 +1,42 @@
+# tools/serverinfo.toml
+
+[[command]]
+path = "serverinfo"
+translation = "Query macOS Server hardware, software, and configuration status."
+verdict = "allow"
+rationale = "Read-only queries about server status by default."
+
+[[flag]]
+applies_to = "serverinfo"
+flag = "--hardware"
+translation_modifier = "checking whether running on server hardware"
+verdict = "allow"
+rationale = "Read-only operation that displays hardware configuration details without modifying any settings."
+
+[[flag]]
+applies_to = "serverinfo"
+flag = "--software"
+translation_modifier = "checking whether the volume has a server OS installed"
+verdict = "allow"
+rationale = "Read-only operation that displays installed software information without modifying any settings."
+
+[[flag]]
+applies_to = "serverinfo"
+flag = "--configured"
+translation_modifier = "checking whether the server is configured"
+verdict = "allow"
+rationale = "Read-only configuration check."
+
+[[flag]]
+applies_to = "serverinfo"
+flag = "--setperfmode"
+translation_modifier = "enabling or disabling server performance mode"
+verdict = "allow"
+rationale = "Changes system performance tuning settings; reversible but affects running services."
+
+[[flag]]
+applies_to = "serverinfo"
+flag = "--perfmode"
+translation_modifier = "checking whether server performance mode is enabled"
+verdict = "allow"
+rationale = "Read-only operation that displays the current performance mode without modifying any settings."

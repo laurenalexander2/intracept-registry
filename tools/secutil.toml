@@ -1,0 +1,7 @@
+# tools/secutil.toml
+
+[[command]]
+path = "secutil"
+translation = "Extract strongname and X509 certificate information from .NET assemblies."
+verdict = "allow"
+rationale = "Read-only extraction and display of certificate data; modifies nothing."

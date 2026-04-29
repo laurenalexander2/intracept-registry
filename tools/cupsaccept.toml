@@ -1,0 +1,28 @@
+# tools/cupsaccept.toml
+
+[[command]]
+path = "cupsaccept"
+translation = "Accept print jobs for a printer."
+verdict = "allow"
+rationale = "Changes printer queue state to accept incoming jobs."
+
+[[flag]]
+applies_to = "cupsaccept"
+flag = "-E"
+translation_modifier = "using an encrypted connection to the print server"
+verdict = "allow"
+rationale = "Only changes connection security; does not affect queue behavior."
+
+[[flag]]
+applies_to = "cupsaccept"
+flag = "-U"
+translation_modifier = "connecting as a specific user"
+verdict = "allow"
+rationale = "Only changes the username used for authentication."
+
+[[flag]]
+applies_to = "cupsaccept"
+flag = "-h"
+translation_modifier = "connecting to a specific print server"
+verdict = "allow"
+rationale = "Only changes which server is contacted."

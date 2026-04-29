@@ -1,0 +1,7 @@
+# tools/tclsh.toml
+
+[[command]]
+path = "tclsh"
+translation = "Run the Tcl command-line interpreter."
+verdict = "allow"
+rationale = "Launches a scripting interpreter; risk depends on the scripts executed."

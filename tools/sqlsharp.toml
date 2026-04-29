@@ -1,0 +1,7 @@
+# tools/sqlsharp.toml
+
+[[command]]
+path = "sqlsharp"
+translation = "Run an interactive SQL query shell for .NET database providers."
+verdict = "allow"
+rationale = "Executes arbitrary SQL against connected databases; queries can modify data."

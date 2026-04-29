@@ -1,0 +1,28 @@
+# tools/setquota.toml
+
+[[command]]
+path = "setquota"
+translation = "Set home directory disk quotas for users on the local computer."
+verdict = "allow"
+rationale = "Applies disk quota limits that can restrict users' ability to save files; reversible by removing quotas."
+
+[[flag]]
+applies_to = "setquota"
+flag = "-a"
+translation_modifier = "applying quotas for users in all directory domains"
+verdict = "allow"
+rationale = "Broad scope affecting all directory domains; same reversibility as the base command."
+
+[[flag]]
+applies_to = "setquota"
+flag = "-l"
+translation_modifier = "applying quotas only for users in the local directory domain"
+verdict = "allow"
+rationale = "Scoped to local users; same reversibility as the base command."
+
+[[flag]]
+applies_to = "setquota"
+flag = "-u"
+translation_modifier = "targeting a specific user"
+verdict = "allow"
+rationale = "Narrows scope to one user; same reversibility as the base command."

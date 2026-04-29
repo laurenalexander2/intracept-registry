@@ -1,0 +1,7 @@
+# tools/cupstestppd.toml
+
+[[command]]
+path = "cupstestppd"
+translation = "Test a PostScript Printer Description file."
+verdict = "allow"
+rationale = "Read-only validation of PPD files."

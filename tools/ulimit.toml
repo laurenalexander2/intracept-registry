@@ -1,0 +1,91 @@
+# tools/ulimit.toml
+
+[[command]]
+path = "ulimit"
+translation = "Display or set resource limits for the shell and its child processes."
+verdict = "allow"
+rationale = "Can restrict resources like open files or memory, which may cause processes to fail if set too low."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-a"
+translation_modifier = "listing all current resource limits"
+verdict = "allow"
+rationale = "Read-only display of all resource limits."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-n"
+translation_modifier = "setting or displaying the maximum number of open files"
+verdict = "allow"
+rationale = "Changing the open file limit can cause processes to fail if set too low."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-u"
+translation_modifier = "setting or displaying the maximum number of user processes"
+verdict = "allow"
+rationale = "Restricting the process limit can prevent new processes from starting."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-s"
+translation_modifier = "setting or displaying the maximum stack size"
+verdict = "allow"
+rationale = "A too-small stack size can cause programs to crash."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-v"
+translation_modifier = "setting or displaying the maximum virtual memory size"
+verdict = "allow"
+rationale = "Restricting virtual memory can cause processes to fail from allocation errors."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-c"
+translation_modifier = "setting or displaying the maximum size of core dump files"
+verdict = "allow"
+rationale = "Only affects whether and how large crash dump files can be."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-f"
+translation_modifier = "setting or displaying the maximum size of files the shell can create"
+verdict = "allow"
+rationale = "Restricting file size can cause writes to fail silently or with errors."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-t"
+translation_modifier = "setting or displaying the maximum CPU time in seconds"
+verdict = "allow"
+rationale = "A too-low CPU time limit can cause long-running processes to be killed."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-m"
+translation_modifier = "setting or displaying the maximum physical memory size"
+verdict = "allow"
+rationale = "Restricting physical memory can degrade performance or cause process failures."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-l"
+translation_modifier = "setting or displaying the maximum size of memory that can be locked"
+verdict = "allow"
+rationale = "Only affects the amount of memory that can be pinned in RAM."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-H"
+translation_modifier = "applying changes to the hard limit instead of the soft limit"
+verdict = "allow"
+rationale = "Hard limits cannot be raised again once lowered, making the change difficult to reverse."
+
+[[flag]]
+applies_to = "ulimit"
+flag = "-S"
+translation_modifier = "applying changes to the soft limit"
+verdict = "allow"
+rationale = "Soft limits can be raised again up to the hard limit."

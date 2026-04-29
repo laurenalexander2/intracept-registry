@@ -1,0 +1,77 @@
+# tools/java.toml
+
+[[command]]
+path = "java"
+translation = "Run the Java virtual machine to execute compiled Java programs."
+verdict = "allow"
+rationale = "Executes arbitrary compiled Java code, which can modify files, make network requests, or run system commands."
+
+[[flag]]
+applies_to = "java"
+flag = "-jar"
+translation_modifier = "running a self-contained Java archive"
+verdict = "allow"
+rationale = "Executes the main class packaged in the Java archive file; the risk depends on what that code does."
+
+[[flag]]
+applies_to = "java"
+flag = "-cp"
+translation_modifier = "using a custom classpath to locate classes and resources"
+verdict = "allow"
+rationale = "Only changes where the runtime looks for classes; does not execute anything by itself."
+
+[[flag]]
+applies_to = "java"
+flag = "-Xmx"
+translation_modifier = "setting the maximum heap memory size"
+verdict = "allow"
+rationale = "Limits how much memory the program can use; does not change program behavior."
+
+[[flag]]
+applies_to = "java"
+flag = "-Xms"
+translation_modifier = "setting the initial heap memory size"
+verdict = "allow"
+rationale = "Sets the starting memory allocation; does not change program behavior."
+
+[[flag]]
+applies_to = "java"
+flag = "-D"
+translation_modifier = "setting a system property"
+verdict = "allow"
+rationale = "Passes a key-value pair to the program; the effect depends on how the program uses it."
+
+[[flag]]
+applies_to = "java"
+flag = "-version"
+translation_modifier = "printing the version and exiting"
+verdict = "allow"
+rationale = "Read-only version display; nothing is executed."
+
+[[flag]]
+applies_to = "java"
+flag = "-verbose"
+translation_modifier = "printing detailed information about class loading and garbage collection"
+verdict = "allow"
+rationale = "Only adds diagnostic output; does not change program behavior."
+
+[[flag]]
+applies_to = "java"
+flag = "-ea"
+translation_modifier = "enabling assertion checks in the program"
+verdict = "allow"
+rationale = "Activates assertion statements for debugging; may cause the program to fail faster on errors."
+
+[[flag]]
+applies_to = "java"
+flag = "-server"
+translation_modifier = "using the server-optimized virtual machine"
+verdict = "allow"
+rationale = "Selects a different optimization strategy; does not change program logic."
+
+[[flag]]
+applies_to = "java"
+flag = "-agentlib"
+translation_modifier = "loading a native agent library for profiling or debugging"
+verdict = "allow"
+rationale = "Loads native code into the virtual machine, which could have side effects depending on the agent."

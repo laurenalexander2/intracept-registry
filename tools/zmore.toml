@@ -1,0 +1,7 @@
+# tools/zmore.toml
+
+[[command]]
+path = "zmore"
+translation = "View gzip-compressed files one page at a time."
+verdict = "allow"
+rationale = "Read-only file viewer; modifies nothing."

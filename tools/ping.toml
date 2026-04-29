@@ -1,0 +1,98 @@
+# tools/ping.toml
+
+[[command]]
+path = "ping"
+translation = "Send test packets to a network host to check if it is reachable."
+verdict = "allow"
+rationale = "Read-only network diagnostic that does not modify any system or remote state."
+
+[[flag]]
+applies_to = "ping"
+flag = "-c"
+translation_modifier = "stopping after a specified number of packets"
+verdict = "allow"
+rationale = "Limits the number of packets sent; prevents the command from running indefinitely."
+
+[[flag]]
+applies_to = "ping"
+flag = "-i"
+translation_modifier = "waiting a specified number of seconds between each packet"
+verdict = "allow"
+rationale = "Controls the interval between packets; does not change the read-only nature of the command."
+
+[[flag]]
+applies_to = "ping"
+flag = "-t"
+translation_modifier = "stopping after a specified number of seconds regardless of results"
+verdict = "allow"
+rationale = "Sets a timeout so the command exits automatically; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-s"
+translation_modifier = "using a specified packet size in bytes"
+verdict = "allow"
+rationale = "Changes the size of test packets but does not alter system state."
+
+[[flag]]
+applies_to = "ping"
+flag = "-f"
+translation_modifier = "sending packets as fast as possible (flood mode)"
+verdict = "allow"
+rationale = "Generates extremely high network traffic that can overwhelm a network or destination host; requires administrator privileges."
+
+[[flag]]
+applies_to = "ping"
+flag = "-q"
+translation_modifier = "showing only the summary at the end"
+verdict = "allow"
+rationale = "Suppresses per-packet output; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-n"
+translation_modifier = "showing addresses as numbers instead of looking up hostnames"
+verdict = "allow"
+rationale = "Skips name lookups for faster output; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-o"
+translation_modifier = "stopping after receiving one successful reply"
+verdict = "allow"
+rationale = "Exits after a single response; a convenient way to test basic connectivity."
+
+[[flag]]
+applies_to = "ping"
+flag = "-W"
+translation_modifier = "waiting a specified number of milliseconds for each reply"
+verdict = "allow"
+rationale = "Sets the per-packet reply timeout; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-m"
+translation_modifier = "limiting how many network hops packets can travel"
+verdict = "allow"
+rationale = "Sets the maximum number of hops; still a read-only diagnostic."
+
+[[flag]]
+applies_to = "ping"
+flag = "-S"
+translation_modifier = "sending from a specified source address"
+verdict = "allow"
+rationale = "Changes the source address of outgoing packets; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-v"
+translation_modifier = "showing detailed information about all received packets"
+verdict = "allow"
+rationale = "Increases output verbosity; still read-only."
+
+[[flag]]
+applies_to = "ping"
+flag = "-D"
+translation_modifier = "preventing packets from being split into smaller pieces"
+verdict = "allow"
+rationale = "Sets the do-not-fragment bit; useful for diagnosing path size limits but still read-only."

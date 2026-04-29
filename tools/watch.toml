@@ -1,0 +1,77 @@
+# tools/watch.toml
+
+[[command]]
+path = "watch"
+translation = "Run a command repeatedly and display its output."
+verdict = "allow"
+rationale = "Repeatedly executes the given command; on its own it only displays output and modifies nothing."
+
+[[flag]]
+applies_to = "watch"
+flag = "-n"
+translation_modifier = "at a custom interval in seconds"
+verdict = "allow"
+rationale = "Changes how often the command runs; does not affect what the command does."
+
+[[flag]]
+applies_to = "watch"
+flag = "-d"
+translation_modifier = "highlighting differences between updates"
+verdict = "allow"
+rationale = "Visual change only; no effect on the underlying command."
+
+[[flag]]
+applies_to = "watch"
+flag = "-t"
+translation_modifier = "hiding the header showing the interval and command"
+verdict = "allow"
+rationale = "Cosmetic change that removes the title bar from the display."
+
+[[flag]]
+applies_to = "watch"
+flag = "-e"
+translation_modifier = "stopping when the command returns an error"
+verdict = "allow"
+rationale = "Freezes the display on error output; does not modify any data."
+
+[[flag]]
+applies_to = "watch"
+flag = "-b"
+translation_modifier = "sounding a beep when the command returns an error"
+verdict = "allow"
+rationale = "Adds an audible alert; no data impact."
+
+[[flag]]
+applies_to = "watch"
+flag = "-g"
+translation_modifier = "stopping when the output changes"
+verdict = "allow"
+rationale = "Exits when a difference is detected; does not modify any data."
+
+[[flag]]
+applies_to = "watch"
+flag = "-c"
+translation_modifier = "interpreting color codes in the output"
+verdict = "allow"
+rationale = "Display formatting only; no effect on data."
+
+[[flag]]
+applies_to = "watch"
+flag = "-x"
+translation_modifier = "passing the command to a shell for execution"
+verdict = "allow"
+rationale = "Uses shell interpretation instead of direct execution; the risk depends on the command itself, not this flag."
+
+[[flag]]
+applies_to = "watch"
+flag = "-p"
+translation_modifier = "running at precise intervals aligned to the clock"
+verdict = "allow"
+rationale = "Adjusts timing precision; no effect on the command or data."
+
+[[flag]]
+applies_to = "watch"
+flag = "-w"
+translation_modifier = "wrapping long lines instead of truncating them"
+verdict = "allow"
+rationale = "Display formatting only; no effect on data."

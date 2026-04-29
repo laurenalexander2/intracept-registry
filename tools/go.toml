@@ -1,0 +1,144 @@
+# tools/go.toml
+
+[[command]]
+path = "go"
+translation = "Run the Go programming language toolchain."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "go build"
+translation = "Compile Go packages and their dependencies into an executable."
+verdict = "allow"
+rationale = "Compiles source code locally; does not execute the resulting binary."
+
+[[command]]
+path = "go run"
+translation = "Compile and immediately execute a Go program."
+verdict = "allow"
+rationale = "Compiles and runs arbitrary Go code, which can modify files or make network requests."
+
+[[command]]
+path = "go test"
+translation = "Run the tests for Go packages."
+verdict = "allow"
+rationale = "Compiles and executes test code, which may have side effects depending on the tests."
+
+[[command]]
+path = "go install"
+translation = "Compile and install a Go package or executable into the Go bin directory."
+verdict = "require_approval"
+rationale = "Downloads, compiles, and places a binary on the system path."
+
+[[command]]
+path = "go get"
+translation = "Download and install Go modules and their dependencies."
+verdict = "require_approval"
+rationale = "Downloads third-party code from the internet and updates dependency files."
+
+[[command]]
+path = "go mod"
+translation = "Manage Go module dependency files."
+verdict = "allow"
+rationale = "The bare subcommand prints help text and modifies nothing."
+
+[[command]]
+path = "go mod tidy"
+translation = "Add missing and remove unused module dependencies."
+verdict = "allow"
+rationale = "Updates go.mod and go.sum files; changes are local and reversible."
+
+[[command]]
+path = "go fmt"
+translation = "Reformat Go source files to match the standard style."
+verdict = "allow"
+rationale = "Modifies source files in place, but changes are cosmetic and easily reversible with version control."
+
+[[command]]
+path = "go vet"
+translation = "Check Go source code for common mistakes."
+verdict = "allow"
+rationale = "Read-only static analysis; does not modify any files."
+
+[[command]]
+path = "go clean"
+translation = "Remove compiled object files and cached build artifacts."
+verdict = "allow"
+rationale = "Deletes build output files; they can be regenerated but deletion takes effect immediately."
+
+[[flag]]
+applies_to = "go build"
+flag = "-o"
+translation_modifier = "writing the output to a specific file"
+verdict = "allow"
+rationale = "Only changes the output destination."
+
+[[flag]]
+applies_to = "go build"
+flag = "-v"
+translation_modifier = "printing the names of packages as they are compiled"
+verdict = "allow"
+rationale = "Only adds diagnostic output; does not change the build result."
+
+[[flag]]
+applies_to = "go build"
+flag = "-race"
+translation_modifier = "enabling the data race detector"
+verdict = "allow"
+rationale = "Adds runtime instrumentation for detecting race conditions; does not change program logic."
+
+[[flag]]
+applies_to = "go test"
+flag = "-v"
+translation_modifier = "printing the name and result of each individual test"
+verdict = "allow"
+rationale = "Only adds diagnostic output; does not change test behavior."
+
+[[flag]]
+applies_to = "go test"
+flag = "-run"
+translation_modifier = "running only tests whose names match the given pattern"
+verdict = "allow"
+rationale = "Filters which tests execute; does not add destructive capability."
+
+[[flag]]
+applies_to = "go test"
+flag = "-cover"
+translation_modifier = "measuring and reporting code coverage"
+verdict = "allow"
+rationale = "Adds coverage instrumentation; does not change test behavior."
+
+[[flag]]
+applies_to = "go test"
+flag = "-race"
+translation_modifier = "enabling the data race detector during tests"
+verdict = "allow"
+rationale = "Adds runtime instrumentation; does not change test logic."
+
+[[flag]]
+applies_to = "go test"
+flag = "-bench"
+translation_modifier = "running benchmark functions that match the given pattern"
+verdict = "allow"
+rationale = "Runs performance benchmarks; does not modify any files."
+
+[[flag]]
+applies_to = "go clean"
+flag = "-cache"
+translation_modifier = "deleting the entire build cache"
+verdict = "allow"
+rationale = "Removes all cached build artifacts; they will be rebuilt on next compilation but deletion is immediate."
+
+[[flag]]
+applies_to = "go clean"
+flag = "-testcache"
+translation_modifier = "deleting all cached test results"
+verdict = "allow"
+rationale = "Forces tests to re-run next time; no source code or binaries are affected."
+
+[[flag]]
+applies_to = "go get"
+flag = "-u"
+translation_modifier = "updating dependencies to their latest versions"
+verdict = "allow"
+rationale = "Fetches newer versions of dependencies, which may introduce breaking changes."

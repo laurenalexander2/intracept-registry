@@ -1,0 +1,91 @@
+# tools/flex.toml
+
+[[command]]
+path = "flex"
+translation = "Generate a C program that performs pattern matching on text input."
+verdict = "allow"
+rationale = "Generates source code from a lexer specification; does not execute the generated code."
+
+[[flag]]
+applies_to = "flex"
+flag = "-o"
+translation_modifier = "writing output to a specific file"
+verdict = "allow"
+rationale = "Only changes the output destination; overwrites are limited to the named file."
+
+[[flag]]
+applies_to = "flex"
+flag = "-d"
+translation_modifier = "enabling debug mode in the generated scanner"
+verdict = "allow"
+rationale = "Only adds debugging output to the generated code."
+
+[[flag]]
+applies_to = "flex"
+flag = "-i"
+translation_modifier = "generating a case-insensitive scanner"
+verdict = "allow"
+rationale = "Only changes how patterns are matched in the generated code."
+
+[[flag]]
+applies_to = "flex"
+flag = "-t"
+translation_modifier = "writing the generated scanner to the terminal instead of a file"
+verdict = "allow"
+rationale = "Sends output to standard out; does not create or overwrite any file."
+
+[[flag]]
+applies_to = "flex"
+flag = "-f"
+translation_modifier = "generating a faster scanner using larger lookup tables"
+verdict = "allow"
+rationale = "Trades memory for speed in the generated code; no safety impact."
+
+[[flag]]
+applies_to = "flex"
+flag = "-l"
+translation_modifier = "generating a scanner compatible with the original lex tool"
+verdict = "allow"
+rationale = "Enables compatibility mode; only affects generated code behavior."
+
+[[flag]]
+applies_to = "flex"
+flag = "-v"
+translation_modifier = "showing statistics about the generated scanner"
+verdict = "allow"
+rationale = "Displays read-only summary information; does not change the output."
+
+[[flag]]
+applies_to = "flex"
+flag = "-B"
+translation_modifier = "optimizing the generated scanner for batch processing instead of interactive use"
+verdict = "allow"
+rationale = "Changes scanner behavior at runtime; no safety impact."
+
+[[flag]]
+applies_to = "flex"
+flag = "-I"
+translation_modifier = "generating an interactive scanner that reads input one character at a time"
+verdict = "allow"
+rationale = "Changes scanner behavior at runtime; no safety impact."
+
+[[flag]]
+applies_to = "flex"
+flag = "-P"
+translation_modifier = "using a custom prefix for generated symbol names instead of the default"
+verdict = "allow"
+rationale = "Only affects naming in generated code; useful when combining multiple scanners."
+
+[[flag]]
+applies_to = "flex"
+flag = "-s"
+translation_modifier = "generating an error for input that does not match any rule instead of echoing it"
+verdict = "allow"
+rationale = "Makes unmatched input an error rather than passing it through; only affects generated code."
+
+[[flag]]
+applies_to = "flex"
+flag = "-L"
+translation_modifier = "omitting line-tracking directives from the generated code"
+verdict = "allow"
+rationale = "Removes line references that help debuggers map errors back to the specification file."

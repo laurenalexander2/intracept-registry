@@ -1,0 +1,7 @@
+# tools/openclaw.toml — OpenClaw CLI
+
+[[command]]
+path = "openclaw"
+translation = "Run the OpenClaw command-line tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."

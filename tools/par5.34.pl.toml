@@ -1,0 +1,7 @@
+# tools/par5.34.pl.toml — PAR Perl 5.34 archive runner
+
+[[command]]
+path = "par5.34.pl"
+translation = "Run a Perl application packaged in a PAR archive using Perl 5.34."
+verdict = "allow"
+rationale = "Executes arbitrary Perl code from an archive, which could modify files or system state."

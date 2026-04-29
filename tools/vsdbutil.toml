@@ -1,0 +1,7 @@
+# tools/vsdbutil.toml
+
+[[command]]
+path = "vsdbutil"
+translation = "Manage the volume status database for ownership and permissions settings."
+verdict = "allow"
+rationale = "Modifies volume ownership settings which affect file permissions enforcement."

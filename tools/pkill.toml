@@ -1,0 +1,137 @@
+# tools/pkill.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "pkill"
+translation = "Send a signal to all processes whose names match a pattern."
+verdict = "allow"
+rationale = "Signals processes by pattern match, which can terminate critical services if the pattern is too broad."
+
+# ── Flags ─────────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "pkill"
+flag = "-f"
+translation_modifier = "matching against the full command line instead of just the process name"
+verdict = "allow"
+rationale = "Broadens the match scope to the entire command line, potentially signaling unintended processes."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-I"
+translation_modifier = "asking for confirmation before signaling each process"
+verdict = "allow"
+rationale = "Adds a safety prompt before each signal is sent, reducing accidental kills."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-x"
+translation_modifier = "requiring the pattern to match the entire process name exactly"
+verdict = "allow"
+rationale = "Narrows the match to exact names only, reducing the chance of signaling unintended processes."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-i"
+translation_modifier = "ignoring upper and lower case differences when matching"
+verdict = "allow"
+rationale = "Case-insensitive matching may widen the set of matched processes beyond what was intended."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-n"
+translation_modifier = "targeting only the most recently started matching process"
+verdict = "allow"
+rationale = "Limits the signal to a single process, reducing the blast radius."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-o"
+translation_modifier = "targeting only the oldest matching process"
+verdict = "allow"
+rationale = "Limits the signal to a single process, reducing the blast radius."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-u"
+translation_modifier = "restricted to processes owned by a specific user"
+verdict = "allow"
+rationale = "Filters by user but still signals all matching processes for that user."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-U"
+translation_modifier = "restricted to processes with a specific real user ID"
+verdict = "allow"
+rationale = "Filters by real user ID but still signals all matching processes."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-G"
+translation_modifier = "restricted to processes with a specific real group ID"
+verdict = "allow"
+rationale = "Filters by group but still signals all matching processes in that group."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-P"
+translation_modifier = "restricted to processes with a specific parent process ID"
+verdict = "allow"
+rationale = "Filters by parent process, which limits scope but may still match multiple children."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-t"
+translation_modifier = "restricted to processes running on a specific terminal"
+verdict = "allow"
+rationale = "Filters by terminal, limiting scope to a single terminal session."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-g"
+translation_modifier = "restricted to processes in a specific process group"
+verdict = "allow"
+rationale = "Filters by process group, which may contain multiple related processes."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-F"
+translation_modifier = "restricted to the process whose ID is stored in a specific file"
+verdict = "allow"
+rationale = "Targets a single process identified by a PID file, greatly reducing the blast radius."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-v"
+translation_modifier = "targeting processes that do not match the pattern instead"
+verdict = "allow"
+rationale = "Inverts the match, potentially signaling a large number of unrelated processes."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-a"
+translation_modifier = "including ancestor processes in the match"
+verdict = "allow"
+rationale = "Extends matching to parent processes, which may include the user's shell or init."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-l"
+translation_modifier = "displaying the signal command used for each matched process"
+verdict = "allow"
+rationale = "Adds informational output without changing which processes are signaled."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-KILL"
+translation_modifier = "forcing immediate termination with no chance for processes to clean up"
+verdict = "allow"
+rationale = "Sends an uncatchable signal that prevents processes from saving data or releasing resources."
+
+[[flag]]
+applies_to = "pkill"
+flag = "-HUP"
+translation_modifier = "asking matched processes to reload their configuration or shut down"
+verdict = "allow"
+rationale = "May cause processes to reload settings or terminate, depending on the program."

@@ -1,0 +1,35 @@
+# tools/footprint.toml
+
+[[command]]
+path = "footprint"
+translation = "Display memory usage information for one or more processes."
+verdict = "allow"
+rationale = "Read-only diagnostic tool that inspects process memory without modifying anything."
+
+[[flag]]
+applies_to = "footprint"
+flag = "-a"
+translation_modifier = "targeting all processes on the system"
+verdict = "allow"
+rationale = "Expands the scope to all processes; still a read-only operation."
+
+[[flag]]
+applies_to = "footprint"
+flag = "-v"
+translation_modifier = "showing detailed region-level memory layout"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "footprint"
+flag = "--sample"
+translation_modifier = "continuously sampling memory at a specified interval"
+verdict = "allow"
+rationale = "Repeatedly gathers memory data; still a read-only operation."
+
+[[flag]]
+applies_to = "footprint"
+flag = "--all"
+translation_modifier = "including all processes in the output"
+verdict = "allow"
+rationale = "Read-only display of memory footprint for all processes."

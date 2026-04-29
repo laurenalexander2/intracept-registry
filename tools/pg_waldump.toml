@@ -1,0 +1,7 @@
+# tools/pg_waldump.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_waldump"
+translation = "Display the contents of PostgreSQL write-ahead log files in human-readable format."
+verdict = "allow"
+rationale = "Read-only inspection of WAL files."

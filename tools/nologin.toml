@@ -1,0 +1,7 @@
+# tools/nologin.toml — Login refusal shell
+
+[[command]]
+path = "nologin"
+translation = "Display a message that the account is unavailable and refuse login."
+verdict = "allow"
+rationale = "A placeholder shell that prevents login; it cannot modify anything."

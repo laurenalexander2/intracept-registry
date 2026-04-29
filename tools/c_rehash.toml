@@ -1,0 +1,7 @@
+# tools/c_rehash.toml
+
+[[command]]
+path = "c_rehash"
+translation = "Rebuild the OpenSSL certificate hash directory."
+verdict = "allow"
+rationale = "Modifies symbolic links in the certificate directory."

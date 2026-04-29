@@ -1,0 +1,7 @@
+# tools/nohup.toml
+
+[[command]]
+path = "nohup"
+translation = "Run a command that keeps running even after the terminal is closed."
+verdict = "allow"
+rationale = "Wraps another command so it ignores hangup signals; the actual risk depends on the wrapped command."

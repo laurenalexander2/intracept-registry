@@ -1,0 +1,7 @@
+# tools/wfsctl.toml
+
+[[command]]
+path = "wfsctl"
+translation = "Configure the WebDAV file sharing service."
+verdict = "require_approval"
+rationale = "Enables or configures WebDAV sharing which exposes files over the network."

@@ -1,0 +1,7 @@
+# tools/trietool.toml
+
+[[command]]
+path = "trietool"
+translation = "Build and query double-array trie data structures for text processing."
+verdict = "allow"
+rationale = "Creates trie data files; does not modify existing files."

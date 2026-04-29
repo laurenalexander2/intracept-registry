@@ -1,0 +1,7 @@
+# tools/auvaltool.toml
+
+[[command]]
+path = "auvaltool"
+translation = "Validate Audio Units with detailed testing."
+verdict = "allow"
+rationale = "Read-only validation and testing of audio plugins."

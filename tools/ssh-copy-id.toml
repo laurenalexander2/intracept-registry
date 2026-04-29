@@ -1,0 +1,7 @@
+# tools/ssh-copy-id.toml
+
+[[command]]
+path = "ssh-copy-id"
+translation = "Install a public key on a remote server for passwordless SSH authentication."
+verdict = "require_approval"
+rationale = "Adds a public key to the remote authorized_keys file, granting future access without a password."

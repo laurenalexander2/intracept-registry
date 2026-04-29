@@ -1,0 +1,21 @@
+# tools/ml-makedepend.toml — SML/NJ makefile dependency generator
+
+[[command]]
+path = "ml-makedepend"
+translation = "Generate makefile dependency information for a Standard ML project."
+verdict = "allow"
+rationale = "Appends dependency information to a makefile; does not compile or run code."
+
+[[flag]]
+applies_to = "ml-makedepend"
+flag = "-f"
+translation_modifier = "appending to a specified makefile instead of the default"
+verdict = "allow"
+rationale = "Changes which file receives the dependency output; no additional risk."
+
+[[flag]]
+applies_to = "ml-makedepend"
+flag = "-n"
+translation_modifier = "expanding architecture and OS paths to host-specific values"
+verdict = "allow"
+rationale = "Changes path format in the output; no additional risk."

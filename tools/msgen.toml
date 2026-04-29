@@ -1,0 +1,14 @@
+# tools/msgen.toml — GNU gettext English translation generator
+
+[[command]]
+path = "msgen"
+translation = "Create an English translation catalog by copying source strings as translations."
+verdict = "allow"
+rationale = "Generates a PO file with identity translations; source file is not modified."
+
+[[flag]]
+applies_to = "msgen"
+flag = "--force"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing output files."

@@ -1,0 +1,7 @@
+# tools/cmpdylib.toml
+
+[[command]]
+path = "cmpdylib"
+translation = "Compare two dynamic libraries for compatibility."
+verdict = "allow"
+rationale = "Read-only comparison of library versions."

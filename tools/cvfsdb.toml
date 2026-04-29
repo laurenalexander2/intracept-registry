@@ -1,0 +1,7 @@
+# tools/cvfsdb.toml
+
+[[command]]
+path = "cvfsdb"
+translation = "Manage the Xsan filesystem database."
+verdict = "require_approval"
+rationale = "Directly manipulates the filesystem metadata database."

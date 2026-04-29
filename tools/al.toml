@@ -1,0 +1,7 @@
+# tools/al.toml
+
+[[command]]
+path = "al"
+translation = "Mono assembly linker."
+verdict = "allow"
+rationale = "Links .NET assemblies during compilation."

@@ -1,0 +1,7 @@
+# tools/mount_udf.toml — UDF filesystem mount
+
+[[command]]
+path = "mount_udf"
+translation = "Mount a Universal Disk Format filesystem from a disc or image."
+verdict = "allow"
+rationale = "Typically mounts optical media in read-only mode."

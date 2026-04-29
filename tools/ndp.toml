@@ -1,0 +1,42 @@
+# tools/ndp.toml — IPv6 Neighbor Discovery Protocol controller
+
+[[command]]
+path = "ndp"
+translation = "Control and diagnose the IPv6 Neighbor Discovery Protocol cache."
+verdict = "allow"
+rationale = "The bare command prints help text."
+
+[[flag]]
+applies_to = "ndp"
+flag = "-a"
+translation_modifier = "displaying all current NDP cache entries"
+verdict = "allow"
+rationale = "Read-only listing of the neighbor cache."
+
+[[flag]]
+applies_to = "ndp"
+flag = "-c"
+translation_modifier = "erasing all NDP cache entries"
+verdict = "allow"
+rationale = "Clears the neighbor cache, temporarily disrupting IPv6 connectivity until entries are re-learned."
+
+[[flag]]
+applies_to = "ndp"
+flag = "-d"
+translation_modifier = "deleting a specific NDP cache entry"
+verdict = "allow"
+rationale = "Removes a single neighbor entry, which may briefly disrupt connectivity to that host."
+
+[[flag]]
+applies_to = "ndp"
+flag = "-s"
+translation_modifier = "adding a static NDP entry for a host"
+verdict = "allow"
+rationale = "Adds a permanent neighbor mapping, which could misdirect traffic if set incorrectly."
+
+[[flag]]
+applies_to = "ndp"
+flag = "-r"
+translation_modifier = "displaying the default router list"
+verdict = "allow"
+rationale = "Read-only display of IPv6 default routers."

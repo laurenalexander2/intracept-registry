@@ -1,0 +1,330 @@
+# tools/diskutil.toml
+
+[[command]]
+path = "diskutil"
+translation = "Run the macOS disk management utility."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "diskutil list"
+translation = "List all disks and partitions."
+verdict = "allow"
+rationale = "Read-only listing of storage devices."
+
+[[flag]]
+applies_to = "diskutil list"
+flag = "-plist"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output to property list format; read-only."
+
+[[command]]
+path = "diskutil info"
+translation = "Display detailed information about a disk or partition."
+verdict = "allow"
+rationale = "Read-only display of disk metadata."
+
+[[flag]]
+applies_to = "diskutil info"
+flag = "-plist"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output to property list format; read-only."
+
+[[flag]]
+applies_to = "diskutil info"
+flag = "-all"
+translation_modifier = "showing information for every disk and partition"
+verdict = "allow"
+rationale = "Widens the read-only query to all devices."
+
+[[command]]
+path = "diskutil activity"
+translation = "Continuously display system-wide disk activity until interrupted."
+verdict = "allow"
+rationale = "Read-only monitoring of disk events."
+
+[[command]]
+path = "diskutil mount"
+translation = "Mount a disk volume."
+verdict = "allow"
+rationale = "Makes a volume accessible; does not modify its contents."
+
+[[flag]]
+applies_to = "diskutil mount"
+flag = "readOnly"
+translation_modifier = "in read-only mode"
+verdict = "allow"
+rationale = "Prevents any modifications to the mounted volume."
+
+[[flag]]
+applies_to = "diskutil mount"
+flag = "nobrowse"
+translation_modifier = "hiding the volume from the Finder"
+verdict = "allow"
+rationale = "Cosmetic change; the volume is still accessible."
+
+[[flag]]
+applies_to = "diskutil mount"
+flag = "-mountPoint"
+translation_modifier = "at a custom mount location instead of the default"
+verdict = "allow"
+rationale = "Changes where the volume appears in the filesystem; does not affect data."
+
+[[command]]
+path = "diskutil mountDisk"
+translation = "Mount all mountable volumes on a disk."
+verdict = "allow"
+rationale = "Makes volumes accessible; does not modify their contents."
+
+[[command]]
+path = "diskutil unmount"
+translation = "Unmount a disk volume."
+verdict = "allow"
+rationale = "Makes a volume inaccessible; applications using files on it may lose unsaved data."
+
+[[flag]]
+applies_to = "diskutil unmount"
+flag = "force"
+translation_modifier = "forcibly closing any open files on the volume"
+verdict = "require_approval"
+rationale = "Forces unmount regardless of open files, which may cause data loss or corruption."
+
+[[command]]
+path = "diskutil unmountDisk"
+translation = "Unmount all volumes on a disk."
+verdict = "allow"
+rationale = "Makes all volumes on the disk inaccessible; applications may lose unsaved data."
+
+[[flag]]
+applies_to = "diskutil unmountDisk"
+flag = "force"
+translation_modifier = "forcibly closing any open files on all volumes"
+verdict = "require_approval"
+rationale = "Forces unmount of all volumes regardless of open files, risking data loss."
+
+[[command]]
+path = "diskutil eject"
+translation = "Eject a disk."
+verdict = "allow"
+rationale = "Unmounts and prepares the disk for safe removal."
+
+[[flag]]
+applies_to = "diskutil eject"
+flag = "force"
+translation_modifier = "forcibly closing any open files before ejecting"
+verdict = "require_approval"
+rationale = "Forces ejection regardless of open files, which may cause data loss."
+
+[[command]]
+path = "diskutil rename"
+translation = "Rename a volume."
+verdict = "allow"
+rationale = "Changes only the volume display name; no data is modified or deleted."
+
+[[command]]
+path = "diskutil eraseDisk"
+translation = "Erase an entire disk and create a new filesystem."
+verdict = "require_approval"
+rationale = "Permanently destroys all data on the disk and creates a new empty filesystem."
+
+[[command]]
+path = "diskutil eraseVolume"
+translation = "Erase a single volume on a disk."
+verdict = "require_approval"
+rationale = "Permanently destroys all data on the volume."
+
+[[command]]
+path = "diskutil reformat"
+translation = "Erase a volume and recreate it with the same type and name."
+verdict = "require_approval"
+rationale = "Permanently destroys all data on the volume."
+
+[[command]]
+path = "diskutil partitionDisk"
+translation = "Partition a disk into multiple volumes."
+verdict = "require_approval"
+rationale = "Repartitions the disk, destroying all existing data on it."
+
+[[command]]
+path = "diskutil resizeVolume"
+translation = "Non-destructively resize a volume."
+verdict = "require_approval"
+rationale = "Changing partition sizes can cause data loss if the volume is shrunk below used capacity."
+
+[[command]]
+path = "diskutil splitPartition"
+translation = "Split a volume into multiple partitions, erasing its data."
+verdict = "require_approval"
+rationale = "Destroys all data on the original partition to create new ones."
+
+[[command]]
+path = "diskutil mergePartitions"
+translation = "Merge two or more adjacent partitions into one."
+verdict = "require_approval"
+rationale = "Destroys all data on all merged partitions except possibly the first."
+
+[[flag]]
+applies_to = "diskutil mergePartitions"
+flag = "force"
+translation_modifier = "reformatting the first partition as well"
+verdict = "require_approval"
+rationale = "Destroys data on all partitions including the first, which is normally preserved."
+
+[[command]]
+path = "diskutil addPartition"
+translation = "Create a new partition in free space after an existing partition."
+verdict = "allow"
+rationale = "Creates a new partition in unused disk space; existing partitions are not modified."
+
+[[command]]
+path = "diskutil verifyDisk"
+translation = "Verify the integrity of a disk."
+verdict = "allow"
+rationale = "Read-only integrity check of the disk structure."
+
+[[command]]
+path = "diskutil repairDisk"
+translation = "Repair the partition map structure of a disk."
+verdict = "allow"
+rationale = "Modifies disk metadata to fix errors; may alter the filesystem structure."
+
+[[command]]
+path = "diskutil verifyVolume"
+translation = "Verify the file system structure of a volume."
+verdict = "allow"
+rationale = "Read-only integrity check of the volume filesystem."
+
+[[command]]
+path = "diskutil repairVolume"
+translation = "Repair the file system structure of a volume."
+verdict = "allow"
+rationale = "Modifies filesystem metadata to fix errors; the volume must be unmounted."
+
+[[command]]
+path = "diskutil enableOwnership"
+translation = "Enable file ownership tracking on a volume."
+verdict = "allow"
+rationale = "Changes how file permissions are enforced; may restrict access to files."
+
+[[command]]
+path = "diskutil disableOwnership"
+translation = "Disable file ownership tracking on a volume."
+verdict = "allow"
+rationale = "Makes all files appear owned by the current user, bypassing permission checks."
+
+[[command]]
+path = "diskutil zeroDisk"
+translation = "Erase a device by writing zeros to all of its storage."
+verdict = "require_approval"
+rationale = "Overwrites all data on the disk with zeros; recovery is not possible."
+
+[[flag]]
+applies_to = "diskutil zeroDisk"
+flag = "force"
+translation_modifier = "forcibly unmounting all volumes first"
+verdict = "require_approval"
+rationale = "Bypasses open-file checks, increasing the chance of data loss."
+
+[[command]]
+path = "diskutil randomDisk"
+translation = "Erase a device by writing random data to all of its storage."
+verdict = "require_approval"
+rationale = "Overwrites all data on the disk with random bytes; recovery is not possible."
+
+[[command]]
+path = "diskutil secureErase"
+translation = "Securely erase a disk or free space using multiple overwrite passes."
+verdict = "require_approval"
+rationale = "Overwrites data with multiple passes designed to make recovery impossible."
+
+[[command]]
+path = "diskutil apfs"
+translation = "Manage APFS containers and volumes."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "diskutil apfs list"
+translation = "Show the status of all current APFS containers."
+verdict = "allow"
+rationale = "Read-only listing of APFS containers and volumes."
+
+[[command]]
+path = "diskutil apfs create"
+translation = "Create a new APFS container with one APFS volume."
+verdict = "require_approval"
+rationale = "Reformats the target partition as an APFS container, destroying existing data."
+
+[[command]]
+path = "diskutil apfs addVolume"
+translation = "Add a new APFS volume to an existing APFS container."
+verdict = "allow"
+rationale = "Creates a new volume in shared container space; existing volumes are not modified."
+
+[[command]]
+path = "diskutil apfs deleteVolume"
+translation = "Delete an APFS volume."
+verdict = "require_approval"
+rationale = "Permanently destroys the volume and all data on it."
+
+[[command]]
+path = "diskutil apfs deleteContainer"
+translation = "Delete an APFS container and all of its volumes."
+verdict = "require_approval"
+rationale = "Permanently destroys the container and all volumes and data within it."
+
+[[command]]
+path = "diskutil apfs resizeContainer"
+translation = "Resize an APFS container and its disk space usage."
+verdict = "require_approval"
+rationale = "Changing container size can affect all volumes within it and may cause data loss if shrunk too far."
+
+[[command]]
+path = "diskutil apfs eraseVolume"
+translation = "Erase the contents of an APFS volume while keeping it in the container."
+verdict = "require_approval"
+rationale = "Permanently destroys all data on the volume."
+
+[[command]]
+path = "diskutil apfs deleteSnapshot"
+translation = "Delete an APFS snapshot from a volume."
+verdict = "require_approval"
+rationale = "Permanently removes the snapshot; that point-in-time view of the data is lost."
+
+[[command]]
+path = "diskutil apfs listSnapshots"
+translation = "List APFS snapshots on a mounted APFS volume."
+verdict = "allow"
+rationale = "Read-only listing of snapshots."
+
+[[command]]
+path = "diskutil apfs convert"
+translation = "Non-destructively convert an HFS+ volume to APFS."
+verdict = "require_approval"
+rationale = "Converts the filesystem in place; while non-destructive, a failure during conversion can cause data loss."
+
+[[command]]
+path = "diskutil apfs encryptVolume"
+translation = "Enable FileVault encryption on an APFS volume."
+verdict = "allow"
+rationale = "Starts background encryption; data remains accessible but losing the passphrase means permanent data loss."
+
+[[command]]
+path = "diskutil apfs decryptVolume"
+translation = "Disable FileVault encryption on an APFS volume."
+verdict = "allow"
+rationale = "Starts background decryption; data remains accessible during the process."
+
+[[command]]
+path = "diskutil apfs unlockVolume"
+translation = "Unlock a locked encrypted APFS volume."
+verdict = "allow"
+rationale = "Makes an encrypted volume accessible; does not modify data."
+
+[[command]]
+path = "diskutil apfs lockVolume"
+translation = "Lock an encrypted APFS volume."
+verdict = "allow"
+rationale = "Makes the volume inaccessible until unlocked again; applications using it may lose unsaved data."

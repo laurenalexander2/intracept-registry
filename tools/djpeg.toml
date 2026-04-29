@@ -1,0 +1,7 @@
+# tools/djpeg.toml
+
+[[command]]
+path = "djpeg"
+translation = "Decompress JPEG files to other image formats."
+verdict = "allow"
+rationale = "Creates new image files without modifying the original JPEG."

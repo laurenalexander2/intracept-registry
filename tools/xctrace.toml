@@ -1,0 +1,7 @@
+# tools/xctrace.toml
+
+[[command]]
+path = "xctrace"
+translation = "Record, import, and export Instruments performance traces."
+verdict = "allow"
+rationale = "Captures performance data into trace files; does not modify the profiled application."

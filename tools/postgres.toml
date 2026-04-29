@@ -1,0 +1,7 @@
+# tools/postgres.toml
+
+[[command]]
+path = "postgres"
+translation = "Run the PostgreSQL database server."
+verdict = "allow"
+rationale = "Starts the database server process; typically managed by pg_ctl rather than invoked directly."

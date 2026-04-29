@@ -1,0 +1,7 @@
+# tools/perlivp5.34.toml — Perl 5.34 installation verification
+
+[[command]]
+path = "perlivp5.34"
+translation = "Verify that the Perl 5.34 installation is complete and functional."
+verdict = "allow"
+rationale = "Read-only diagnostic that tests the Perl installation."

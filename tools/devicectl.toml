@@ -1,0 +1,7 @@
+# tools/devicectl.toml
+
+[[command]]
+path = "devicectl"
+translation = "Manage connected Apple devices."
+verdict = "allow"
+rationale = "Controls connected iOS and watchOS devices for development."

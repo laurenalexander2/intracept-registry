@@ -1,0 +1,7 @@
+# tools/zipsplit.toml
+
+[[command]]
+path = "zipsplit"
+translation = "Split a zip archive into smaller parts."
+verdict = "allow"
+rationale = "Creates new zip files from an existing archive; the original is unchanged."

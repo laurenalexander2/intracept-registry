@@ -1,0 +1,7 @@
+# tools/vpnd.toml
+
+[[command]]
+path = "vpnd"
+translation = "Run the macOS VPN server background service."
+verdict = "allow"
+rationale = "Starts a VPN service that accepts incoming connections; exposes the system as a VPN endpoint."

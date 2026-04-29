@@ -1,0 +1,98 @@
+# tools/zip.toml
+
+[[command]]
+path = "zip"
+translation = "Create compressed zip archive files."
+verdict = "allow"
+rationale = "Creates an archive file; does not modify the source files."
+
+[[flag]]
+applies_to = "zip"
+flag = "-r"
+translation_modifier = "recursively including all files in subdirectories"
+verdict = "allow"
+rationale = "Includes directory trees in the archive; source files are not modified."
+
+[[flag]]
+applies_to = "zip"
+flag = "-d"
+translation_modifier = "deleting specified entries from the archive"
+verdict = "allow"
+rationale = "Removes entries from an existing archive file."
+
+[[flag]]
+applies_to = "zip"
+flag = "-e"
+translation_modifier = "encrypting the archive with a password"
+verdict = "allow"
+rationale = "Adds password protection; does not change the archive contents."
+
+[[flag]]
+applies_to = "zip"
+flag = "-m"
+translation_modifier = "deleting the original files after adding them to the archive"
+verdict = "require_approval"
+rationale = "Removes source files after archiving; data is only in the zip file."
+
+[[flag]]
+applies_to = "zip"
+flag = "-u"
+translation_modifier = "updating only files that are newer than those already in the archive"
+verdict = "allow"
+rationale = "Only replaces archive entries with newer versions; source files are not modified."
+
+[[flag]]
+applies_to = "zip"
+flag = "-f"
+translation_modifier = "freshening the archive by replacing only entries that already exist and are newer"
+verdict = "allow"
+rationale = "Only updates existing archive entries; does not add new files or modify source files."
+
+[[flag]]
+applies_to = "zip"
+flag = "-j"
+translation_modifier = "storing files without their directory paths"
+verdict = "allow"
+rationale = "Flattens the directory structure in the archive; source files are not modified."
+
+[[flag]]
+applies_to = "zip"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses output messages; does not change behavior."
+
+[[flag]]
+applies_to = "zip"
+flag = "-x"
+translation_modifier = "excluding files that match specified patterns"
+verdict = "allow"
+rationale = "Reduces the set of files added to the archive; source files are not affected."
+
+[[flag]]
+applies_to = "zip"
+flag = "-9"
+translation_modifier = "using maximum compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "zip"
+flag = "-@"
+translation_modifier = "reading the list of files to archive from standard input"
+verdict = "allow"
+rationale = "Changes how input files are specified; does not add destructive capability."
+
+[[flag]]
+applies_to = "zip"
+flag = "-T"
+translation_modifier = "testing the archive integrity after creation"
+verdict = "allow"
+rationale = "Read-only validation of the archive; does not modify any files."
+
+[[flag]]
+applies_to = "zip"
+flag = "-FS"
+translation_modifier = "synchronizing the archive with the file system, removing entries that no longer exist on disk"
+verdict = "allow"
+rationale = "Deletes archive entries that have no matching file on disk, which may cause unexpected data loss from the archive."

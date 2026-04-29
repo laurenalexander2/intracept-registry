@@ -1,0 +1,7 @@
+# tools/ppdpo.toml
+
+[[command]]
+path = "ppdpo"
+translation = "Extract message strings from CUPS PPD files for translation."
+verdict = "allow"
+rationale = "Read-only extraction that writes a PO file."

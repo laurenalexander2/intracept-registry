@@ -1,0 +1,7 @@
+# tools/automationmodetool.toml
+
+[[command]]
+path = "automationmodetool"
+translation = "Enable or disable automation mode for assistive access."
+verdict = "allow"
+rationale = "Changes accessibility automation permissions for applications."

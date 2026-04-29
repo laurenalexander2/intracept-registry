@@ -1,0 +1,7 @@
+# tools/avbanalyse.toml
+
+[[command]]
+path = "avbanalyse"
+translation = "Analyze AVB audio/video bridging network traffic."
+verdict = "allow"
+rationale = "Read-only network analysis tool."

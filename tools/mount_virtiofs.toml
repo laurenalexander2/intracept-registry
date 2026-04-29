@@ -1,0 +1,7 @@
+# tools/mount_virtiofs.toml — VirtIO filesystem mount
+
+[[command]]
+path = "mount_virtiofs"
+translation = "Mount a VirtIO shared filesystem between a virtual machine and its host."
+verdict = "allow"
+rationale = "Attaches a shared filesystem that bridges host and guest; changes are visible to both."

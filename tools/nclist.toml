@@ -1,0 +1,7 @@
+# tools/nclist.toml — NFS credential lister (alias for ncctl list)
+
+[[command]]
+path = "nclist"
+translation = "List the Kerberos principals currently set on NFS mounts."
+verdict = "allow"
+rationale = "Read-only display of credential information."

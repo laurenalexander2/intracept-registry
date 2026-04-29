@@ -1,0 +1,7 @@
+# tools/seeksize.d.toml
+
+[[command]]
+path = "seeksize.d"
+translation = "Print a report of disk event seek distances by process using DTrace."
+verdict = "allow"
+rationale = "Read-only monitoring of disk seeks; modifies nothing."

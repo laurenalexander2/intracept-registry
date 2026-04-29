@@ -1,0 +1,7 @@
+# tools/what.toml
+
+[[command]]
+path = "what"
+translation = "Display identification strings embedded in binary files."
+verdict = "allow"
+rationale = "Read-only extraction of version strings; modifies nothing."

@@ -1,0 +1,7 @@
+# tools/quotaoff.toml
+
+[[command]]
+path = "quotaoff"
+translation = "Disable disk quotas on a filesystem."
+verdict = "allow"
+rationale = "Disables quota enforcement, allowing users to exceed their limits."

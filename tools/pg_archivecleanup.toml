@@ -1,0 +1,21 @@
+# tools/pg_archivecleanup.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_archivecleanup"
+translation = "Remove old WAL files from a PostgreSQL archive directory."
+verdict = "require_approval"
+rationale = "Permanently deletes WAL archive files, which may be needed for point-in-time recovery."
+
+[[flag]]
+applies_to = "pg_archivecleanup"
+flag = "-n"
+translation_modifier = "only showing which files would be removed without actually deleting them"
+verdict = "allow"
+rationale = "Dry run that does not delete any files."
+
+[[flag]]
+applies_to = "pg_archivecleanup"
+flag = "--clean"
+translation_modifier = "removing old WAL files that are no longer needed"
+verdict = "require_approval"
+rationale = "Deletes WAL archive files; if the wrong files are removed, point-in-time recovery may be impossible."

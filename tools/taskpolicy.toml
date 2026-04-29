@@ -1,0 +1,7 @@
+# tools/taskpolicy.toml
+
+[[command]]
+path = "taskpolicy"
+translation = "Execute a command with a specified scheduling and I/O policy."
+verdict = "allow"
+rationale = "Runs a command with modified priority settings; the command itself determines risk."

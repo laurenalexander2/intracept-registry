@@ -1,0 +1,7 @@
+# tools/dbmmanage.toml
+
+[[command]]
+path = "dbmmanage"
+translation = "Manage Apache database-format password files."
+verdict = "allow"
+rationale = "Creates and modifies user authentication databases for Apache."

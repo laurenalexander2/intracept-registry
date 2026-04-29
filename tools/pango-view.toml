@@ -1,0 +1,7 @@
+# tools/pango-view.toml — Pango text renderer
+
+[[command]]
+path = "pango-view"
+translation = "Render text to an image or display using the Pango text layout library."
+verdict = "allow"
+rationale = "Produces rendered text output; does not modify system state."

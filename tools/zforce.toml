@@ -1,0 +1,7 @@
+# tools/zforce.toml
+
+[[command]]
+path = "zforce"
+translation = "Add a .gz extension to gzip-compressed files that lack one."
+verdict = "allow"
+rationale = "Renames files to add the correct extension; the file content is unchanged."

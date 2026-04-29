@@ -1,0 +1,7 @@
+# tools/viewdiagnostic.toml
+
+[[command]]
+path = "viewdiagnostic"
+translation = "Display diagnostic information about view hierarchy and layout."
+verdict = "allow"
+rationale = "Read-only diagnostic output; modifies nothing."

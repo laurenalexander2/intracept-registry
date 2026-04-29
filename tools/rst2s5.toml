@@ -1,0 +1,7 @@
+# tools/rst2s5.toml
+
+[[command]]
+path = "rst2s5"
+translation = "Convert reStructuredText documents to S5 slideshow format."
+verdict = "allow"
+rationale = "Converts reStructuredText markup to S5 slideshow format; does not modify the source file."

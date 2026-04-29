@@ -1,0 +1,7 @@
+# tools/msgcmp.toml — GNU gettext message catalog comparator
+
+[[command]]
+path = "msgcmp"
+translation = "Compare two translation catalog files for consistency."
+verdict = "allow"
+rationale = "Read-only comparison that produces diagnostic output."

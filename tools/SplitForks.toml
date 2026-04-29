@@ -1,0 +1,7 @@
+# tools/SplitForks.toml
+
+[[command]]
+path = "SplitForks"
+translation = "Split resource forks and Finder information from files into AppleDouble format."
+verdict = "allow"
+rationale = "Modifies file fork structure by splitting resources into separate files; the data is preserved but reorganized."

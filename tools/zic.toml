@@ -1,0 +1,7 @@
+# tools/zic.toml
+
+[[command]]
+path = "zic"
+translation = "Compile time zone definition files into the system timezone database."
+verdict = "allow"
+rationale = "Modifies the system timezone database; incorrect definitions can cause time calculation errors."

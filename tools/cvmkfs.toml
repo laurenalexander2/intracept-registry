@@ -1,0 +1,7 @@
+# tools/cvmkfs.toml
+
+[[command]]
+path = "cvmkfs"
+translation = "Create a new Xsan filesystem."
+verdict = "require_approval"
+rationale = "Initializes a new filesystem on storage devices, destroying any existing data."

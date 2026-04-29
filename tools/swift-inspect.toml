@@ -1,0 +1,7 @@
+# tools/swift-inspect.toml
+
+[[command]]
+path = "swift-inspect"
+translation = "Inspect Swift runtime metadata in a running process."
+verdict = "allow"
+rationale = "Read-only inspection of process memory for Swift type information; does not modify the target."

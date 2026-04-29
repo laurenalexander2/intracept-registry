@@ -1,0 +1,13 @@
+# tools/openai.toml — OpenAI CLI
+
+[[command]]
+path = "openai"
+translation = "Run the OpenAI command-line interface for API calls and client-side tools."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "openai api"
+translation = "Make direct API calls to the OpenAI service."
+verdict = "allow"
+rationale = "Sends requests to the OpenAI API, which may consume API credits and transmit data."

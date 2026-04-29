@@ -1,0 +1,7 @@
+# tools/twine.toml
+
+[[command]]
+path = "twine"
+translation = "Upload Python packages to PyPI or other package repositories."
+verdict = "require_approval"
+rationale = "Publishes packages to a remote repository; published versions cannot be easily retracted."

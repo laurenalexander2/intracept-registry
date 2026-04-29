@@ -1,0 +1,216 @@
+# tools/gpg.toml
+
+[[command]]
+path = "gpg"
+translation = "Encrypt, decrypt, and sign data using the GNU Privacy Guard."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "gpg --encrypt"
+translation = "Encrypt data for one or more recipients."
+verdict = "allow"
+rationale = "Creates an encrypted copy of the input; the original file is not modified."
+
+[[command]]
+path = "gpg --decrypt"
+translation = "Decrypt an encrypted file or message."
+verdict = "allow"
+rationale = "Reads encrypted data and outputs the plaintext; does not modify the encrypted file."
+
+[[command]]
+path = "gpg --sign"
+translation = "Create a digital signature on a file or message."
+verdict = "allow"
+rationale = "Creates a signed copy; the original file is not modified."
+
+[[command]]
+path = "gpg --verify"
+translation = "Verify a digital signature."
+verdict = "allow"
+rationale = "Read-only validation of a signature; modifies nothing."
+
+[[command]]
+path = "gpg --gen-key"
+translation = "Generate a new key pair for encryption and signing."
+verdict = "allow"
+rationale = "Creates a persistent key pair in the keyring that can be used for authentication and encryption."
+
+[[command]]
+path = "gpg --list-keys"
+translation = "List all public keys in the keyring."
+verdict = "allow"
+rationale = "Read-only display of stored public keys."
+
+[[command]]
+path = "gpg --list-secret-keys"
+translation = "List all private keys in the keyring."
+verdict = "allow"
+rationale = "Read-only display of stored private keys."
+
+[[command]]
+path = "gpg --import"
+translation = "Import keys from a file into the keyring."
+verdict = "allow"
+rationale = "Adds keys to the local keyring; does not modify existing keys."
+
+[[command]]
+path = "gpg --export"
+translation = "Export public keys from the keyring to a file."
+verdict = "allow"
+rationale = "Reads keys and outputs them; the keyring is not modified."
+
+[[command]]
+path = "gpg --delete-keys"
+translation = "Remove public keys from the keyring."
+verdict = "require_approval"
+rationale = "Permanently removes public keys; they must be re-imported if needed."
+
+[[command]]
+path = "gpg --delete-secret-keys"
+translation = "Remove private keys from the keyring."
+verdict = "require_approval"
+rationale = "Permanently removes private keys; without a backup the key is irrecoverable."
+
+[[command]]
+path = "gpg --edit-key"
+translation = "Edit key properties such as trust level and expiration."
+verdict = "allow"
+rationale = "Modifies key attributes that affect trust and usability."
+
+[[command]]
+path = "gpg --send-keys"
+translation = "Upload public keys to a key server."
+verdict = "require_approval"
+rationale = "Publishes keys to a public server; once uploaded, keys cannot be removed from the server."
+
+[[command]]
+path = "gpg --recv-keys"
+translation = "Download public keys from a key server."
+verdict = "allow"
+rationale = "Imports keys from a remote server into the local keyring."
+
+[[command]]
+path = "gpg --fingerprint"
+translation = "Display the fingerprint of a key."
+verdict = "allow"
+rationale = "Read-only display of key fingerprint information."
+
+[[flag]]
+applies_to = "gpg --encrypt"
+flag = "-r"
+translation_modifier = "specifying a recipient for the encrypted message"
+verdict = "allow"
+rationale = "Selects which key to encrypt for; does not change the encryption operation."
+
+[[flag]]
+applies_to = "gpg --encrypt"
+flag = "--armor"
+translation_modifier = "encoding the output in text-safe ASCII format"
+verdict = "allow"
+rationale = "Changes output encoding only; does not affect the encryption."
+
+[[flag]]
+applies_to = "gpg --encrypt"
+flag = "-o"
+translation_modifier = "writing output to a specified file"
+verdict = "allow"
+rationale = "Specifies the output destination; may overwrite an existing file."
+
+[[flag]]
+applies_to = "gpg --encrypt"
+flag = "--symmetric"
+translation_modifier = "using a passphrase instead of a public key for encryption"
+verdict = "allow"
+rationale = "Changes the encryption method but does not increase risk."
+
+[[flag]]
+applies_to = "gpg --sign"
+flag = "--detach-sign"
+translation_modifier = "creating a separate signature file instead of embedding it"
+verdict = "allow"
+rationale = "Creates a detached signature file; the original is not modified."
+
+[[flag]]
+applies_to = "gpg --sign"
+flag = "--clearsign"
+translation_modifier = "wrapping the message in a readable text signature"
+verdict = "allow"
+rationale = "Creates a cleartext signed message; a formatting choice."
+
+[[flag]]
+applies_to = "gpg --sign"
+flag = "--armor"
+translation_modifier = "encoding the signature in text-safe ASCII format"
+verdict = "allow"
+rationale = "Changes output encoding only; does not affect the signature."
+
+[[flag]]
+applies_to = "gpg --sign"
+flag = "-u"
+translation_modifier = "using a specific private key for signing"
+verdict = "allow"
+rationale = "Selects which key to sign with; does not change the signing operation."
+
+[[flag]]
+applies_to = "gpg --decrypt"
+flag = "-o"
+translation_modifier = "writing the decrypted output to a specified file"
+verdict = "allow"
+rationale = "Specifies the output destination; may overwrite an existing file."
+
+[[flag]]
+applies_to = "gpg --export"
+flag = "--armor"
+translation_modifier = "encoding the exported key in text-safe ASCII format"
+verdict = "allow"
+rationale = "Changes output encoding only; does not affect the key data."
+
+[[flag]]
+applies_to = "gpg --export"
+flag = "-o"
+translation_modifier = "writing the exported key to a specified file"
+verdict = "allow"
+rationale = "Specifies the output destination; may overwrite an existing file."
+
+[[flag]]
+applies_to = "gpg --delete-keys"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Skips the confirmation prompt, increasing the risk of accidental key deletion."
+
+[[flag]]
+applies_to = "gpg --delete-secret-keys"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "require_approval"
+rationale = "Skips confirmation for private key deletion; the key may be permanently lost."
+
+[[flag]]
+applies_to = "gpg"
+flag = "--batch"
+translation_modifier = "running without any interactive prompts"
+verdict = "allow"
+rationale = "Disables interactive prompts; commonly used in automated scripts."
+
+[[flag]]
+applies_to = "gpg"
+flag = "--keyring"
+translation_modifier = "using a specific keyring file"
+verdict = "allow"
+rationale = "Selects a non-default keyring; does not modify the default keyring."
+
+[[flag]]
+applies_to = "gpg"
+flag = "--homedir"
+translation_modifier = "using a specific directory for configuration and keyrings"
+verdict = "allow"
+rationale = "Overrides the default configuration directory; does not modify the default one."
+
+[[flag]]
+applies_to = "gpg"
+flag = "--verbose"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of output displayed."

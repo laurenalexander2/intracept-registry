@@ -1,0 +1,91 @@
+# tools/pg_restore.toml
+
+[[command]]
+path = "pg_restore"
+translation = "Restore a PostgreSQL database from an archive created by pg_dump."
+verdict = "require_approval"
+rationale = "Modifies a database by creating objects and loading data, potentially overwriting existing data."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-d"
+translation_modifier = "restoring into a specified database"
+verdict = "allow"
+rationale = "Selects the target database; does not change the restore behavior."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-c"
+translation_modifier = "dropping existing database objects before recreating them"
+verdict = "require_approval"
+rationale = "Deletes existing tables and other objects before restore, permanently destroying current data."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-C"
+translation_modifier = "creating the target database before restoring into it"
+verdict = "allow"
+rationale = "Creates a new database, which consumes resources and may conflict with existing databases."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-a"
+translation_modifier = "restoring only the data, not the schema"
+verdict = "require_approval"
+rationale = "Loads data into existing tables, which may overwrite or duplicate existing rows."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-s"
+translation_modifier = "restoring only the schema, not the data"
+verdict = "allow"
+rationale = "Creates database objects without loading data; may fail if objects already exist."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-j"
+translation_modifier = "using multiple parallel jobs for faster restoration"
+verdict = "allow"
+rationale = "Increases restore speed with parallelism; does not change what is restored."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-l"
+translation_modifier = "listing the archive contents without restoring anything"
+verdict = "allow"
+rationale = "Read-only display of the archive table of contents."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-1"
+translation_modifier = "restoring everything in a single transaction that rolls back on error"
+verdict = "allow"
+rationale = "Adds atomicity, which is a safety-enhancing option."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-e"
+translation_modifier = "stopping immediately on the first error"
+verdict = "allow"
+rationale = "Exits early on error rather than continuing with a partial restore."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "--if-exists"
+translation_modifier = "only dropping objects that actually exist when using the clean option"
+verdict = "allow"
+rationale = "Prevents errors from DROP commands on nonexistent objects; a safety enhancement."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "-t"
+translation_modifier = "restoring only the specified table"
+verdict = "allow"
+rationale = "Limits the restore scope to a single table."
+
+[[flag]]
+applies_to = "pg_restore"
+flag = "--clean"
+translation_modifier = "dropping existing database objects before recreating them"
+verdict = "require_approval"
+rationale = "Deletes existing database objects before restoring; data loss if restore fails partway."

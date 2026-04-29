@@ -1,0 +1,7 @@
+# tools/dyld_info.toml
+
+[[command]]
+path = "dyld_info"
+translation = "Display dynamic linker information for Apple platform binary files."
+verdict = "allow"
+rationale = "Read-only display of binary linking details."

@@ -1,0 +1,7 @@
+# tools/whereis.toml
+
+[[command]]
+path = "whereis"
+translation = "Locate the binary, source, and manual page for a command."
+verdict = "allow"
+rationale = "Read-only file location search; modifies nothing."

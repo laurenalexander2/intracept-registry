@@ -1,0 +1,7 @@
+# tools/python3.12.toml
+
+[[command]]
+path = "python3.12"
+translation = "Run the Python 3.12 interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary Python code, which could modify files or system state."

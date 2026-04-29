@@ -1,0 +1,21 @@
+# tools/paste.toml
+
+[[command]]
+path = "paste"
+translation = "Merge corresponding lines from multiple files side by side."
+verdict = "allow"
+rationale = "Read-only operation that combines lines and prints to the terminal; input files are not modified."
+
+[[flag]]
+applies_to = "paste"
+flag = "-s"
+translation_modifier = "joining all lines of each file into a single line instead of merging across files"
+verdict = "allow"
+rationale = "Changes the merge direction; still read-only."
+
+[[flag]]
+applies_to = "paste"
+flag = "-d"
+translation_modifier = "using specified characters as separators instead of tabs"
+verdict = "allow"
+rationale = "Changes the delimiter in the output; still read-only."

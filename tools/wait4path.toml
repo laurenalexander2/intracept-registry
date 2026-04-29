@@ -1,0 +1,7 @@
+# tools/wait4path.toml
+
+[[command]]
+path = "wait4path"
+translation = "Wait for a specified file system path to appear."
+verdict = "allow"
+rationale = "Blocks until a path exists; does not create or modify files."

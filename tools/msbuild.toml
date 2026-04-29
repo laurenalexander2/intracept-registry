@@ -1,0 +1,28 @@
+# tools/msbuild.toml — Microsoft Build Engine (Mono)
+
+[[command]]
+path = "msbuild"
+translation = "Build a project or solution using the MSBuild build engine."
+verdict = "allow"
+rationale = "Compiles source code and produces build artifacts locally; does not deploy or modify production systems."
+
+[[flag]]
+applies_to = "msbuild"
+flag = "-target"
+translation_modifier = "building only the specified targets"
+verdict = "allow"
+rationale = "Narrows the build scope; no additional risk."
+
+[[flag]]
+applies_to = "msbuild"
+flag = "-property"
+translation_modifier = "with overridden project-level properties"
+verdict = "allow"
+rationale = "Sets build properties; affects only the build output."
+
+[[flag]]
+applies_to = "msbuild"
+flag = "-restore"
+translation_modifier = "restoring NuGet packages before building"
+verdict = "allow"
+rationale = "Downloads dependencies from configured package sources."

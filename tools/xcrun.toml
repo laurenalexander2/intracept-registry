@@ -1,0 +1,84 @@
+# tools/xcrun.toml
+
+[[command]]
+path = "xcrun"
+translation = "Locate and run developer tools from the active Xcode installation."
+verdict = "allow"
+rationale = "Finds and executes Xcode tools; risk depends on the tool being run."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--find"
+translation_modifier = "printing the path to a tool instead of running it"
+verdict = "allow"
+rationale = "Read-only lookup that displays the tool path without executing anything."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--sdk"
+translation_modifier = "searching within a specific SDK"
+verdict = "allow"
+rationale = "Limits the search to a named SDK; does not modify anything."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--toolchain"
+translation_modifier = "searching within a specific toolchain"
+verdict = "allow"
+rationale = "Limits the search to a named toolchain; does not modify anything."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--show-sdk-path"
+translation_modifier = "printing the path to the selected SDK"
+verdict = "allow"
+rationale = "Read-only display of the SDK path."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--show-sdk-version"
+translation_modifier = "printing the version number of the selected SDK"
+verdict = "allow"
+rationale = "Read-only display of the SDK version."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--show-sdk-build-version"
+translation_modifier = "printing the build version of the selected SDK"
+verdict = "allow"
+rationale = "Read-only display of the SDK build version."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--show-sdk-platform-path"
+translation_modifier = "printing the path to the platform for the selected SDK"
+verdict = "allow"
+rationale = "Read-only display of the platform path."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--kill-cache"
+translation_modifier = "clearing the developer tool lookup cache"
+verdict = "allow"
+rationale = "Removes the cache; all values must be re-cached, which may slow the next lookup."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--no-cache"
+translation_modifier = "bypassing the cache for this lookup"
+verdict = "allow"
+rationale = "Skips the cache for a single invocation; does not delete the cache."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "--log"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Prints the full command line being invoked; does not change behavior."
+
+[[flag]]
+applies_to = "xcrun"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Adds verbose output about tool lookup; does not change behavior."

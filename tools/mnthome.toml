@@ -1,0 +1,35 @@
+# tools/mnthome.toml — AFP home directory mounter
+
+[[command]]
+path = "mnthome"
+translation = "Unmount and remount an AFP home directory with the correct user privileges."
+verdict = "allow"
+rationale = "Unmounts and remounts a network filesystem, which temporarily disrupts access to the home directory."
+
+[[flag]]
+applies_to = "mnthome"
+flag = "-u"
+translation_modifier = "only unmounting the current home directory mount"
+verdict = "allow"
+rationale = "Unmounts the home directory without remounting, leaving it inaccessible until remounted."
+
+[[flag]]
+applies_to = "mnthome"
+flag = "-n"
+translation_modifier = "without force-unmounting the previous mount point"
+verdict = "allow"
+rationale = "Skips the forced unmount, which is a safer approach."
+
+[[flag]]
+applies_to = "mnthome"
+flag = "-m"
+translation_modifier = "at a specified alternative mount point"
+verdict = "allow"
+rationale = "Changes the mount location; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "mnthome"
+flag = "-i"
+translation_modifier = "only displaying information about the AFP home mount point"
+verdict = "allow"
+rationale = "Read-only display of mount information."

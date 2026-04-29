@@ -1,0 +1,7 @@
+# tools/playwright.toml
+
+[[command]]
+path = "playwright"
+translation = "Run the Playwright browser automation and testing framework."
+verdict = "allow"
+rationale = "Controls web browsers programmatically, which can navigate to URLs and interact with web pages."

@@ -1,0 +1,21 @@
+# tools/tee.toml
+
+[[command]]
+path = "tee"
+translation = "Read from standard input and write to both standard output and one or more files."
+verdict = "allow"
+rationale = "Writes data to files, which may overwrite existing content."
+
+[[flag]]
+applies_to = "tee"
+flag = "-a"
+translation_modifier = "appending to the files instead of overwriting them"
+verdict = "allow"
+rationale = "Preserves existing file content by appending; reduces overwrite risk."
+
+[[flag]]
+applies_to = "tee"
+flag = "-i"
+translation_modifier = "ignoring interrupt signals"
+verdict = "allow"
+rationale = "Prevents the process from being interrupted by Ctrl-C; does not affect file content."

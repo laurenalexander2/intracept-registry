@@ -1,0 +1,42 @@
+# tools/sample.toml
+
+[[command]]
+path = "sample"
+translation = "Profile a running process by periodically sampling its call stack."
+verdict = "allow"
+rationale = "Read-only profiling that does not modify the target process."
+
+[[flag]]
+applies_to = "sample"
+flag = "-wait"
+translation_modifier = "waiting for the target process to start before sampling"
+verdict = "allow"
+rationale = "Delays sampling until the process appears; still read-only."
+
+[[flag]]
+applies_to = "sample"
+flag = "-mayDie"
+translation_modifier = "capturing symbol information immediately in case the process exits during sampling"
+verdict = "allow"
+rationale = "Only changes when symbol data is collected; still read-only."
+
+[[flag]]
+applies_to = "sample"
+flag = "-fullPaths"
+translation_modifier = "showing full source file paths instead of just file names"
+verdict = "allow"
+rationale = "Only changes the level of detail in the output."
+
+[[flag]]
+applies_to = "sample"
+flag = "-e"
+translation_modifier = "opening the report in TextEdit when sampling finishes"
+verdict = "allow"
+rationale = "Launches a text editor to view the report; no data modification."
+
+[[flag]]
+applies_to = "sample"
+flag = "-file"
+translation_modifier = "saving the report to a specified file path"
+verdict = "allow"
+rationale = "Only changes where the report is saved."

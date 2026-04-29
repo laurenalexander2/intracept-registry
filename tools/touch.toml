@@ -1,0 +1,63 @@
+# tools/touch.toml
+
+[[command]]
+path = "touch"
+translation = "Create empty files or update the timestamps on existing files."
+verdict = "allow"
+rationale = "Creates files if they do not exist or updates timestamps; does not modify file contents."
+
+[[flag]]
+applies_to = "touch"
+flag = "-a"
+translation_modifier = "only updating the last-accessed time"
+verdict = "allow"
+rationale = "Limits the timestamp change to the access time only."
+
+[[flag]]
+applies_to = "touch"
+flag = "-m"
+translation_modifier = "only updating the last-modified time"
+verdict = "allow"
+rationale = "Limits the timestamp change to the modification time only."
+
+[[flag]]
+applies_to = "touch"
+flag = "-c"
+translation_modifier = "skipping the file if it does not already exist instead of creating it"
+verdict = "allow"
+rationale = "Prevents creation of new files; a scope-reducing option."
+
+[[flag]]
+applies_to = "touch"
+flag = "-t"
+translation_modifier = "setting a specific date and time instead of using the current time"
+verdict = "allow"
+rationale = "Allows setting an arbitrary timestamp; does not modify file contents."
+
+[[flag]]
+applies_to = "touch"
+flag = "-r"
+translation_modifier = "copying the timestamps from another specified file"
+verdict = "allow"
+rationale = "Uses another file's timestamps as the source; does not modify file contents."
+
+[[flag]]
+applies_to = "touch"
+flag = "-d"
+translation_modifier = "setting a specific date and time in a flexible format instead of using the current time"
+verdict = "allow"
+rationale = "Allows setting an arbitrary timestamp; does not modify file contents."
+
+[[flag]]
+applies_to = "touch"
+flag = "-h"
+translation_modifier = "updating the shortcut itself instead of the file it points to"
+verdict = "allow"
+rationale = "Changes the target of the timestamp update; does not modify file contents."
+
+[[flag]]
+applies_to = "touch"
+flag = "-A"
+translation_modifier = "adjusting the existing timestamps forward or backward by a specified amount"
+verdict = "allow"
+rationale = "Shifts timestamps relative to their current value; does not modify file contents."

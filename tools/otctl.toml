@@ -1,0 +1,7 @@
+# tools/otctl.toml — iCloud Keychain diagnostic tool
+
+[[command]]
+path = "otctl"
+translation = "Display diagnostic information about iCloud Keychain syncing and trust state."
+verdict = "allow"
+rationale = "Read-only diagnostic output for sysdiagnose; does not modify keychain data."

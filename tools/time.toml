@@ -1,0 +1,42 @@
+# tools/time.toml
+
+[[command]]
+path = "time"
+translation = "Measure the execution time of a command."
+verdict = "allow"
+rationale = "Runs a command and reports timing statistics; the timing itself adds no risk."
+
+[[flag]]
+applies_to = "time"
+flag = "-l"
+translation_modifier = "also showing detailed resource usage statistics"
+verdict = "allow"
+rationale = "Displays additional read-only metrics like memory usage; modifies nothing."
+
+[[flag]]
+applies_to = "time"
+flag = "-p"
+translation_modifier = "formatting the output in the portable standard format"
+verdict = "allow"
+rationale = "Only changes output formatting; still read-only."
+
+[[flag]]
+applies_to = "time"
+flag = "-h"
+translation_modifier = "formatting the output in a human-readable format"
+verdict = "allow"
+rationale = "Only changes output formatting; still read-only."
+
+[[flag]]
+applies_to = "time"
+flag = "-o"
+translation_modifier = "writing the timing results to a specified file"
+verdict = "allow"
+rationale = "Writes timing output to a file; overwrites the file if it exists."
+
+[[flag]]
+applies_to = "time"
+flag = "-a"
+translation_modifier = "appending timing results to the output file instead of overwriting it"
+verdict = "allow"
+rationale = "Preserves existing file contents by appending; used with the -o option."

@@ -1,0 +1,7 @@
+# tools/unvis.toml
+
+[[command]]
+path = "unvis"
+translation = "Decode strings encoded with the vis utility back to their original form."
+verdict = "allow"
+rationale = "Text decoding filter; writes to the terminal without modifying files."

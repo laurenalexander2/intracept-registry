@@ -1,0 +1,7 @@
+# tools/xar.toml
+
+[[command]]
+path = "xar"
+translation = "Create, extract, and manipulate extensible archives."
+verdict = "allow"
+rationale = "Archive operations create or extract files; originals are unchanged during extraction."

@@ -1,0 +1,7 @@
+# tools/tput.toml
+
+[[command]]
+path = "tput"
+translation = "Query or set terminal capabilities using the terminfo database."
+verdict = "allow"
+rationale = "Sends control sequences to the terminal; changes are cosmetic and session-scoped."

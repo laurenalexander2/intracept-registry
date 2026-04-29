@@ -1,0 +1,7 @@
+# tools/sync.toml
+
+[[command]]
+path = "sync"
+translation = "Flush pending disk writes to ensure data is written to storage."
+verdict = "allow"
+rationale = "Forces cached data to disk; a safety operation that prevents data loss."

@@ -1,0 +1,7 @@
+# tools/rsvg-convert.toml
+
+[[command]]
+path = "rsvg-convert"
+translation = "Convert SVG images to PNG, PDF, or other raster formats."
+verdict = "allow"
+rationale = "Creates a new output file; the source SVG is not modified."

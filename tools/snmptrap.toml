@@ -1,0 +1,28 @@
+# tools/snmptrap.toml
+
+[[command]]
+path = "snmptrap"
+translation = "Send an SNMP notification to a monitoring system."
+verdict = "allow"
+rationale = "Sends a notification that may trigger alerts or automated responses on the receiving system."
+
+[[flag]]
+applies_to = "snmptrap"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmptrap"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmptrap"
+flag = "-Ci"
+translation_modifier = "sending an inform request that waits for acknowledgment instead of a one-way notification"
+verdict = "allow"
+rationale = "Only changes the notification type to one that confirms receipt."

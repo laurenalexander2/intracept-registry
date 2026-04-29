@@ -1,0 +1,21 @@
+# tools/mkbom.toml — Bill-of-materials file creator
+
+[[command]]
+path = "mkbom"
+translation = "Create a bill-of-materials file from a directory or file listing."
+verdict = "allow"
+rationale = "Generates a metadata file; overwrites only the specified output bom file."
+
+[[flag]]
+applies_to = "mkbom"
+flag = "-s"
+translation_modifier = "containing only file paths without metadata"
+verdict = "allow"
+rationale = "Simplifies the output format; no additional risk."
+
+[[flag]]
+applies_to = "mkbom"
+flag = "-i"
+translation_modifier = "using a text file listing as input instead of a directory"
+verdict = "allow"
+rationale = "Changes the input source; no additional risk."

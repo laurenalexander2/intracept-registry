@@ -1,0 +1,14 @@
+# tools/sfltool.toml
+
+[[command]]
+path = "sfltool"
+translation = "Create a diagnostic snapshot of SharedFileList data."
+verdict = "allow"
+rationale = "Creates a read-only archive of SharedFileList state for debugging; modifies nothing."
+
+[[flag]]
+applies_to = "sfltool"
+flag = "-z"
+translation_modifier = "compressing the snapshot into a zip archive"
+verdict = "allow"
+rationale = "Adds compression to the output; no additional risk."

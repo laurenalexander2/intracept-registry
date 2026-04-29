@@ -1,0 +1,35 @@
+# tools/compress.toml
+
+[[command]]
+path = "compress"
+translation = "Compress files using the Lempel-Ziv algorithm."
+verdict = "allow"
+rationale = "Compresses files in place, replacing the original with a .Z file."
+
+[[flag]]
+applies_to = "compress"
+flag = "-f"
+translation_modifier = "overwriting existing files without asking for confirmation"
+verdict = "allow"
+rationale = "Suppresses confirmation prompts and forces compression even when the file would grow."
+
+[[flag]]
+applies_to = "compress"
+flag = "-v"
+translation_modifier = "showing the compression ratio for each file"
+verdict = "allow"
+rationale = "Only adds informational output; no change to behavior."
+
+[[flag]]
+applies_to = "compress"
+flag = "-c"
+translation_modifier = "writing compressed output to the terminal instead of replacing the file"
+verdict = "allow"
+rationale = "Leaves the original file unmodified; only writes to the terminal."
+
+[[flag]]
+applies_to = "compress"
+flag = "-b"
+translation_modifier = "limiting the compression code size to a specified number of bits"
+verdict = "allow"
+rationale = "Only tunes the compression algorithm; no change in what files are affected."

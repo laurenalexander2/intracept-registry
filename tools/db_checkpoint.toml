@@ -1,0 +1,7 @@
+# tools/db_checkpoint.toml
+
+[[command]]
+path = "db_checkpoint"
+translation = "Force a checkpoint in a Berkeley DB environment."
+verdict = "allow"
+rationale = "Flushes database buffers to disk."

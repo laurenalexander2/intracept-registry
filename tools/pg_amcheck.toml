@@ -1,0 +1,14 @@
+# tools/pg_amcheck.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_amcheck"
+translation = "Check PostgreSQL database objects for corruption."
+verdict = "allow"
+rationale = "Read-only integrity verification that does not modify any data."
+
+[[flag]]
+applies_to = "pg_amcheck"
+flag = "--all"
+translation_modifier = "checking all relations in the database"
+verdict = "allow"
+rationale = "Read-only integrity check across all relations."

@@ -1,0 +1,7 @@
+# tools/ptargrep.toml
+
+[[command]]
+path = "ptargrep"
+translation = "Search for patterns inside files within a tar archive."
+verdict = "allow"
+rationale = "Read-only search within archive contents."

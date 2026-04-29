@@ -1,0 +1,7 @@
+# tools/pyftsubset.toml
+
+[[command]]
+path = "pyftsubset"
+translation = "Create a subset of a font file containing only specified glyphs."
+verdict = "allow"
+rationale = "Creates a new font file; the original is not modified."

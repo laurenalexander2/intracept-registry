@@ -1,0 +1,7 @@
+# tools/bashbug.toml
+
+[[command]]
+path = "bashbug"
+translation = "Report bugs in the Bash shell."
+verdict = "allow"
+rationale = "Opens a bug report template in an editor."

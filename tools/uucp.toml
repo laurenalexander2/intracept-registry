@@ -1,0 +1,14 @@
+# tools/uucp.toml
+
+[[command]]
+path = "uucp"
+translation = "Copy files between systems using the Unix-to-Unix Copy protocol."
+verdict = "allow"
+rationale = "Transfers files to remote systems; may overwrite files at the destination."
+
+[[flag]]
+applies_to = "uucp"
+flag = "--recursive"
+translation_modifier = "copying directories recursively"
+verdict = "allow"
+rationale = "Copies entire directory trees over the Unix-to-Unix Copy protocol; increases scope of files transferred."

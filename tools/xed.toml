@@ -1,0 +1,7 @@
+# tools/xed.toml
+
+[[command]]
+path = "xed"
+translation = "Open files or projects in Xcode."
+verdict = "allow"
+rationale = "Launches Xcode with specified files; does not modify files itself."

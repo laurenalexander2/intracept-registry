@@ -1,0 +1,63 @@
+# tools/postmap.toml
+
+[[command]]
+path = "postmap"
+translation = "Create or query a Postfix lookup table from a text file."
+verdict = "allow"
+rationale = "Rebuilds lookup tables that affect mail routing and delivery."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-q"
+translation_modifier = "looking up a single key and printing the result"
+verdict = "allow"
+rationale = "Read-only query of an existing table; nothing is modified."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-d"
+translation_modifier = "deleting a specific entry from the lookup table"
+verdict = "allow"
+rationale = "Removes a mail routing entry, which may cause delivery failures for the affected address."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-i"
+translation_modifier = "adding entries from standard input without replacing the existing table"
+verdict = "allow"
+rationale = "Appends to the table instead of rebuilding it, but still modifies mail routing data."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-s"
+translation_modifier = "listing all entries in the lookup table"
+verdict = "allow"
+rationale = "Read-only dump of all table contents."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-r"
+translation_modifier = "silently replacing existing entries when updating"
+verdict = "allow"
+rationale = "Overwrites existing entries without warning, which could change mail routing unexpectedly."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-w"
+translation_modifier = "silently ignoring attempts to update existing entries"
+verdict = "allow"
+rationale = "Skips duplicate entries without modifying them."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-v"
+translation_modifier = "showing detailed processing information"
+verdict = "allow"
+rationale = "Only increases log verbosity for troubleshooting."
+
+[[flag]]
+applies_to = "postmap"
+flag = "-c"
+translation_modifier = "reading configuration from a specific directory"
+verdict = "allow"
+rationale = "Only changes where configuration files are loaded from."

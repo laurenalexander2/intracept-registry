@@ -1,0 +1,7 @@
+# tools/msgexec.toml — GNU gettext message command executor
+
+[[command]]
+path = "msgexec"
+translation = "Apply a shell command to each translation in a catalog file."
+verdict = "allow"
+rationale = "Executes an arbitrary shell command for each message, which could modify system state."

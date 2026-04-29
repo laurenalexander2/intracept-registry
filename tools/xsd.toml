@@ -1,0 +1,7 @@
+# tools/xsd.toml
+
+[[command]]
+path = "xsd"
+translation = "Generate .NET classes from XML Schema definitions."
+verdict = "allow"
+rationale = "Generates source code from schema files; does not modify existing code."

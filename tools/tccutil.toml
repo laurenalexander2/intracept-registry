@@ -1,0 +1,7 @@
+# tools/tccutil.toml
+
+[[command]]
+path = "tccutil"
+translation = "Manage the privacy database that controls application access to protected resources."
+verdict = "require_approval"
+rationale = "Resets privacy permissions for applications; affected apps will need to re-request access to contacts, photos, etc."

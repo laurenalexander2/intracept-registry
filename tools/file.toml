@@ -1,0 +1,70 @@
+# tools/file.toml
+
+[[command]]
+path = "file"
+translation = "Identify the type of a file by examining its contents."
+verdict = "allow"
+rationale = "Read-only analysis that inspects file contents without modifying anything."
+
+[[flag]]
+applies_to = "file"
+flag = "-b"
+translation_modifier = "showing only the file type without the file name"
+verdict = "allow"
+rationale = "Changes output formatting; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-i"
+translation_modifier = "showing the content type and character encoding instead of a human-readable description"
+verdict = "allow"
+rationale = "Changes the output format; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-I"
+translation_modifier = "showing the content type and character encoding instead of a human-readable description"
+verdict = "allow"
+rationale = "Changes the output format; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-z"
+translation_modifier = "looking inside compressed files to identify their contents"
+verdict = "allow"
+rationale = "Decompresses for inspection only; does not modify any files."
+
+[[flag]]
+applies_to = "file"
+flag = "-L"
+translation_modifier = "following shortcuts to examine the target file instead of the shortcut itself"
+verdict = "allow"
+rationale = "Resolves the link before inspection; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-h"
+translation_modifier = "examining the shortcut itself instead of following it to the target file"
+verdict = "allow"
+rationale = "Inspects the link rather than its target; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-f"
+translation_modifier = "reading the list of files to examine from a specified file"
+verdict = "allow"
+rationale = "Reads file names from a list; still performs read-only inspection."
+
+[[flag]]
+applies_to = "file"
+flag = "-k"
+translation_modifier = "showing all matching file types instead of stopping at the first match"
+verdict = "allow"
+rationale = "Provides more detailed output; still read-only."
+
+[[flag]]
+applies_to = "file"
+flag = "-s"
+translation_modifier = "examining special device files in addition to regular files"
+verdict = "allow"
+rationale = "Reads from device files, which is unusual but still a read-only operation."

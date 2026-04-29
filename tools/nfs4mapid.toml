@@ -1,0 +1,7 @@
+# tools/nfs4mapid.toml — NFSv4 ID mapping daemon
+
+[[command]]
+path = "nfs4mapid"
+translation = "Run the NFSv4 user and group ID mapping service."
+verdict = "allow"
+rationale = "Provides name-to-ID translation for NFSv4; does not modify files or exports."

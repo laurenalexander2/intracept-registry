@@ -1,0 +1,7 @@
+# tools/cvupdatefs.toml
+
+[[command]]
+path = "cvupdatefs"
+translation = "Update an Xsan filesystem configuration."
+verdict = "require_approval"
+rationale = "Modifies the running filesystem configuration."

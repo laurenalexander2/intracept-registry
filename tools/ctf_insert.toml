@@ -1,0 +1,7 @@
+# tools/ctf_insert.toml
+
+[[command]]
+path = "ctf_insert"
+translation = "Insert compact type format debug data into Apple platform binaries."
+verdict = "allow"
+rationale = "Modifies binary files to add debug information."

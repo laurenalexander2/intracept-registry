@@ -1,0 +1,7 @@
+# tools/cvmkfile.toml
+
+[[command]]
+path = "cvmkfile"
+translation = "Create files on Xsan volumes with specific allocation."
+verdict = "allow"
+rationale = "Creates files with specific storage allocation."

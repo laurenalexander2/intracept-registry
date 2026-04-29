@@ -1,0 +1,7 @@
+# tools/tabs.toml
+
+[[command]]
+path = "tabs"
+translation = "Set tab stops on a terminal."
+verdict = "allow"
+rationale = "Changes terminal tab stop positions for the current session; resets on terminal close."

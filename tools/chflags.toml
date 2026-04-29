@@ -1,0 +1,7 @@
+# tools/chflags.toml
+
+[[command]]
+path = "chflags"
+translation = "Change file flags on macOS."
+verdict = "allow"
+rationale = "Modifies file-level flags such as immutable or hidden attributes."

@@ -1,0 +1,14 @@
+# tools/pbcopy.toml — Pasteboard copy
+
+[[command]]
+path = "pbcopy"
+translation = "Copy standard input to the macOS clipboard."
+verdict = "allow"
+rationale = "Places text on the pasteboard; overwrites only clipboard contents, which is trivially reversible."
+
+[[flag]]
+applies_to = "pbcopy"
+flag = "-pboard"
+translation_modifier = "targeting a specific pasteboard instead of the default general one"
+verdict = "allow"
+rationale = "Selects which pasteboard to write to; no additional risk."

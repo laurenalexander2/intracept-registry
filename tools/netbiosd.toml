@@ -1,0 +1,7 @@
+# tools/netbiosd.toml — NetBIOS protocol daemon
+
+[[command]]
+path = "netbiosd"
+translation = "Run the NetBIOS name service background service for network browsing and name registration."
+verdict = "allow"
+rationale = "Starts a network background service that registers and defends NetBIOS names on the local network."

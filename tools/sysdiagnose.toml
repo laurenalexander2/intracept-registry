@@ -1,0 +1,7 @@
+# tools/sysdiagnose.toml
+
+[[command]]
+path = "sysdiagnose"
+translation = "Collect comprehensive system diagnostic information into an archive."
+verdict = "allow"
+rationale = "Gathers logs, profiles, and system state into a tar archive; does not modify system configuration."

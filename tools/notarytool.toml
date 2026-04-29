@@ -1,0 +1,127 @@
+# tools/notarytool.toml
+
+[[command]]
+path = "notarytool"
+translation = "Manage submissions to the Apple notary service for macOS software distribution."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "notarytool submit"
+translation = "Upload a signed application, disk image, or installer package to Apple for notarization."
+verdict = "allow"
+rationale = "Sends the file to Apple for scanning; does not modify the local file but initiates an external review."
+
+[[command]]
+path = "notarytool info"
+translation = "Get the status of a previous notarization submission."
+verdict = "allow"
+rationale = "Read-only query of submission status."
+
+[[command]]
+path = "notarytool log"
+translation = "Download the notarization log for a completed submission."
+verdict = "allow"
+rationale = "Retrieves a log file; does not modify the submission."
+
+[[command]]
+path = "notarytool history"
+translation = "List previous notarization submissions for your team."
+verdict = "allow"
+rationale = "Read-only listing of past submissions."
+
+[[command]]
+path = "notarytool wait"
+translation = "Wait for a notarization submission to finish processing."
+verdict = "allow"
+rationale = "Blocks until the submission completes; does not modify anything."
+
+[[command]]
+path = "notarytool store-credentials"
+translation = "Save notarization service credentials to the macOS Keychain."
+verdict = "allow"
+rationale = "Stores authentication credentials locally; removable from the keychain."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--wait"
+translation_modifier = "waiting for the submission to complete before exiting"
+verdict = "allow"
+rationale = "Blocks until processing is done; does not change the submission."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--force"
+translation_modifier = "uploading even if pre-flight validation finds problems"
+verdict = "allow"
+rationale = "Bypasses local validation checks; the submission may be rejected by Apple."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--no-s3-acceleration"
+translation_modifier = "disabling accelerated uploads"
+verdict = "allow"
+rationale = "Uses standard upload speed; may help with connectivity issues."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--timeout"
+translation_modifier = "exiting after a specified duration if the submission has not completed"
+verdict = "allow"
+rationale = "Limits how long the tool waits; the submission continues processing on Apple's servers."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "-p"
+translation_modifier = "authenticating using credentials stored in the Keychain"
+verdict = "allow"
+rationale = "Uses previously saved credentials; does not expose secrets on the command line."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "-k"
+translation_modifier = "authenticating using an App Store Connect API key file"
+verdict = "allow"
+rationale = "Specifies the private key for API authentication."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--apple-id"
+translation_modifier = "authenticating with an Apple ID"
+verdict = "allow"
+rationale = "Specifies the Apple ID for authentication."
+
+[[flag]]
+applies_to = "notarytool submit"
+flag = "--team-id"
+translation_modifier = "specifying the developer team to use"
+verdict = "allow"
+rationale = "Selects which team to submit under; required for multi-team accounts."
+
+[[flag]]
+applies_to = "notarytool store-credentials"
+flag = "--validate"
+translation_modifier = "verifying the credentials are valid before saving them"
+verdict = "allow"
+rationale = "Tests credentials against the server before storing; a safety check."
+
+[[flag]]
+applies_to = "notarytool store-credentials"
+flag = "--no-validate"
+translation_modifier = "saving credentials without verifying them first"
+verdict = "allow"
+rationale = "Skips the validation step; credentials may turn out to be invalid."
+
+[[flag]]
+applies_to = "notarytool store-credentials"
+flag = "--sync"
+translation_modifier = "making the credentials available across devices via iCloud Keychain"
+verdict = "allow"
+rationale = "Syncs credentials to other devices; removable from iCloud Keychain."
+
+[[flag]]
+applies_to = "notarytool"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of output displayed."

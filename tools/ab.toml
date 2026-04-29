@@ -1,0 +1,126 @@
+# tools/ab.toml
+
+[[command]]
+path = "ab"
+translation = "Benchmark an HTTP server by sending requests."
+verdict = "allow"
+rationale = "Sends HTTP requests for performance testing; does not modify server data."
+
+[[flag]]
+applies_to = "ab"
+flag = "-n"
+translation_modifier = "sending a specified total number of requests"
+verdict = "allow"
+rationale = "Controls the number of requests; more requests increase server load but do not modify data."
+
+[[flag]]
+applies_to = "ab"
+flag = "-c"
+translation_modifier = "sending multiple requests at the same time"
+verdict = "allow"
+rationale = "High concurrency can overwhelm the target server and degrade its performance for other users."
+
+[[flag]]
+applies_to = "ab"
+flag = "-t"
+translation_modifier = "running the benchmark for a specified number of seconds"
+verdict = "allow"
+rationale = "Limits the test duration; does not change the nature of the requests."
+
+[[flag]]
+applies_to = "ab"
+flag = "-k"
+translation_modifier = "reusing connections between requests"
+verdict = "allow"
+rationale = "Enables keep-alive to reduce connection overhead; does not change what is sent."
+
+[[flag]]
+applies_to = "ab"
+flag = "-p"
+translation_modifier = "sending data from a file to create or update a resource on the server"
+verdict = "allow"
+rationale = "Sends data to the server, which could trigger state changes on the target."
+
+[[flag]]
+applies_to = "ab"
+flag = "-u"
+translation_modifier = "sending data from a file to replace a resource on the server"
+verdict = "allow"
+rationale = "Sends data to the server, which could create or overwrite resources on the target."
+
+[[flag]]
+applies_to = "ab"
+flag = "-T"
+translation_modifier = "using a specified content type for the request body"
+verdict = "allow"
+rationale = "Sets the content-type header; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ab"
+flag = "-H"
+translation_modifier = "including a custom HTTP header"
+verdict = "allow"
+rationale = "Adds a header to requests; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ab"
+flag = "-A"
+translation_modifier = "authenticating with a username and password"
+verdict = "allow"
+rationale = "Sends credentials to the server; may expose them if the connection is not encrypted."
+
+[[flag]]
+applies_to = "ab"
+flag = "-C"
+translation_modifier = "including a cookie with each request"
+verdict = "allow"
+rationale = "Sends cookie data; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ab"
+flag = "-X"
+translation_modifier = "routing requests through a specified proxy server"
+verdict = "allow"
+rationale = "Redirects traffic through a proxy; does not change what data is sent."
+
+[[flag]]
+applies_to = "ab"
+flag = "-i"
+translation_modifier = "requesting only response headers without downloading content"
+verdict = "allow"
+rationale = "Retrieves only headers; reduces the amount of data transferred."
+
+[[flag]]
+applies_to = "ab"
+flag = "-m"
+translation_modifier = "using a specified HTTP method"
+verdict = "allow"
+rationale = "Changes the HTTP verb; does not inherently increase risk beyond the base command."
+
+[[flag]]
+applies_to = "ab"
+flag = "-r"
+translation_modifier = "continuing even when receiving network connection errors"
+verdict = "allow"
+rationale = "Prevents the benchmark from stopping on errors; does not change what is sent."
+
+[[flag]]
+applies_to = "ab"
+flag = "-s"
+translation_modifier = "setting a custom timeout in seconds for each request"
+verdict = "allow"
+rationale = "Changes the wait time per request; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ab"
+flag = "-e"
+translation_modifier = "saving response time percentiles to a CSV file"
+verdict = "allow"
+rationale = "Writes benchmark statistics to a local file; does not affect the server."
+
+[[flag]]
+applies_to = "ab"
+flag = "-g"
+translation_modifier = "saving detailed timing data to a file for graphing"
+verdict = "allow"
+rationale = "Writes benchmark data to a local file; does not affect the server."

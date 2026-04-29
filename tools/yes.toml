@@ -1,0 +1,7 @@
+# tools/yes.toml
+
+[[command]]
+path = "yes"
+translation = "Repeatedly output a string until terminated."
+verdict = "allow"
+rationale = "Outputs text to the terminal indefinitely; modifies nothing."

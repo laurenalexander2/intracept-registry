@@ -1,0 +1,136 @@
+# tools/yarn.toml
+
+[[command]]
+path = "yarn"
+translation = "Run the Yarn package manager for JavaScript projects."
+verdict = "allow"
+rationale = "The bare command runs install by default; equivalent to yarn install."
+
+[[command]]
+path = "yarn install"
+translation = "Install all dependencies listed in the project's package.json."
+verdict = "require_approval"
+rationale = "Downloads and installs packages from the registry, which execute install scripts that may modify the system."
+
+[[flag]]
+applies_to = "yarn install"
+flag = "--immutable"
+translation_modifier = "failing if the lockfile would need to be updated"
+verdict = "allow"
+rationale = "Prevents lockfile changes; a safety check for CI environments."
+
+[[command]]
+path = "yarn add"
+translation = "Add a dependency to the project."
+verdict = "require_approval"
+rationale = "Downloads and installs a package, modifying package.json and the lockfile."
+
+[[flag]]
+applies_to = "yarn add"
+flag = "--dev"
+translation_modifier = "as a development dependency"
+verdict = "allow"
+rationale = "Changes the dependency category but does not alter the installation behavior."
+
+[[command]]
+path = "yarn remove"
+translation = "Remove a dependency from the project."
+verdict = "allow"
+rationale = "Uninstalls a package and modifies package.json and the lockfile."
+
+[[command]]
+path = "yarn run"
+translation = "Run a script defined in the project's package.json."
+verdict = "allow"
+rationale = "Executes an arbitrary script, which may perform any action."
+
+[[command]]
+path = "yarn dlx"
+translation = "Run a package in a temporary environment without installing it permanently."
+verdict = "allow"
+rationale = "Downloads and executes remote code from the registry."
+
+[[command]]
+path = "yarn cache clean"
+translation = "Remove shared cache files used by Yarn."
+verdict = "allow"
+rationale = "Deletes cached packages; they will be re-downloaded on next install."
+
+[[flag]]
+applies_to = "yarn cache clean"
+flag = "--all"
+translation_modifier = "removing the entire cache including mirror files"
+verdict = "allow"
+rationale = "Deletes all cached data, which may significantly slow down the next install."
+
+[[command]]
+path = "yarn init"
+translation = "Create a new package.json file in the current directory."
+verdict = "allow"
+rationale = "Creates a configuration file; does not install anything."
+
+[[command]]
+path = "yarn up"
+translation = "Update project dependencies to newer versions."
+verdict = "allow"
+rationale = "Modifies the lockfile and installs new package versions that may introduce breaking changes."
+
+[[command]]
+path = "yarn dedupe"
+translation = "Remove duplicate dependency versions by consolidating ranges."
+verdict = "allow"
+rationale = "Modifies the lockfile and may change which versions are installed."
+
+[[command]]
+path = "yarn exec"
+translation = "Execute a shell command in the project environment."
+verdict = "allow"
+rationale = "Runs an arbitrary command with access to project binaries."
+
+[[command]]
+path = "yarn info"
+translation = "Display information about installed packages."
+verdict = "allow"
+rationale = "Read-only display of package metadata."
+
+[[command]]
+path = "yarn link"
+translation = "Connect the local project to another local package for development."
+verdict = "allow"
+rationale = "Creates a symbolic link for local development; easily reversible."
+
+[[command]]
+path = "yarn unlink"
+translation = "Disconnect the local project from a linked package."
+verdict = "allow"
+rationale = "Removes a development symbolic link and reinstalls the normal dependency."
+
+[[command]]
+path = "yarn pack"
+translation = "Generate a tarball from the current workspace."
+verdict = "allow"
+rationale = "Creates a local archive file; does not publish anything."
+
+[[command]]
+path = "yarn rebuild"
+translation = "Rebuild the project's native packages."
+verdict = "allow"
+rationale = "Re-runs native build scripts, which may compile code and modify the local environment."
+
+[[command]]
+path = "yarn npm audit"
+translation = "Check installed packages for known security vulnerabilities."
+verdict = "allow"
+rationale = "Read-only security audit of dependencies."
+
+[[command]]
+path = "yarn npm publish"
+translation = "Publish a package to the npm registry."
+verdict = "require_approval"
+rationale = "Makes the package publicly available on the registry, which is difficult to fully undo."
+
+[[command]]
+path = "yarn set version"
+translation = "Lock the Yarn version used by the project."
+verdict = "allow"
+rationale = "Downloads a specific Yarn binary for the project; does not affect dependencies."

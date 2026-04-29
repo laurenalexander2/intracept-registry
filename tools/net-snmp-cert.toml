@@ -1,0 +1,14 @@
+# tools/net-snmp-cert.toml — Net-SNMP certificate management (skipping detailed flags)
+
+[[command]]
+path = "net-snmp-cert"
+translation = "Manage TLS certificates for Net-SNMP secure communications."
+verdict = "allow"
+rationale = "Creates, imports, and manages certificates that control SNMP authentication and encryption."
+
+[[flag]]
+applies_to = "net-snmp-cert"
+flag = "--force"
+translation_modifier = "overwriting existing certificates without prompting"
+verdict = "allow"
+rationale = "Replaces existing SNMP certificates; may disrupt monitoring until reconfigured."

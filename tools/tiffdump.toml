@@ -1,0 +1,7 @@
+# tools/tiffdump.toml
+
+[[command]]
+path = "tiffdump"
+translation = "Display the raw structure and tags of a TIFF file."
+verdict = "allow"
+rationale = "Read-only display of internal TIFF structure; modifies nothing."

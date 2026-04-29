@@ -1,0 +1,7 @@
+# tools/profiles.toml
+
+[[command]]
+path = "profiles"
+translation = "Manage macOS configuration profiles for device management and policy enforcement."
+verdict = "require_approval"
+rationale = "Installs or removes configuration profiles that can change system settings and restrictions."

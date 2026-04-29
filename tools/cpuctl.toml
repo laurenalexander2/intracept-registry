@@ -1,0 +1,7 @@
+# tools/cpuctl.toml
+
+[[command]]
+path = "cpuctl"
+translation = "Manage CPU cores on macOS."
+verdict = "require_approval"
+rationale = "Enables or disables CPU cores, affecting system performance and stability."

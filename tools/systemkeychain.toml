@@ -1,0 +1,7 @@
+# tools/systemkeychain.toml
+
+[[command]]
+path = "systemkeychain"
+translation = "Manage the system keychain used for system-wide credentials."
+verdict = "require_approval"
+rationale = "Modifies the system keychain which stores credentials used by system services; incorrect changes can break services."

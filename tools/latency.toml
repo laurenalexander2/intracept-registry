@@ -1,0 +1,63 @@
+# tools/latency.toml
+
+[[command]]
+path = "latency"
+translation = "Monitor scheduling and interrupt latency statistics in real time."
+verdict = "allow"
+rationale = "Read-only monitoring of system timing behavior; requires root privileges but modifies nothing."
+
+[[flag]]
+applies_to = "latency"
+flag = "-p"
+translation_modifier = "observing only threads at a specified scheduling priority level"
+verdict = "allow"
+rationale = "Only filters which threads are monitored."
+
+[[flag]]
+applies_to = "latency"
+flag = "-h"
+translation_modifier = "displaying high-resolution interrupt latencies and saving them to a CSV file on exit"
+verdict = "allow"
+rationale = "Creates a diagnostic CSV file; does not affect system behavior."
+
+[[flag]]
+applies_to = "latency"
+flag = "-m"
+translation_modifier = "displaying per-CPU interrupt latency statistics"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "latency"
+flag = "-st"
+translation_modifier = "logging events when scheduling latency exceeds a specified threshold in microseconds"
+verdict = "allow"
+rationale = "Only changes which events are logged; no system modification."
+
+[[flag]]
+applies_to = "latency"
+flag = "-it"
+translation_modifier = "logging events when interrupt latency exceeds a specified threshold in microseconds"
+verdict = "allow"
+rationale = "Only changes which events are logged; no system modification."
+
+[[flag]]
+applies_to = "latency"
+flag = "-l"
+translation_modifier = "writing threshold-exceeding events to a specified log file"
+verdict = "allow"
+rationale = "Creates a log file on disk; does not modify system behavior."
+
+[[flag]]
+applies_to = "latency"
+flag = "-R"
+translation_modifier = "reading from a saved trace file instead of monitoring the live system"
+verdict = "allow"
+rationale = "Processes an existing file; no live system interaction."
+
+[[flag]]
+applies_to = "latency"
+flag = "-n"
+translation_modifier = "using a specified kernel file instead of the default"
+verdict = "allow"
+rationale = "Only changes which kernel symbol information is used for display."

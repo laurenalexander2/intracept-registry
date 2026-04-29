@@ -1,0 +1,7 @@
+# tools/pg_test_fsync-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_test_fsync-17"
+translation = "Test the speed of various fsync methods available to PostgreSQL."
+verdict = "allow"
+rationale = "Read-only benchmark that tests disk sync performance."

@@ -1,0 +1,7 @@
+# tools/afhash.toml
+
+[[command]]
+path = "afhash"
+translation = "Compute a hash of an audio file."
+verdict = "allow"
+rationale = "Read-only operation that computes and displays file hashes without modifying any files."

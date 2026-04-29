@@ -1,0 +1,7 @@
+# tools/tiffcp.toml
+
+[[command]]
+path = "tiffcp"
+translation = "Copy and optionally recompress TIFF images."
+verdict = "allow"
+rationale = "Creates a new output file; original files are unchanged."

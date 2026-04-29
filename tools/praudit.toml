@@ -1,0 +1,7 @@
+# tools/praudit.toml
+
+[[command]]
+path = "praudit"
+translation = "Print the contents of macOS audit trail files in human-readable format."
+verdict = "allow"
+rationale = "Read-only display of security audit logs."

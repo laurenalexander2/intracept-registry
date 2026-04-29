@@ -1,0 +1,7 @@
+# tools/mono-sgen.toml — Mono runtime with SGen garbage collector
+
+[[command]]
+path = "mono-sgen"
+translation = "Run a .NET application using the Mono runtime with the SGen garbage collector."
+verdict = "allow"
+rationale = "Executes arbitrary managed code, which could modify files or system state."

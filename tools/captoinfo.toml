@@ -1,0 +1,7 @@
+# tools/captoinfo.toml
+
+[[command]]
+path = "captoinfo"
+translation = "Convert termcap entries to terminfo format."
+verdict = "allow"
+rationale = "Converts terminal capability descriptions; outputs to the terminal."

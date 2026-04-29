@@ -1,0 +1,7 @@
+# tools/auditreduce.toml
+
+[[command]]
+path = "auditreduce"
+translation = "Filter and select records from BSM audit trail files."
+verdict = "allow"
+rationale = "Read-only filtering of audit logs."

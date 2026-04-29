@@ -1,0 +1,7 @@
+# tools/dist_package_tool.toml
+
+[[command]]
+path = "dist_package_tool"
+translation = "Create macOS distribution packages."
+verdict = "allow"
+rationale = "Creates installer package files."

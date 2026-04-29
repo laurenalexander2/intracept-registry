@@ -1,0 +1,7 @@
+# tools/postmulti.toml
+
+[[command]]
+path = "postmulti"
+translation = "Manage multiple Postfix instances on the same machine."
+verdict = "allow"
+rationale = "Creates, enables, disables, or destroys Postfix instances."

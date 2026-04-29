@@ -1,0 +1,7 @@
+# tools/printf.toml
+
+[[command]]
+path = "printf"
+translation = "Format and print text to the terminal."
+verdict = "allow"
+rationale = "Read-only output formatting; does not modify files."

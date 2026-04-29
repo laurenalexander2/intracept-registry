@@ -1,0 +1,7 @@
+# tools/sha512sum.toml
+
+[[command]]
+path = "sha512sum"
+translation = "Compute or verify SHA-512 checksums in GNU-compatible format."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."

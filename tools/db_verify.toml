@@ -1,0 +1,7 @@
+# tools/db_verify.toml
+
+[[command]]
+path = "db_verify"
+translation = "Verify the integrity of a Berkeley DB database."
+verdict = "allow"
+rationale = "Read-only operation that checks database file integrity without modifying the database."

@@ -1,0 +1,91 @@
+# tools/lz4.toml
+
+[[command]]
+path = "lz4"
+translation = "Compress or decompress files using the LZ4 algorithm."
+verdict = "allow"
+rationale = "By default replaces source files with compressed or decompressed versions."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-d"
+translation_modifier = "decompressing instead of compressing"
+verdict = "allow"
+rationale = "Decompresses the input file, replacing it with the decompressed version."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-f"
+translation_modifier = "overwriting the output file without prompting"
+verdict = "allow"
+rationale = "Forces overwriting of existing files."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-k"
+translation_modifier = "keeping the source file after compression or decompression"
+verdict = "allow"
+rationale = "Preserves the input file instead of deleting it."
+
+[[flag]]
+applies_to = "lz4"
+flag = "--rm"
+translation_modifier = "removing the source file after successful compression or decompression"
+verdict = "allow"
+rationale = "Deletes the original file after processing."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-c"
+translation_modifier = "writing output to standard output instead of a file"
+verdict = "allow"
+rationale = "Leaves original files intact; only writes to standard output."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-t"
+translation_modifier = "testing the compressed file integrity without decompressing"
+verdict = "allow"
+rationale = "Read-only integrity check that does not modify any files."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-z"
+translation_modifier = "forcing compression regardless of the file extension"
+verdict = "allow"
+rationale = "Overrides automatic mode detection; same risk as normal compression."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-m"
+translation_modifier = "processing multiple input files at once"
+verdict = "allow"
+rationale = "Increases the scope of files affected in a single invocation."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Processes all files in a directory tree, increasing the scope of files affected."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-9"
+translation_modifier = "using maximum compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "lz4"
+flag = "-1"
+translation_modifier = "using fastest compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "lz4"
+flag = "--list"
+translation_modifier = "listing information about compressed files without modifying them"
+verdict = "allow"
+rationale = "Read-only display of compression statistics."

@@ -1,0 +1,14 @@
+# tools/rmdir.toml
+
+[[command]]
+path = "rmdir"
+translation = "Remove empty directories."
+verdict = "allow"
+rationale = "Only removes directories that are already empty; fails if the directory contains any files."
+
+[[flag]]
+applies_to = "rmdir"
+flag = "-p"
+translation_modifier = "removing each parent directory in the path if they are also empty"
+verdict = "allow"
+rationale = "Extends removal to empty parent directories; still safe because non-empty directories are skipped."

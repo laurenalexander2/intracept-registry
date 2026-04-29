@@ -1,0 +1,7 @@
+# tools/po-fetch.toml
+
+[[command]]
+path = "po-fetch"
+translation = "Fetch translation files from a translation service."
+verdict = "allow"
+rationale = "Downloads translation files; does not modify existing project files."

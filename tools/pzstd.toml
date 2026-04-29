@@ -1,0 +1,14 @@
+# tools/pzstd.toml
+
+[[command]]
+path = "pzstd"
+translation = "Compress or decompress files using the Zstandard algorithm with parallel processing."
+verdict = "allow"
+rationale = "Creates compressed files alongside originals by default; original files are preserved unless explicitly removed."
+
+[[flag]]
+applies_to = "pzstd"
+flag = "--force"
+translation_modifier = "overwriting existing output files without prompting"
+verdict = "allow"
+rationale = "Overwrites existing output files without confirmation; recoverable from backups."

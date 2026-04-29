@@ -1,0 +1,7 @@
+# tools/mprof-report.toml — Mono profiler report generator
+
+[[command]]
+path = "mprof-report"
+translation = "Generate a human-readable report from a Mono profiler log file."
+verdict = "allow"
+rationale = "Read-only analysis of a profiler log; produces only text output."

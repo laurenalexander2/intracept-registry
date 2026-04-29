@@ -1,0 +1,7 @@
+# tools/cvdbset.toml
+
+[[command]]
+path = "cvdbset"
+translation = "Set Xsan debug parameters."
+verdict = "allow"
+rationale = "Modifies debugging flags for the Xsan filesystem."

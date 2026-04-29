@@ -1,0 +1,35 @@
+# tools/cupsreject.toml
+
+[[command]]
+path = "cupsreject"
+translation = "Reject new print jobs for a printer."
+verdict = "allow"
+rationale = "Changes printer queue to reject incoming jobs."
+
+[[flag]]
+applies_to = "cupsreject"
+flag = "-E"
+translation_modifier = "using an encrypted connection to the print server"
+verdict = "allow"
+rationale = "Only changes connection security; does not affect queue behavior."
+
+[[flag]]
+applies_to = "cupsreject"
+flag = "-r"
+translation_modifier = "setting a reason message shown to users whose jobs are rejected"
+verdict = "allow"
+rationale = "Only sets a display message; does not change rejection behavior."
+
+[[flag]]
+applies_to = "cupsreject"
+flag = "-U"
+translation_modifier = "connecting as a specific user"
+verdict = "allow"
+rationale = "Only changes the username used for authentication."
+
+[[flag]]
+applies_to = "cupsreject"
+flag = "-h"
+translation_modifier = "connecting to a specific print server"
+verdict = "allow"
+rationale = "Only changes which server is contacted."

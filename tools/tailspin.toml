@@ -1,0 +1,7 @@
+# tools/tailspin.toml
+
+[[command]]
+path = "tailspin"
+translation = "Capture and display kernel trace data for performance analysis."
+verdict = "allow"
+rationale = "Read-only system tracing that writes to a file; does not modify system state."

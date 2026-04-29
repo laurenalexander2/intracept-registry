@@ -1,0 +1,7 @@
+# tools/ttx.toml
+
+[[command]]
+path = "ttx"
+translation = "Convert between OpenType font files and XML representations."
+verdict = "allow"
+rationale = "Creates new XML or font files from existing ones; originals are unchanged."

@@ -1,0 +1,7 @@
+# tools/auval.toml
+
+[[command]]
+path = "auval"
+translation = "Validate Audio Units on macOS."
+verdict = "allow"
+rationale = "Read-only validation of audio plugin components."

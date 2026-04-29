@@ -1,0 +1,131 @@
+# tools/gem.toml
+
+[[command]]
+path = "gem"
+translation = "Run the RubyGems package manager."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "gem install"
+translation = "Download and install a Ruby gem and its dependencies."
+verdict = "require_approval"
+rationale = "Downloads and installs packages that may execute native extension build scripts."
+
+[[command]]
+path = "gem uninstall"
+translation = "Remove an installed Ruby gem."
+verdict = "allow"
+rationale = "Removes a locally installed gem; can be reinstalled."
+
+[[command]]
+path = "gem update"
+translation = "Update installed gems to the latest versions."
+verdict = "allow"
+rationale = "Downloads and installs newer versions that may introduce breaking changes."
+
+[[command]]
+path = "gem list"
+translation = "List installed Ruby gems."
+verdict = "allow"
+rationale = "Read-only listing of installed gems."
+
+[[command]]
+path = "gem search"
+translation = "Search for gems on the RubyGems repository."
+verdict = "allow"
+rationale = "Read-only search of the remote repository."
+
+[[command]]
+path = "gem build"
+translation = "Build a gem package from a gemspec file."
+verdict = "allow"
+rationale = "Creates a local .gem file; does not publish it."
+
+[[command]]
+path = "gem push"
+translation = "Upload a gem package to the RubyGems repository."
+verdict = "require_approval"
+rationale = "Publishes the gem publicly; published versions are difficult to fully remove."
+
+[[command]]
+path = "gem environment"
+translation = "Display the RubyGems environment configuration."
+verdict = "allow"
+rationale = "Read-only display of environment settings."
+
+[[command]]
+path = "gem cleanup"
+translation = "Remove old versions of installed gems."
+verdict = "allow"
+rationale = "Deletes older gem versions from the local system."
+
+[[flag]]
+applies_to = "gem update"
+flag = "--system"
+translation_modifier = "updating RubyGems itself to the latest version"
+verdict = "allow"
+rationale = "Modifies the package manager binary, which affects all future gem operations."
+
+[[flag]]
+applies_to = "gem install"
+flag = "--no-document"
+translation_modifier = "skipping documentation generation"
+verdict = "allow"
+rationale = "Only skips building docs; speeds up installation without changing behavior."
+
+[[flag]]
+applies_to = "gem install"
+flag = "--user-install"
+translation_modifier = "installing into the user's home directory instead of the system directory"
+verdict = "allow"
+rationale = "Limits the install scope to the current user; avoids modifying system directories."
+
+[[flag]]
+applies_to = "gem install"
+flag = "--force"
+translation_modifier = "bypassing dependency checks"
+verdict = "allow"
+rationale = "Skips dependency validation, which may leave the gem in a broken state."
+
+[[flag]]
+applies_to = "gem install"
+flag = "--version"
+translation_modifier = "installing a specific version of the gem"
+verdict = "allow"
+rationale = "Only constrains which version is installed."
+
+[[flag]]
+applies_to = "gem install"
+flag = "--ignore-dependencies"
+translation_modifier = "without installing any required dependency gems"
+verdict = "allow"
+rationale = "The installed gem may not work correctly without its dependencies."
+
+[[flag]]
+applies_to = "gem uninstall"
+flag = "--all"
+translation_modifier = "removing all installed versions of the gem"
+verdict = "allow"
+rationale = "Removes every version at once; other gems that depend on them may break."
+
+[[flag]]
+applies_to = "gem uninstall"
+flag = "--force"
+translation_modifier = "removing the gem even if other gems depend on it"
+verdict = "allow"
+rationale = "Ignores dependency requirements, which may break other installed gems."
+
+[[flag]]
+applies_to = "gem uninstall"
+flag = "--executables"
+translation_modifier = "also removing the gem's installed executable scripts"
+verdict = "allow"
+rationale = "Cleans up executable files left behind; they can be reinstalled."
+
+[[flag]]
+applies_to = "gem cleanup"
+flag = "--dryrun"
+translation_modifier = "simulating the cleanup without actually removing anything"
+verdict = "allow"
+rationale = "No gems are deleted; only shows what would be removed."

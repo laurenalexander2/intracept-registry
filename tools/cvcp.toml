@@ -1,0 +1,7 @@
+# tools/cvcp.toml
+
+[[command]]
+path = "cvcp"
+translation = "Copy files on Xsan volumes with metadata preservation."
+verdict = "allow"
+rationale = "Copies files, potentially overwriting existing files."

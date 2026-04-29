@@ -1,0 +1,7 @@
+# tools/xmlcatalog.toml
+
+[[command]]
+path = "xmlcatalog"
+translation = "Query and modify XML and Standard Generalized Markup Language catalog files."
+verdict = "allow"
+rationale = "Manages XML entity resolution catalogs; modifications are to catalog metadata only."

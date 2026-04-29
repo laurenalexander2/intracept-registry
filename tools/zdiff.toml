@@ -1,0 +1,7 @@
+# tools/zdiff.toml
+
+[[command]]
+path = "zdiff"
+translation = "Compare gzip-compressed files showing differences."
+verdict = "allow"
+rationale = "Read-only comparison; modifies nothing."

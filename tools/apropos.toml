@@ -1,0 +1,7 @@
+# tools/apropos.toml
+
+[[command]]
+path = "apropos"
+translation = "Search the manual page descriptions for a keyword."
+verdict = "allow"
+rationale = "Read-only search of manual page metadata."

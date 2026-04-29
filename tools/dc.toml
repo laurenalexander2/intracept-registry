@@ -1,0 +1,56 @@
+# tools/dc.toml
+
+[[command]]
+path = "dc"
+translation = "Run a reverse-polish notation calculator."
+verdict = "allow"
+rationale = "Performs mathematical calculations; does not modify files."
+
+[[flag]]
+applies_to = "dc"
+flag = "-e"
+translation_modifier = "evaluating the given expression directly"
+verdict = "allow"
+rationale = "Runs a calculation from the command line instead of interactively; read-only."
+
+[[flag]]
+applies_to = "dc"
+flag = "-f"
+translation_modifier = "reading commands from a specified file"
+verdict = "allow"
+rationale = "Processes calculations from a file; does not modify the file."
+
+[[flag]]
+applies_to = "dc"
+flag = "-i"
+translation_modifier = "forcing interactive mode"
+verdict = "allow"
+rationale = "Enables interactive prompts; no effect on data or files."
+
+[[flag]]
+applies_to = "dc"
+flag = "-S"
+translation_modifier = "setting the decimal precision to a specified number of places"
+verdict = "allow"
+rationale = "Only changes calculation precision; read-only computation."
+
+[[flag]]
+applies_to = "dc"
+flag = "-I"
+translation_modifier = "setting the input number base"
+verdict = "allow"
+rationale = "Only changes how input numbers are interpreted; read-only computation."
+
+[[flag]]
+applies_to = "dc"
+flag = "-O"
+translation_modifier = "setting the output number base"
+verdict = "allow"
+rationale = "Only changes how results are displayed; read-only computation."
+
+[[flag]]
+applies_to = "dc"
+flag = "-x"
+translation_modifier = "enabling extended register mode for more storage slots"
+verdict = "allow"
+rationale = "Expands available register names; no effect on files or data safety."

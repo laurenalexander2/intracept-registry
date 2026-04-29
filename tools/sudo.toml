@@ -1,0 +1,69 @@
+# tools/sudo.toml
+
+[[command]]
+path = "sudo"
+translation = "Execute a command as the superuser or another user."
+verdict = "require_approval"
+rationale = "Elevates privileges to run commands as root; the executed command has unrestricted system access."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-u"
+translation_modifier = "running the command as a specified user instead of root"
+verdict = "allow"
+rationale = "Executes with another user's permissions; risk depends on the target user's privileges."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-i"
+translation_modifier = "starting a login shell as the target user"
+verdict = "allow"
+rationale = "Opens an interactive root shell with full environment; all subsequent commands run elevated."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-s"
+translation_modifier = "starting a shell as the target user"
+verdict = "allow"
+rationale = "Opens an elevated shell; all subsequent commands run with escalated privileges."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-k"
+translation_modifier = "invalidating the cached credentials"
+verdict = "allow"
+rationale = "Forces re-authentication on next sudo use; a security-tightening action."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-l"
+translation_modifier = "listing the allowed commands for the current user"
+verdict = "allow"
+rationale = "Read-only display of sudoers permissions."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-n"
+translation_modifier = "failing immediately if a password is required instead of prompting"
+verdict = "allow"
+rationale = "Non-interactive mode; prevents execution if not already authenticated."
+
+[[flag]]
+applies_to = "sudo"
+flag = "-E"
+translation_modifier = "preserving the current environment variables"
+verdict = "allow"
+rationale = "Passes environment to the elevated command; may expose sensitive variables or bypass security policies."
+
+[[flag]]
+applies_to = "sudo"
+flag = "--remove"
+translation_modifier = "removing a specified user's cached credentials"
+verdict = "allow"
+rationale = "Removes cached authentication credentials; requires re-authentication."
+[[flag]]
+applies_to = "sudo"
+flag = "--reset"
+translation_modifier = "resetting the user's cached credentials and security settings"
+verdict = "allow"
+rationale = "Resets all cached credentials; affects system authentication state."

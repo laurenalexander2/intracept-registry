@@ -1,0 +1,7 @@
+# tools/vtool.toml
+
+[[command]]
+path = "vtool"
+translation = "Display and modify version and build information in Apple platform binaries."
+verdict = "allow"
+rationale = "Can modify version load commands in Apple platform binaries; changes affect how the system identifies the binary."

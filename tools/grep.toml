@@ -1,0 +1,215 @@
+# tools/grep.toml
+
+[[command]]
+path = "grep"
+translation = "Search file contents for lines matching a pattern."
+verdict = "allow"
+rationale = "Read-only search that displays matching lines without modifying any files."
+
+# ── Search mode flags ────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-E"
+translation_modifier = "using extended regular expression syntax"
+verdict = "allow"
+rationale = "Changes the regex dialect; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-F"
+translation_modifier = "treating the pattern as a literal string instead of a regular expression"
+verdict = "allow"
+rationale = "Disables regex interpretation; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-P"
+translation_modifier = "using Perl-compatible regular expression syntax"
+verdict = "allow"
+rationale = "Changes the regex dialect to PCRE; still read-only."
+
+# ── Match modifiers ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-i"
+translation_modifier = "matching case-insensitively"
+verdict = "allow"
+rationale = "Broadens matches to ignore case; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-w"
+translation_modifier = "matching only whole words"
+verdict = "allow"
+rationale = "Narrows matches to word boundaries; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-x"
+translation_modifier = "matching only entire lines"
+verdict = "allow"
+rationale = "Requires the pattern to match the full line; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-v"
+translation_modifier = "showing only lines that do not match"
+verdict = "allow"
+rationale = "Inverts the match; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-e"
+translation_modifier = "using an explicitly specified pattern, allowing multiple patterns or patterns starting with a dash"
+verdict = "allow"
+rationale = "Specifies one or more patterns; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-f"
+translation_modifier = "reading patterns from a file"
+verdict = "allow"
+rationale = "Loads patterns from a file instead of the command line; still read-only."
+
+# ── Scope flags ──────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Searches files in subdirectories; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-R"
+translation_modifier = "recursively through all subdirectories, following symbolic links"
+verdict = "allow"
+rationale = "Like -r but follows symbolic links, potentially expanding search scope; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "--include"
+translation_modifier = "searching only files whose names match a specified pattern"
+verdict = "allow"
+rationale = "Narrows the set of files searched; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "--exclude"
+translation_modifier = "skipping files whose names match a specified pattern"
+verdict = "allow"
+rationale = "Narrows the set of files searched; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "--exclude-dir"
+translation_modifier = "skipping directories whose names match a specified pattern"
+verdict = "allow"
+rationale = "Narrows the set of directories searched; still read-only."
+
+# ── Output format flags ─────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-l"
+translation_modifier = "showing only the names of files that contain a match"
+verdict = "allow"
+rationale = "Changes output format to filenames only; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-L"
+translation_modifier = "showing only the names of files that do not contain a match"
+verdict = "allow"
+rationale = "Inverts file-level matching to show non-matching files; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-c"
+translation_modifier = "showing only the count of matching lines per file"
+verdict = "allow"
+rationale = "Changes output to counts; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-n"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Adds line numbers to output; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-H"
+translation_modifier = "always showing the filename for each match"
+verdict = "allow"
+rationale = "Prefixes each match with the filename; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-h"
+translation_modifier = "suppressing the filename prefix in output"
+verdict = "allow"
+rationale = "Removes filename prefixes from output; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-o"
+translation_modifier = "showing only the matching portion of each line"
+verdict = "allow"
+rationale = "Changes output to show only the matched text; still read-only."
+
+# ── Context flags ────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-A"
+translation_modifier = "including a specified number of lines after each match"
+verdict = "allow"
+rationale = "Adds trailing context lines to output; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-B"
+translation_modifier = "including a specified number of lines before each match"
+verdict = "allow"
+rationale = "Adds leading context lines to output; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-C"
+translation_modifier = "including a specified number of lines before and after each match"
+verdict = "allow"
+rationale = "Adds surrounding context lines to output; still read-only."
+
+# ── Behavioral flags ────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "grep"
+flag = "-q"
+translation_modifier = "suppressing all output and only setting the exit code"
+verdict = "allow"
+rationale = "Produces no output; useful in scripts for testing whether a match exists."
+
+[[flag]]
+applies_to = "grep"
+flag = "-m"
+translation_modifier = "stopping after a specified number of matches"
+verdict = "allow"
+rationale = "Limits the number of matches returned; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-s"
+translation_modifier = "suppressing error messages about nonexistent or unreadable files"
+verdict = "allow"
+rationale = "Silences file access errors; still read-only."
+
+[[flag]]
+applies_to = "grep"
+flag = "-Z"
+translation_modifier = "separating output filenames with null characters instead of newlines"
+verdict = "allow"
+rationale = "Changes output delimiter for safe piping to xargs; still read-only."

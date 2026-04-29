@@ -1,0 +1,7 @@
+# tools/trap.toml
+
+[[command]]
+path = "trap"
+translation = "Set up commands to run automatically when the shell receives a signal."
+verdict = "allow"
+rationale = "Configures signal handlers within the current shell session; does not modify files."

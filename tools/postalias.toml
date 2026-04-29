@@ -1,0 +1,7 @@
+# tools/postalias.toml
+
+[[command]]
+path = "postalias"
+translation = "Create or query a Postfix alias database."
+verdict = "allow"
+rationale = "Modifies the alias database, which affects how email is routed."

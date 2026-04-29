@@ -1,0 +1,7 @@
+# tools/cursor.toml
+
+[[command]]
+path = "cursor"
+translation = "Open files or directories in the Cursor AI code editor."
+verdict = "allow"
+rationale = "Opens the editor application; does not modify files until the user takes action within the editor."

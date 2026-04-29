@@ -1,0 +1,7 @@
+# tools/pod2man5.34.toml
+
+[[command]]
+path = "pod2man5.34"
+translation = "Convert Perl Pod documentation to Unix manual page format using Perl 5.34."
+verdict = "allow"
+rationale = "Read-only conversion that writes to the terminal."

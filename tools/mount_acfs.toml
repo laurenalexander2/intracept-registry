@@ -1,0 +1,7 @@
+# tools/mount_acfs.toml — ACFS filesystem mount
+
+[[command]]
+path = "mount_acfs"
+translation = "Mount an Apple Cluster File System volume."
+verdict = "allow"
+rationale = "Attaches a filesystem to the local directory tree, changing the directory tree for all processes."

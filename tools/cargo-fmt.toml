@@ -1,0 +1,7 @@
+# tools/cargo-fmt.toml
+
+[[command]]
+path = "cargo-fmt"
+translation = "Format Rust source code in the current package."
+verdict = "allow"
+rationale = "Modifies source files cosmetically; does not change program behavior."

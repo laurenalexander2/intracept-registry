@@ -1,0 +1,7 @@
+# tools/umtool.toml
+
+[[command]]
+path = "umtool"
+translation = "Manage Unified Messaging configurations and diagnostics."
+verdict = "allow"
+rationale = "Limited public documentation; exact capabilities are unclear."

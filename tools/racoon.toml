@@ -1,0 +1,7 @@
+# tools/racoon.toml
+
+[[command]]
+path = "racoon"
+translation = "Run the Internet Key Exchange management background service for IPsec VPN connections."
+verdict = "allow"
+rationale = "Manages VPN encryption keys and security associations for network tunnels."

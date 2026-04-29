@@ -1,0 +1,7 @@
+# tools/DevToolsSecurity.toml
+
+[[command]]
+path = "DevToolsSecurity"
+translation = "Enable or disable developer tool access on macOS."
+verdict = "require_approval"
+rationale = "Changes system security settings for developer tools."

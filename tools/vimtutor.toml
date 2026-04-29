@@ -1,0 +1,7 @@
+# tools/vimtutor.toml
+
+[[command]]
+path = "vimtutor"
+translation = "Launch the interactive vim tutorial."
+verdict = "allow"
+rationale = "Opens a copy of a tutorial file for practice; does not modify any user files."

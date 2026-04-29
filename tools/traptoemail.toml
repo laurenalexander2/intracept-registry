@@ -1,0 +1,7 @@
+# tools/traptoemail.toml
+
+[[command]]
+path = "traptoemail"
+translation = "Convert SNMP trap notifications into email messages."
+verdict = "allow"
+rationale = "Sends email based on received traps; messages cannot be unsent once delivered."

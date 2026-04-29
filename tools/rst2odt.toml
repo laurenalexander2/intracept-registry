@@ -1,0 +1,7 @@
+# tools/rst2odt.toml
+
+[[command]]
+path = "rst2odt"
+translation = "Convert reStructuredText documents to OpenDocument format."
+verdict = "allow"
+rationale = "Converts reStructuredText markup to OpenDocument format; does not modify the source file."

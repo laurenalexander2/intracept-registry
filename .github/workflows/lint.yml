@@ -1,0 +1,23 @@
+name: Lint TOML registry
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.toml'
+      - 'tools/lint.py'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run registry linter
+        run: python tools/lint.py tools/
+
+      - name: Run lint tests
+        run: python -m pytest tools/test_lint.py -v

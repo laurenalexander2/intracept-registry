@@ -1,0 +1,7 @@
+# tools/chgrp.toml
+
+[[command]]
+path = "chgrp"
+translation = "Change the group ownership of files."
+verdict = "allow"
+rationale = "Modifies file group ownership, which affects access permissions."

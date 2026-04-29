@@ -1,0 +1,7 @@
+# tools/normalizer.toml — Python charset normalizer
+
+[[command]]
+path = "normalizer"
+translation = "Detect and report the character encoding of text files."
+verdict = "allow"
+rationale = "Read-only analysis of file encoding; does not modify any files."

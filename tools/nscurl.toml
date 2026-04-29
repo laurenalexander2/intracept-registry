@@ -1,0 +1,21 @@
+# tools/nscurl.toml — macOS NSURLSession-based HTTP client
+
+[[command]]
+path = "nscurl"
+translation = "Transfer data from or to a URL using the macOS NSURLSession networking API."
+verdict = "allow"
+rationale = "Performs network requests; does not modify local system state beyond writing downloaded files."
+
+[[flag]]
+applies_to = "nscurl"
+flag = "-o"
+translation_modifier = "writing the response to a specified file"
+verdict = "allow"
+rationale = "Saves output to a file; the specified file will be overwritten if it exists."
+
+[[flag]]
+applies_to = "nscurl"
+flag = "--ats-diagnostics"
+translation_modifier = "running App Transport Security diagnostic checks against the URL"
+verdict = "allow"
+rationale = "Read-only diagnostic that tests TLS configuration; does not transfer data."

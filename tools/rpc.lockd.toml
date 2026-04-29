@@ -1,0 +1,7 @@
+# tools/rpc.lockd.toml
+
+[[command]]
+path = "rpc.lockd"
+translation = "Run the NFS file locking background service."
+verdict = "allow"
+rationale = "System background service for NFS lock management; typically started by launchd."

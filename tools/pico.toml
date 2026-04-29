@@ -1,0 +1,7 @@
+# tools/pico.toml
+
+[[command]]
+path = "pico"
+translation = "Edit text files using a simple terminal-based text editor."
+verdict = "allow"
+rationale = "Opens files for editing; changes are written to disk on save."

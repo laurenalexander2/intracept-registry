@@ -1,0 +1,7 @@
+# tools/view.toml
+
+[[command]]
+path = "view"
+translation = "Open a file in vim in read-only mode."
+verdict = "allow"
+rationale = "Opens vim without write permission by default; the file cannot be accidentally modified."

@@ -1,0 +1,14 @@
+# tools/unzstd.toml
+
+[[command]]
+path = "unzstd"
+translation = "Decompress Zstandard-compressed files."
+verdict = "allow"
+rationale = "Decompresses files creating the original output; non-destructive."
+
+[[flag]]
+applies_to = "unzstd"
+flag = "--force"
+translation_modifier = "overwriting existing output files without prompting"
+verdict = "allow"
+rationale = "Overwrites existing output files without confirmation; recoverable from backups."

@@ -1,0 +1,14 @@
+# tools/expand.toml
+
+[[command]]
+path = "expand"
+translation = "Convert tabs to spaces in text."
+verdict = "allow"
+rationale = "Reads input and writes to the terminal; does not modify files in place."
+
+[[flag]]
+applies_to = "expand"
+flag = "-t"
+translation_modifier = "using custom tab stop positions"
+verdict = "allow"
+rationale = "Only changes tab stop spacing; no additional risk."

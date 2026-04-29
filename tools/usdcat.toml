@@ -1,0 +1,7 @@
+# tools/usdcat.toml
+
+[[command]]
+path = "usdcat"
+translation = "Display the contents of a Universal Scene Description file."
+verdict = "allow"
+rationale = "Read-only display of USD file contents; modifies nothing."

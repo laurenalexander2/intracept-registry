@@ -1,0 +1,14 @@
+# tools/dsimport.toml
+
+[[command]]
+path = "dsimport"
+translation = "Import records into the macOS Directory Service."
+verdict = "require_approval"
+rationale = "Adds or modifies user accounts and groups in the directory."
+
+[[flag]]
+applies_to = "dsimport"
+flag = "--force"
+translation_modifier = "overwriting existing records without prompting"
+verdict = "require_approval"
+rationale = "Forces import overwriting existing directory service records."

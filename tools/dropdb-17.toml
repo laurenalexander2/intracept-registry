@@ -1,0 +1,14 @@
+# tools/dropdb-17.toml
+
+[[command]]
+path = "dropdb-17"
+translation = "Delete a PostgreSQL 17 database."
+verdict = "require_approval"
+rationale = "Permanently destroys the database and all its data."
+
+[[flag]]
+applies_to = "dropdb-17"
+flag = "--force"
+translation_modifier = "without asking for confirmation before dropping the database"
+verdict = "require_approval"
+rationale = "Bypasses the confirmation prompt for a destructive database operation."

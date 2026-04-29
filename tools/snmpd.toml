@@ -1,0 +1,7 @@
+# tools/snmpd.toml
+
+[[command]]
+path = "snmpd"
+translation = "Run the SNMP agent background service to respond to SNMP queries about the local system."
+verdict = "allow"
+rationale = "Exposes system information via SNMP; normally managed by launchd."

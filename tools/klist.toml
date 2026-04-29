@@ -1,0 +1,49 @@
+# tools/klist.toml
+
+[[command]]
+path = "klist"
+translation = "Display the contents of a Kerberos credential cache."
+verdict = "allow"
+rationale = "Read-only display of cached authentication tickets."
+
+[[flag]]
+applies_to = "klist"
+flag = "-v"
+translation_modifier = "showing verbose details including encryption types and flags"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "klist"
+flag = "--all"
+translation_modifier = "listing all Kerberos credential caches"
+verdict = "allow"
+rationale = "Read-only display of all cached credentials."
+
+[[flag]]
+applies_to = "klist"
+flag = "-f"
+translation_modifier = "including ticket flags in the output"
+verdict = "allow"
+rationale = "Adds flag details to the display; read-only."
+
+[[flag]]
+applies_to = "klist"
+flag = "-s"
+translation_modifier = "testing silently whether a valid ticket exists"
+verdict = "allow"
+rationale = "Returns only an exit code; produces no output and modifies nothing."
+
+[[flag]]
+applies_to = "klist"
+flag = "-c"
+translation_modifier = "displaying a specific credential cache instead of the default"
+verdict = "allow"
+rationale = "Selects a non-default cache to display; read-only."
+
+[[flag]]
+applies_to = "klist"
+flag = "-l"
+translation_modifier = "listing all available credential caches for the current user"
+verdict = "allow"
+rationale = "Read-only display of cache names."

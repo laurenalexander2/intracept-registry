@@ -1,0 +1,98 @@
+# tools/ldapmodify.toml
+
+[[command]]
+path = "ldapmodify"
+translation = "Modify existing entries in an LDAP directory."
+verdict = "require_approval"
+rationale = "Changes attributes on directory entries, which can affect authentication, access control, or organizational data."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-a"
+translation_modifier = "adding new entries instead of modifying existing ones"
+verdict = "allow"
+rationale = "Switches the tool from modify mode to add mode, creating new directory entries."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-c"
+translation_modifier = "continuing past errors instead of stopping"
+verdict = "allow"
+rationale = "Skips failed operations and keeps going, which may cause partial updates that are hard to track."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-n"
+translation_modifier = "simulating the operation without actually modifying entries"
+verdict = "allow"
+rationale = "No data is written; only shows what would happen."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases diagnostic output to the terminal."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-f"
+translation_modifier = "reading changes from a file instead of standard input"
+verdict = "allow"
+rationale = "Only changes where input is read from."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-x"
+translation_modifier = "using simple authentication instead of advanced authentication"
+verdict = "allow"
+rationale = "Only changes the authentication method used."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-H"
+translation_modifier = "connecting to a specific LDAP server address"
+verdict = "allow"
+rationale = "Only changes which server is contacted."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-D"
+translation_modifier = "authenticating with a specific identity"
+verdict = "allow"
+rationale = "Only specifies which account to bind as."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-W"
+translation_modifier = "prompting for a password"
+verdict = "allow"
+rationale = "Safer than passing a password on the command line."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-w"
+translation_modifier = "using a password provided on the command line"
+verdict = "allow"
+rationale = "Specifies authentication credentials; the password may be visible in process listings."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-Z"
+translation_modifier = "requesting an encrypted connection"
+verdict = "allow"
+rationale = "Enables transport encryption, which improves security."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-ZZ"
+translation_modifier = "requiring an encrypted connection and failing if encryption is unavailable"
+verdict = "allow"
+rationale = "Enforces transport encryption; fails safely if the server does not support it."
+
+[[flag]]
+applies_to = "ldapmodify"
+flag = "-S"
+translation_modifier = "writing skipped entries to a file for later review"
+verdict = "allow"
+rationale = "Only controls where error information is logged."

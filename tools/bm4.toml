@@ -1,0 +1,7 @@
+# tools/bm4.toml
+
+[[command]]
+path = "bm4"
+translation = "Run the Mono Basic compiler version 4."
+verdict = "allow"
+rationale = "Compiles source code into build artifacts locally; does not modify existing files outside the build directory."

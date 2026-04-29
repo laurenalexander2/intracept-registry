@@ -1,0 +1,798 @@
+# tools/gh.toml
+
+# ── Base command ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh"
+translation = "Run the GitHub command-line tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Authentication ───────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh auth"
+translation = "Manage authentication state for the GitHub CLI."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh auth login"
+translation = "Log in to a GitHub account."
+verdict = "allow"
+rationale = "Stores credentials locally; does not modify any remote resources."
+
+[[command]]
+path = "gh auth logout"
+translation = "Log out of a GitHub account."
+verdict = "allow"
+rationale = "Removes stored credentials, which may disrupt automated workflows that depend on them."
+
+[[command]]
+path = "gh auth status"
+translation = "Display the current authentication state."
+verdict = "allow"
+rationale = "Read-only display of login status."
+
+# ── Repositories ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh repo"
+translation = "Manage GitHub repositories."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh repo create"
+translation = "Create a new repository on GitHub."
+verdict = "require_approval"
+rationale = "Creates a new remote resource visible to others depending on visibility settings."
+
+[[flag]]
+applies_to = "gh repo create"
+flag = "--public"
+translation_modifier = "making it publicly visible to everyone"
+verdict = "allow"
+rationale = "Public repositories expose code to the entire internet."
+
+[[flag]]
+applies_to = "gh repo create"
+flag = "--private"
+translation_modifier = "making it visible only to you and collaborators"
+verdict = "allow"
+rationale = "Restricts access to the repository owner and explicitly added collaborators."
+
+[[flag]]
+applies_to = "gh repo create"
+flag = "--clone"
+translation_modifier = "cloning it to the local machine after creation"
+verdict = "allow"
+rationale = "Creates a local directory; does not affect remote state beyond the initial creation."
+
+[[command]]
+path = "gh repo clone"
+translation = "Download a GitHub repository to the local machine."
+verdict = "allow"
+rationale = "Creates a new local directory; does not modify the remote repository."
+
+[[command]]
+path = "gh repo fork"
+translation = "Create a personal copy of someone else's repository on GitHub."
+verdict = "allow"
+rationale = "Creates a new remote repository under your account."
+
+[[command]]
+path = "gh repo view"
+translation = "Display details about a GitHub repository."
+verdict = "allow"
+rationale = "Read-only display of repository metadata."
+
+[[command]]
+path = "gh repo list"
+translation = "List repositories owned by a user or organization."
+verdict = "allow"
+rationale = "Read-only listing of repositories."
+
+[[command]]
+path = "gh repo edit"
+translation = "Modify settings of a GitHub repository."
+verdict = "allow"
+rationale = "Changes repository configuration such as visibility, description, or features."
+
+[[command]]
+path = "gh repo rename"
+translation = "Rename a GitHub repository."
+verdict = "require_approval"
+rationale = "Changes the repository URL, which may break existing links and integrations."
+
+[[command]]
+path = "gh repo archive"
+translation = "Archive a GitHub repository, making it read-only."
+verdict = "allow"
+rationale = "Prevents further changes to the repository; reversible via unarchive."
+
+[[flag]]
+applies_to = "gh repo archive"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Bypasses the confirmation prompt on archiving, which makes the repository read-only."
+
+[[command]]
+path = "gh repo unarchive"
+translation = "Unarchive a GitHub repository, restoring write access."
+verdict = "allow"
+rationale = "Reverses an archive operation; restores normal repository functionality."
+
+[[command]]
+path = "gh repo delete"
+translation = "Permanently delete a GitHub repository."
+verdict = "require_approval"
+rationale = "Irrecoverably removes the repository, all issues, pull requests, and settings from GitHub."
+
+[[flag]]
+applies_to = "gh repo delete"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "require_approval"
+rationale = "Skips the confirmation prompt on a destructive operation, increasing the chance of accidental deletion."
+
+[[command]]
+path = "gh repo sync"
+translation = "Sync a forked repository with its upstream."
+verdict = "allow"
+rationale = "Updates branch refs to match the upstream, which may overwrite divergent local changes."
+
+# ── Pull requests ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh pr"
+translation = "Manage GitHub pull requests."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh pr create"
+translation = "Create a new pull request on GitHub."
+verdict = "allow"
+rationale = "Publishes a pull request visible to repository collaborators."
+
+[[flag]]
+applies_to = "gh pr create"
+flag = "--draft"
+translation_modifier = "marking it as a draft that is not ready for review"
+verdict = "allow"
+rationale = "Creates the PR in draft state, signaling it is not ready to merge."
+
+[[flag]]
+applies_to = "gh pr create"
+flag = "--fill"
+translation_modifier = "using commit messages for the title and body"
+verdict = "allow"
+rationale = "Auto-fills PR metadata from commits; still creates the same PR."
+
+[[flag]]
+applies_to = "gh pr create"
+flag = "--dry-run"
+translation_modifier = "simulating the creation without actually opening a pull request"
+verdict = "allow"
+rationale = "No pull request is created; only shows what would happen."
+
+[[command]]
+path = "gh pr list"
+translation = "List pull requests in a repository."
+verdict = "allow"
+rationale = "Read-only listing of pull requests."
+
+[[command]]
+path = "gh pr view"
+translation = "Display details about a pull request."
+verdict = "allow"
+rationale = "Read-only display of pull request metadata."
+
+[[command]]
+path = "gh pr checkout"
+translation = "Check out a pull request's branch locally."
+verdict = "allow"
+rationale = "Creates or switches to a local branch; does not modify the remote."
+
+[[command]]
+path = "gh pr diff"
+translation = "Show the changes in a pull request."
+verdict = "allow"
+rationale = "Read-only display of the pull request diff."
+
+[[command]]
+path = "gh pr checks"
+translation = "Show the CI check status for a pull request."
+verdict = "allow"
+rationale = "Read-only display of check run results."
+
+[[command]]
+path = "gh pr status"
+translation = "Show the status of pull requests relevant to you."
+verdict = "allow"
+rationale = "Read-only summary of your pull requests."
+
+[[command]]
+path = "gh pr merge"
+translation = "Merge a pull request on GitHub."
+verdict = "require_approval"
+rationale = "Integrates changes into the base branch, modifying the shared repository history."
+
+[[flag]]
+applies_to = "gh pr merge"
+flag = "--squash"
+translation_modifier = "squashing all commits into one before merging"
+verdict = "allow"
+rationale = "Changes the merge strategy but does not increase destructive potential."
+
+[[flag]]
+applies_to = "gh pr merge"
+flag = "--rebase"
+translation_modifier = "rebasing the commits onto the base branch"
+verdict = "allow"
+rationale = "Changes the merge strategy; the PR is still merged into the base branch."
+
+[[flag]]
+applies_to = "gh pr merge"
+flag = "--delete-branch"
+translation_modifier = "deleting the branch after merging"
+verdict = "allow"
+rationale = "Removes the local and remote branch, which is expected but irreversible without recreating it."
+
+[[flag]]
+applies_to = "gh pr merge"
+flag = "--admin"
+translation_modifier = "bypassing branch protection requirements"
+verdict = "require_approval"
+rationale = "Overrides required checks and reviews, merging code that has not passed safeguards."
+
+[[flag]]
+applies_to = "gh pr merge"
+flag = "--auto"
+translation_modifier = "enabling auto-merge once requirements are met"
+verdict = "allow"
+rationale = "Schedules an automatic merge, which will proceed without further human confirmation."
+
+[[command]]
+path = "gh pr close"
+translation = "Close a pull request without merging it."
+verdict = "allow"
+rationale = "Closes the PR, stopping the review process; can be reopened."
+
+[[flag]]
+applies_to = "gh pr close"
+flag = "--delete-branch"
+translation_modifier = "deleting the local and remote branch after closing"
+verdict = "allow"
+rationale = "Removes the branch, which may discard unmerged work if not preserved elsewhere."
+
+[[command]]
+path = "gh pr reopen"
+translation = "Reopen a previously closed pull request."
+verdict = "allow"
+rationale = "Restores a closed PR to open state; no destructive changes."
+
+[[command]]
+path = "gh pr review"
+translation = "Add a review to a pull request."
+verdict = "allow"
+rationale = "Publishes a review visible to collaborators that may approve or block merging."
+
+[[command]]
+path = "gh pr comment"
+translation = "Add a comment to a pull request."
+verdict = "allow"
+rationale = "Posts a publicly visible comment on the pull request."
+
+[[command]]
+path = "gh pr edit"
+translation = "Modify a pull request's title, body, or metadata."
+verdict = "allow"
+rationale = "Updates PR metadata; does not affect code or branch state."
+
+[[command]]
+path = "gh pr revert"
+translation = "Create a new pull request that reverts a previously merged pull request."
+verdict = "allow"
+rationale = "Creates a revert PR that, if merged, undoes changes in the base branch."
+
+# ── Issues ───────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh issue"
+translation = "Manage GitHub issues."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh issue create"
+translation = "Create a new issue on GitHub."
+verdict = "allow"
+rationale = "Publishes an issue visible to repository collaborators or the public."
+
+[[command]]
+path = "gh issue list"
+translation = "List issues in a repository."
+verdict = "allow"
+rationale = "Read-only operation that lists repository issues without modifying or closing any of them."
+
+[[command]]
+path = "gh issue view"
+translation = "Display details about an issue."
+verdict = "allow"
+rationale = "Read-only display of issue metadata."
+
+[[command]]
+path = "gh issue status"
+translation = "Show the status of issues relevant to you."
+verdict = "allow"
+rationale = "Read-only summary of your issues."
+
+[[command]]
+path = "gh issue close"
+translation = "Close an issue."
+verdict = "allow"
+rationale = "Changes the issue state; can be reopened."
+
+[[command]]
+path = "gh issue reopen"
+translation = "Reopen a previously closed issue."
+verdict = "allow"
+rationale = "Restores a closed issue to open state."
+
+[[command]]
+path = "gh issue comment"
+translation = "Add a comment to an issue."
+verdict = "allow"
+rationale = "Posts a publicly visible comment on the issue."
+
+[[command]]
+path = "gh issue edit"
+translation = "Modify an issue's title, body, or metadata."
+verdict = "allow"
+rationale = "Updates issue metadata without deleting anything."
+
+[[command]]
+path = "gh issue delete"
+translation = "Permanently delete an issue from GitHub."
+verdict = "require_approval"
+rationale = "Removes the issue and all its comments irreversibly."
+
+[[flag]]
+applies_to = "gh issue delete"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Skips the confirmation prompt on a destructive operation."
+
+[[command]]
+path = "gh issue transfer"
+translation = "Move an issue to a different repository."
+verdict = "allow"
+rationale = "Transfers the issue, changing its URL and repository context."
+
+# ── Releases ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh release"
+translation = "Manage GitHub releases."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh release create"
+translation = "Create a new release on GitHub."
+verdict = "require_approval"
+rationale = "Publishes a release with assets visible to repository users; may auto-create a tag."
+
+[[flag]]
+applies_to = "gh release create"
+flag = "--draft"
+translation_modifier = "saving it as a draft without publishing"
+verdict = "allow"
+rationale = "The release is not visible to the public until explicitly published."
+
+[[flag]]
+applies_to = "gh release create"
+flag = "--prerelease"
+translation_modifier = "marking it as a pre-release version"
+verdict = "allow"
+rationale = "Labels the release as pre-release; does not change its visibility or content."
+
+[[flag]]
+applies_to = "gh release create"
+flag = "--generate-notes"
+translation_modifier = "auto-generating release notes from commits"
+verdict = "allow"
+rationale = "Fills in release notes automatically; does not affect the release content or assets."
+
+[[flag]]
+applies_to = "gh release create"
+flag = "--verify-tag"
+translation_modifier = "aborting if the tag does not already exist on the remote"
+verdict = "allow"
+rationale = "Adds a safety check that prevents accidental tag creation."
+
+[[command]]
+path = "gh release list"
+translation = "List releases in a repository."
+verdict = "allow"
+rationale = "Read-only listing of releases."
+
+[[command]]
+path = "gh release view"
+translation = "Display details about a release."
+verdict = "allow"
+rationale = "Read-only display of release metadata."
+
+[[command]]
+path = "gh release download"
+translation = "Download assets from a GitHub release."
+verdict = "allow"
+rationale = "Downloads files to the local machine; does not modify the remote release."
+
+[[command]]
+path = "gh release delete"
+translation = "Delete a release from GitHub."
+verdict = "require_approval"
+rationale = "Permanently removes the release and its metadata; assets may become inaccessible."
+
+[[flag]]
+applies_to = "gh release delete"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Skips the confirmation prompt on a destructive operation."
+
+[[flag]]
+applies_to = "gh release delete"
+flag = "--cleanup-tag"
+translation_modifier = "also deleting the associated Git tag"
+verdict = "require_approval"
+rationale = "Removes the tag in addition to the release, which may break references and automation."
+
+[[command]]
+path = "gh release edit"
+translation = "Modify a release's metadata or assets."
+verdict = "allow"
+rationale = "Changes a published release that users may be consuming."
+
+# ── Gists ────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh gist"
+translation = "Manage GitHub gists."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh gist create"
+translation = "Create a new gist on GitHub."
+verdict = "require_approval"
+rationale = "Publishes content to GitHub that may be publicly visible."
+
+[[command]]
+path = "gh gist list"
+translation = "List your gists."
+verdict = "allow"
+rationale = "Read-only operation that lists the user's gists without modifying or deleting any of them."
+
+[[command]]
+path = "gh gist view"
+translation = "Display the contents of a gist."
+verdict = "allow"
+rationale = "Read-only display of gist content."
+
+[[command]]
+path = "gh gist edit"
+translation = "Modify the contents of a gist."
+verdict = "allow"
+rationale = "Changes published gist content that others may have linked to."
+
+[[command]]
+path = "gh gist delete"
+translation = "Permanently delete a gist from GitHub."
+verdict = "require_approval"
+rationale = "Removes the gist and all its files irreversibly; others may have linked to it."
+
+# ── Workflow runs ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh run"
+translation = "Manage GitHub Actions workflow runs."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh run list"
+translation = "List recent workflow runs."
+verdict = "allow"
+rationale = "Read-only listing of workflow runs."
+
+[[command]]
+path = "gh run view"
+translation = "Display details about a workflow run."
+verdict = "allow"
+rationale = "Read-only display of run details and logs."
+
+[[command]]
+path = "gh run watch"
+translation = "Watch a workflow run until it completes."
+verdict = "allow"
+rationale = "Read-only monitoring of a running workflow."
+
+[[command]]
+path = "gh run download"
+translation = "Download artifacts from a workflow run."
+verdict = "allow"
+rationale = "Downloads files to the local machine; does not modify the remote run."
+
+[[command]]
+path = "gh run cancel"
+translation = "Cancel a running workflow."
+verdict = "allow"
+rationale = "Stops a workflow run that may be performing deployments or other important tasks."
+
+[[command]]
+path = "gh run rerun"
+translation = "Re-run a completed workflow run."
+verdict = "require_approval"
+rationale = "Triggers a new execution that may deploy code or consume resources."
+
+[[command]]
+path = "gh run delete"
+translation = "Delete a workflow run and its logs."
+verdict = "allow"
+rationale = "Removes run history and artifacts, which may be needed for auditing."
+
+# ── Workflows ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh workflow"
+translation = "Manage GitHub Actions workflows."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh workflow list"
+translation = "List workflows in a repository."
+verdict = "allow"
+rationale = "Read-only listing of workflow definitions."
+
+[[command]]
+path = "gh workflow view"
+translation = "Display details about a workflow."
+verdict = "allow"
+rationale = "Read-only display of workflow configuration and recent runs."
+
+[[command]]
+path = "gh workflow run"
+translation = "Trigger a workflow run by dispatching a workflow event."
+verdict = "require_approval"
+rationale = "Starts a new workflow execution that may deploy code, consume resources, or modify infrastructure."
+
+[[command]]
+path = "gh workflow enable"
+translation = "Enable a workflow that was previously disabled."
+verdict = "allow"
+rationale = "Re-enables a workflow; it will only run when triggered by future events."
+
+[[command]]
+path = "gh workflow disable"
+translation = "Disable a workflow so it no longer runs automatically."
+verdict = "allow"
+rationale = "Prevents the workflow from running, which may break CI/CD pipelines that depend on it."
+
+# ── Secrets ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh secret"
+translation = "Manage GitHub secrets for Actions, Codespaces, or Dependabot."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh secret set"
+translation = "Create or update a secret in a repository or organization."
+verdict = "require_approval"
+rationale = "Stores sensitive values that are used by workflows and services."
+
+[[command]]
+path = "gh secret list"
+translation = "List secrets in a repository or organization."
+verdict = "allow"
+rationale = "Read-only listing of secret names; values are not displayed."
+
+[[command]]
+path = "gh secret delete"
+translation = "Delete a secret from a repository or organization."
+verdict = "require_approval"
+rationale = "Removes a secret that may be required by running workflows, potentially breaking deployments."
+
+# ── Variables ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh variable"
+translation = "Manage GitHub Actions variables for a repository or organization."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh variable set"
+translation = "Create or update a GitHub Actions variable."
+verdict = "allow"
+rationale = "Changes a variable value that running workflows may depend on."
+
+[[command]]
+path = "gh variable list"
+translation = "List GitHub Actions variables in a repository or organization."
+verdict = "allow"
+rationale = "Read-only listing of variable names and values."
+
+[[command]]
+path = "gh variable delete"
+translation = "Delete a GitHub Actions variable."
+verdict = "allow"
+rationale = "Removes a variable that may be required by running workflows, potentially breaking builds."
+
+# ── Cache ───────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh cache"
+translation = "Manage GitHub Actions caches for a repository."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh cache list"
+translation = "List GitHub Actions caches in a repository."
+verdict = "allow"
+rationale = "Read-only listing of cached data."
+
+[[command]]
+path = "gh cache delete"
+translation = "Delete one or more GitHub Actions caches."
+verdict = "allow"
+rationale = "Removes cached data that may need to be rebuilt, slowing future workflow runs."
+
+[[flag]]
+applies_to = "gh cache delete"
+flag = "--all"
+translation_modifier = "deleting all caches in the repository"
+verdict = "require_approval"
+rationale = "Removes every cache at once, which may significantly slow all subsequent workflow runs."
+
+# ── Browse ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh browse"
+translation = "Open the current repository in a web browser."
+verdict = "allow"
+rationale = "Opens a URL in the browser; does not modify any resources."
+
+# ── Search ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh search"
+translation = "Search across GitHub for repositories, issues, pull requests, and more."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh search repos"
+translation = "Search for repositories on GitHub."
+verdict = "allow"
+rationale = "Read-only search that lists matching repositories."
+
+[[command]]
+path = "gh search issues"
+translation = "Search for issues across GitHub."
+verdict = "allow"
+rationale = "Read-only search that lists matching issues."
+
+[[command]]
+path = "gh search prs"
+translation = "Search for pull requests across GitHub."
+verdict = "allow"
+rationale = "Read-only search that lists matching pull requests."
+
+[[command]]
+path = "gh search commits"
+translation = "Search for commits across GitHub."
+verdict = "allow"
+rationale = "Read-only search that lists matching commits."
+
+[[command]]
+path = "gh search code"
+translation = "Search for code across GitHub repositories."
+verdict = "allow"
+rationale = "Read-only search that lists matching code snippets."
+
+# ── Labels ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh label"
+translation = "Manage labels on a GitHub repository."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh label list"
+translation = "List labels in a repository."
+verdict = "allow"
+rationale = "Read-only listing of repository labels."
+
+[[command]]
+path = "gh label create"
+translation = "Create a new label in a repository."
+verdict = "allow"
+rationale = "Adds a label definition; does not modify any issues or pull requests."
+
+[[command]]
+path = "gh label edit"
+translation = "Modify an existing label's name, description, or color."
+verdict = "allow"
+rationale = "Changes label metadata; does not remove the label from any issues."
+
+[[command]]
+path = "gh label delete"
+translation = "Delete a label from a repository."
+verdict = "require_approval"
+rationale = "Removes the label from all issues and pull requests that use it."
+
+[[flag]]
+applies_to = "gh label delete"
+flag = "--yes"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Skips the confirmation prompt on label deletion."
+
+# ── SSH keys ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh ssh-key"
+translation = "Manage SSH keys registered with your GitHub account."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "gh ssh-key list"
+translation = "List SSH keys registered with your GitHub account."
+verdict = "allow"
+rationale = "Read-only listing of SSH keys."
+
+[[command]]
+path = "gh ssh-key add"
+translation = "Add an SSH key to your GitHub account."
+verdict = "require_approval"
+rationale = "Grants a new key access to your account for Git operations over SSH."
+
+[[command]]
+path = "gh ssh-key delete"
+translation = "Remove an SSH key from your GitHub account."
+verdict = "allow"
+rationale = "Revokes access for that key, which may break automated systems that depend on it."
+
+# ── API ──────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gh api"
+translation = "Make an authenticated request to the GitHub API."
+verdict = "allow"
+rationale = "Can read or modify any GitHub resource the authenticated user has access to."
+
+[[flag]]
+applies_to = "gh api"
+flag = "--method"
+translation_modifier = "using a specific HTTP method such as POST, PUT, PATCH, or DELETE"
+verdict = "allow"
+rationale = "Non-GET methods modify or delete remote resources."
+
+[[flag]]
+applies_to = "gh api"
+flag = "--paginate"
+translation_modifier = "fetching all pages of results automatically"
+verdict = "allow"
+rationale = "Follows pagination links to retrieve complete result sets; still read-only when used with GET."

@@ -1,0 +1,7 @@
+# tools/sn.toml
+
+[[command]]
+path = "sn"
+translation = "Manage strong name keys and signatures for .NET assemblies."
+verdict = "allow"
+rationale = "Can generate keys and sign assemblies, modifying binary files."

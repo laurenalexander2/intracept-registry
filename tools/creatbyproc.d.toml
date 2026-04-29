@@ -1,0 +1,7 @@
+# tools/creatbyproc.d.toml
+
+[[command]]
+path = "creatbyproc.d"
+translation = "Trace file creation by process using DTrace."
+verdict = "allow"
+rationale = "Read-only system monitoring script."

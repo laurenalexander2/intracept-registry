@@ -1,0 +1,42 @@
+# tools/snmpstatus.toml
+
+[[command]]
+path = "snmpstatus"
+translation = "Retrieve a summary of status information from a network device using SNMP."
+verdict = "allow"
+rationale = "Read-only status query; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmpstatus"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmpstatus"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmpstatus"
+flag = "-Cf"
+translation_modifier = "stopping on errors instead of retrying without the failed item"
+verdict = "allow"
+rationale = "Only changes error-handling behavior on the client side."
+
+[[flag]]
+applies_to = "snmpstatus"
+flag = "-r"
+translation_modifier = "setting the number of retry attempts"
+verdict = "allow"
+rationale = "Only controls how many times a failed request is retried."
+
+[[flag]]
+applies_to = "snmpstatus"
+flag = "-t"
+translation_modifier = "setting the timeout between retries"
+verdict = "allow"
+rationale = "Only controls how long to wait before retrying a request."

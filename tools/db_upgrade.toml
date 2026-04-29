@@ -1,0 +1,7 @@
+# tools/db_upgrade.toml
+
+[[command]]
+path = "db_upgrade"
+translation = "Upgrade a Berkeley DB database to the current format."
+verdict = "allow"
+rationale = "Modifies the database file format in place."

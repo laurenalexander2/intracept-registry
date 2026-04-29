@@ -1,0 +1,7 @@
+# tools/purge.toml
+
+[[command]]
+path = "purge"
+translation = "Force the macOS disk cache to be purged, freeing inactive memory."
+verdict = "allow"
+rationale = "Clears disk caches; no data is lost as caches are rebuilt on demand."

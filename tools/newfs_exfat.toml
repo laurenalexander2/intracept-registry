@@ -1,0 +1,14 @@
+# tools/newfs_exfat.toml — exFAT filesystem constructor
+
+[[command]]
+path = "newfs_exfat"
+translation = "Create a new exFAT filesystem on a device."
+verdict = "require_approval"
+rationale = "Formats a device, destroying all existing data on the partition."
+
+[[flag]]
+applies_to = "newfs_exfat"
+flag = "-N"
+translation_modifier = "only printing parameters without actually creating the filesystem"
+verdict = "allow"
+rationale = "Dry run that does not modify the device."

@@ -1,0 +1,28 @@
+# tools/sysctl.toml
+
+[[command]]
+path = "sysctl"
+translation = "Get or set kernel state parameters."
+verdict = "require_approval"
+rationale = "Can modify kernel tuning parameters that affect system behavior; read-only by default but writable with name=value syntax."
+
+[[flag]]
+applies_to = "sysctl"
+flag = "-a"
+translation_modifier = "listing all available kernel parameters and their values"
+verdict = "allow"
+rationale = "Read-only listing of all parameters."
+
+[[flag]]
+applies_to = "sysctl"
+flag = "-w"
+translation_modifier = "setting a kernel parameter to a specified value"
+verdict = "require_approval"
+rationale = "Modifies kernel state which can affect system stability, security, or performance."
+
+[[flag]]
+applies_to = "sysctl"
+flag = "-n"
+translation_modifier = "displaying only the value without the parameter name"
+verdict = "allow"
+rationale = "Cosmetic output change; no state modification."

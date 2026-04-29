@@ -1,0 +1,77 @@
+# tools/javac.toml
+
+[[command]]
+path = "javac"
+translation = "Compile Java source code into bytecode class files."
+verdict = "allow"
+rationale = "Compiles source files into class files; does not execute the resulting code."
+
+[[flag]]
+applies_to = "javac"
+flag = "-d"
+translation_modifier = "writing compiled class files to a specific directory"
+verdict = "allow"
+rationale = "Only changes the output destination for compiled files."
+
+[[flag]]
+applies_to = "javac"
+flag = "-cp"
+translation_modifier = "using a custom classpath to find referenced classes"
+verdict = "allow"
+rationale = "Only changes where the compiler looks for dependencies."
+
+[[flag]]
+applies_to = "javac"
+flag = "-source"
+translation_modifier = "compiling for a specific Java language version"
+verdict = "allow"
+rationale = "Restricts which language features are allowed; does not affect safety."
+
+[[flag]]
+applies_to = "javac"
+flag = "-target"
+translation_modifier = "generating bytecode compatible with a specific Java version"
+verdict = "allow"
+rationale = "Controls the output bytecode version; does not affect safety."
+
+[[flag]]
+applies_to = "javac"
+flag = "-Xlint"
+translation_modifier = "enabling recommended compiler warnings"
+verdict = "allow"
+rationale = "Only changes which warnings are displayed during compilation."
+
+[[flag]]
+applies_to = "javac"
+flag = "-g"
+translation_modifier = "including debugging information in the output"
+verdict = "allow"
+rationale = "Adds debug symbols to class files; does not change program behavior."
+
+[[flag]]
+applies_to = "javac"
+flag = "-verbose"
+translation_modifier = "printing detailed information about the compilation process"
+verdict = "allow"
+rationale = "Only adds diagnostic output; does not change the compiled result."
+
+[[flag]]
+applies_to = "javac"
+flag = "-deprecation"
+translation_modifier = "showing details for each use of a deprecated API"
+verdict = "allow"
+rationale = "Only changes which warnings are displayed; does not affect the compiled code."
+
+[[flag]]
+applies_to = "javac"
+flag = "-Werror"
+translation_modifier = "treating all warnings as errors that stop compilation"
+verdict = "allow"
+rationale = "Makes compilation stricter but does not change the output when it succeeds."
+
+[[flag]]
+applies_to = "javac"
+flag = "-encoding"
+translation_modifier = "specifying the character encoding of source files"
+verdict = "allow"
+rationale = "Only affects how source text is read; does not change program logic."

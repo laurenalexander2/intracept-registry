@@ -1,0 +1,42 @@
+# tools/base64.toml
+
+[[command]]
+path = "base64"
+translation = "Encode or decode data in base64 format."
+verdict = "allow"
+rationale = "Transforms data format without modifying files; outputs to the terminal by default."
+
+[[flag]]
+applies_to = "base64"
+flag = "-d"
+translation_modifier = "decoding base64 input instead of encoding"
+verdict = "allow"
+rationale = "Changes the direction of transformation; still outputs to the terminal."
+
+[[flag]]
+applies_to = "base64"
+flag = "--decode"
+translation_modifier = "decoding base64 input instead of encoding"
+verdict = "allow"
+rationale = "Changes the direction of transformation; still outputs to the terminal."
+
+[[flag]]
+applies_to = "base64"
+flag = "-b"
+translation_modifier = "inserting line breaks at a specified character interval"
+verdict = "allow"
+rationale = "Only affects output formatting; no data modification."
+
+[[flag]]
+applies_to = "base64"
+flag = "-i"
+translation_modifier = "reading from a specified input file"
+verdict = "allow"
+rationale = "Changes the input source; no data is modified."
+
+[[flag]]
+applies_to = "base64"
+flag = "-o"
+translation_modifier = "writing output to a specified file"
+verdict = "allow"
+rationale = "Writes to a file that may overwrite existing data."

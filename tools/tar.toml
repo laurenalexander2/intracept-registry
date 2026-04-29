@@ -1,0 +1,133 @@
+# tools/tar.toml
+
+[[command]]
+path = "tar"
+translation = "Create or extract archive files."
+verdict = "allow"
+rationale = "The bare command prints help; behavior depends on flags."
+
+[[flag]]
+applies_to = "tar"
+flag = "-c"
+translation_modifier = "creating a new archive"
+verdict = "allow"
+rationale = "Creates an archive file; does not modify the source files."
+
+[[flag]]
+applies_to = "tar"
+flag = "-x"
+translation_modifier = "extracting files from an archive"
+verdict = "allow"
+rationale = "Extracts files to disk, potentially overwriting existing files at the destination."
+
+[[flag]]
+applies_to = "tar"
+flag = "-f"
+translation_modifier = "using a specified archive file"
+verdict = "allow"
+rationale = "Specifies the archive filename; required for most operations."
+
+[[flag]]
+applies_to = "tar"
+flag = "-z"
+translation_modifier = "compressing or decompressing with gzip"
+verdict = "allow"
+rationale = "Adds gzip compression; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "-j"
+translation_modifier = "compressing or decompressing with bzip2"
+verdict = "allow"
+rationale = "Adds bzip2 compression; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output verbosity; does not change behavior."
+
+[[flag]]
+applies_to = "tar"
+flag = "-t"
+translation_modifier = "listing the contents of the archive without extracting"
+verdict = "allow"
+rationale = "Read-only listing; no files are created or modified."
+
+[[flag]]
+applies_to = "tar"
+flag = "--overwrite"
+translation_modifier = "overwriting existing files without prompting during extraction"
+verdict = "allow"
+rationale = "Silently replaces existing files during extraction."
+
+[[flag]]
+applies_to = "tar"
+flag = "-C"
+translation_modifier = "changing to a specified directory before processing"
+verdict = "allow"
+rationale = "Changes the working directory; does not add destructive capability."
+
+[[flag]]
+applies_to = "tar"
+flag = "-J"
+translation_modifier = "compressing or decompressing with xz"
+verdict = "allow"
+rationale = "Adds xz compression; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "--lz4"
+translation_modifier = "compressing or decompressing with lz4"
+verdict = "allow"
+rationale = "Adds lz4 compression; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "--zstd"
+translation_modifier = "compressing or decompressing with Zstandard"
+verdict = "allow"
+rationale = "Adds Zstandard compression; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "-k"
+translation_modifier = "never overwriting existing files during extraction"
+verdict = "allow"
+rationale = "Prevents overwriting; a safety-enhancing option."
+
+[[flag]]
+applies_to = "tar"
+flag = "--exclude"
+translation_modifier = "skipping files and directories that match a specified pattern"
+verdict = "allow"
+rationale = "Reduces the set of files processed; a scope-reducing option."
+
+[[flag]]
+applies_to = "tar"
+flag = "-r"
+translation_modifier = "appending files to the end of an existing archive"
+verdict = "allow"
+rationale = "Adds entries to an archive; does not overwrite or delete existing entries."
+
+[[flag]]
+applies_to = "tar"
+flag = "-a"
+translation_modifier = "automatically choosing the compression method based on the archive file extension"
+verdict = "allow"
+rationale = "Selects compression format; does not change the archive scope."
+
+[[flag]]
+applies_to = "tar"
+flag = "-p"
+translation_modifier = "preserving original file permissions during extraction"
+verdict = "allow"
+rationale = "Restores file permissions from the archive; does not add destructive capability."
+
+[[flag]]
+applies_to = "tar"
+flag = "--one-file-system"
+translation_modifier = "staying within a single file system and not crossing mount points"
+verdict = "allow"
+rationale = "Limits the scope of the archive; a safety-enhancing option."

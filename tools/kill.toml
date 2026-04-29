@@ -1,0 +1,109 @@
+# tools/kill.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kill"
+translation = "Send a signal to one or more running processes, typically to stop them."
+verdict = "allow"
+rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
+
+# ── Signal flags ──────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "kill"
+flag = "-9"
+translation_modifier = "forcing immediate termination with no chance for the process to clean up"
+verdict = "allow"
+rationale = "Immediately stops the process without allowing it to save data or release resources."
+
+[[flag]]
+applies_to = "kill"
+flag = "-KILL"
+translation_modifier = "forcing immediate termination with no chance for the process to clean up"
+verdict = "allow"
+rationale = "Same as -9; immediately stops the process without allowing it to save data or release resources."
+
+[[flag]]
+applies_to = "kill"
+flag = "-15"
+translation_modifier = "requesting a graceful shutdown"
+verdict = "allow"
+rationale = "Asks the process to shut down cleanly; this is the default signal."
+
+[[flag]]
+applies_to = "kill"
+flag = "-TERM"
+translation_modifier = "requesting a graceful shutdown"
+verdict = "allow"
+rationale = "Same as -15; asks the process to terminate cleanly."
+
+[[flag]]
+applies_to = "kill"
+flag = "-HUP"
+translation_modifier = "asking the process to reload its configuration or shut down"
+verdict = "allow"
+rationale = "May cause the process to reload settings or terminate, depending on the program."
+
+[[flag]]
+applies_to = "kill"
+flag = "-1"
+translation_modifier = "asking the process to reload its configuration or shut down"
+verdict = "allow"
+rationale = "Same as -HUP; may cause the process to reload settings or terminate."
+
+[[flag]]
+applies_to = "kill"
+flag = "-INT"
+translation_modifier = "sending an interrupt as if the user pressed Control-C"
+verdict = "allow"
+rationale = "Interrupts the process the same way pressing Control-C would."
+
+[[flag]]
+applies_to = "kill"
+flag = "-2"
+translation_modifier = "sending an interrupt as if the user pressed Control-C"
+verdict = "allow"
+rationale = "Same as -INT; interrupts the process the same way pressing Control-C would."
+
+[[flag]]
+applies_to = "kill"
+flag = "-QUIT"
+translation_modifier = "requesting termination and a diagnostic snapshot of the process"
+verdict = "allow"
+rationale = "Asks the process to quit and may produce a diagnostic dump for debugging."
+
+[[flag]]
+applies_to = "kill"
+flag = "-3"
+translation_modifier = "requesting termination and a diagnostic snapshot of the process"
+verdict = "allow"
+rationale = "Same as -QUIT; asks the process to quit and may produce a diagnostic dump."
+
+[[flag]]
+applies_to = "kill"
+flag = "-STOP"
+translation_modifier = "pausing the process so it can be resumed later"
+verdict = "allow"
+rationale = "Suspends the process without terminating it; it can be resumed with a continue signal."
+
+[[flag]]
+applies_to = "kill"
+flag = "-CONT"
+translation_modifier = "resuming a previously paused process"
+verdict = "allow"
+rationale = "Restarts a suspended process; it simply continues where it left off."
+
+[[flag]]
+applies_to = "kill"
+flag = "-0"
+translation_modifier = "checking whether the process exists without actually sending a signal"
+verdict = "allow"
+rationale = "No signal is delivered; only tests if the process is running and the user has permission to signal it."
+
+[[flag]]
+applies_to = "kill"
+flag = "-l"
+translation_modifier = "listing all available signal names instead of sending a signal"
+verdict = "allow"
+rationale = "Read-only operation that prints signal names and exits."

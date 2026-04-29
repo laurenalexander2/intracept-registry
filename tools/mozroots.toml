@@ -1,0 +1,28 @@
+# tools/mozroots.toml — Mozilla root certificate importer (deprecated)
+
+[[command]]
+path = "mozroots"
+translation = "Download and import trusted root certificates from Mozilla into the Mono trust store."
+verdict = "allow"
+rationale = "Modifies the local certificate trust store, which affects TLS validation for all Mono applications."
+
+[[flag]]
+applies_to = "mozroots"
+flag = "--import"
+translation_modifier = "importing the certificates into the trust store"
+verdict = "allow"
+rationale = "Adds certificates to the trust store, changing which servers are trusted."
+
+[[flag]]
+applies_to = "mozroots"
+flag = "--sync"
+translation_modifier = "synchronizing the trust store by adding and removing certificates to match Mozilla's list"
+verdict = "require_approval"
+rationale = "Removes previously trusted certificates, which may break TLS connections to servers that relied on those roots."
+
+[[flag]]
+applies_to = "mozroots"
+flag = "--machine"
+translation_modifier = "in the machine-wide trust store instead of the user store"
+verdict = "require_approval"
+rationale = "Modifies the machine-wide trust store, affecting TLS validation for all users on the system."

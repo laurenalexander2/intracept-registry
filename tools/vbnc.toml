@@ -1,0 +1,7 @@
+# tools/vbnc.toml
+
+[[command]]
+path = "vbnc"
+translation = "Compile Visual Basic .NET source code using the Mono compiler."
+verdict = "allow"
+rationale = "Compiles source into assemblies; does not modify source files."

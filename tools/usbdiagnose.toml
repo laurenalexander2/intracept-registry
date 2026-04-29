@@ -1,0 +1,7 @@
+# tools/usbdiagnose.toml
+
+[[command]]
+path = "usbdiagnose"
+translation = "Collect diagnostic information about USB devices and connections."
+verdict = "allow"
+rationale = "Read-only USB diagnostic data collection; does not modify device state."

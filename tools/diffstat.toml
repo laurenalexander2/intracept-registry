@@ -1,0 +1,7 @@
+# tools/diffstat.toml
+
+[[command]]
+path = "diffstat"
+translation = "Display statistics from diff output."
+verdict = "allow"
+rationale = "Read-only summary of diff output."

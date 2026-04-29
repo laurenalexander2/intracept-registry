@@ -1,0 +1,35 @@
+# tools/fdisk.toml
+
+[[command]]
+path = "fdisk"
+translation = "Display or modify the MBR partition table on a disk."
+verdict = "allow"
+rationale = "Without flags, only displays the partition table as a read-only operation."
+
+[[flag]]
+applies_to = "fdisk"
+flag = "-i"
+translation_modifier = "initializing and overwriting the entire MBR sector"
+verdict = "require_approval"
+rationale = "Completely overwrites the MBR and partition table, destroying all existing partition information."
+
+[[flag]]
+applies_to = "fdisk"
+flag = "-e"
+translation_modifier = "entering interactive partition editing mode"
+verdict = "require_approval"
+rationale = "Allows modification of partition entries; changes are not written until explicitly confirmed."
+
+[[flag]]
+applies_to = "fdisk"
+flag = "-u"
+translation_modifier = "updating the MBR boot code while preserving the partition table"
+verdict = "require_approval"
+rationale = "Overwrites MBR boot code and the Windows disk signature, which can affect system bootability."
+
+[[flag]]
+applies_to = "fdisk"
+flag = "-y"
+translation_modifier = "without asking for confirmation before writing"
+verdict = "require_approval"
+rationale = "Skips confirmation prompts, increasing the chance of unintended partition table changes."

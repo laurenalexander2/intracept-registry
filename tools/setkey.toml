@@ -1,0 +1,49 @@
+# tools/setkey.toml
+
+[[command]]
+path = "setkey"
+translation = "Manipulate the IPsec Security Association and Security Policy databases in the kernel."
+verdict = "require_approval"
+rationale = "Modifies kernel-level IPsec configuration; incorrect entries can disrupt network connectivity or security."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-c"
+translation_modifier = "reading commands from standard input"
+verdict = "require_approval"
+rationale = "Applies IPsec configuration commands interactively; same risk as the base command."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-f"
+translation_modifier = "reading commands from a specified file"
+verdict = "require_approval"
+rationale = "Applies IPsec configuration from a file; same risk as the base command."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-D"
+translation_modifier = "dumping Security Association Database entries"
+verdict = "allow"
+rationale = "Read-only display of Security Association Database entries."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-F"
+translation_modifier = "flushing all Security Association Database entries"
+verdict = "require_approval"
+rationale = "Removes all IPsec security associations from the kernel, immediately breaking all active IPsec tunnels."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-P"
+translation_modifier = "operating on Security Policy Database entries instead of Security Association Database entries"
+verdict = "require_approval"
+rationale = "Targets security policies; combined with -F, flushes all policies which breaks IPsec configuration."
+
+[[flag]]
+applies_to = "setkey"
+flag = "-n"
+translation_modifier = "validating input without making changes"
+verdict = "allow"
+rationale = "Dry-run mode that checks syntax without modifying the database."

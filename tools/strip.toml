@@ -1,0 +1,77 @@
+# tools/strip.toml
+
+[[command]]
+path = "strip"
+translation = "Remove symbol table information from object files."
+verdict = "allow"
+rationale = "Permanently removes debug symbols from binaries; the information cannot be recovered without rebuilding."
+
+[[flag]]
+applies_to = "strip"
+flag = "-x"
+translation_modifier = "removing all non-global symbols"
+verdict = "allow"
+rationale = "Strips local symbols which are needed for debugging; recovery requires rebuilding."
+
+[[flag]]
+applies_to = "strip"
+flag = "-S"
+translation_modifier = "removing only debug symbols"
+verdict = "allow"
+rationale = "Removes debugging information while preserving other symbols."
+
+[[flag]]
+applies_to = "strip"
+flag = "-u"
+translation_modifier = "preserving undefined symbols referenced by dynamic libraries"
+verdict = "allow"
+rationale = "Limits stripping to keep the binary functional with dynamic linking."
+
+[[flag]]
+applies_to = "strip"
+flag = "-r"
+translation_modifier = "preserving symbols referenced by dynamic libraries"
+verdict = "allow"
+rationale = "Limits stripping to keep the binary functional with dynamic linking."
+
+[[flag]]
+applies_to = "strip"
+flag = "-o"
+translation_modifier = "writing the result to a separate file instead of modifying the original"
+verdict = "allow"
+rationale = "Preserves the original file by writing stripped output elsewhere."
+
+[[flag]]
+applies_to = "strip"
+flag = "-R"
+translation_modifier = "removing only the specific symbols listed in a file"
+verdict = "allow"
+rationale = "Selectively removes named symbols; recovery requires rebuilding."
+
+[[flag]]
+applies_to = "strip"
+flag = "-s"
+translation_modifier = "keeping only the specific symbols listed in a file"
+verdict = "allow"
+rationale = "Removes all symbols not in the list; recovery requires rebuilding."
+
+[[flag]]
+applies_to = "strip"
+flag = "-N"
+translation_modifier = "removing all symbol table entries and the string table entirely"
+verdict = "allow"
+rationale = "Aggressively strips all symbol information, making debugging and dynamic analysis impossible without rebuilding."
+
+[[flag]]
+applies_to = "strip"
+flag = "-c"
+translation_modifier = "removing section contents to create a stub library"
+verdict = "allow"
+rationale = "Removes executable code from a dynamic library, leaving only the interface; the library can no longer be used at runtime."
+
+[[flag]]
+applies_to = "strip"
+flag = "-no_uuid"
+translation_modifier = "removing the unique build identifier from the binary"
+verdict = "allow"
+rationale = "Removes the UUID used to match binaries with debug symbol files."

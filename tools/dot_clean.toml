@@ -1,0 +1,7 @@
+# tools/dot_clean.toml
+
+[[command]]
+path = "dot_clean"
+translation = "Remove Apple Double resource fork files from directories."
+verdict = "allow"
+rationale = "Deletes ._ files that store macOS metadata."

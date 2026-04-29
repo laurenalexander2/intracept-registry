@@ -1,0 +1,7 @@
+# tools/automator.toml
+
+[[command]]
+path = "automator"
+translation = "Run Automator workflows from the command line."
+verdict = "allow"
+rationale = "Executes workflow actions that may modify files or interact with applications."

@@ -1,0 +1,28 @@
+# tools/hostname.toml
+
+[[command]]
+path = "hostname"
+translation = "Display or set the system hostname."
+verdict = "allow"
+rationale = "Without arguments, only displays the current hostname."
+
+[[flag]]
+applies_to = "hostname"
+flag = "-s"
+translation_modifier = "showing only the short hostname without the domain"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hostname"
+flag = "-f"
+translation_modifier = "showing the fully qualified domain name"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hostname"
+flag = "-d"
+translation_modifier = "showing only the domain name"
+verdict = "allow"
+rationale = "Only changes the output format."

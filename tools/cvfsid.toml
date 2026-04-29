@@ -1,0 +1,7 @@
+# tools/cvfsid.toml
+
+[[command]]
+path = "cvfsid"
+translation = "Display Xsan filesystem identification."
+verdict = "allow"
+rationale = "Read-only display of filesystem identity."

@@ -1,0 +1,7 @@
+# tools/sha384sum.toml
+
+[[command]]
+path = "sha384sum"
+translation = "Compute or verify SHA-384 checksums in GNU-compatible format."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."

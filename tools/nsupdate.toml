@@ -1,0 +1,21 @@
+# tools/nsupdate.toml — Dynamic DNS update client
+
+[[command]]
+path = "nsupdate"
+translation = "Send dynamic DNS update requests to add or remove records from a DNS zone."
+verdict = "require_approval"
+rationale = "Modifies live DNS records, which can redirect traffic, cause outages, or enable impersonation if used incorrectly."
+
+[[flag]]
+applies_to = "nsupdate"
+flag = "-l"
+translation_modifier = "updating only the local DNS server using a session key"
+verdict = "allow"
+rationale = "Limits updates to the local server, reducing blast radius."
+
+[[flag]]
+applies_to = "nsupdate"
+flag = "-v"
+translation_modifier = "using TCP instead of UDP for the update"
+verdict = "allow"
+rationale = "Changes the transport protocol; no additional risk."

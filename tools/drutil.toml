@@ -1,0 +1,7 @@
+# tools/drutil.toml
+
+[[command]]
+path = "drutil"
+translation = "Control the optical disc drive on macOS."
+verdict = "allow"
+rationale = "Can eject, burn, or erase optical discs."

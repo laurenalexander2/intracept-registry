@@ -1,0 +1,7 @@
+# tools/db_printlog.toml
+
+[[command]]
+path = "db_printlog"
+translation = "Display Berkeley DB log files."
+verdict = "allow"
+rationale = "Read-only display of database transaction logs."

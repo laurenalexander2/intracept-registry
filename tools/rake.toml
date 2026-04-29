@@ -1,0 +1,7 @@
+# tools/rake.toml
+
+[[command]]
+path = "rake"
+translation = "Run Ruby build tasks defined in a Rakefile."
+verdict = "allow"
+rationale = "Executes arbitrary Ruby code defined in task files."

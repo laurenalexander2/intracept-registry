@@ -1,0 +1,91 @@
+# tools/sort.toml
+
+[[command]]
+path = "sort"
+translation = "Sort lines of text from files or piped input."
+verdict = "allow"
+rationale = "Outputs sorted text to the terminal without modifying the input file."
+
+[[flag]]
+applies_to = "sort"
+flag = "-r"
+translation_modifier = "in reverse order"
+verdict = "allow"
+rationale = "Changes sort direction; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-n"
+translation_modifier = "sorting numerically instead of alphabetically"
+verdict = "allow"
+rationale = "Changes the sort comparison method; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-u"
+translation_modifier = "removing duplicate lines from the output"
+verdict = "allow"
+rationale = "Filters output to unique lines; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-k"
+translation_modifier = "sorting by a specified field position"
+verdict = "allow"
+rationale = "Changes the sort key; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-t"
+translation_modifier = "using a specified character as the field separator"
+verdict = "allow"
+rationale = "Changes how fields are delimited; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-o"
+translation_modifier = "writing the sorted output to a specified file"
+verdict = "allow"
+rationale = "Writes output to a file, which may overwrite existing content."
+
+[[flag]]
+applies_to = "sort"
+flag = "-f"
+translation_modifier = "ignoring case when comparing lines"
+verdict = "allow"
+rationale = "Makes sorting case-insensitive; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-h"
+translation_modifier = "sorting by human-readable size suffixes like K, M, and G"
+verdict = "allow"
+rationale = "Interprets size suffixes for numeric comparison; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-V"
+translation_modifier = "sorting version numbers in natural order"
+verdict = "allow"
+rationale = "Uses version-aware comparison; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-s"
+translation_modifier = "preserving the original order of lines with equal sort keys"
+verdict = "allow"
+rationale = "Enables stable sorting; still read-only."
+
+[[flag]]
+applies_to = "sort"
+flag = "-c"
+translation_modifier = "checking whether the input is already sorted without producing output"
+verdict = "allow"
+rationale = "Only verifies sort order; does not modify anything."
+
+[[flag]]
+applies_to = "sort"
+flag = "-b"
+translation_modifier = "ignoring leading blank spaces when comparing"
+verdict = "allow"
+rationale = "Trims leading whitespace for comparison; still read-only."

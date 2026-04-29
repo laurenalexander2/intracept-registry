@@ -1,0 +1,7 @@
+# tools/sa.toml
+
+[[command]]
+path = "sa"
+translation = "Display system accounting statistics from process accounting records."
+verdict = "allow"
+rationale = "Read-only display of historical accounting data."

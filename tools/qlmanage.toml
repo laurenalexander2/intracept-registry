@@ -1,0 +1,70 @@
+# tools/qlmanage.toml
+
+[[command]]
+path = "qlmanage"
+translation = "Manage and test Quick Look previews and thumbnails for files."
+verdict = "allow"
+rationale = "Generates previews and thumbnails; does not modify the source files."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-t"
+translation_modifier = "generating thumbnails for the specified files"
+verdict = "allow"
+rationale = "Creates thumbnail images; does not modify the source files."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-p"
+translation_modifier = "generating previews for the specified files"
+verdict = "allow"
+rationale = "Creates preview renderings; does not modify the source files."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-r"
+translation_modifier = "resetting the Quick Look server and all generator caches"
+verdict = "allow"
+rationale = "Clears cached data that is rebuilt on demand; no permanent data loss."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-m"
+translation_modifier = "displaying information about the Quick Look server and detected generators"
+verdict = "allow"
+rationale = "Read-only display of server and generator information."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-s"
+translation_modifier = "at a specified pixel size"
+verdict = "allow"
+rationale = "Controls thumbnail or preview dimensions; no additional risk."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-f"
+translation_modifier = "at a specified scale factor"
+verdict = "allow"
+rationale = "Controls rendering scale; no additional risk."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-x"
+translation_modifier = "without displaying the result in a window"
+verdict = "allow"
+rationale = "Suppresses the preview window; no additional risk."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-c"
+translation_modifier = "treating the file as a specified content type"
+verdict = "allow"
+rationale = "Overrides automatic content type detection; no additional risk."
+
+[[flag]]
+applies_to = "qlmanage"
+flag = "-g"
+translation_modifier = "using a specified Quick Look generator"
+verdict = "allow"
+rationale = "Overrides automatic generator selection; no additional risk."

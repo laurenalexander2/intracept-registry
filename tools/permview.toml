@@ -1,0 +1,7 @@
+# tools/permview.toml — Mono permission viewer
+
+[[command]]
+path = "permview"
+translation = "Display the security permissions declared in a .NET assembly."
+verdict = "allow"
+rationale = "Read-only inspection of assembly security metadata."

@@ -1,0 +1,49 @@
+# tools/cut.toml
+
+[[command]]
+path = "cut"
+translation = "Extract selected columns or fields from each line of input."
+verdict = "allow"
+rationale = "Read-only operation that prints selected portions of text without modifying the input."
+
+[[flag]]
+applies_to = "cut"
+flag = "-d"
+translation_modifier = "using a specified character to separate fields"
+verdict = "allow"
+rationale = "Changes which character marks field boundaries; still read-only."
+
+[[flag]]
+applies_to = "cut"
+flag = "-f"
+translation_modifier = "selecting specific fields by number"
+verdict = "allow"
+rationale = "Chooses which fields to display; still read-only."
+
+[[flag]]
+applies_to = "cut"
+flag = "-c"
+translation_modifier = "selecting specific character positions"
+verdict = "allow"
+rationale = "Chooses which characters to display; still read-only."
+
+[[flag]]
+applies_to = "cut"
+flag = "-b"
+translation_modifier = "selecting specific byte positions"
+verdict = "allow"
+rationale = "Chooses which bytes to display; still read-only."
+
+[[flag]]
+applies_to = "cut"
+flag = "-s"
+translation_modifier = "skipping lines that do not contain the delimiter"
+verdict = "allow"
+rationale = "Filters out lines without delimiters; still read-only."
+
+[[flag]]
+applies_to = "cut"
+flag = "-w"
+translation_modifier = "using whitespace as the field separator"
+verdict = "allow"
+rationale = "Treats spaces and tabs as a single separator; still read-only."

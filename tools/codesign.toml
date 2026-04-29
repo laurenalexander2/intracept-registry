@@ -1,0 +1,161 @@
+# tools/codesign.toml
+
+[[command]]
+path = "codesign"
+translation = "Create, verify, or display code signatures on macOS applications."
+verdict = "allow"
+rationale = "Modifies application bundles by adding or changing their cryptographic signatures."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-s"
+translation_modifier = "signing the code with a specified identity"
+verdict = "allow"
+rationale = "Applies a code signature that determines whether the application is trusted."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-v"
+translation_modifier = "verifying the existing code signature"
+verdict = "allow"
+rationale = "Read-only validation of the signature; does not modify the application."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-d"
+translation_modifier = "displaying signature information instead of signing"
+verdict = "allow"
+rationale = "Read-only display of signature details."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-h"
+translation_modifier = "displaying the hosting chain of a running process"
+verdict = "allow"
+rationale = "Read-only inspection of process signing state."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-f"
+translation_modifier = "replacing any existing signature"
+verdict = "allow"
+rationale = "Overwrites the current signature, which may invalidate existing trust settings."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--deep"
+translation_modifier = "signing or verifying all nested code bundles recursively"
+verdict = "allow"
+rationale = "Extends the operation to all embedded frameworks and plugins."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--all-architectures"
+translation_modifier = "verifying each architecture in a universal binary separately"
+verdict = "allow"
+rationale = "Thorough verification across all architectures; read-only."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-i"
+translation_modifier = "setting a custom identifier string in the signature"
+verdict = "allow"
+rationale = "Overrides the default identifier; only meaningful during signing."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-o"
+translation_modifier = "setting option flags in the code signature"
+verdict = "allow"
+rationale = "Embeds runtime options that affect how the system enforces signing policies."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--entitlements"
+translation_modifier = "embedding entitlements in the code signature"
+verdict = "allow"
+rationale = "Entitlements grant capabilities to the application; incorrect values may grant excessive permissions."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--remove-signature"
+translation_modifier = "removing the code signature entirely"
+verdict = "require_approval"
+rationale = "Leaves the application unsigned; it may be blocked by Gatekeeper or fail to run."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-D"
+translation_modifier = "writing a detached signature to a separate file"
+verdict = "allow"
+rationale = "Creates a separate signature file; the original code is not modified."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--timestamp"
+translation_modifier = "including a secure timestamp from Apple's timestamp service"
+verdict = "allow"
+rationale = "Adds a trusted timestamp; improves signature validity over time."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-R"
+translation_modifier = "checking the signature against a specified requirement"
+verdict = "allow"
+rationale = "Read-only verification against a custom requirement; does not modify the code."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--check-notarization"
+translation_modifier = "checking whether the code has been notarized by Apple"
+verdict = "allow"
+rationale = "Read-only online check of notarization status."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--validate-constraint"
+translation_modifier = "validating launch environment constraints on the code"
+verdict = "allow"
+rationale = "Read-only validation of constraint satisfaction."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--dryrun"
+translation_modifier = "simulating the signing operation without writing any changes"
+verdict = "allow"
+rationale = "No files are modified; only shows what would happen."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--keychain"
+translation_modifier = "searching for the signing identity in a specific keychain"
+verdict = "allow"
+rationale = "Selects a non-default keychain; does not change the signing operation."
+
+[[flag]]
+applies_to = "codesign"
+flag = "-r"
+translation_modifier = "embedding internal requirements in the code signature"
+verdict = "allow"
+rationale = "Sets requirements that must be met for the signature to be considered valid."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--options"
+translation_modifier = "setting runtime enforcement options such as hardened runtime or library validation"
+verdict = "allow"
+rationale = "Controls security policies enforced on the signed code at runtime."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--ignore-resources"
+translation_modifier = "skipping resource validation during verification"
+verdict = "allow"
+rationale = "Speeds up verification but may miss corrupted resources; read-only operation."
+
+[[flag]]
+applies_to = "codesign"
+flag = "--continue"
+translation_modifier = "continuing to process remaining files even if one fails"
+verdict = "allow"
+rationale = "Changes error handling behavior; does not change the operation on individual files."

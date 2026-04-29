@@ -1,0 +1,7 @@
+# tools/SafeEjectGPU.toml
+
+[[command]]
+path = "SafeEjectGPU"
+translation = "Safely disconnect an external GPU from the system."
+verdict = "allow"
+rationale = "Disconnects a GPU, which may cause applications using it to crash or lose rendering."

@@ -1,0 +1,7 @@
+# tools/dirname.toml
+
+[[command]]
+path = "dirname"
+translation = "Print the directory portion of a file path."
+verdict = "allow"
+rationale = "Read-only text manipulation that does not access the file system."

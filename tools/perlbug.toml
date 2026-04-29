@@ -1,0 +1,7 @@
+# tools/perlbug.toml — Perl bug report generator
+
+[[command]]
+path = "perlbug"
+translation = "Generate and send a bug report for the Perl programming language."
+verdict = "allow"
+rationale = "Collects system information and creates a report template; sends email only with user confirmation."

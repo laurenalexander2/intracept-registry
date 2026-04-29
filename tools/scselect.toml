@@ -1,0 +1,14 @@
+# tools/scselect.toml
+
+[[command]]
+path = "scselect"
+translation = "Select or display the active network location configuration."
+verdict = "allow"
+rationale = "Switching locations immediately reconfigures network settings, which can disrupt connectivity."
+
+[[flag]]
+applies_to = "scselect"
+flag = "-n"
+translation_modifier = "delaying the location change until the next system boot"
+verdict = "allow"
+rationale = "Defers the reconfiguration; no immediate effect on running network services."

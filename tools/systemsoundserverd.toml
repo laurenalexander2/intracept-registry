@@ -1,0 +1,7 @@
+# tools/systemsoundserverd.toml
+
+[[command]]
+path = "systemsoundserverd"
+translation = "Run the system sound server background service."
+verdict = "allow"
+rationale = "Audio playback background service; normally managed by launchd and does not modify files."

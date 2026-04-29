@@ -1,0 +1,7 @@
+# tools/bzfgrep.toml
+
+[[command]]
+path = "bzfgrep"
+translation = "Search bzip2-compressed files for fixed strings."
+verdict = "allow"
+rationale = "Read-only search of compressed file contents."

@@ -1,0 +1,7 @@
+# tools/usdchecker.toml
+
+[[command]]
+path = "usdchecker"
+translation = "Validate a Universal Scene Description file for correctness."
+verdict = "allow"
+rationale = "Read-only validation of USD files; modifies nothing."

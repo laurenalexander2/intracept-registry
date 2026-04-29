@@ -1,0 +1,7 @@
+# tools/sdef.toml
+
+[[command]]
+path = "sdef"
+translation = "Extract the scripting definition from a scriptable application."
+verdict = "allow"
+rationale = "Read-only extraction of AppleScript dictionary to standard output; modifies nothing."

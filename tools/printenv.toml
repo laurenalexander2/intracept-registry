@@ -1,0 +1,7 @@
+# tools/printenv.toml
+
+[[command]]
+path = "printenv"
+translation = "Print the values of environment variables."
+verdict = "allow"
+rationale = "Read-only display of environment variables."

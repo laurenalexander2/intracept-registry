@@ -1,0 +1,7 @@
+# tools/pg_createsubscriber.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_createsubscriber"
+translation = "Convert a PostgreSQL physical standby server into a logical replication subscriber."
+verdict = "require_approval"
+rationale = "Permanently changes the replication mode of a standby, which cannot be easily reversed."

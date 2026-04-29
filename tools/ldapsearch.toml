@@ -1,0 +1,105 @@
+# tools/ldapsearch.toml
+
+[[command]]
+path = "ldapsearch"
+translation = "Search an LDAP directory and display matching entries."
+verdict = "allow"
+rationale = "Read-only search against an LDAP directory server."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-b"
+translation_modifier = "starting the search from a specific base distinguished name"
+verdict = "allow"
+rationale = "Only changes the starting point of the search."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-s"
+translation_modifier = "using a specific search scope"
+verdict = "allow"
+rationale = "Controls whether the search covers one level or the entire subtree."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-H"
+translation_modifier = "connecting to a specific LDAP server URI"
+verdict = "allow"
+rationale = "Only changes which server is queried."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-x"
+translation_modifier = "using simple authentication instead of advanced authentication"
+verdict = "allow"
+rationale = "Only changes the authentication method used."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-D"
+translation_modifier = "authenticating with a specific identity"
+verdict = "allow"
+rationale = "Only specifies which account to bind as."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-W"
+translation_modifier = "prompting for a password"
+verdict = "allow"
+rationale = "Safer than passing a password on the command line."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-w"
+translation_modifier = "using a password provided on the command line"
+verdict = "allow"
+rationale = "Specifies authentication credentials; the password may be visible in process listings."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-Z"
+translation_modifier = "requesting an encrypted connection"
+verdict = "allow"
+rationale = "Enables transport encryption, which improves security."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-ZZ"
+translation_modifier = "requiring an encrypted connection and failing if encryption is unavailable"
+verdict = "allow"
+rationale = "Enforces transport encryption; fails safely if the server does not support it."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-l"
+translation_modifier = "limiting how long the search can run"
+verdict = "allow"
+rationale = "Only restricts the duration of the search."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-z"
+translation_modifier = "limiting the number of entries returned"
+verdict = "allow"
+rationale = "Only restricts how many results are returned."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-A"
+translation_modifier = "retrieving attribute names only without their values"
+verdict = "allow"
+rationale = "Returns less data than the default; read-only."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-L"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "ldapsearch"
+flag = "-n"
+translation_modifier = "simulating the search without actually performing it"
+verdict = "allow"
+rationale = "No search is executed; only shows what would happen."

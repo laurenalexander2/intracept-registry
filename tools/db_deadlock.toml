@@ -1,0 +1,7 @@
+# tools/db_deadlock.toml
+
+[[command]]
+path = "db_deadlock"
+translation = "Detect and break deadlocks in a Berkeley DB environment."
+verdict = "allow"
+rationale = "May abort database transactions to resolve deadlocks."

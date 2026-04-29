@@ -1,0 +1,70 @@
+# tools/ar.toml
+
+[[command]]
+path = "ar"
+translation = "Create, modify, or extract files from archive libraries."
+verdict = "allow"
+rationale = "Manages static library archives used during compilation; primarily a build tool."
+
+[[flag]]
+applies_to = "ar"
+flag = "-d"
+translation_modifier = "deleting specified files from the archive"
+verdict = "allow"
+rationale = "Removes members from an archive, which may break builds if the wrong file is deleted."
+
+[[flag]]
+applies_to = "ar"
+flag = "-r"
+translation_modifier = "replacing or adding files into the archive"
+verdict = "allow"
+rationale = "Adds or updates archive members; the archive can be rebuilt if needed."
+
+[[flag]]
+applies_to = "ar"
+flag = "-t"
+translation_modifier = "listing the files contained in the archive"
+verdict = "allow"
+rationale = "Read-only listing that modifies nothing."
+
+[[flag]]
+applies_to = "ar"
+flag = "-x"
+translation_modifier = "extracting files from the archive into the current directory"
+verdict = "allow"
+rationale = "Writes files to disk, but only overwrites existing files with the archived versions."
+
+[[flag]]
+applies_to = "ar"
+flag = "-q"
+translation_modifier = "quickly appending files without checking for duplicates"
+verdict = "allow"
+rationale = "Appends to the archive without verifying whether the file already exists; faster but may create duplicates."
+
+[[flag]]
+applies_to = "ar"
+flag = "-s"
+translation_modifier = "writing an index of the archive contents"
+verdict = "allow"
+rationale = "Updates the archive index, equivalent to running ranlib; does not alter archive members."
+
+[[flag]]
+applies_to = "ar"
+flag = "-c"
+translation_modifier = "suppressing the message when a new archive is created"
+verdict = "allow"
+rationale = "Cosmetic change that silences an informational message."
+
+[[flag]]
+applies_to = "ar"
+flag = "-v"
+translation_modifier = "showing detailed output for each file processed"
+verdict = "allow"
+rationale = "Increases verbosity of output without changing behavior."
+
+[[flag]]
+applies_to = "ar"
+flag = "-u"
+translation_modifier = "only replacing files that are newer than the archived version"
+verdict = "allow"
+rationale = "Restricts updates to files with a more recent modification time, reducing unnecessary changes."

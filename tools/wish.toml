@@ -1,0 +1,7 @@
+# tools/wish.toml
+
+[[command]]
+path = "wish"
+translation = "Run the Tcl/Tk windowing shell interpreter."
+verdict = "allow"
+rationale = "Launches a GUI scripting interpreter; risk depends on scripts executed."

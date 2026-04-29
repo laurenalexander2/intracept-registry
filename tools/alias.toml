@@ -1,0 +1,14 @@
+# tools/alias.toml
+
+[[command]]
+path = "alias"
+translation = "Create or display shortcut names for shell commands."
+verdict = "allow"
+rationale = "Defines command shortcuts in the current shell session; changes are not saved permanently."
+
+[[flag]]
+applies_to = "alias"
+flag = "-p"
+translation_modifier = "printing all currently defined shortcuts"
+verdict = "allow"
+rationale = "Read-only display of existing aliases; modifies nothing."

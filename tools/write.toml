@@ -1,0 +1,7 @@
+# tools/write.toml
+
+[[command]]
+path = "write"
+translation = "Send a message to another logged-in user's terminal."
+verdict = "allow"
+rationale = "Sends text to another user's terminal; does not modify files."

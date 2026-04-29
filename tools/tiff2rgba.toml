@@ -1,0 +1,7 @@
+# tools/tiff2rgba.toml
+
+[[command]]
+path = "tiff2rgba"
+translation = "Convert a TIFF image to red-green-blue-alpha color format."
+verdict = "allow"
+rationale = "Creates a new output file; the original image is unchanged."

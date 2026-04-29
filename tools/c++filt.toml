@@ -1,0 +1,7 @@
+# tools/c++filt.toml
+
+[[command]]
+path = "c++filt"
+translation = "Demangle C++ symbol names."
+verdict = "allow"
+rationale = "Read-only name demangling; outputs to the terminal."

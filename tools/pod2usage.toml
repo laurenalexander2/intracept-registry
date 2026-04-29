@@ -1,0 +1,7 @@
+# tools/pod2usage.toml
+
+[[command]]
+path = "pod2usage"
+translation = "Extract and display usage information from Perl Pod documentation."
+verdict = "allow"
+rationale = "Read-only extraction that writes to the terminal."

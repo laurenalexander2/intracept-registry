@@ -1,0 +1,7 @@
+# tools/cvdb.toml
+
+[[command]]
+path = "cvdb"
+translation = "Debug Xsan filesystem issues."
+verdict = "allow"
+rationale = "Read-only diagnostic tool for Xsan."

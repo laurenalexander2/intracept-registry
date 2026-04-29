@@ -1,0 +1,7 @@
+# tools/cargo-sqlx.toml
+
+[[command]]
+path = "cargo-sqlx"
+translation = "Run SQLx database migration and query checking tools."
+verdict = "allow"
+rationale = "Can create and run database migrations that modify schema and data."

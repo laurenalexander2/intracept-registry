@@ -1,0 +1,7 @@
+# tools/quotacheck.toml
+
+[[command]]
+path = "quotacheck"
+translation = "Scan a filesystem and update the disk quota usage database."
+verdict = "allow"
+rationale = "Modifies the quota database files to reflect current disk usage."

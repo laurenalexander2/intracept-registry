@@ -1,0 +1,7 @@
+# tools/priclass.d.toml
+
+[[command]]
+path = "priclass.d"
+translation = "Trace process priority classification using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of scheduling priorities."

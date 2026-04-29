@@ -1,0 +1,42 @@
+# tools/ssh-agent.toml
+
+[[command]]
+path = "ssh-agent"
+translation = "Run the SSH authentication agent to hold private keys in memory."
+verdict = "allow"
+rationale = "Starts a background agent process; keys must be explicitly added before any authentication occurs."
+
+[[flag]]
+applies_to = "ssh-agent"
+flag = "-k"
+translation_modifier = "killing the currently running agent"
+verdict = "allow"
+rationale = "Stops the agent process; keys are cleared from memory."
+
+[[flag]]
+applies_to = "ssh-agent"
+flag = "-d"
+translation_modifier = "running in debug mode without forking into the background"
+verdict = "allow"
+rationale = "Keeps the agent in the foreground and writes debug output; useful for troubleshooting."
+
+[[flag]]
+applies_to = "ssh-agent"
+flag = "-D"
+translation_modifier = "running in the foreground without forking"
+verdict = "allow"
+rationale = "Keeps the agent in the foreground; does not modify any keys or system state."
+
+[[flag]]
+applies_to = "ssh-agent"
+flag = "-t"
+translation_modifier = "setting a default lifetime for added identities"
+verdict = "allow"
+rationale = "Limits how long keys remain loaded; a security-enhancing option."
+
+[[flag]]
+applies_to = "ssh-agent"
+flag = "-a"
+translation_modifier = "binding the agent to a specific socket path"
+verdict = "allow"
+rationale = "Controls where the agent socket is created; does not affect key management."

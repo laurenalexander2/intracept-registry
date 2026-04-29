@@ -1,0 +1,7 @@
+# tools/rst2latex.toml
+
+[[command]]
+path = "rst2latex"
+translation = "Convert reStructuredText documents to LaTeX format."
+verdict = "allow"
+rationale = "Converts reStructuredText markup to LaTeX output; does not modify the source file."

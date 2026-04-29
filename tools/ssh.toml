@@ -1,0 +1,70 @@
+# tools/ssh.toml
+
+[[command]]
+path = "ssh"
+translation = "Open a secure shell connection to a remote server."
+verdict = "require_approval"
+rationale = "Establishes a remote session where commands can be executed on another machine."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-i"
+translation_modifier = "using a specified private key file for authentication"
+verdict = "allow"
+rationale = "Selects an identity file; does not change the connection's capabilities."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-p"
+translation_modifier = "connecting to a specified port"
+verdict = "allow"
+rationale = "Changes the target port; does not add destructive capability."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-L"
+translation_modifier = "forwarding a local port to a remote address through the tunnel"
+verdict = "allow"
+rationale = "Opens a local listening port that tunnels traffic to a remote destination."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-R"
+translation_modifier = "forwarding a remote port back to a local address through the tunnel"
+verdict = "require_approval"
+rationale = "Opens a listening port on the remote server that tunnels traffic back to the local machine."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-D"
+translation_modifier = "creating a network proxy on a local port"
+verdict = "require_approval"
+rationale = "Opens a local network proxy that routes traffic through the remote server."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-N"
+translation_modifier = "without executing a remote command"
+verdict = "allow"
+rationale = "Establishes the connection for port forwarding only; no remote shell is opened."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-o"
+translation_modifier = "with a specified SSH configuration option"
+verdict = "allow"
+rationale = "Overrides a configuration setting; the risk depends on the specific option."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-t"
+translation_modifier = "forcing an interactive terminal session on the remote side"
+verdict = "allow"
+rationale = "Requests a terminal for the session; needed for interactive programs but does not change the connection's capabilities."
+
+[[flag]]
+applies_to = "ssh"
+flag = "-A"
+translation_modifier = "forwarding the local SSH agent to the remote server"
+verdict = "require_approval"
+rationale = "Exposes local SSH keys to the remote server, which could be used by a compromised host to authenticate as you."

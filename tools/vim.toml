@@ -1,0 +1,21 @@
+# tools/vim.toml
+
+[[command]]
+path = "vim"
+translation = "Open a file in the Vim text editor."
+verdict = "allow"
+rationale = "Opens files for editing; changes are written when the user saves."
+
+[[flag]]
+applies_to = "vim"
+flag = "-R"
+translation_modifier = "opening the file in read-only mode"
+verdict = "allow"
+rationale = "Prevents accidental writes to the file."
+
+[[flag]]
+applies_to = "vim"
+flag = "-d"
+translation_modifier = "comparing files in diff mode"
+verdict = "allow"
+rationale = "Opens files side-by-side for comparison; does not auto-save changes."

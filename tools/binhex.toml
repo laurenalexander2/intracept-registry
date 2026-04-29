@@ -1,0 +1,14 @@
+# tools/binhex.toml
+
+[[command]]
+path = "binhex"
+translation = "Encode or decode BinHex format files."
+verdict = "allow"
+rationale = "Converts file format; outputs to the terminal by default."
+
+[[flag]]
+applies_to = "binhex"
+flag = "--overwrite"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Replaces existing files without prompting."

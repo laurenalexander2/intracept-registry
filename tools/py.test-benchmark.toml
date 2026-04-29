@@ -1,0 +1,7 @@
+# tools/py.test-benchmark.toml
+
+[[command]]
+path = "py.test-benchmark"
+translation = "Run Python benchmarks using the pytest-benchmark plugin."
+verdict = "allow"
+rationale = "Executes benchmark code; a read-only performance measurement."

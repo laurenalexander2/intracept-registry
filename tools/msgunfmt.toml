@@ -1,0 +1,14 @@
+# tools/msgunfmt.toml — GNU gettext binary catalog decompiler
+
+[[command]]
+path = "msgunfmt"
+translation = "Convert a binary machine object message catalog back into a readable PO text file."
+verdict = "allow"
+rationale = "Read-only decompilation of a binary file; writes to the terminal or a specified output file."
+
+[[flag]]
+applies_to = "msgunfmt"
+flag = "--force"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing output files."

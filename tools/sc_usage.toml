@@ -1,0 +1,42 @@
+# tools/sc_usage.toml
+
+[[command]]
+path = "sc_usage"
+translation = "Show system call usage statistics for a process in real time."
+verdict = "allow"
+rationale = "Read-only monitoring of system call activity; modifies nothing."
+
+[[flag]]
+applies_to = "sc_usage"
+flag = "-c"
+translation_modifier = "using a specified system call code mapping file"
+verdict = "allow"
+rationale = "Only changes where system call names are looked up."
+
+[[flag]]
+applies_to = "sc_usage"
+flag = "-e"
+translation_modifier = "sorting output by call count instead of time"
+verdict = "allow"
+rationale = "Changes display sorting; purely cosmetic."
+
+[[flag]]
+applies_to = "sc_usage"
+flag = "-l"
+translation_modifier = "outputting as a continuous scrolling list instead of updating in place"
+verdict = "allow"
+rationale = "Changes display mode; no state modification."
+
+[[flag]]
+applies_to = "sc_usage"
+flag = "-s"
+translation_modifier = "at a specified sampling interval in seconds"
+verdict = "allow"
+rationale = "Adjusts update frequency; no state modification."
+
+[[flag]]
+applies_to = "sc_usage"
+flag = "-E"
+translation_modifier = "launching and monitoring a specified executable"
+verdict = "allow"
+rationale = "Executes a program to monitor it; the launched process may modify state."

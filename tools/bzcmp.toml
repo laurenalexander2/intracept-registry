@@ -1,0 +1,7 @@
+# tools/bzcmp.toml
+
+[[command]]
+path = "bzcmp"
+translation = "Compare bzip2-compressed files."
+verdict = "allow"
+rationale = "Read-only comparison of compressed files."

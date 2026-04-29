@@ -1,0 +1,14 @@
+# tools/mount_nfs.toml — NFS filesystem mount
+
+[[command]]
+path = "mount_nfs"
+translation = "Mount a remote NFS network filesystem."
+verdict = "allow"
+rationale = "Attaches a remote network filesystem to the local directory tree, enabling read-write access by default."
+
+[[flag]]
+applies_to = "mount_nfs"
+flag = "-o bg"
+translation_modifier = "retrying the mount in the background if the initial attempt fails"
+verdict = "allow"
+rationale = "Moves retry logic to a background process; useful for non-critical mounts at boot."

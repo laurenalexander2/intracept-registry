@@ -1,0 +1,105 @@
+# tools/ssh-keygen.toml
+
+[[command]]
+path = "ssh-keygen"
+translation = "Generate, manage, and convert SSH authentication keys."
+verdict = "allow"
+rationale = "Creates or modifies SSH keys that control access to remote systems."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-t"
+translation_modifier = "using a specified key type"
+verdict = "allow"
+rationale = "Selects the algorithm for key generation; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-b"
+translation_modifier = "with a specified number of bits"
+verdict = "allow"
+rationale = "Sets the key length; does not change the operation's scope."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-f"
+translation_modifier = "writing the key to a specified file"
+verdict = "allow"
+rationale = "May overwrite an existing key file, which could lock out access to remote systems."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-R"
+translation_modifier = "removing a host entry from the known_hosts file"
+verdict = "allow"
+rationale = "Modifies the known_hosts file, which may allow connection to a different server with the same hostname."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-l"
+translation_modifier = "displaying the fingerprint of a key file"
+verdict = "allow"
+rationale = "Read-only display of key fingerprint."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-p"
+translation_modifier = "changing the passphrase on an existing key"
+verdict = "allow"
+rationale = "Modifies the key file to change its passphrase; the key itself is unchanged."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-C"
+translation_modifier = "setting a comment label on the key"
+verdict = "allow"
+rationale = "Changes the key's comment field; does not affect the key's cryptographic properties."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-N"
+translation_modifier = "setting the passphrase for the new key on the command line"
+verdict = "allow"
+rationale = "Provides the passphrase non-interactively; does not change the key generation."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses output messages; does not change behavior."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-y"
+translation_modifier = "reading a private key file and printing the corresponding public key"
+verdict = "allow"
+rationale = "Read-only extraction of the public key; does not modify the private key."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-E"
+translation_modifier = "using a specified hash algorithm when displaying fingerprints"
+verdict = "allow"
+rationale = "Changes the fingerprint display format; read-only operation."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-H"
+translation_modifier = "replacing hostnames in the known_hosts file with hashed values"
+verdict = "allow"
+rationale = "Irreversibly modifies the known_hosts file; original hostnames cannot be recovered."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-A"
+translation_modifier = "generating host keys of all default types if they do not already exist"
+verdict = "allow"
+rationale = "Creates new host key files on the system; existing keys are not overwritten."
+
+[[flag]]
+applies_to = "ssh-keygen"
+flag = "-L"
+translation_modifier = "displaying the contents of a certificate"
+verdict = "allow"
+rationale = "Read-only display of certificate information."

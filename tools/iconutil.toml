@@ -1,0 +1,21 @@
+# tools/iconutil.toml
+
+[[command]]
+path = "iconutil"
+translation = "Convert between icon set folders and icon files."
+verdict = "allow"
+rationale = "Creates a new output file; does not modify the source."
+
+[[flag]]
+applies_to = "iconutil"
+flag = "-c"
+translation_modifier = "converting to a specified format, either an icon file or an icon set folder"
+verdict = "allow"
+rationale = "Specifies the output format; does not modify the source."
+
+[[flag]]
+applies_to = "iconutil"
+flag = "-o"
+translation_modifier = "writing to a specified output file or directory"
+verdict = "allow"
+rationale = "Overrides the default output name; does not modify the source."

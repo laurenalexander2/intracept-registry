@@ -1,0 +1,14 @@
+# tools/vi.toml
+
+[[command]]
+path = "vi"
+translation = "Open a file in the vi text editor."
+verdict = "allow"
+rationale = "Opens files for editing; changes are written when the user saves."
+
+[[flag]]
+applies_to = "vi"
+flag = "-R"
+translation_modifier = "opening the file in read-only mode"
+verdict = "allow"
+rationale = "Prevents accidental writes to the file."

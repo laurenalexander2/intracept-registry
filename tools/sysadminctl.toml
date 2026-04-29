@@ -1,0 +1,77 @@
+# tools/sysadminctl.toml
+
+[[command]]
+path = "sysadminctl"
+translation = "Manage local user accounts, secure tokens, and system administration settings."
+verdict = "require_approval"
+rationale = "Creates, deletes, and modifies user accounts with full administrative control."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-deleteUser"
+translation_modifier = "deleting a specified user account"
+verdict = "require_approval"
+rationale = "Permanently removes a user account and potentially their home directory; irrecoverable without backups."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-addUser"
+translation_modifier = "creating a new user account"
+verdict = "require_approval"
+rationale = "Adds a new user to the system with specified privileges; reversible by deletion."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-resetPasswordFor"
+translation_modifier = "resetting the password for a local user"
+verdict = "require_approval"
+rationale = "Changes a user's password without knowing the old one; locks the user out of their previous password."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-secureTokenStatus"
+translation_modifier = "checking the secure token status for a user"
+verdict = "allow"
+rationale = "Read-only operation that reports whether a Secure Token has been granted to the specified user."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-secureTokenOn"
+translation_modifier = "enabling the secure token for a user"
+verdict = "require_approval"
+rationale = "Grants the user a secure token which is required for FileVault and certain system operations."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-secureTokenOff"
+translation_modifier = "disabling the secure token for a user"
+verdict = "require_approval"
+rationale = "Removes the secure token which may prevent the user from unlocking FileVault or performing admin tasks."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-admin"
+translation_modifier = "granting administrator privileges to the new user"
+verdict = "require_approval"
+rationale = "Creates a user with full administrative access to the system."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-secure"
+translation_modifier = "securely erasing the deleted user's home directory"
+verdict = "require_approval"
+rationale = "Overwrites the user's data making recovery impossible even with forensic tools."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-guestAccount"
+translation_modifier = "enabling or disabling the guest account"
+verdict = "allow"
+rationale = "Controls whether unauthenticated users can access the system."
+
+[[flag]]
+applies_to = "sysadminctl"
+flag = "-screenLock"
+translation_modifier = "configuring screen lock behavior"
+verdict = "allow"
+rationale = "Changes system security posture by controlling when the screen locks."

@@ -1,0 +1,7 @@
+# tools/topsysproc.toml
+
+[[command]]
+path = "topsysproc"
+translation = "Display the processes making the most system calls in real time."
+verdict = "allow"
+rationale = "Read-only process monitoring; modifies nothing."

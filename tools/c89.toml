@@ -1,0 +1,7 @@
+# tools/c89.toml
+
+[[command]]
+path = "c89"
+translation = "Compile C source code using the C89 standard."
+verdict = "allow"
+rationale = "Compiles code locally; does not execute the resulting binary."

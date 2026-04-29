@@ -1,0 +1,7 @@
+# tools/createhomedir.toml
+
+[[command]]
+path = "createhomedir"
+translation = "Create home directories for network users on macOS."
+verdict = "allow"
+rationale = "Creates directories on the local filesystem for directory service users."

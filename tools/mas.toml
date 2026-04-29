@@ -1,0 +1,55 @@
+# tools/mas.toml
+
+[[command]]
+path = "mas"
+translation = "Run the Mac App Store command-line interface."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "mas install"
+translation = "Install previously purchased apps from the Mac App Store."
+verdict = "allow"
+rationale = "Downloads and installs applications, which consume disk space and may run background processes."
+
+[[command]]
+path = "mas uninstall"
+translation = "Uninstall apps that were installed from the Mac App Store."
+verdict = "require_approval"
+rationale = "Permanently removes an application and its associated data."
+
+[[command]]
+path = "mas upgrade"
+translation = "Update all outdated apps from the Mac App Store."
+verdict = "allow"
+rationale = "Downloads and installs new versions of multiple apps, which may introduce breaking changes."
+
+[[command]]
+path = "mas list"
+translation = "List all apps installed from the Mac App Store."
+verdict = "allow"
+rationale = "Read-only display of installed applications."
+
+[[command]]
+path = "mas search"
+translation = "Search for apps in the Mac App Store."
+verdict = "allow"
+rationale = "Read-only operation that searches the Mac App Store without installing or modifying anything."
+
+[[command]]
+path = "mas outdated"
+translation = "List apps with pending updates from the Mac App Store."
+verdict = "allow"
+rationale = "Read-only display of available updates."
+
+[[command]]
+path = "mas signout"
+translation = "Sign out of the Mac App Store."
+verdict = "allow"
+rationale = "Ends the current App Store session, requiring re-authentication for future purchases."
+
+[[command]]
+path = "mas reset"
+translation = "Reset App Store processes and clear cached downloads."
+verdict = "allow"
+rationale = "Terminates App Store processes and deletes cached data."

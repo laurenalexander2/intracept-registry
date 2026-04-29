@@ -1,0 +1,14 @@
+# tools/mkfile.toml — File creator (zero-padded)
+
+[[command]]
+path = "mkfile"
+translation = "Create a file of a specified size, padded with zeroes."
+verdict = "allow"
+rationale = "Creates files that can consume significant disk space; overwrites any existing file at the target path."
+
+[[flag]]
+applies_to = "mkfile"
+flag = "-n"
+translation_modifier = "without allocating disk blocks until data is written"
+verdict = "allow"
+rationale = "Creates a sparse file that uses minimal disk space initially."

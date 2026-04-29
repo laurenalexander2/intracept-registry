@@ -1,0 +1,35 @@
+# tools/tr.toml
+
+[[command]]
+path = "tr"
+translation = "Replace, delete, or squeeze characters from input text."
+verdict = "allow"
+rationale = "Outputs transformed text to the terminal without modifying any files."
+
+[[flag]]
+applies_to = "tr"
+flag = "-d"
+translation_modifier = "deleting matching characters instead of replacing them"
+verdict = "allow"
+rationale = "Removes specified characters from the output; the input source is unchanged."
+
+[[flag]]
+applies_to = "tr"
+flag = "-s"
+translation_modifier = "collapsing consecutive repeated characters into a single occurrence"
+verdict = "allow"
+rationale = "Reduces runs of the same character to one; still read-only."
+
+[[flag]]
+applies_to = "tr"
+flag = "-c"
+translation_modifier = "operating on all characters except the ones specified"
+verdict = "allow"
+rationale = "Inverts the character set; still read-only."
+
+[[flag]]
+applies_to = "tr"
+flag = "-C"
+translation_modifier = "operating on all characters except the ones specified"
+verdict = "allow"
+rationale = "Inverts the character set, same as -c; still read-only."

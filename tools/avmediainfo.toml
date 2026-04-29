@@ -1,0 +1,7 @@
+# tools/avmediainfo.toml
+
+[[command]]
+path = "avmediainfo"
+translation = "Display information about audio and video files."
+verdict = "allow"
+rationale = "Read-only display of media file metadata."

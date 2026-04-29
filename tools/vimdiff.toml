@@ -1,0 +1,7 @@
+# tools/vimdiff.toml
+
+[[command]]
+path = "vimdiff"
+translation = "Open two or more files in vim side by side to compare differences."
+verdict = "allow"
+rationale = "Opens files for viewing and optional editing; no modification occurs until the user explicitly saves."

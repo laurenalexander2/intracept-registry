@@ -1,0 +1,7 @@
+# tools/prove.toml
+
+[[command]]
+path = "prove"
+translation = "Run Perl test scripts and display results using the Test Anything Protocol."
+verdict = "allow"
+rationale = "Executes test scripts; primarily a read-only testing operation."

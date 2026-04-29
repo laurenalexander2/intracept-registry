@@ -1,0 +1,7 @@
+# tools/ptargrep5.34.toml
+
+[[command]]
+path = "ptargrep5.34"
+translation = "Search for patterns inside files within a tar archive using Perl 5.34."
+verdict = "allow"
+rationale = "Read-only search within archive contents."

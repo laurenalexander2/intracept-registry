@@ -1,0 +1,7 @@
+# tools/pridist.d.toml
+
+[[command]]
+path = "pridist.d"
+translation = "Trace process priority distribution using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of scheduling priority distribution."

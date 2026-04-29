@@ -1,0 +1,7 @@
+# tools/compression_tool.toml
+
+[[command]]
+path = "compression_tool"
+translation = "Compress or decompress files using various algorithms."
+verdict = "allow"
+rationale = "Creates or extracts compressed files."

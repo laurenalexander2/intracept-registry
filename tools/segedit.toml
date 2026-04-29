@@ -1,0 +1,28 @@
+# tools/segedit.toml
+
+[[command]]
+path = "segedit"
+translation = "Extract or replace sections in Apple platform object files."
+verdict = "allow"
+rationale = "Can modify binary files when replacing sections; extraction is read-only but replacement alters executables."
+
+[[flag]]
+applies_to = "segedit"
+flag = "-extract"
+translation_modifier = "extracting a named section to a file"
+verdict = "allow"
+rationale = "Reads section data from the binary and writes to a new file; no modification to the input."
+
+[[flag]]
+applies_to = "segedit"
+flag = "-replace"
+translation_modifier = "replacing a named section with data from a file"
+verdict = "allow"
+rationale = "Modifies binary content by substituting section data; writes to a new output file rather than in-place."
+
+[[flag]]
+applies_to = "segedit"
+flag = "-output"
+translation_modifier = "writing the modified binary to a specified output file"
+verdict = "allow"
+rationale = "Directs output to a named file; the original input is unchanged."

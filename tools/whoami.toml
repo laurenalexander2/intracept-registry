@@ -1,0 +1,7 @@
+# tools/whoami.toml
+
+[[command]]
+path = "whoami"
+translation = "Display the current effective user name."
+verdict = "allow"
+rationale = "Read-only display of the current user identity; modifies nothing."

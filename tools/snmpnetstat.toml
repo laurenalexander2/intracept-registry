@@ -1,0 +1,77 @@
+# tools/snmpnetstat.toml
+
+[[command]]
+path = "snmpnetstat"
+translation = "Display network connection and interface information from a remote device using SNMP."
+verdict = "allow"
+rationale = "Read-only network status query; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Ca"
+translation_modifier = "including server sockets that are listening for connections"
+verdict = "allow"
+rationale = "Only shows additional read-only information."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Ci"
+translation_modifier = "showing network interface statistics instead of connections"
+verdict = "allow"
+rationale = "Only changes which read-only information is displayed."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Co"
+translation_modifier = "showing byte counts instead of packet counts for interfaces"
+verdict = "allow"
+rationale = "Only changes the unit of measurement in the display."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Cr"
+translation_modifier = "showing the routing table"
+verdict = "allow"
+rationale = "Only changes which read-only information is displayed."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Cs"
+translation_modifier = "showing per-protocol statistics"
+verdict = "allow"
+rationale = "Only changes which read-only information is displayed."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Cn"
+translation_modifier = "showing network addresses as numbers instead of names"
+verdict = "allow"
+rationale = "Only changes how addresses are displayed."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-Cp"
+translation_modifier = "showing information only for a specific network protocol"
+verdict = "allow"
+rationale = "Only filters which read-only information is displayed."
+
+[[flag]]
+applies_to = "snmpnetstat"
+flag = "-CI"
+translation_modifier = "showing information only for a specific network interface"
+verdict = "allow"
+rationale = "Only filters which read-only information is displayed."

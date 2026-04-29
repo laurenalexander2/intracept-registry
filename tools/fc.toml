@@ -1,0 +1,7 @@
+# tools/fc.toml
+
+[[command]]
+path = "fc"
+translation = "List or edit and re-execute previous shell commands."
+verdict = "allow"
+rationale = "Can re-execute previous commands, which may include state-changing operations."

@@ -1,0 +1,14 @@
+# tools/AssetCacheManagerUtil.toml
+
+[[command]]
+path = "AssetCacheManagerUtil"
+translation = "Manage the macOS content caching service."
+verdict = "allow"
+rationale = "Controls the content caching service settings."
+
+[[flag]]
+applies_to = "AssetCacheManagerUtil"
+flag = "--all"
+translation_modifier = "operating on all cached assets"
+verdict = "allow"
+rationale = "Affects all cached content; re-downloading may be slow on limited bandwidth."

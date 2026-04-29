@@ -1,0 +1,49 @@
+# tools/snmpget.toml
+
+[[command]]
+path = "snmpget"
+translation = "Retrieve a specific value from a network device using SNMP."
+verdict = "allow"
+rationale = "Read-only SNMP request; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-Cf"
+translation_modifier = "stopping on errors instead of retrying without the failed item"
+verdict = "allow"
+rationale = "Only changes error-handling behavior on the client side."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-r"
+translation_modifier = "setting the number of retry attempts"
+verdict = "allow"
+rationale = "Only controls how many times a failed request is retried."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-t"
+translation_modifier = "setting the timeout between retries"
+verdict = "allow"
+rationale = "Only controls how long to wait before retrying a request."
+
+[[flag]]
+applies_to = "snmpget"
+flag = "-Os"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only changes how object names are displayed in the output."

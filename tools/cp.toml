@@ -1,0 +1,116 @@
+# tools/cp.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "cp"
+translation = "Copy files and directories to a new location."
+verdict = "allow"
+rationale = "Copies a single named file; overwrites an existing destination file by default, but the original source is unchanged."
+
+# ── Flags ─────────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "cp"
+flag = "-R"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Copies entire directory trees, increasing the scope of files potentially overwritten at the destination."
+
+[[flag]]
+applies_to = "cp"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Same as -R; copies entire directory trees, increasing the scope of files potentially overwritten."
+
+[[flag]]
+applies_to = "cp"
+flag = "-f"
+translation_modifier = "removing and recreating destination files that cannot be overwritten"
+verdict = "allow"
+rationale = "Forcefully replaces destination files without prompting, even if permissions would normally prevent it."
+
+[[flag]]
+applies_to = "cp"
+flag = "-i"
+translation_modifier = "prompting before overwriting existing files"
+verdict = "allow"
+rationale = "Adds an interactive confirmation step, reducing the risk of accidental overwrite."
+
+[[flag]]
+applies_to = "cp"
+flag = "-n"
+translation_modifier = "without overwriting any existing files"
+verdict = "allow"
+rationale = "Prevents overwriting; a safety-enhancing option."
+
+[[flag]]
+applies_to = "cp"
+flag = "-p"
+translation_modifier = "preserving file timestamps, permissions, and ownership"
+verdict = "allow"
+rationale = "Maintains original file metadata; does not change the copy scope."
+
+[[flag]]
+applies_to = "cp"
+flag = "-a"
+translation_modifier = "in archive mode, preserving all file attributes and recursing into directories"
+verdict = "allow"
+rationale = "Combines recursive copy with metadata preservation, mirroring entire directory trees."
+
+[[flag]]
+applies_to = "cp"
+flag = "-l"
+translation_modifier = "creating hard links instead of copying file contents"
+verdict = "allow"
+rationale = "Creates hard links rather than independent copies; changes to one affect the other."
+
+[[flag]]
+applies_to = "cp"
+flag = "-s"
+translation_modifier = "creating symbolic links instead of copying file contents"
+verdict = "allow"
+rationale = "Creates symbolic links rather than copies; the original file remains unchanged."
+
+[[flag]]
+applies_to = "cp"
+flag = "-L"
+translation_modifier = "following all symbolic links and copying their targets"
+verdict = "allow"
+rationale = "Copies the files that symbolic links point to, which may pull in files outside the intended scope."
+
+[[flag]]
+applies_to = "cp"
+flag = "-H"
+translation_modifier = "following symbolic links on the command line but not in subdirectories"
+verdict = "allow"
+rationale = "Only follows symbolic links explicitly named as arguments; limited scope expansion."
+
+[[flag]]
+applies_to = "cp"
+flag = "-P"
+translation_modifier = "preserving symbolic links as links instead of copying their targets"
+verdict = "allow"
+rationale = "Copies the link itself rather than following it; this is the default in recursive mode."
+
+[[flag]]
+applies_to = "cp"
+flag = "-x"
+translation_modifier = "without crossing filesystem mount points"
+verdict = "allow"
+rationale = "Limits the scope of recursive copying to the current filesystem."
+
+[[flag]]
+applies_to = "cp"
+flag = "-c"
+translation_modifier = "using copy-on-write clones when supported by the filesystem"
+verdict = "allow"
+rationale = "Creates lightweight clones that share storage until modified; falls back to normal copy if unsupported."
+
+[[flag]]
+applies_to = "cp"
+flag = "-v"
+translation_modifier = "showing each file as it is copied"
+verdict = "allow"
+rationale = "Adds verbose output without changing what is copied."

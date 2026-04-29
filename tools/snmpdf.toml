@@ -1,0 +1,7 @@
+# tools/snmpdf.toml
+
+[[command]]
+path = "snmpdf"
+translation = "Display disk space usage on a remote device via SNMP."
+verdict = "allow"
+rationale = "Read-only disk usage query; does not modify the remote device."

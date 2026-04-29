@@ -1,0 +1,336 @@
+# tools/networksetup.toml
+
+[[command]]
+path = "networksetup"
+translation = "View or modify macOS network configuration settings."
+verdict = "require_approval"
+rationale = "Can change IP addresses, DNS servers, proxies, and other network settings that affect connectivity."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-listallnetworkservices"
+translation_modifier = "listing all network services on the system"
+verdict = "allow"
+rationale = "Read-only listing of configured network services."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-listnetworkserviceorder"
+translation_modifier = "listing all network services in their priority order"
+verdict = "allow"
+rationale = "Read-only listing of service order with port and device details."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-listallhardwareports"
+translation_modifier = "listing all hardware ports with their device names and addresses"
+verdict = "allow"
+rationale = "Read-only listing of hardware port details."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-detectnewhardware"
+translation_modifier = "scanning for new network hardware and creating default services for it"
+verdict = "allow"
+rationale = "Creates new network service configurations for detected hardware."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getmacaddress"
+translation_modifier = "displaying the hardware address for a specific port or device"
+verdict = "allow"
+rationale = "Read-only display of the hardware address."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getcomputername"
+translation_modifier = "displaying the computer's network name"
+verdict = "allow"
+rationale = "Read-only display of the computer name."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setcomputername"
+translation_modifier = "setting the computer's network name"
+verdict = "allow"
+rationale = "Changes the visible hostname; does not affect connectivity."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getinfo"
+translation_modifier = "displaying the current network configuration for a service"
+verdict = "allow"
+rationale = "Read-only display of IP address, subnet, router, and DNS information."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setmanual"
+translation_modifier = "setting a manual IP address, subnet mask, and router"
+verdict = "allow"
+rationale = "Changes the IP configuration, which can disrupt network connectivity if set incorrectly."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setdhcp"
+translation_modifier = "switching to automatic IP configuration using DHCP"
+verdict = "allow"
+rationale = "Changes the IP configuration method; the assigned address may differ from the previous one."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setbootp"
+translation_modifier = "switching to the bootstrap protocol for automatic IP configuration"
+verdict = "allow"
+rationale = "Changes the IP configuration method, which may disrupt connectivity."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setv4off"
+translation_modifier = "turning off IPv4 for a network service"
+verdict = "require_approval"
+rationale = "Disabling IPv4 can immediately break network connectivity for the service."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setv6off"
+translation_modifier = "turning off IPv6 for a network service"
+verdict = "allow"
+rationale = "Disabling IPv6 may break connectivity to IPv6-only resources."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setv6automatic"
+translation_modifier = "setting IPv6 to configure itself automatically"
+verdict = "allow"
+rationale = "Enables automatic IPv6 configuration, which is the standard default."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getdnsservers"
+translation_modifier = "displaying the DNS servers for a service"
+verdict = "allow"
+rationale = "Read-only display of configured DNS servers."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setdnsservers"
+translation_modifier = "setting the DNS servers for a service"
+verdict = "allow"
+rationale = "Changes DNS resolution, which affects how all applications resolve hostnames."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getsearchdomains"
+translation_modifier = "displaying the search domains for a service"
+verdict = "allow"
+rationale = "Read-only display of configured search domains."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setsearchdomains"
+translation_modifier = "setting the search domains for a service"
+verdict = "allow"
+rationale = "Changes which domains are automatically searched during name resolution."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getwebproxy"
+translation_modifier = "displaying the web proxy settings for a service"
+verdict = "allow"
+rationale = "Read-only display of proxy configuration."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setwebproxy"
+translation_modifier = "configuring a web proxy for a service"
+verdict = "allow"
+rationale = "Routes all HTTP traffic through a proxy, which could expose data or block access if misconfigured."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setwebproxystate"
+translation_modifier = "turning the web proxy on or off for a service"
+verdict = "allow"
+rationale = "Enabling or disabling the proxy changes how HTTP traffic is routed."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setsecurewebproxy"
+translation_modifier = "configuring a secure web proxy for a service"
+verdict = "allow"
+rationale = "Routes all HTTPS traffic through a proxy, which could expose data or block access if misconfigured."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setsocksfirewallproxy"
+translation_modifier = "configuring a network relay proxy for a service"
+verdict = "allow"
+rationale = "Routes traffic through a network relay proxy, which could expose data or block access if misconfigured."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setproxyautodiscovery"
+translation_modifier = "turning automatic proxy discovery on or off for a service"
+verdict = "allow"
+rationale = "Only toggles whether the system looks for proxy configuration automatically."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getairportnetwork"
+translation_modifier = "displaying the currently connected Wi-Fi network"
+verdict = "allow"
+rationale = "Read-only display of the current Wi-Fi network name."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setairportnetwork"
+translation_modifier = "connecting to a specified Wi-Fi network"
+verdict = "allow"
+rationale = "Switches the Wi-Fi connection to a different network."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getairportpower"
+translation_modifier = "displaying whether Wi-Fi is on or off"
+verdict = "allow"
+rationale = "Read-only display of Wi-Fi power state."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setairportpower"
+translation_modifier = "turning Wi-Fi on or off for a specific device"
+verdict = "allow"
+rationale = "Disabling Wi-Fi immediately drops the wireless connection."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-listpreferredwirelessnetworks"
+translation_modifier = "listing all saved Wi-Fi networks for a device"
+verdict = "allow"
+rationale = "Read-only listing of remembered wireless networks."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-addpreferredwirelessnetworkatindex"
+translation_modifier = "adding a Wi-Fi network to the saved networks list"
+verdict = "allow"
+rationale = "Adds a network to the preferred list without changing the current connection."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-removepreferredwirelessnetwork"
+translation_modifier = "removing a Wi-Fi network from the saved networks list"
+verdict = "allow"
+rationale = "Removes one remembered network; the device can still reconnect manually."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-removeallpreferredwirelessnetworks"
+translation_modifier = "removing all saved Wi-Fi networks from a device"
+verdict = "require_approval"
+rationale = "Deletes all remembered wireless networks, requiring manual reconnection to each."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getnetworkserviceenabled"
+translation_modifier = "displaying whether a network service is enabled or disabled"
+verdict = "allow"
+rationale = "Read-only check of service state."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setnetworkserviceenabled"
+translation_modifier = "enabling or disabling a network service"
+verdict = "allow"
+rationale = "Disabling a service stops all connectivity through that interface."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-createnetworkservice"
+translation_modifier = "creating a new network service on a hardware port"
+verdict = "allow"
+rationale = "Adds a new service without affecting existing configurations."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-removenetworkservice"
+translation_modifier = "removing a network service from the system configuration"
+verdict = "require_approval"
+rationale = "Deletes a network service configuration, which can permanently disrupt connectivity for that interface."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-ordernetworkservices"
+translation_modifier = "changing the priority order in which network services are used"
+verdict = "allow"
+rationale = "Reordering services changes which connection the system prefers, affecting routing."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getMTU"
+translation_modifier = "displaying the maximum packet size for a hardware port"
+verdict = "allow"
+rationale = "Read-only display of the maximum packet size value."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-setMTU"
+translation_modifier = "setting the maximum packet size for a hardware port"
+verdict = "allow"
+rationale = "An incorrect maximum packet size value can cause network communication failures."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-listlocations"
+translation_modifier = "listing all network location profiles"
+verdict = "allow"
+rationale = "Read-only listing of saved locations."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-getcurrentlocation"
+translation_modifier = "displaying the name of the active network location profile"
+verdict = "allow"
+rationale = "Read-only display of the current location."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-createlocation"
+translation_modifier = "creating a new network location profile"
+verdict = "allow"
+rationale = "Adds a new location without affecting the current configuration."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-deletelocation"
+translation_modifier = "deleting a network location profile"
+verdict = "allow"
+rationale = "Removes a saved network configuration; cannot be recovered without manual recreation."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-switchtolocation"
+translation_modifier = "switching to a different network location profile"
+verdict = "allow"
+rationale = "Changes all network settings at once by switching to a different location."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-version"
+translation_modifier = "displaying the version number"
+verdict = "allow"
+rationale = "Read-only display of version information."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-help"
+translation_modifier = "displaying usage information for all available commands"
+verdict = "allow"
+rationale = "Read-only display of help text."
+
+[[flag]]
+applies_to = "networksetup"
+flag = "-printcommands"
+translation_modifier = "listing all available commands without descriptions"
+verdict = "allow"
+rationale = "Read-only listing of command names."

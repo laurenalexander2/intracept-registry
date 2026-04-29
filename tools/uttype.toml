@@ -1,0 +1,14 @@
+# tools/uttype.toml
+
+[[command]]
+path = "uttype"
+translation = "Query Uniform Type Identifier information for file types."
+verdict = "allow"
+rationale = "Read-only type identifier lookup; modifies nothing."
+
+[[flag]]
+applies_to = "uttype"
+flag = "--all"
+translation_modifier = "displaying all known uniform type identifiers"
+verdict = "allow"
+rationale = "Read-only display of type identifier information."

@@ -1,0 +1,7 @@
+# tools/zcmp.toml
+
+[[command]]
+path = "zcmp"
+translation = "Compare gzip-compressed files without decompressing to disk."
+verdict = "allow"
+rationale = "Read-only comparison; modifies nothing."

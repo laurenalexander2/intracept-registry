@@ -1,0 +1,7 @@
+# tools/sml.toml
+
+[[command]]
+path = "sml"
+translation = "Run the Standard ML of New Jersey interactive compiler and interpreter."
+verdict = "allow"
+rationale = "Launches an interactive programming environment; does not modify files without explicit program instructions."

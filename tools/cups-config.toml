@@ -1,0 +1,63 @@
+# tools/cups-config.toml
+
+[[command]]
+path = "cups-config"
+translation = "Display CUPS library configuration."
+verdict = "allow"
+rationale = "Read-only display of CUPS build configuration."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--version"
+translation_modifier = "showing the installed CUPS version number"
+verdict = "allow"
+rationale = "Read-only display of version information."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--cflags"
+translation_modifier = "showing compiler options needed to build against CUPS"
+verdict = "allow"
+rationale = "Read-only display of compiler flags."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--ldflags"
+translation_modifier = "showing linker options needed to build against CUPS"
+verdict = "allow"
+rationale = "Read-only display of linker flags."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--libs"
+translation_modifier = "showing the libraries needed to link against CUPS"
+verdict = "allow"
+rationale = "Read-only display of library names."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--serverbin"
+translation_modifier = "showing the directory where CUPS filters and backends are stored"
+verdict = "allow"
+rationale = "Read-only display of a directory path."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--serverroot"
+translation_modifier = "showing the directory where CUPS configuration files are stored"
+verdict = "allow"
+rationale = "Read-only display of a directory path."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--datadir"
+translation_modifier = "showing the default CUPS data directory"
+verdict = "allow"
+rationale = "Read-only display of a directory path."
+
+[[flag]]
+applies_to = "cups-config"
+flag = "--static"
+translation_modifier = "reporting static libraries instead of shared libraries"
+verdict = "allow"
+rationale = "Only changes which library names are displayed."

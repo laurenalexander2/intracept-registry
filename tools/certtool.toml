@@ -1,0 +1,98 @@
+# tools/certtool.toml
+
+[[command]]
+path = "certtool"
+translation = "Create and manage certificates and keys on macOS."
+verdict = "allow"
+rationale = "Generates certificates and keys used for authentication and encryption."
+
+[[command]]
+path = "certtool c"
+translation = "Create a key pair and self-signed certificate in a keychain."
+verdict = "allow"
+rationale = "Generates a persistent key pair and certificate that can be used for authentication."
+
+[[command]]
+path = "certtool r"
+translation = "Create a certificate signing request."
+verdict = "allow"
+rationale = "Generates a request file; does not create or modify certificates."
+
+[[command]]
+path = "certtool V"
+translation = "Verify a certificate signing request."
+verdict = "allow"
+rationale = "Read-only validation of a signing request; modifies nothing."
+
+[[command]]
+path = "certtool C"
+translation = "Create a system identity for a specified domain."
+verdict = "allow"
+rationale = "Creates a system-level identity used for server authentication."
+
+[[command]]
+path = "certtool i"
+translation = "Import a certificate from a file into a keychain."
+verdict = "allow"
+rationale = "Adds a certificate to the keychain; does not modify existing entries."
+
+[[command]]
+path = "certtool d"
+translation = "Display the contents of a certificate file."
+verdict = "allow"
+rationale = "Read-only display of certificate information."
+
+[[command]]
+path = "certtool y"
+translation = "Display all certificates in a keychain."
+verdict = "allow"
+rationale = "Read-only listing of keychain certificates."
+
+[[flag]]
+applies_to = "certtool c"
+flag = "-k"
+translation_modifier = "using a specific keychain"
+verdict = "allow"
+rationale = "Selects a non-default keychain; does not change the operation."
+
+[[flag]]
+applies_to = "certtool c"
+flag = "-c"
+translation_modifier = "creating the keychain if it does not already exist"
+verdict = "allow"
+rationale = "Creates a new keychain file if needed; does not overwrite existing keychains."
+
+[[flag]]
+applies_to = "certtool c"
+flag = "-p"
+translation_modifier = "providing the keychain passphrase on the command line"
+verdict = "allow"
+rationale = "Supplies the passphrase non-interactively; does not change the operation."
+
+[[flag]]
+applies_to = "certtool c"
+flag = "-a"
+translation_modifier = "generating the private key with a default access control list"
+verdict = "allow"
+rationale = "Allows other applications to access the key; widens access scope."
+
+[[flag]]
+applies_to = "certtool c"
+flag = "-u"
+translation_modifier = "limiting private key access to the current user only"
+verdict = "allow"
+rationale = "Restricts key access; a security-enhancing option."
+
+[[flag]]
+applies_to = "certtool C"
+flag = "-P"
+translation_modifier = "skipping creation if a system identity already exists for the domain"
+verdict = "allow"
+rationale = "Prevents overwriting an existing identity; a safety check."
+
+[[flag]]
+applies_to = "certtool"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of output displayed."

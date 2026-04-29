@@ -1,0 +1,25 @@
+# tools/ncctl.toml — NFS kernel credential controller
+
+[[command]]
+path = "ncctl"
+translation = "Manage Kerberos credentials for NFS filesystem mounts."
+verdict = "allow"
+rationale = "The bare command prints help text."
+
+[[command]]
+path = "ncctl init"
+translation = "Set the Kerberos principal for NFS mounts to use for authentication."
+verdict = "allow"
+rationale = "Changes which Kerberos identity is used for NFS access, affecting file permissions."
+
+[[command]]
+path = "ncctl destroy"
+translation = "Remove the current Kerberos credentials from NFS mounts."
+verdict = "allow"
+rationale = "Invalidates NFS authentication credentials, which may cause access failures."
+
+[[command]]
+path = "ncctl list"
+translation = "List the Kerberos principals currently set on NFS mounts."
+verdict = "allow"
+rationale = "Read-only display of credential information."

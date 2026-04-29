@@ -1,0 +1,7 @@
+# tools/mount_cddafs.toml — CD Digital Audio filesystem mount
+
+[[command]]
+path = "mount_cddafs"
+translation = "Mount a CD Digital Audio filesystem for accessing audio tracks as files."
+verdict = "allow"
+rationale = "Mounts a read-only audio CD filesystem; no data can be modified."

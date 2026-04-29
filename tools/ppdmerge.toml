@@ -1,0 +1,7 @@
+# tools/ppdmerge.toml
+
+[[command]]
+path = "ppdmerge"
+translation = "Merge two or more CUPS PPD files into a single multi-language file."
+verdict = "allow"
+rationale = "Creates a merged output file; source files are not modified."

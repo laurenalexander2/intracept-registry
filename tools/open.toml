@@ -1,0 +1,143 @@
+# tools/open.toml — macOS file/URL opener
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "open"
+translation = "Open a file, directory, or URL with its default application."
+verdict = "allow"
+rationale = "Launches applications to view files; equivalent to double-clicking in Finder."
+
+# ── Application selection ────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "open"
+flag = "-a"
+translation_modifier = "using a specified application"
+verdict = "allow"
+rationale = "Overrides the default application; the opened file is still handled by a GUI application."
+
+[[flag]]
+applies_to = "open"
+flag = "-b"
+translation_modifier = "using an application identified by its bundle identifier"
+verdict = "allow"
+rationale = "Selects the application by bundle identifier instead of name; same behavior as -a."
+
+[[flag]]
+applies_to = "open"
+flag = "-e"
+translation_modifier = "in TextEdit"
+verdict = "allow"
+rationale = "Opens the file in the built-in text editor."
+
+[[flag]]
+applies_to = "open"
+flag = "-t"
+translation_modifier = "in the default text editor"
+verdict = "allow"
+rationale = "Opens the file in the system's default text editor."
+
+[[flag]]
+applies_to = "open"
+flag = "-h"
+translation_modifier = "searching for and opening a developer header file by name"
+verdict = "allow"
+rationale = "Searches SDK header locations; read-only lookup and display."
+
+# ── Input handling ───────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "open"
+flag = "-f"
+translation_modifier = "reading from piped input and opening the result in the default text editor"
+verdict = "allow"
+rationale = "Creates a temporary file from piped input and opens it; trivially reversible."
+
+[[flag]]
+applies_to = "open"
+flag = "-u"
+translation_modifier = "treating the argument as a URL even if it matches a file path"
+verdict = "allow"
+rationale = "Forces URL handling instead of file path resolution; no additional risk."
+
+# ── Launch behavior ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "open"
+flag = "-R"
+translation_modifier = "revealing the file in Finder instead of opening it"
+verdict = "allow"
+rationale = "Shows the file location in Finder without opening it in an application."
+
+[[flag]]
+applies_to = "open"
+flag = "-n"
+translation_modifier = "opening a new instance of the application even if one is already running"
+verdict = "allow"
+rationale = "Launches an additional application instance; no data is modified."
+
+[[flag]]
+applies_to = "open"
+flag = "-g"
+translation_modifier = "without bringing the application to the foreground"
+verdict = "allow"
+rationale = "Keeps the application in the background; no additional risk."
+
+[[flag]]
+applies_to = "open"
+flag = "-j"
+translation_modifier = "launching the application hidden"
+verdict = "allow"
+rationale = "Starts the application without showing its windows; no additional risk."
+
+[[flag]]
+applies_to = "open"
+flag = "-W"
+translation_modifier = "waiting until the opened application exits before returning"
+verdict = "allow"
+rationale = "Blocks the shell until the application closes; useful for scripting."
+
+[[flag]]
+applies_to = "open"
+flag = "-F"
+translation_modifier = "without restoring the application's saved window state"
+verdict = "allow"
+rationale = "Opens the application fresh; saved persistent state is discarded."
+
+# ── Application arguments and environment ────────────────────────────────────
+
+[[flag]]
+applies_to = "open"
+flag = "--args"
+translation_modifier = "passing all remaining arguments to the launched application"
+verdict = "allow"
+rationale = "Forwards arguments to the application; no additional risk from the open command itself."
+
+[[flag]]
+applies_to = "open"
+flag = "--env"
+translation_modifier = "adding a specified environment variable to the launched application"
+verdict = "allow"
+rationale = "Sets an environment variable for the application process only."
+
+[[flag]]
+applies_to = "open"
+flag = "--stdin"
+translation_modifier = "connecting the launched application's standard input to a specified file"
+verdict = "allow"
+rationale = "Redirects stdin for the launched application; the file is read, not modified."
+
+[[flag]]
+applies_to = "open"
+flag = "--stdout"
+translation_modifier = "writing the launched application's standard output to a specified file"
+verdict = "allow"
+rationale = "Writes output to a file, which will be created or overwritten."
+
+[[flag]]
+applies_to = "open"
+flag = "--stderr"
+translation_modifier = "writing the launched application's error output to a specified file"
+verdict = "allow"
+rationale = "Writes error output to a file, which will be created or overwritten."

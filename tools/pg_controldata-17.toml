@@ -1,0 +1,7 @@
+# tools/pg_controldata-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_controldata-17"
+translation = "Display control information of a PostgreSQL database cluster."
+verdict = "allow"
+rationale = "Read-only display of cluster metadata."

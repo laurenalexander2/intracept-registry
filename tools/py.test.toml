@@ -1,0 +1,7 @@
+# tools/py.test.toml
+
+[[command]]
+path = "py.test"
+translation = "Run Python tests using the pytest framework."
+verdict = "allow"
+rationale = "Executes test code; primarily a read-only testing operation."

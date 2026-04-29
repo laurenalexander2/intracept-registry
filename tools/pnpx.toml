@@ -1,0 +1,7 @@
+# tools/pnpx.toml
+
+[[command]]
+path = "pnpx"
+translation = "Execute a package binary using the pnpm package manager without installing it globally."
+verdict = "allow"
+rationale = "Downloads and executes code from the npm registry."

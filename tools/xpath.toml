@@ -1,0 +1,7 @@
+# tools/xpath.toml
+
+[[command]]
+path = "xpath"
+translation = "Evaluate XPath expressions against XML documents."
+verdict = "allow"
+rationale = "Read-only querying of XML content; does not modify files."

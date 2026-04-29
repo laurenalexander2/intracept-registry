@@ -1,0 +1,7 @@
+# tools/spfd.toml
+
+[[command]]
+path = "spfd"
+translation = "Run the SPF query background service for email sender policy framework lookups."
+verdict = "allow"
+rationale = "Performs DNS-based SPF lookups; does not modify email or DNS records."

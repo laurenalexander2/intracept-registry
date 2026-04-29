@@ -1,0 +1,28 @@
+# tools/mono-xmltool.toml — Mono XML validation and transformation tool
+
+[[command]]
+path = "mono-xmltool"
+translation = "Validate or transform XML documents using schemas, stylesheets, or grammars."
+verdict = "allow"
+rationale = "Read-only validation and transformation of XML files; output is written to the terminal or a specified file."
+
+[[flag]]
+applies_to = "mono-xmltool"
+flag = "--validate"
+translation_modifier = "validating an XML instance against a schema or grammar"
+verdict = "allow"
+rationale = "Read-only schema validation; no files are modified."
+
+[[flag]]
+applies_to = "mono-xmltool"
+flag = "--transform"
+translation_modifier = "applying a transformation stylesheet to produce transformed output"
+verdict = "allow"
+rationale = "Produces transformed output; the source file is not modified."
+
+[[flag]]
+applies_to = "mono-xmltool"
+flag = "--prettyprint"
+translation_modifier = "reformatting the XML with standard indentation"
+verdict = "allow"
+rationale = "Reformats XML output; the source file is not modified unless explicitly overwritten."

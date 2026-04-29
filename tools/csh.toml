@@ -1,0 +1,7 @@
+# tools/csh.toml
+
+[[command]]
+path = "csh"
+translation = "Run the C shell interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary shell commands with full system access."

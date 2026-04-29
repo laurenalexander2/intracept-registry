@@ -1,0 +1,7 @@
+# tools/tqdm.toml
+
+[[command]]
+path = "tqdm"
+translation = "Display a progress bar for piped data or iterables."
+verdict = "allow"
+rationale = "Passes data through unchanged while displaying progress; no state modification."

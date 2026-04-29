@@ -1,0 +1,7 @@
+# tools/createdb-17.toml
+
+[[command]]
+path = "createdb-17"
+translation = "Create a new PostgreSQL 17 database."
+verdict = "require_approval"
+rationale = "Creates a new database on the PostgreSQL server."

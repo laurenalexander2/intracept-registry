@@ -1,0 +1,102 @@
+# tools/fdesetup.toml
+
+[[command]]
+path = "fdesetup"
+translation = "Run the macOS FileVault disk encryption configuration tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "fdesetup enable"
+translation = "Enable FileVault full-disk encryption on the startup volume."
+verdict = "require_approval"
+rationale = "Encrypts the entire startup disk, which requires a recovery key and changes boot behavior."
+
+[[command]]
+path = "fdesetup disable"
+translation = "Disable FileVault full-disk encryption on the startup volume."
+verdict = "require_approval"
+rationale = "Decrypts the entire startup disk, removing encryption protection from all data."
+
+[[command]]
+path = "fdesetup status"
+translation = "Display the current FileVault encryption status."
+verdict = "allow"
+rationale = "Read-only query that reports encryption state."
+
+[[command]]
+path = "fdesetup list"
+translation = "List the users enabled for FileVault."
+verdict = "allow"
+rationale = "Read-only display of enabled FileVault users."
+
+[[command]]
+path = "fdesetup add"
+translation = "Add a user to the list of FileVault-enabled users."
+verdict = "require_approval"
+rationale = "Grants an additional user the ability to unlock the encrypted disk."
+
+[[command]]
+path = "fdesetup remove"
+translation = "Remove a user from the list of FileVault-enabled users."
+verdict = "require_approval"
+rationale = "Revokes a user's ability to unlock the disk; if done incorrectly, may lock out access."
+
+[[command]]
+path = "fdesetup changerecovery"
+translation = "Change or add a FileVault recovery key."
+verdict = "require_approval"
+rationale = "Replaces the recovery key, which is the last resort for unlocking an encrypted disk."
+
+[[command]]
+path = "fdesetup removerecovery"
+translation = "Remove a FileVault recovery key."
+verdict = "require_approval"
+rationale = "Removes a recovery key without replacement, risking permanent data loss if the password is forgotten."
+
+[[command]]
+path = "fdesetup authrestart"
+translation = "Restart the system bypassing the FileVault unlock screen."
+verdict = "require_approval"
+rationale = "Temporarily stores the encryption key in memory and the system management controller, reducing FileVault protection during restart."
+
+[[command]]
+path = "fdesetup sync"
+translation = "Synchronize Open Directory user information with FileVault."
+verdict = "allow"
+rationale = "Updates FileVault user attributes and may remove users deleted from Open Directory."
+
+[[flag]]
+applies_to = "fdesetup enable"
+flag = "--norecoverykey"
+translation_modifier = "without creating a personal recovery key"
+verdict = "require_approval"
+rationale = "Skipping the recovery key means the only way to unlock is the user password, risking permanent data loss."
+
+[[flag]]
+applies_to = "fdesetup enable"
+flag = "--forcerestart"
+translation_modifier = "forcing a restart after enabling encryption"
+verdict = "allow"
+rationale = "Automatically restarts the system, which may interrupt running work."
+
+[[flag]]
+applies_to = "fdesetup enable"
+flag = "--authrestart"
+translation_modifier = "performing an authenticated restart after enabling"
+verdict = "allow"
+rationale = "Restarts the system and temporarily stores the unlock key, reducing security during the restart."
+
+[[flag]]
+applies_to = "fdesetup enable"
+flag = "--defer"
+translation_modifier = "deferring encryption until the user logs in"
+verdict = "allow"
+rationale = "Delays enablement to a more convenient time; does not immediately change disk state."
+
+[[flag]]
+applies_to = "fdesetup status"
+flag = "--extended"
+translation_modifier = "showing estimated completion time during encryption or decryption"
+verdict = "allow"
+rationale = "Only adds additional status detail; read-only operation."

@@ -1,0 +1,7 @@
+# tools/ppdi.toml
+
+[[command]]
+path = "ppdi"
+translation = "Import PPD files into a CUPS driver information file."
+verdict = "allow"
+rationale = "Modifies a driver info file; does not affect printer configuration."

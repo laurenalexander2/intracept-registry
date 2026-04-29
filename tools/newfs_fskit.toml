@@ -1,0 +1,7 @@
+# tools/newfs_fskit.toml — FSKit filesystem constructor
+
+[[command]]
+path = "newfs_fskit"
+translation = "Create a new filesystem using an FSKit filesystem module."
+verdict = "require_approval"
+rationale = "Formats a device, destroying all existing data on the partition."

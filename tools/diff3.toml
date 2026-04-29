@@ -1,0 +1,7 @@
+# tools/diff3.toml
+
+[[command]]
+path = "diff3"
+translation = "Compare three files and show differences."
+verdict = "allow"
+rationale = "Read-only three-way comparison that outputs to the terminal."

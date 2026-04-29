@@ -1,0 +1,7 @@
+# tools/pyproject-build.toml
+
+[[command]]
+path = "pyproject-build"
+translation = "Build a Python package from its pyproject.toml configuration."
+verdict = "allow"
+rationale = "Creates distribution archives in a build directory; does not install or publish."

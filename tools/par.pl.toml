@@ -1,0 +1,7 @@
+# tools/par.pl.toml — PAR Perl archive runner
+
+[[command]]
+path = "par.pl"
+translation = "Run a Perl application packaged in a PAR archive."
+verdict = "allow"
+rationale = "Executes arbitrary Perl code from an archive, which could modify files or system state."

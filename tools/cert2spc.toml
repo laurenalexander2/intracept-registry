@@ -1,0 +1,7 @@
+# tools/cert2spc.toml
+
+[[command]]
+path = "cert2spc"
+translation = "Convert X.509 certificates to a software publisher certificate."
+verdict = "allow"
+rationale = "Creates a new certificate file without modifying the original."

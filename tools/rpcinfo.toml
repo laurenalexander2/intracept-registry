@@ -1,0 +1,14 @@
+# tools/rpcinfo.toml
+
+[[command]]
+path = "rpcinfo"
+translation = "Display information about registered RPC services."
+verdict = "allow"
+rationale = "Read-only query of the RPC port mapper."
+
+[[flag]]
+applies_to = "rpcinfo"
+flag = "--delete"
+translation_modifier = "deleting a registered RPC service mapping"
+verdict = "allow"
+rationale = "Removes an RPC service registration; the service becomes undiscoverable."

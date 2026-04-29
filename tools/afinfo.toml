@@ -1,0 +1,35 @@
+# tools/afinfo.toml
+
+[[command]]
+path = "afinfo"
+translation = "Display information about an audio file."
+verdict = "allow"
+rationale = "Read-only display of audio file metadata."
+
+[[flag]]
+applies_to = "afinfo"
+flag = "-b"
+translation_modifier = "printing a brief one-line summary"
+verdict = "allow"
+rationale = "Changes output format to a shorter display; still read-only."
+
+[[flag]]
+applies_to = "afinfo"
+flag = "-r"
+translation_modifier = "calculating the actual duration by counting all audio packets"
+verdict = "allow"
+rationale = "Reads the full file for accurate duration; still read-only."
+
+[[flag]]
+applies_to = "afinfo"
+flag = "-i"
+translation_modifier = "including the embedded metadata dictionary"
+verdict = "allow"
+rationale = "Shows additional metadata fields; still read-only."
+
+[[flag]]
+applies_to = "afinfo"
+flag = "-x"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Changes output to XML format; still read-only."

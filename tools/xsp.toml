@@ -1,0 +1,7 @@
+# tools/xsp.toml
+
+[[command]]
+path = "xsp"
+translation = "Run the Mono ASP.NET development web server."
+verdict = "allow"
+rationale = "Starts a local development web server; risk depends on the hosted application."

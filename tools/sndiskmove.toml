@@ -1,0 +1,21 @@
+# tools/sndiskmove.toml
+
+[[command]]
+path = "sndiskmove"
+translation = "Migrate the contents of an Xsan disk to a new disk."
+verdict = "require_approval"
+rationale = "Copies and relabels disk volumes; incorrect use on active filesystems causes data corruption."
+
+[[flag]]
+applies_to = "sndiskmove"
+flag = "-f"
+translation_modifier = "without asking for confirmation"
+verdict = "require_approval"
+rationale = "Skips confirmation prompt on a destructive disk migration operation."
+
+[[flag]]
+applies_to = "sndiskmove"
+flag = "-q"
+translation_modifier = "suppressing progress output"
+verdict = "allow"
+rationale = "Cosmetic change to output; no additional risk."

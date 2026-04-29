@@ -1,0 +1,7 @@
+# tools/pyrsa-verify.toml
+
+[[command]]
+path = "pyrsa-verify"
+translation = "Verify a digital signature against data using an RSA public key."
+verdict = "allow"
+rationale = "Read-only signature verification."

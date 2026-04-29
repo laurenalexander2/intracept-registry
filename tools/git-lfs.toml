@@ -1,0 +1,231 @@
+# tools/git-lfs.toml
+
+# ── Base command ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs"
+translation = "Run the Git Large File Storage extension."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Setup ────────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs install"
+translation = "Install Git LFS hooks and filters into the Git configuration."
+verdict = "allow"
+rationale = "Adds configuration entries for smudge/clean filters; does not modify repository content."
+
+[[command]]
+path = "git-lfs uninstall"
+translation = "Remove Git LFS hooks and filters from the Git configuration."
+verdict = "allow"
+rationale = "Removes LFS filter configuration, which may cause LFS-tracked files to appear as pointer files on future checkouts."
+
+[[command]]
+path = "git-lfs update"
+translation = "Update Git hooks for the current repository to use Git LFS."
+verdict = "allow"
+rationale = "Refreshes hook scripts; does not modify tracked files or history."
+
+# ── Tracking ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs track"
+translation = "Add file patterns to be tracked by Git LFS."
+verdict = "allow"
+rationale = "Modifies .gitattributes to mark file types for LFS tracking; does not move existing data."
+
+[[command]]
+path = "git-lfs untrack"
+translation = "Remove file patterns from Git LFS tracking."
+verdict = "allow"
+rationale = "Stops tracking file types in LFS, which may cause large files to be stored directly in Git on future commits."
+
+# ── Transferring files ───────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs fetch"
+translation = "Download Git LFS files from a remote without checking them out."
+verdict = "allow"
+rationale = "Downloads LFS objects to the local cache; does not modify the working tree."
+
+[[flag]]
+applies_to = "git-lfs fetch"
+flag = "--all"
+translation_modifier = "downloading LFS objects for all refs, not just the current branch"
+verdict = "allow"
+rationale = "Increases download scope but only populates the local cache."
+
+[[command]]
+path = "git-lfs pull"
+translation = "Download Git LFS files from a remote and check them out into the working tree."
+verdict = "allow"
+rationale = "Replaces pointer files with actual file content; working tree changes are expected."
+
+[[command]]
+path = "git-lfs push"
+translation = "Upload Git LFS files to a remote server."
+verdict = "require_approval"
+rationale = "Sends large file content to the remote LFS store, consuming storage quota."
+
+[[flag]]
+applies_to = "git-lfs push"
+flag = "--all"
+translation_modifier = "uploading all locally referenced LFS objects"
+verdict = "allow"
+rationale = "Pushes all LFS objects reachable from any ref, which may include unintended files."
+
+[[flag]]
+applies_to = "git-lfs push"
+flag = "--dry-run"
+translation_modifier = "simulating the push without actually uploading anything"
+verdict = "allow"
+rationale = "No data is transmitted; only shows what would be pushed."
+
+# ── Working tree ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs checkout"
+translation = "Replace LFS pointer files in the working tree with actual file content."
+verdict = "allow"
+rationale = "Populates the working tree with real content from the local LFS cache."
+
+[[command]]
+path = "git-lfs ls-files"
+translation = "List Git LFS files in the index and working tree."
+verdict = "allow"
+rationale = "Read-only listing of LFS-tracked files."
+
+[[command]]
+path = "git-lfs status"
+translation = "Show the status of Git LFS files in the working tree."
+verdict = "allow"
+rationale = "Read-only display of LFS file states."
+
+[[command]]
+path = "git-lfs env"
+translation = "Display the current Git LFS environment and configuration."
+verdict = "allow"
+rationale = "Read-only display of configuration details."
+
+# ── Locking ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs lock"
+translation = "Mark a file as locked on the Git LFS server to prevent others from editing it."
+verdict = "allow"
+rationale = "Prevents other collaborators from pushing changes to the locked file."
+
+[[command]]
+path = "git-lfs locks"
+translation = "List currently locked files on the Git LFS server."
+verdict = "allow"
+rationale = "Read-only listing of locked files."
+
+[[command]]
+path = "git-lfs unlock"
+translation = "Remove the lock on a file on the Git LFS server."
+verdict = "allow"
+rationale = "Releases a lock, allowing others to edit the file again."
+
+# ── Migration ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs migrate"
+translation = "Convert files in the repository history to or from Git LFS."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "git-lfs migrate info"
+translation = "Show a summary of file sizes by type to help decide what to migrate."
+verdict = "allow"
+rationale = "Read-only analysis of repository file sizes."
+
+[[command]]
+path = "git-lfs migrate import"
+translation = "Convert regular Git files to Git LFS pointers, rewriting history."
+verdict = "require_approval"
+rationale = "Rewrites commit history to replace blobs with LFS pointers; requires a force-push to share."
+
+[[flag]]
+applies_to = "git-lfs migrate import"
+flag = "--everything"
+translation_modifier = "across all refs in the repository"
+verdict = "require_approval"
+rationale = "Rewrites every ref in the repository, maximizing the scope of history changes."
+
+[[flag]]
+applies_to = "git-lfs migrate import"
+flag = "--no-rewrite"
+translation_modifier = "without rewriting existing history, only converting in new commits"
+verdict = "allow"
+rationale = "Avoids history rewriting; only future commits will use LFS for the specified file types."
+
+[[command]]
+path = "git-lfs migrate export"
+translation = "Convert Git LFS pointers back to regular Git files, rewriting history."
+verdict = "require_approval"
+rationale = "Rewrites commit history to replace LFS pointers with full blobs; requires a force-push to share."
+
+[[flag]]
+applies_to = "git-lfs migrate export"
+flag = "--everything"
+translation_modifier = "across all refs in the repository"
+verdict = "require_approval"
+rationale = "Rewrites every ref in the repository, maximizing the scope of history changes."
+
+# ── Maintenance ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "git-lfs prune"
+translation = "Delete old Git LFS files from local storage to free disk space."
+verdict = "allow"
+rationale = "Removes local copies of LFS objects that are still available on the remote."
+
+[[flag]]
+applies_to = "git-lfs prune"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually deleting anything"
+verdict = "allow"
+rationale = "No files are deleted; only shows what would be pruned."
+
+[[flag]]
+applies_to = "git-lfs prune"
+flag = "--force"
+translation_modifier = "deleting all objects except unpushed ones, including those needed by the current checkout"
+verdict = "require_approval"
+rationale = "Removes objects required for the current working tree, which may require re-fetching."
+
+[[flag]]
+applies_to = "git-lfs prune"
+flag = "--verify-remote"
+translation_modifier = "verifying the remote has a copy before deleting locally"
+verdict = "allow"
+rationale = "Adds a safety check that confirms remote availability before local deletion."
+
+[[flag]]
+applies_to = "git-lfs prune"
+flag = "--no-verify-remote"
+translation_modifier = "skipping remote verification before deleting locally"
+verdict = "allow"
+rationale = "Disables the safety check, risking deletion of locally-unique copies."
+
+[[command]]
+path = "git-lfs fsck"
+translation = "Check Git LFS files for consistency and corruption."
+verdict = "allow"
+rationale = "Read-only integrity check that modifies nothing."
+
+[[command]]
+path = "git-lfs dedup"
+translation = "De-duplicate Git LFS files in the local store to save disk space."
+verdict = "allow"
+rationale = "Replaces duplicate copies with hard links or copies; file content is preserved."
+
+[[command]]
+path = "git-lfs logs"
+translation = "Show recent error logs from Git LFS commands."
+verdict = "allow"
+rationale = "Read-only display of error log entries."

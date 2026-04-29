@@ -1,0 +1,105 @@
+# tools/dd.toml
+
+[[command]]
+path = "dd"
+translation = "Copy and convert data between files, devices, or streams."
+verdict = "require_approval"
+rationale = "Writes raw data to files or devices, which can overwrite disk contents including partition tables and filesystems."
+
+[[flag]]
+applies_to = "dd"
+flag = "if="
+translation_modifier = "reading from a specified input file or device"
+verdict = "allow"
+rationale = "Specifies the data source; does not add destructive capability."
+
+[[flag]]
+applies_to = "dd"
+flag = "of="
+translation_modifier = "writing to a specified output file or device"
+verdict = "require_approval"
+rationale = "Directs raw data to a target that may be a disk device, overwriting all existing content without confirmation."
+
+[[flag]]
+applies_to = "dd"
+flag = "bs="
+translation_modifier = "using a specified block size for reading and writing"
+verdict = "allow"
+rationale = "Changes the I/O block size; does not affect what data is written."
+
+[[flag]]
+applies_to = "dd"
+flag = "count="
+translation_modifier = "copying only a specified number of blocks"
+verdict = "allow"
+rationale = "Limits the amount of data copied; a scope-reducing option."
+
+[[flag]]
+applies_to = "dd"
+flag = "skip="
+translation_modifier = "skipping a specified number of blocks from the beginning of the input"
+verdict = "allow"
+rationale = "Changes the read offset; does not add destructive capability."
+
+[[flag]]
+applies_to = "dd"
+flag = "seek="
+translation_modifier = "skipping a specified number of blocks from the beginning of the output before writing"
+verdict = "allow"
+rationale = "Changes the write offset, which may leave gaps or overwrite data at arbitrary positions in the output."
+
+[[flag]]
+applies_to = "dd"
+flag = "conv=notrunc"
+translation_modifier = "without truncating the output file"
+verdict = "allow"
+rationale = "Preserves existing data beyond what is written; a safety-improving option."
+
+[[flag]]
+applies_to = "dd"
+flag = "conv=noerror"
+translation_modifier = "continuing past read errors instead of stopping"
+verdict = "allow"
+rationale = "Silently skips unreadable data, which may produce incomplete or corrupted output."
+
+[[flag]]
+applies_to = "dd"
+flag = "conv=sync"
+translation_modifier = "padding each input block to the full block size"
+verdict = "allow"
+rationale = "Pads short reads with null bytes; useful with noerror for disk recovery."
+
+[[flag]]
+applies_to = "dd"
+flag = "conv=swab"
+translation_modifier = "swapping every pair of input bytes"
+verdict = "allow"
+rationale = "Transforms data byte order; does not add destructive capability."
+
+[[flag]]
+applies_to = "dd"
+flag = "status=progress"
+translation_modifier = "showing transfer progress once per second"
+verdict = "allow"
+rationale = "Only changes what status information is displayed."
+
+[[flag]]
+applies_to = "dd"
+flag = "status=none"
+translation_modifier = "suppressing all status output"
+verdict = "allow"
+rationale = "Only suppresses informational messages; does not change behavior."
+
+[[flag]]
+applies_to = "dd"
+flag = "ibs="
+translation_modifier = "using a specified input block size"
+verdict = "allow"
+rationale = "Sets the read block size independently; does not affect what data is written."
+
+[[flag]]
+applies_to = "dd"
+flag = "obs="
+translation_modifier = "using a specified output block size"
+verdict = "allow"
+rationale = "Sets the write block size independently; does not affect what data is written."

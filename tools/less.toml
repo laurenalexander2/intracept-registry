@@ -1,0 +1,105 @@
+# tools/less.toml
+
+[[command]]
+path = "less"
+translation = "View file contents one screen at a time."
+verdict = "allow"
+rationale = "Read-only pager that displays file contents interactively."
+
+[[flag]]
+applies_to = "less"
+flag = "-N"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Adds line numbers to the display; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-S"
+translation_modifier = "without wrapping long lines"
+verdict = "allow"
+rationale = "Changes display formatting to chop long lines; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-i"
+translation_modifier = "ignoring case when searching unless the search term contains uppercase"
+verdict = "allow"
+rationale = "Changes search behavior; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-I"
+translation_modifier = "ignoring case when searching regardless of the search term"
+verdict = "allow"
+rationale = "Changes search behavior; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-F"
+translation_modifier = "exiting immediately if the entire file fits on one screen"
+verdict = "allow"
+rationale = "Automatically quits for short files; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-R"
+translation_modifier = "preserving color codes so colored output displays correctly"
+verdict = "allow"
+rationale = "Passes through formatting codes; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-X"
+translation_modifier = "without clearing the screen when exiting"
+verdict = "allow"
+rationale = "Keeps the displayed content visible after quitting; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-e"
+translation_modifier = "exiting automatically when reaching the end of the file a second time"
+verdict = "allow"
+rationale = "Changes exit behavior; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-E"
+translation_modifier = "exiting automatically the first time the end of the file is reached"
+verdict = "allow"
+rationale = "Changes exit behavior; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-n"
+translation_modifier = "without computing line numbers for faster startup"
+verdict = "allow"
+rationale = "Disables line number tracking to improve performance; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-K"
+translation_modifier = "exiting immediately when an interrupt key is pressed"
+verdict = "allow"
+rationale = "Changes how interrupt signals are handled; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-J"
+translation_modifier = "showing a status column on the left edge to mark search matches"
+verdict = "allow"
+rationale = "Adds a visual indicator for matched lines; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-m"
+translation_modifier = "showing a more detailed prompt with the percentage through the file"
+verdict = "allow"
+rationale = "Changes the prompt style; still read-only."
+
+[[flag]]
+applies_to = "less"
+flag = "-g"
+translation_modifier = "highlighting only the current search match instead of all matches"
+verdict = "allow"
+rationale = "Changes search highlighting behavior; still read-only."

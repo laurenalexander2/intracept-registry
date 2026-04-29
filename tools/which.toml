@@ -1,0 +1,25 @@
+# tools/which.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "which"
+translation = "Show the full path of a command by searching the system PATH."
+verdict = "allow"
+rationale = "Read-only lookup that displays file paths without modifying anything."
+
+# ── Flags ────────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "which"
+flag = "-a"
+translation_modifier = "listing all matching executables found in the PATH, not just the first"
+verdict = "allow"
+rationale = "Expands the output to show all matches; still a read-only operation."
+
+[[flag]]
+applies_to = "which"
+flag = "-s"
+translation_modifier = "producing no output and only returning an exit code"
+verdict = "allow"
+rationale = "Suppresses output; returns 0 if found, 1 if not. Still read-only."

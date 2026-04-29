@@ -1,0 +1,7 @@
+# tools/pygmentize.toml
+
+[[command]]
+path = "pygmentize"
+translation = "Highlight source code syntax and output in various formats."
+verdict = "allow"
+rationale = "Read-only syntax highlighting that writes to the terminal or a file."

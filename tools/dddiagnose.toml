@@ -1,0 +1,7 @@
+# tools/dddiagnose.toml
+
+[[command]]
+path = "dddiagnose"
+translation = "Collect disk diagnostic information on macOS."
+verdict = "allow"
+rationale = "Read-only gathering of disk diagnostic data."

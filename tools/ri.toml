@@ -1,0 +1,7 @@
+# tools/ri.toml
+
+[[command]]
+path = "ri"
+translation = "Display Ruby API documentation for classes, methods, and modules."
+verdict = "allow"
+rationale = "Read-only documentation viewer."

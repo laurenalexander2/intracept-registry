@@ -1,0 +1,7 @@
+# tools/postlog.toml
+
+[[command]]
+path = "postlog"
+translation = "Write a message to the Postfix logging system."
+verdict = "allow"
+rationale = "Appends a log entry; does not modify mail or configuration."

@@ -1,0 +1,56 @@
+# tools/bless.toml
+
+[[command]]
+path = "bless"
+translation = "Set the boot device or volume on macOS."
+verdict = "require_approval"
+rationale = "Modifies the system boot configuration, which affects which OS starts on reboot."
+
+[[flag]]
+applies_to = "bless"
+flag = "--info"
+translation_modifier = "displaying the current boot configuration instead of changing it"
+verdict = "allow"
+rationale = "Read-only query that shows the blessed directory and boot device; modifies nothing."
+
+[[flag]]
+applies_to = "bless"
+flag = "--setBoot"
+translation_modifier = "setting the system to boot from the specified volume"
+verdict = "require_approval"
+rationale = "Changes the startup disk, which determines which operating system loads on next reboot."
+
+[[flag]]
+applies_to = "bless"
+flag = "--folder"
+translation_modifier = "marking a directory as the blessed boot folder on the volume"
+verdict = "require_approval"
+rationale = "Modifies the volume header to set the boot directory, changing boot behavior."
+
+[[flag]]
+applies_to = "bless"
+flag = "--mount"
+translation_modifier = "using the volume at the specified mount point"
+verdict = "allow"
+rationale = "Only specifies which volume to operate on; the actual change requires --setBoot."
+
+[[flag]]
+applies_to = "bless"
+flag = "--unbless"
+translation_modifier = "clearing the boot folder and file information from the volume"
+verdict = "require_approval"
+rationale = "Removes bootability from a volume, which may prevent it from being used as a startup disk."
+
+[[flag]]
+applies_to = "bless"
+flag = "--nextonly"
+translation_modifier = "applying the boot selection only for the next restart"
+verdict = "allow"
+rationale = "Limits the boot change to a single restart, automatically reverting afterward."
+
+[[flag]]
+applies_to = "bless"
+flag = "--plist"
+translation_modifier = "formatting the output as a property list"
+verdict = "allow"
+rationale = "Only changes the output format; no state modification."

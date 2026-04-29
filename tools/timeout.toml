@@ -1,0 +1,56 @@
+# tools/timeout.toml
+
+[[command]]
+path = "timeout"
+translation = "Run a command with a time limit."
+verdict = "allow"
+rationale = "Executes a command and stops it if it exceeds the specified duration; the bare command only adds a time constraint."
+
+[[flag]]
+applies_to = "timeout"
+flag = "-s"
+translation_modifier = "sending a specific signal instead of the default termination signal"
+verdict = "allow"
+rationale = "Allows sending forceful signals like a forced-kill signal, which can prevent programs from cleaning up gracefully."
+
+[[flag]]
+applies_to = "timeout"
+flag = "--signal"
+translation_modifier = "sending a specific signal instead of the default termination signal"
+verdict = "allow"
+rationale = "Allows sending forceful signals like a forced-kill signal, which can prevent programs from cleaning up gracefully."
+
+[[flag]]
+applies_to = "timeout"
+flag = "-k"
+translation_modifier = "sending a forced stop signal if the command does not exit after the first signal"
+verdict = "allow"
+rationale = "Forcefully terminates the process after a grace period, which may prevent it from saving state."
+
+[[flag]]
+applies_to = "timeout"
+flag = "--kill-after"
+translation_modifier = "sending a forced stop signal if the command does not exit after the first signal"
+verdict = "allow"
+rationale = "Forcefully terminates the process after a grace period, which may prevent it from saving state."
+
+[[flag]]
+applies_to = "timeout"
+flag = "--preserve-status"
+translation_modifier = "returning the command's own exit code instead of a timeout indicator"
+verdict = "allow"
+rationale = "Only changes the exit status reported; no effect on the command or data."
+
+[[flag]]
+applies_to = "timeout"
+flag = "--foreground"
+translation_modifier = "allowing the command to read from the terminal directly"
+verdict = "allow"
+rationale = "Adjusts how the process interacts with the terminal; no additional data risk."
+
+[[flag]]
+applies_to = "timeout"
+flag = "-v"
+translation_modifier = "printing a message when the time limit is reached"
+verdict = "allow"
+rationale = "Adds informational output; no effect on the command or data."

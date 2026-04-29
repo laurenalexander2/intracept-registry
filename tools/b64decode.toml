@@ -1,0 +1,7 @@
+# tools/b64decode.toml
+
+[[command]]
+path = "b64decode"
+translation = "Decode base64-encoded data."
+verdict = "allow"
+rationale = "Outputs decoded data to the terminal; does not modify files."

@@ -1,0 +1,56 @@
+# tools/caffeinate.toml
+
+[[command]]
+path = "caffeinate"
+translation = "Prevent the Mac from sleeping."
+verdict = "allow"
+rationale = "Temporarily prevents system sleep; ends when the command exits."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-i"
+translation_modifier = "preventing idle sleep"
+verdict = "allow"
+rationale = "Keeps the system awake during idle periods."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-d"
+translation_modifier = "preventing the display from sleeping"
+verdict = "allow"
+rationale = "Prevents the display from sleeping, which only affects power management behavior temporarily."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-m"
+translation_modifier = "preventing the disk from idle sleeping"
+verdict = "allow"
+rationale = "Keeps the disk spinning during idle periods; only affects power management."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-s"
+translation_modifier = "preventing the system from sleeping while plugged in"
+verdict = "allow"
+rationale = "Keeps the system awake only when plugged in; ends when the command exits."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-u"
+translation_modifier = "declaring that the user is active and turning on the display"
+verdict = "allow"
+rationale = "Wakes the display as if user activity occurred; temporary assertion."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-t"
+translation_modifier = "for a specified number of seconds"
+verdict = "allow"
+rationale = "Limits the duration; the assertion expires automatically."
+
+[[flag]]
+applies_to = "caffeinate"
+flag = "-w"
+translation_modifier = "until a specified process exits"
+verdict = "allow"
+rationale = "Ties the sleep prevention to the lifetime of another process."

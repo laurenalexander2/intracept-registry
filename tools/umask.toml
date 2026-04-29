@@ -1,0 +1,14 @@
+# tools/umask.toml
+
+[[command]]
+path = "umask"
+translation = "Display or set the default permission mask for newly created files."
+verdict = "allow"
+rationale = "Without arguments, displays the current mask. Setting a mask only affects future files created in the session."
+
+[[flag]]
+applies_to = "umask"
+flag = "-S"
+translation_modifier = "displaying the mask in symbolic form instead of as a number"
+verdict = "allow"
+rationale = "Only changes the output format; modifies nothing."

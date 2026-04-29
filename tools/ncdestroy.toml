@@ -1,0 +1,7 @@
+# tools/ncdestroy.toml — NFS credential destroyer (alias for ncctl destroy)
+
+[[command]]
+path = "ncdestroy"
+translation = "Remove the current Kerberos credentials from NFS mounts."
+verdict = "allow"
+rationale = "Invalidates NFS authentication credentials, which may cause access failures."

@@ -1,0 +1,14 @@
+# tools/bputil.toml
+
+[[command]]
+path = "bputil"
+translation = "Manage boot policy on Apple Silicon Macs."
+verdict = "require_approval"
+rationale = "Modifies boot security policy, which can change system security posture."
+
+[[flag]]
+applies_to = "bputil"
+flag = "--remove"
+translation_modifier = "removing a boot policy entry"
+verdict = "require_approval"
+rationale = "Deletes boot security policy; may prevent the system from booting."

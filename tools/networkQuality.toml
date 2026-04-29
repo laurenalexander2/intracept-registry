@@ -1,0 +1,35 @@
+# tools/networkQuality.toml — Network quality testing tool
+
+[[command]]
+path = "networkQuality"
+translation = "Measure network speed, latency, and responsiveness by running tests against an Internet server."
+verdict = "allow"
+rationale = "Performs network measurements using data transfers; does not modify system configuration."
+
+[[flag]]
+applies_to = "networkQuality"
+flag = "-s"
+translation_modifier = "running upload and download tests sequentially instead of in parallel"
+verdict = "allow"
+rationale = "Changes test methodology; no additional risk."
+
+[[flag]]
+applies_to = "networkQuality"
+flag = "-I"
+translation_modifier = "testing on a specific network interface"
+verdict = "allow"
+rationale = "Binds the test to a specific interface; no additional risk."
+
+[[flag]]
+applies_to = "networkQuality"
+flag = "-d"
+translation_modifier = "skipping the download test"
+verdict = "allow"
+rationale = "Reduces the scope of testing; no additional risk."
+
+[[flag]]
+applies_to = "networkQuality"
+flag = "-u"
+translation_modifier = "skipping the upload test"
+verdict = "allow"
+rationale = "Reduces the scope of testing; no additional risk."

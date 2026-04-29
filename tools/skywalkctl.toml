@@ -1,0 +1,7 @@
+# tools/skywalkctl.toml
+
+[[command]]
+path = "skywalkctl"
+translation = "Control and query the Skywalk networking subsystem."
+verdict = "allow"
+rationale = "Limited public documentation; appears to manage kernel-level networking but exact behavior is unclear."

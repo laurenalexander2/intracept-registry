@@ -1,0 +1,7 @@
+# tools/bintrans.toml
+
+[[command]]
+path = "bintrans"
+translation = "Encode or decode binary files."
+verdict = "allow"
+rationale = "Converts file encoding; outputs to the terminal by default."

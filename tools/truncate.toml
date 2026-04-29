@@ -1,0 +1,7 @@
+# tools/truncate.toml
+
+[[command]]
+path = "truncate"
+translation = "Set a file to a specified size, extending or shrinking it."
+verdict = "require_approval"
+rationale = "Shrinking a file permanently discards data beyond the new size; recovery requires backups."

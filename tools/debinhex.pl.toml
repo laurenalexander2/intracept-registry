@@ -1,0 +1,7 @@
+# tools/debinhex.pl.toml
+
+[[command]]
+path = "debinhex.pl"
+translation = "Decode BinHex-encoded files using Perl."
+verdict = "allow"
+rationale = "Decodes files; outputs to the terminal by default."

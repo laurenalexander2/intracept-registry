@@ -1,0 +1,49 @@
+# tools/sdx.toml
+
+[[command]]
+path = "sdx"
+translation = "Run the Starkit Developer Extension for building and managing Tcl Starkits."
+verdict = "allow"
+rationale = "The bare command prints available subcommands and modifies nothing."
+
+[[command]]
+path = "sdx wrap"
+translation = "Create a Starkit archive from a directory structure."
+verdict = "allow"
+rationale = "Creates a new archive file; does not modify existing files."
+
+[[command]]
+path = "sdx qwrap"
+translation = "Create a Starkit from a single Tcl script."
+verdict = "allow"
+rationale = "Creates a new archive file from a script; does not modify existing files."
+
+[[command]]
+path = "sdx unwrap"
+translation = "Extract the contents of a Starkit into a directory."
+verdict = "allow"
+rationale = "Extracts files into a new directory; does not modify the original Starkit."
+
+[[command]]
+path = "sdx lsk"
+translation = "List the contents of a Starkit archive."
+verdict = "allow"
+rationale = "Read-only listing of archive contents."
+
+[[command]]
+path = "sdx version"
+translation = "Display the version ID of a Starkit."
+verdict = "allow"
+rationale = "Read-only version calculation."
+
+[[command]]
+path = "sdx mkpack"
+translation = "Copy and optimally repack a Starkit to remove unused areas."
+verdict = "allow"
+rationale = "Creates a new optimized copy; the original file is unchanged."
+
+[[command]]
+path = "sdx mksplit"
+translation = "Split a Starkit into head and tail parts."
+verdict = "allow"
+rationale = "Creates new split files; the original Starkit is unchanged."

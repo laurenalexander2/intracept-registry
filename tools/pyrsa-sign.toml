@@ -1,0 +1,7 @@
+# tools/pyrsa-sign.toml
+
+[[command]]
+path = "pyrsa-sign"
+translation = "Create a digital signature for data using an RSA private key."
+verdict = "allow"
+rationale = "Creates a signature; does not modify the input data."

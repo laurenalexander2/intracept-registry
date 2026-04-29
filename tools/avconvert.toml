@@ -1,0 +1,77 @@
+# tools/avconvert.toml
+
+[[command]]
+path = "avconvert"
+translation = "Convert audio and video files between formats."
+verdict = "allow"
+rationale = "Creates a new output file; does not modify the original."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "-s"
+translation_modifier = "from a specified source media file"
+verdict = "allow"
+rationale = "Identifies the input file; does not modify it."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "-o"
+translation_modifier = "writing to a specified output file"
+verdict = "allow"
+rationale = "Names the output file; does not affect the source."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "-p"
+translation_modifier = "using a specified quality and resolution preset"
+verdict = "allow"
+rationale = "Selects encoding parameters; does not affect the source file."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--replace"
+translation_modifier = "overwriting the output file if it already exists"
+verdict = "allow"
+rationale = "Replaces an existing file without confirmation; the overwritten file is lost."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--start"
+translation_modifier = "skipping the first specified number of seconds of the source"
+verdict = "allow"
+rationale = "Trims the beginning of the output; does not affect the source file."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--duration"
+translation_modifier = "limiting the output to a specified number of seconds"
+verdict = "allow"
+rationale = "Trims the output length; does not affect the source file."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--multiPass"
+translation_modifier = "performing a higher-quality multi-pass encode"
+verdict = "allow"
+rationale = "Increases encoding quality at the cost of time; does not affect the source file."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--disableFastStart"
+translation_modifier = "without optimizing the file for streaming playback"
+verdict = "allow"
+rationale = "Reduces disk access during conversion; affects only playback start behavior of the output."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "--disableMetadataFilter"
+translation_modifier = "preserving all source metadata including location and device information"
+verdict = "allow"
+rationale = "Retains privacy-sensitive metadata that is normally stripped; no destructive action."
+
+[[flag]]
+applies_to = "avconvert"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Enables verbose output during conversion; no state change."

@@ -1,0 +1,7 @@
+# tools/ppdhtml.toml
+
+[[command]]
+path = "ppdhtml"
+translation = "Generate an HTML summary of a CUPS PPD file."
+verdict = "allow"
+rationale = "Read-only conversion that writes HTML to the terminal."

@@ -1,0 +1,7 @@
+# tools/snmptrapd.toml
+
+[[command]]
+path = "snmptrapd"
+translation = "Run the SNMP trap receiver background service to listen for incoming notifications."
+verdict = "allow"
+rationale = "Listens for incoming SNMP traps; does not modify remote devices."

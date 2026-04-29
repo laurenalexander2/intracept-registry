@@ -1,0 +1,21 @@
+# tools/nbdst.toml — NetBoot deferred shadow tool
+
+[[command]]
+path = "nbdst"
+translation = "Associate a shadow file with a NetBoot root disk image for local write redirection."
+verdict = "allow"
+rationale = "Modifies the root device's write path; incorrect usage could affect the boot environment."
+
+[[flag]]
+applies_to = "nbdst"
+flag = "--recycle"
+translation_modifier = "resetting and reusing an existing shadow file"
+verdict = "allow"
+rationale = "Discards previously written data in the shadow file."
+
+[[flag]]
+applies_to = "nbdst"
+flag = "--preallocate"
+translation_modifier = "pre-allocating the shadow file to a specified size"
+verdict = "allow"
+rationale = "Allocates disk space and resets the shadow file."

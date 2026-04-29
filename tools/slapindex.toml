@@ -1,0 +1,7 @@
+# tools/slapindex.toml
+
+[[command]]
+path = "slapindex"
+translation = "Regenerate indexes for an LDAP database."
+verdict = "allow"
+rationale = "Rebuilds database indexes which requires the server to be stopped; incorrect use can leave indexes inconsistent."

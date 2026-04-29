@@ -1,0 +1,147 @@
+# tools/ditto.toml
+
+[[command]]
+path = "ditto"
+translation = "Copy files and directories, preserving macOS metadata and resource forks."
+verdict = "allow"
+rationale = "Copies files to a destination, potentially overwriting existing files."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Prints a line for each source directory copied; does not change copy behavior."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-V"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Prints a line for every file, link, and device copied; does not change copy behavior."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-X"
+translation_modifier = "without crossing filesystem boundaries into other volumes"
+verdict = "allow"
+rationale = "Limits the copy scope by skipping directories on different volumes."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-c"
+translation_modifier = "creating an archive at the destination instead of copying files"
+verdict = "allow"
+rationale = "Creates an archive; may overwrite an existing file at the destination."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-x"
+translation_modifier = "extracting files from an archive"
+verdict = "allow"
+rationale = "Extracts archive contents, potentially overwriting existing files at the destination."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-z"
+translation_modifier = "using gzip compression for the archive"
+verdict = "allow"
+rationale = "Adds compression; does not change what is copied."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-j"
+translation_modifier = "using bzip2 compression for the archive"
+verdict = "allow"
+rationale = "Adds compression; does not change what is copied."
+
+[[flag]]
+applies_to = "ditto"
+flag = "-k"
+translation_modifier = "using PKZip format instead of the default archive format"
+verdict = "allow"
+rationale = "Changes the archive format; does not change what is copied."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--rsrc"
+translation_modifier = "preserving resource forks and HFS metadata"
+verdict = "allow"
+rationale = "Ensures macOS-specific metadata is copied; does not change scope."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--norsrc"
+translation_modifier = "skipping resource forks, extended attributes, and access control lists"
+verdict = "allow"
+rationale = "Omits macOS-specific metadata from the copy; reduces what is transferred."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--noextattr"
+translation_modifier = "skipping extended attributes"
+verdict = "allow"
+rationale = "Omits extended attributes; may lose metadata like quarantine flags."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--noacl"
+translation_modifier = "skipping access control lists"
+verdict = "allow"
+rationale = "Omits ACL data; copied files may have different permissions than the originals."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--noqtn"
+translation_modifier = "skipping quarantine information"
+verdict = "allow"
+rationale = "Removes the quarantine flag, allowing downloaded files to open without Gatekeeper warnings."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--hfsCompression"
+translation_modifier = "compressing files with filesystem-level compression at the destination"
+verdict = "allow"
+rationale = "Applies transparent compression; files remain fully readable."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--keepParent"
+translation_modifier = "embedding the parent directory name inside the archive"
+verdict = "allow"
+rationale = "Changes archive structure; does not affect source files."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--arch"
+translation_modifier = "thinning universal binaries to only the specified architecture"
+verdict = "allow"
+rationale = "Removes other architectures from copied binaries; the destination copy will only run on the specified architecture."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--bom"
+translation_modifier = "copying only files listed in a bill of materials file"
+verdict = "allow"
+rationale = "Limits the copy to a specific file list; reduces scope."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--password"
+translation_modifier = "prompting for a password to extract an encrypted ZIP archive"
+verdict = "allow"
+rationale = "Enables extraction of password-protected archives."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--clone"
+translation_modifier = "attempting to clone files instead of copying their data"
+verdict = "allow"
+rationale = "Uses copy-on-write cloning for efficiency; data is preserved identically."
+
+[[flag]]
+applies_to = "ditto"
+flag = "--sequesterRsrc"
+translation_modifier = "storing resource forks in a __MACOSX subdirectory inside the archive"
+verdict = "allow"
+rationale = "Changes how metadata is stored in ZIP archives; does not affect source files."

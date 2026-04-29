@@ -1,0 +1,7 @@
+# tools/rpcgen.toml
+
+[[command]]
+path = "rpcgen"
+translation = "Generate C code for RPC client and server stubs from an RPC protocol specification."
+verdict = "allow"
+rationale = "Generates source code files; does not modify system state."

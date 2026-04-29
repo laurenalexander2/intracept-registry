@@ -1,0 +1,56 @@
+# tools/fs_usage.toml
+
+[[command]]
+path = "fs_usage"
+translation = "Monitor filesystem-related system calls and page faults in real time."
+verdict = "allow"
+rationale = "Read-only diagnostic tool that traces filesystem activity without modifying anything."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-e"
+translation_modifier = "excluding specified processes from the output"
+verdict = "allow"
+rationale = "Only filters which processes are displayed."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-w"
+translation_modifier = "forcing wide output with full detail"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-f"
+translation_modifier = "filtering output to a specific category of events"
+verdict = "allow"
+rationale = "Only changes which event types are displayed."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-b"
+translation_modifier = "annotating disk operations with boot cache information"
+verdict = "allow"
+rationale = "Only adds diagnostic annotations to the output."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-t"
+translation_modifier = "stopping automatically after a specified number of seconds"
+verdict = "allow"
+rationale = "Only limits how long the tool runs."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-R"
+translation_modifier = "reading from a saved trace file instead of monitoring the live system"
+verdict = "allow"
+rationale = "Processes an existing file; no live system interaction."
+
+[[flag]]
+applies_to = "fs_usage"
+flag = "-F"
+translation_modifier = "trimming long pathnames from the right side instead of the left"
+verdict = "allow"
+rationale = "Only changes how pathnames are displayed."

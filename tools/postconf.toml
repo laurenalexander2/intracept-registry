@@ -1,0 +1,77 @@
+# tools/postconf.toml
+
+[[command]]
+path = "postconf"
+translation = "Display or modify Postfix mail server configuration parameters."
+verdict = "allow"
+rationale = "Can change mail server configuration that affects mail delivery behavior."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-d"
+translation_modifier = "showing default parameter values instead of current settings"
+verdict = "allow"
+rationale = "Read-only display of default configuration."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-e"
+translation_modifier = "writing new values into the configuration file"
+verdict = "require_approval"
+rationale = "Directly modifies the mail server configuration file, which can break mail delivery if values are incorrect."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-n"
+translation_modifier = "showing only parameters that differ from the defaults"
+verdict = "allow"
+rationale = "Read-only display of non-default configuration values."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-m"
+translation_modifier = "listing all supported lookup table types"
+verdict = "allow"
+rationale = "Read-only display of available table types."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-l"
+translation_modifier = "listing all supported mailbox locking methods"
+verdict = "allow"
+rationale = "Read-only display of locking method names."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-h"
+translation_modifier = "showing parameter values without their names"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-M"
+translation_modifier = "displaying or editing service entries in the master configuration file"
+verdict = "require_approval"
+rationale = "Can modify the master process configuration, which controls how mail services run."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-#"
+translation_modifier = "commenting out a parameter in the configuration file"
+verdict = "require_approval"
+rationale = "Effectively removes a configuration parameter, reverting it to its default value."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-X"
+translation_modifier = "removing a parameter from the configuration file"
+verdict = "require_approval"
+rationale = "Deletes a parameter entirely, reverting it to its default value."
+
+[[flag]]
+applies_to = "postconf"
+flag = "-v"
+translation_modifier = "showing detailed processing information"
+verdict = "allow"
+rationale = "Only increases output verbosity for troubleshooting."

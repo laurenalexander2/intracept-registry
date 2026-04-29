@@ -1,0 +1,56 @@
+# tools/nslookup.toml
+
+[[command]]
+path = "nslookup"
+translation = "Look up the address or name information for a domain using a name server."
+verdict = "allow"
+rationale = "Read-only network query that does not modify any system or server configuration."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-type"
+translation_modifier = "requesting a specific type of record"
+verdict = "allow"
+rationale = "Changes the kind of information requested; still a read-only query."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-query"
+translation_modifier = "requesting a specific type of record"
+verdict = "allow"
+rationale = "Changes the kind of information requested; equivalent to -type."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-timeout"
+translation_modifier = "waiting a specified number of seconds for a reply"
+verdict = "allow"
+rationale = "Sets how long to wait for a response; still read-only."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-retry"
+translation_modifier = "retrying a specified number of times if the server does not respond"
+verdict = "allow"
+rationale = "Controls how many times the query is repeated; still read-only."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-port"
+translation_modifier = "connecting to the name server on a specified port number"
+verdict = "allow"
+rationale = "Changes which port to use for the query; still read-only."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-debug"
+translation_modifier = "showing detailed information about the query and response"
+verdict = "allow"
+rationale = "Increases output verbosity for troubleshooting; still read-only."
+
+[[flag]]
+applies_to = "nslookup"
+flag = "-version"
+translation_modifier = "showing the version number and exiting immediately"
+verdict = "allow"
+rationale = "Prints version information and exits without performing any query."

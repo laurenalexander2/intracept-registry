@@ -1,0 +1,98 @@
+# tools/zstd.toml
+
+[[command]]
+path = "zstd"
+translation = "Compress or decompress files using the Zstandard algorithm."
+verdict = "allow"
+rationale = "Compresses files, creating a new .zst file; original is kept by default unlike gzip."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-d"
+translation_modifier = "decompressing instead of compressing"
+verdict = "allow"
+rationale = "Decompresses .zst files, creating or replacing the original file."
+
+[[flag]]
+applies_to = "zstd"
+flag = "--rm"
+translation_modifier = "removing the source file after successful compression or decompression"
+verdict = "allow"
+rationale = "Deletes the input file, leaving only the output."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-f"
+translation_modifier = "overwriting existing files without prompting"
+verdict = "allow"
+rationale = "Forces operation even if the output file already exists."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-r"
+translation_modifier = "recursively through all subdirectories"
+verdict = "allow"
+rationale = "Processes all files in a directory tree."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-t"
+translation_modifier = "testing the integrity of compressed files without decompressing"
+verdict = "allow"
+rationale = "Read-only operation that verifies compressed file integrity."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-l"
+translation_modifier = "listing compression information without modifying files"
+verdict = "allow"
+rationale = "Read-only display of compression statistics."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-c"
+translation_modifier = "writing output to standard output and keeping the original file"
+verdict = "allow"
+rationale = "Leaves the original file intact; output goes to standard output."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-k"
+translation_modifier = "keeping the source file after compression or decompression"
+verdict = "allow"
+rationale = "Preserves the input file; this is the default behavior."
+
+[[flag]]
+applies_to = "zstd"
+flag = "--ultra"
+translation_modifier = "enabling ultra-high compression levels that use significantly more memory"
+verdict = "allow"
+rationale = "Unlocks higher compression levels; does not change which files are processed."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-T0"
+translation_modifier = "using all available processor cores for compression"
+verdict = "allow"
+rationale = "Increases compression speed through parallelism; does not change which files are processed."
+
+[[flag]]
+applies_to = "zstd"
+flag = "--long"
+translation_modifier = "using a larger search window for better compression of files with distant repeated patterns"
+verdict = "allow"
+rationale = "Increases memory usage for better compression; does not change which files are processed."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-19"
+translation_modifier = "using maximum standard compression"
+verdict = "allow"
+rationale = "Changes compression level only; does not affect which files are processed."
+
+[[flag]]
+applies_to = "zstd"
+flag = "-C"
+translation_modifier = "adding an integrity checksum to verify data has not been corrupted"
+verdict = "allow"
+rationale = "Adds a verification checksum; does not change the data."

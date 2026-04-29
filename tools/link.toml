@@ -1,0 +1,7 @@
+# tools/link.toml
+
+[[command]]
+path = "link"
+translation = "Create a hard link between two files."
+verdict = "allow"
+rationale = "Creates a new directory entry pointing to an existing file's data, making the file accessible from multiple paths."

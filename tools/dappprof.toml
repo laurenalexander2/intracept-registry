@@ -1,0 +1,7 @@
+# tools/dappprof.toml
+
+[[command]]
+path = "dappprof"
+translation = "Profile application function calls using DTrace."
+verdict = "allow"
+rationale = "Read-only profiling of application behavior."

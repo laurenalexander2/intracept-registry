@@ -1,0 +1,7 @@
+# tools/pg_config.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_config"
+translation = "Display information about the installed version of PostgreSQL."
+verdict = "allow"
+rationale = "Read-only output of build configuration values."

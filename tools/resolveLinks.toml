@@ -1,0 +1,7 @@
+# tools/resolveLinks.toml
+
+[[command]]
+path = "resolveLinks"
+translation = "Resolve symbolic links and aliases in a file path."
+verdict = "allow"
+rationale = "Read-only operation that resolves symbolic links and aliases to display the actual file path."

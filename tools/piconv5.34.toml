@@ -1,0 +1,7 @@
+# tools/piconv5.34.toml
+
+[[command]]
+path = "piconv5.34"
+translation = "Convert text between character encodings using Perl 5.34."
+verdict = "allow"
+rationale = "Read-only conversion that writes output to the terminal."

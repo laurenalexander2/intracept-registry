@@ -1,0 +1,14 @@
+# tools/bunzip2.toml
+
+[[command]]
+path = "bunzip2"
+translation = "Decompress bzip2-compressed files."
+verdict = "allow"
+rationale = "Decompresses files in place, replacing the .bz2 file with the original."
+
+[[flag]]
+applies_to = "bunzip2"
+flag = "--force"
+translation_modifier = "overwriting existing output files without prompting"
+verdict = "allow"
+rationale = "Overwrites existing output files without confirmation; recoverable from backups."

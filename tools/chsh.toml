@@ -1,0 +1,7 @@
+# tools/chsh.toml
+
+[[command]]
+path = "chsh"
+translation = "Change a user's login shell."
+verdict = "require_approval"
+rationale = "Modifies the default shell for a user account."

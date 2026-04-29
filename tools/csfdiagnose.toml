@@ -1,0 +1,7 @@
+# tools/csfdiagnose.toml
+
+[[command]]
+path = "csfdiagnose"
+translation = "Diagnose CoreServicesForwardingd issues."
+verdict = "allow"
+rationale = "Read-only diagnostic tool that gathers and displays system information without making changes."

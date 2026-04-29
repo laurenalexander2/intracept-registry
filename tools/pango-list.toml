@@ -1,0 +1,7 @@
+# tools/pango-list.toml — Pango font lister
+
+[[command]]
+path = "pango-list"
+translation = "List all fonts available to the Pango text rendering library."
+verdict = "allow"
+rationale = "Read-only listing of installed fonts."

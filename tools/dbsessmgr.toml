@@ -1,0 +1,7 @@
+# tools/dbsessmgr.toml
+
+[[command]]
+path = "dbsessmgr"
+translation = "Manage Mono database sessions."
+verdict = "allow"
+rationale = "Session management tool for database connections."

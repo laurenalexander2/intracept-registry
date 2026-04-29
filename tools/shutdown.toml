@@ -1,0 +1,49 @@
+# tools/shutdown.toml
+
+[[command]]
+path = "shutdown"
+translation = "Shut down, reboot, or put the system to sleep at a specified time."
+verdict = "require_approval"
+rationale = "Halts or reboots the entire system, terminating all running processes and potentially causing data loss."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-h"
+translation_modifier = "halting and powering off the system"
+verdict = "require_approval"
+rationale = "Powers off the machine completely; all unsaved work is lost."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-r"
+translation_modifier = "rebooting the system"
+verdict = "require_approval"
+rationale = "Restarts the system, terminating all processes; unsaved work is lost but the system comes back."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-s"
+translation_modifier = "putting the system to sleep"
+verdict = "allow"
+rationale = "Suspends the system; all processes are preserved and resume on wake."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-k"
+translation_modifier = "warning users and disabling logins without actually shutting down"
+verdict = "allow"
+rationale = "Prevents new logins but does not halt the system; existing sessions continue."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-n"
+translation_modifier = "without flushing the file system cache"
+verdict = "require_approval"
+rationale = "Skips cache flush which can cause file system corruption and data loss."
+
+[[flag]]
+applies_to = "shutdown"
+flag = "-q"
+translation_modifier = "without broadcasting a warning message to users"
+verdict = "allow"
+rationale = "Suppresses notification; does not change the shutdown action itself."

@@ -1,0 +1,7 @@
+# tools/piconv.toml
+
+[[command]]
+path = "piconv"
+translation = "Convert text between character encodings using Perl."
+verdict = "allow"
+rationale = "Read-only conversion that writes output to the terminal."

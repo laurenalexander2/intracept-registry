@@ -1,0 +1,7 @@
+# tools/mount_ftp.toml — FTP filesystem mount
+
+[[command]]
+path = "mount_ftp"
+translation = "Mount an FTP server as a read-only filesystem."
+verdict = "allow"
+rationale = "Provides read-only access to files on a remote FTP server."

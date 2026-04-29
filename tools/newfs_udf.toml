@@ -1,0 +1,7 @@
+# tools/newfs_udf.toml — UDF filesystem constructor
+
+[[command]]
+path = "newfs_udf"
+translation = "Create a new Universal Disk Format filesystem on a device."
+verdict = "require_approval"
+rationale = "Formats a device, destroying all existing data on the partition."

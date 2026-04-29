@@ -1,0 +1,49 @@
+# tools/csrutil.toml
+
+[[command]]
+path = "csrutil"
+translation = "Manage System Integrity Protection on macOS."
+verdict = "allow"
+rationale = "The bare command prints usage information and modifies nothing."
+
+[[command]]
+path = "csrutil status"
+translation = "Display the current System Integrity Protection configuration."
+verdict = "allow"
+rationale = "Read-only query that shows the SIP status; modifies nothing."
+
+[[command]]
+path = "csrutil enable"
+translation = "Enable System Integrity Protection on the startup volume."
+verdict = "require_approval"
+rationale = "Re-enables system security restrictions, which may prevent previously allowed modifications to protected system files."
+
+[[command]]
+path = "csrutil disable"
+translation = "Disable System Integrity Protection on the startup volume."
+verdict = "require_approval"
+rationale = "Removes fundamental security protections from the operating system, exposing system files and processes to modification."
+
+[[command]]
+path = "csrutil clear"
+translation = "Reset System Integrity Protection to the default configuration."
+verdict = "require_approval"
+rationale = "Clears any custom SIP settings, which may change security behavior unpredictably if the current configuration differs from default."
+
+[[command]]
+path = "csrutil authenticated-root disable"
+translation = "Allow booting from non-sealed system snapshots."
+verdict = "require_approval"
+rationale = "Disables verified boot, allowing a modified system volume to be used, which undermines OS integrity."
+
+[[command]]
+path = "csrutil authenticated-root enable"
+translation = "Require booting only from sealed system snapshots."
+verdict = "allow"
+rationale = "Restores the default secure boot behavior; a protective operation."
+
+[[command]]
+path = "csrutil authenticated-root status"
+translation = "Display the current authenticated root setting."
+verdict = "allow"
+rationale = "Read-only query; modifies nothing."

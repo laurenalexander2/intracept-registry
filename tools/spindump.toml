@@ -1,0 +1,84 @@
+# tools/spindump.toml
+
+[[command]]
+path = "spindump"
+translation = "Capture a stack trace sample from running processes for performance analysis."
+verdict = "allow"
+rationale = "Read-only sampling of process state; writes a report file but does not modify running processes."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-i"
+translation_modifier = "reading from a saved file instead of sampling the live system"
+verdict = "allow"
+rationale = "Processes an existing file; no live system interaction."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-o"
+translation_modifier = "writing the report to a specified file or directory"
+verdict = "allow"
+rationale = "Only changes where the report is saved."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-heavy"
+translation_modifier = "sorting call stacks by frequency count"
+verdict = "allow"
+rationale = "Only changes output ordering; this is the default behavior."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-timeline"
+translation_modifier = "sorting call stacks in chronological order"
+verdict = "allow"
+rationale = "Only changes output ordering."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-wait"
+translation_modifier = "waiting for the target process to start before sampling"
+verdict = "allow"
+rationale = "Delays sampling until the process appears; still read-only."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-onlyRunnable"
+translation_modifier = "showing only threads that were ready to run"
+verdict = "allow"
+rationale = "Only filters which call stacks are displayed."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-onlyBlocked"
+translation_modifier = "showing only threads that were not running"
+verdict = "allow"
+rationale = "Only filters which call stacks are displayed."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-onlyTarget"
+translation_modifier = "sampling only the target process for faster collection"
+verdict = "allow"
+rationale = "Narrows scope to one process; allows faster sampling rates."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-stdout"
+translation_modifier = "printing the report to the terminal in addition to a file"
+verdict = "allow"
+rationale = "Only adds an additional output destination."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-noFile"
+translation_modifier = "printing the report only to the terminal without saving to a file"
+verdict = "allow"
+rationale = "Avoids writing any file to disk."
+
+[[flag]]
+applies_to = "spindump"
+flag = "-timelimit"
+translation_modifier = "exiting after a specified number of seconds regardless of report status"
+verdict = "allow"
+rationale = "Only limits how long the tool runs."

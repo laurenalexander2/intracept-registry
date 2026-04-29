@@ -1,0 +1,7 @@
+# tools/cairo-trace.toml
+
+[[command]]
+path = "cairo-trace"
+translation = "Trace cairo graphics library calls."
+verdict = "allow"
+rationale = "Records graphics API calls for debugging."

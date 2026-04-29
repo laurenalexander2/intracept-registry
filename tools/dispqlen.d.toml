@@ -1,0 +1,7 @@
+# tools/dispqlen.d.toml
+
+[[command]]
+path = "dispqlen.d"
+translation = "Display disk I/O queue length using DTrace."
+verdict = "allow"
+rationale = "Read-only system monitoring script."

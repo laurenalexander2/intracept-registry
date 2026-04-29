@@ -1,0 +1,35 @@
+# tools/reboot.toml
+
+[[command]]
+path = "reboot"
+translation = "Restart the operating system."
+verdict = "require_approval"
+rationale = "Immediately restarts the system, terminating all running processes and unsaved work."
+
+[[flag]]
+applies_to = "reboot"
+flag = "-l"
+translation_modifier = "without recording the reboot in the system log"
+verdict = "allow"
+rationale = "Only suppresses log recording; does not change the reboot behavior itself."
+
+[[flag]]
+applies_to = "reboot"
+flag = "-n"
+translation_modifier = "without flushing the file system cache"
+verdict = "require_approval"
+rationale = "Skipping the cache flush can cause file system corruption and data loss."
+
+[[flag]]
+applies_to = "reboot"
+flag = "-N"
+translation_modifier = "without flushing the file system cache during process cleanup but still syncing at the kernel level"
+verdict = "require_approval"
+rationale = "Skips the initial cache flush, which may cause data loss if devices are unavailable, though a kernel-level sync still occurs."
+
+[[flag]]
+applies_to = "reboot"
+flag = "-q"
+translation_modifier = "quickly without gracefully terminating processes"
+verdict = "require_approval"
+rationale = "Performs an ungraceful restart, skipping process cleanup and risking data loss."

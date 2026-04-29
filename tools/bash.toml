@@ -1,0 +1,134 @@
+# tools/bash.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "bash"
+translation = "Run the Bash shell interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary shell commands with full access to the user's environment and files."
+
+# ── Execution modes ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "bash"
+flag = "-c"
+translation_modifier = "executing a command string passed as an argument"
+verdict = "allow"
+rationale = "Runs inline commands directly; the risk depends entirely on what the command does."
+
+[[flag]]
+applies_to = "bash"
+flag = "-s"
+translation_modifier = "reading commands from standard input"
+verdict = "allow"
+rationale = "Executes whatever is piped in; the risk depends on the input source."
+
+[[flag]]
+applies_to = "bash"
+flag = "-i"
+translation_modifier = "in interactive mode with a prompt and job control"
+verdict = "allow"
+rationale = "Starts an interactive session; the risk is inherent to an open shell."
+
+[[flag]]
+applies_to = "bash"
+flag = "--login"
+translation_modifier = "as a login shell, sourcing profile and login configuration files"
+verdict = "allow"
+rationale = "Executes login profile scripts which may modify the environment or run commands."
+
+[[flag]]
+applies_to = "bash"
+flag = "--noprofile"
+translation_modifier = "without sourcing login profile configuration files"
+verdict = "allow"
+rationale = "Skips login scripts, reducing the chance of unintended side effects from profile files."
+
+[[flag]]
+applies_to = "bash"
+flag = "--norc"
+translation_modifier = "without sourcing the shell startup configuration file"
+verdict = "allow"
+rationale = "Skips the .bashrc file, ensuring a clean environment without user customizations."
+
+[[flag]]
+applies_to = "bash"
+flag = "-r"
+translation_modifier = "in restricted mode, limiting certain operations"
+verdict = "allow"
+rationale = "Disables cd, setting PATH, and other actions; a security-hardening measure."
+
+# ── Syntax and debugging ─────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "bash"
+flag = "-n"
+translation_modifier = "only checking syntax without executing"
+verdict = "allow"
+rationale = "Validates syntax without running any commands; no side effects."
+
+[[flag]]
+applies_to = "bash"
+flag = "-x"
+translation_modifier = "printing each command before executing it"
+verdict = "allow"
+rationale = "Adds debug tracing; does not change what commands are executed."
+
+[[flag]]
+applies_to = "bash"
+flag = "-v"
+translation_modifier = "printing each line of the script as it is read"
+verdict = "allow"
+rationale = "Adds verbose output; does not change what commands are executed."
+
+# ── Error handling ───────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "bash"
+flag = "-e"
+translation_modifier = "exiting immediately if any command fails"
+verdict = "allow"
+rationale = "Adds stricter error handling; a safety-enhancing option."
+
+[[flag]]
+applies_to = "bash"
+flag = "-u"
+translation_modifier = "treating unset variables as an error"
+verdict = "allow"
+rationale = "Catches common scripting mistakes by erroring on undefined variables."
+
+[[flag]]
+applies_to = "bash"
+flag = "-o"
+translation_modifier = "enabling or disabling a named shell option"
+verdict = "allow"
+rationale = "Modifies shell behavior settings; individual options vary but the flag itself is configuration."
+
+[[flag]]
+applies_to = "bash"
+flag = "-p"
+translation_modifier = "in privileged mode, not processing startup files and not inheriting the environment"
+verdict = "allow"
+rationale = "Prevents inheriting potentially unsafe environment settings from the caller."
+
+[[flag]]
+applies_to = "bash"
+flag = "-B"
+translation_modifier = "with brace expansion enabled"
+verdict = "allow"
+rationale = "Enables brace expansion for pattern generation; default behavior in most configurations."
+
+[[flag]]
+applies_to = "bash"
+flag = "-C"
+translation_modifier = "preventing output redirection from overwriting existing files"
+verdict = "allow"
+rationale = "A protective measure that prevents accidental file overwrites via redirection."
+
+[[flag]]
+applies_to = "bash"
+flag = "--posix"
+translation_modifier = "in POSIX-compliant mode, following the POSIX standard more strictly"
+verdict = "allow"
+rationale = "Restricts behavior to POSIX standards; disables some Bash-specific extensions."

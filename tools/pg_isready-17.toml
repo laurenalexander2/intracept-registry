@@ -1,0 +1,7 @@
+# tools/pg_isready-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_isready-17"
+translation = "Check whether a PostgreSQL server is ready to accept connections."
+verdict = "allow"
+rationale = "Read-only connection check that does not modify anything."

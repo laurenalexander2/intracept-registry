@@ -1,0 +1,7 @@
+# tools/tiffinfo.toml
+
+[[command]]
+path = "tiffinfo"
+translation = "Display metadata and properties of a TIFF image."
+verdict = "allow"
+rationale = "Read-only display of TIFF file information; modifies nothing."

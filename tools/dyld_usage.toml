@@ -1,0 +1,7 @@
+# tools/dyld_usage.toml
+
+[[command]]
+path = "dyld_usage"
+translation = "Trace dynamic linker activity."
+verdict = "allow"
+rationale = "Read-only tracing of library loading."

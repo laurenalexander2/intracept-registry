@@ -1,0 +1,7 @@
+# tools/cpuinfo.toml
+
+[[command]]
+path = "cpuinfo"
+translation = "Display CPU information."
+verdict = "allow"
+rationale = "Read-only display of processor details."

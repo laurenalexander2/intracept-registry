@@ -1,0 +1,7 @@
+# tools/usdzip.toml
+
+[[command]]
+path = "usdzip"
+translation = "Package a Universal Scene Description file and its dependencies into a zip archive."
+verdict = "allow"
+rationale = "Creates a new archive file; source files are unchanged."

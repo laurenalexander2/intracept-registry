@@ -1,0 +1,35 @@
+# tools/locale.toml
+
+[[command]]
+path = "locale"
+translation = "Display the current language and regional settings."
+verdict = "allow"
+rationale = "Read-only display of locale configuration; modifies nothing."
+
+[[flag]]
+applies_to = "locale"
+flag = "-a"
+translation_modifier = "listing all available locales on the system"
+verdict = "allow"
+rationale = "Read-only listing; modifies nothing."
+
+[[flag]]
+applies_to = "locale"
+flag = "-m"
+translation_modifier = "listing all available character encoding sets"
+verdict = "allow"
+rationale = "Read-only listing; modifies nothing."
+
+[[flag]]
+applies_to = "locale"
+flag = "-k"
+translation_modifier = "displaying the name of each setting before its value"
+verdict = "allow"
+rationale = "Only changes output formatting; modifies nothing."
+
+[[flag]]
+applies_to = "locale"
+flag = "-c"
+translation_modifier = "displaying the category name before each group of settings"
+verdict = "allow"
+rationale = "Only changes output formatting; modifies nothing."

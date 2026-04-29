@@ -1,0 +1,84 @@
+# tools/pr.toml
+
+[[command]]
+path = "pr"
+translation = "Format text files for printing with headers, columns, and pagination."
+verdict = "allow"
+rationale = "Read-only formatting that writes to the terminal."
+
+[[flag]]
+applies_to = "pr"
+flag = "-m"
+translation_modifier = "merging multiple files side by side into columns"
+verdict = "allow"
+rationale = "Only changes the layout of the output; no destructive action."
+
+[[flag]]
+applies_to = "pr"
+flag = "-t"
+translation_modifier = "without printing headers or trailers"
+verdict = "allow"
+rationale = "Only suppresses the default header and footer lines."
+
+[[flag]]
+applies_to = "pr"
+flag = "-h"
+translation_modifier = "using a custom header string instead of the filename"
+verdict = "allow"
+rationale = "Only changes the text shown in the page header."
+
+[[flag]]
+applies_to = "pr"
+flag = "-l"
+translation_modifier = "using a specified page length in lines"
+verdict = "allow"
+rationale = "Only changes the number of lines per page."
+
+[[flag]]
+applies_to = "pr"
+flag = "-w"
+translation_modifier = "using a specified page width in columns"
+verdict = "allow"
+rationale = "Only changes the output line width."
+
+[[flag]]
+applies_to = "pr"
+flag = "-d"
+translation_modifier = "double-spacing the output"
+verdict = "allow"
+rationale = "Only adds extra blank lines between output lines."
+
+[[flag]]
+applies_to = "pr"
+flag = "-n"
+translation_modifier = "adding line numbers to each line"
+verdict = "allow"
+rationale = "Only adds numbering to the output."
+
+[[flag]]
+applies_to = "pr"
+flag = "-o"
+translation_modifier = "indenting each line by a specified number of spaces"
+verdict = "allow"
+rationale = "Only adds leading whitespace to the output."
+
+[[flag]]
+applies_to = "pr"
+flag = "-a"
+translation_modifier = "filling columns across the page in round-robin order"
+verdict = "allow"
+rationale = "Only changes the column fill direction; no destructive action."
+
+[[flag]]
+applies_to = "pr"
+flag = "-F"
+translation_modifier = "using form-feed characters for new pages instead of blank lines"
+verdict = "allow"
+rationale = "Only changes the page separator character."
+
+[[flag]]
+applies_to = "pr"
+flag = "-s"
+translation_modifier = "using a specified character to separate columns instead of spaces"
+verdict = "allow"
+rationale = "Only changes the column delimiter character."

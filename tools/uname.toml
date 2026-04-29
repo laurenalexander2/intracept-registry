@@ -1,0 +1,7 @@
+# tools/uname.toml
+
+[[command]]
+path = "uname"
+translation = "Display system identification information."
+verdict = "allow"
+rationale = "Read-only display of kernel and OS details; modifies nothing."

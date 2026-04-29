@@ -1,0 +1,7 @@
+# tools/securityd.toml
+
+[[command]]
+path = "securityd"
+translation = "Run the security context background service for keychain and cryptographic operations."
+verdict = "allow"
+rationale = "System background service not intended for direct invocation; launching it manually has no destructive effect."

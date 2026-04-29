@@ -1,0 +1,7 @@
+# tools/expr.toml
+
+[[command]]
+path = "expr"
+translation = "Evaluate a math or text expression and print the result."
+verdict = "allow"
+rationale = "Read-only computation that prints a result and modifies nothing."

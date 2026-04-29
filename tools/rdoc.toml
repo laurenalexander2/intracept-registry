@@ -1,0 +1,20 @@
+# tools/rdoc.toml
+
+[[command]]
+path = "rdoc"
+translation = "Generate HTML documentation from Ruby source code and comments."
+verdict = "allow"
+rationale = "Creates documentation files; does not modify source code."
+
+[[flag]]
+applies_to = "rdoc"
+flag = "--all"
+translation_modifier = "including all files in the documentation generation"
+verdict = "allow"
+rationale = "Generates documentation for all files; scope-widening but non-destructive."
+[[flag]]
+applies_to = "rdoc"
+flag = "--force"
+translation_modifier = "overwriting existing documentation files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing documentation files."

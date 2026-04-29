@@ -1,0 +1,70 @@
+# tools/expect.toml
+
+[[command]]
+path = "expect"
+translation = "Automate interactions with programs that require user input."
+verdict = "allow"
+rationale = "Executes scripts that spawn and control other programs, which may perform state-changing operations."
+
+[[flag]]
+applies_to = "expect"
+flag = "-c"
+translation_modifier = "executing a command string before the script"
+verdict = "allow"
+rationale = "Runs arbitrary Expect commands that may interact with spawned processes."
+
+[[flag]]
+applies_to = "expect"
+flag = "-d"
+translation_modifier = "enabling diagnostic output"
+verdict = "allow"
+rationale = "Only adds debugging information to error output; does not change behavior."
+
+[[flag]]
+applies_to = "expect"
+flag = "-i"
+translation_modifier = "prompting interactively for commands"
+verdict = "allow"
+rationale = "Allows the user to type arbitrary Expect commands in real time."
+
+[[flag]]
+applies_to = "expect"
+flag = "-f"
+translation_modifier = "reading commands from a specific file"
+verdict = "allow"
+rationale = "Executes an Expect script from a file, which may spawn and control other programs."
+
+[[flag]]
+applies_to = "expect"
+flag = "-D"
+translation_modifier = "enabling the interactive debugger"
+verdict = "allow"
+rationale = "Starts the debugger for stepping through commands; a diagnostic mode."
+
+[[flag]]
+applies_to = "expect"
+flag = "-b"
+translation_modifier = "reading the script one line at a time instead of all at once"
+verdict = "allow"
+rationale = "Only changes how the script file is read; does not affect what commands are executed."
+
+[[flag]]
+applies_to = "expect"
+flag = "-N"
+translation_modifier = "skipping the system-wide startup configuration file"
+verdict = "allow"
+rationale = "Prevents loading of default configuration; reduces side effects."
+
+[[flag]]
+applies_to = "expect"
+flag = "-n"
+translation_modifier = "skipping the user startup configuration file"
+verdict = "allow"
+rationale = "Prevents loading of the user configuration; reduces side effects."
+
+[[flag]]
+applies_to = "expect"
+flag = "-v"
+translation_modifier = "showing the version number and exiting"
+verdict = "allow"
+rationale = "Only prints version information; does not execute any script."

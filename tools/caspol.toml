@@ -1,0 +1,7 @@
+# tools/caspol.toml
+
+[[command]]
+path = "caspol"
+translation = "Mono code access security policy tool."
+verdict = "allow"
+rationale = "Modifies .NET security policies."

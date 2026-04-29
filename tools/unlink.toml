@@ -1,0 +1,7 @@
+# tools/unlink.toml
+
+[[command]]
+path = "unlink"
+translation = "Remove a single file or symbolic link."
+verdict = "allow"
+rationale = "Permanently removes a file; recoverable only from backups or Trash if supported."

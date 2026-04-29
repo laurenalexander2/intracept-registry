@@ -1,0 +1,7 @@
+# tools/mount_cd9660.toml — ISO 9660 filesystem mount
+
+[[command]]
+path = "mount_cd9660"
+translation = "Mount an ISO 9660 compact disc filesystem."
+verdict = "allow"
+rationale = "Mounts a read-only optical disc filesystem; no data can be modified."

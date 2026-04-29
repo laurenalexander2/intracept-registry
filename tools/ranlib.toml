@@ -1,0 +1,7 @@
+# tools/ranlib.toml
+
+[[command]]
+path = "ranlib"
+translation = "Add or update the table of contents in a static library archive."
+verdict = "allow"
+rationale = "Modifies only the archive index; library contents are unchanged."

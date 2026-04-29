@@ -1,0 +1,7 @@
+# tools/raw2tiff.toml
+
+[[command]]
+path = "raw2tiff"
+translation = "Convert a raw image data file to TIFF format."
+verdict = "allow"
+rationale = "Creates a new TIFF file; the source file is not modified."

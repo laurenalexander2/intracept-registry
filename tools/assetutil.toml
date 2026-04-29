@@ -1,0 +1,7 @@
+# tools/assetutil.toml
+
+[[command]]
+path = "assetutil"
+translation = "Process and inspect asset catalog files."
+verdict = "allow"
+rationale = "Reads or manipulates asset catalog files for development."

@@ -1,0 +1,14 @@
+# tools/systemstats.toml
+
+[[command]]
+path = "systemstats"
+translation = "Collect and report system performance statistics."
+verdict = "allow"
+rationale = "Read-only performance data collection; modifies nothing."
+
+[[flag]]
+applies_to = "systemstats"
+flag = "--all"
+translation_modifier = "including all available system statistics"
+verdict = "allow"
+rationale = "Read-only display of all system performance statistics."

@@ -1,0 +1,7 @@
+# tools/db_dump.toml
+
+[[command]]
+path = "db_dump"
+translation = "Dump a Berkeley DB database in a portable format."
+verdict = "allow"
+rationale = "Read-only export of database contents."

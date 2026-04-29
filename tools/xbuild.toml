@@ -1,0 +1,7 @@
+# tools/xbuild.toml
+
+[[command]]
+path = "xbuild"
+translation = "Build .NET projects using the Mono MSBuild-compatible build system."
+verdict = "allow"
+rationale = "Compiles source code into build outputs; does not modify source files."

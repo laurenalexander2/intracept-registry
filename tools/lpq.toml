@@ -1,0 +1,35 @@
+# tools/lpq.toml
+
+[[command]]
+path = "lpq"
+translation = "Display the status of a printer queue."
+verdict = "allow"
+rationale = "Read-only display of queued print jobs."
+
+[[flag]]
+applies_to = "lpq"
+flag = "-a"
+translation_modifier = "showing jobs on all printers"
+verdict = "allow"
+rationale = "Only widens the read-only display to include all printers."
+
+[[flag]]
+applies_to = "lpq"
+flag = "-l"
+translation_modifier = "showing detailed information about each job"
+verdict = "allow"
+rationale = "Only increases the verbosity of the output."
+
+[[flag]]
+applies_to = "lpq"
+flag = "-P"
+translation_modifier = "showing jobs on a specific printer"
+verdict = "allow"
+rationale = "Only filters which printer's queue is displayed."
+
+[[flag]]
+applies_to = "lpq"
+flag = "-E"
+translation_modifier = "using an encrypted connection to the print server"
+verdict = "allow"
+rationale = "Only changes connection security; does not affect the display."

@@ -1,0 +1,91 @@
+# tools/install.toml
+
+[[command]]
+path = "install"
+translation = "Copy files to a destination while setting permissions and ownership."
+verdict = "allow"
+rationale = "Copies files and can set ownership and permissions; overwrites existing files at the destination."
+
+[[flag]]
+applies_to = "install"
+flag = "-d"
+translation_modifier = "creating directories instead of copying files"
+verdict = "allow"
+rationale = "Only creates directories; does not overwrite existing files."
+
+[[flag]]
+applies_to = "install"
+flag = "-m"
+translation_modifier = "setting specific access permissions on the installed files"
+verdict = "allow"
+rationale = "Only changes who can read, write, or run the destination files."
+
+[[flag]]
+applies_to = "install"
+flag = "-o"
+translation_modifier = "setting the owner of the installed files"
+verdict = "allow"
+rationale = "Changes file ownership, which affects who can access and manage the files."
+
+[[flag]]
+applies_to = "install"
+flag = "-g"
+translation_modifier = "setting the group of the installed files"
+verdict = "allow"
+rationale = "Changes which group of users can access the installed files."
+
+[[flag]]
+applies_to = "install"
+flag = "-s"
+translation_modifier = "removing debugging information from the installed programs"
+verdict = "allow"
+rationale = "Strips extra data used for troubleshooting; the programs still function normally."
+
+[[flag]]
+applies_to = "install"
+flag = "-b"
+translation_modifier = "creating a backup of any existing file before overwriting"
+verdict = "allow"
+rationale = "Preserves the original file by renaming it before overwriting."
+
+[[flag]]
+applies_to = "install"
+flag = "-c"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Copies the file, which is already the default behavior."
+
+[[flag]]
+applies_to = "install"
+flag = "-C"
+translation_modifier = "only copying if the file has actually changed"
+verdict = "allow"
+rationale = "Avoids unnecessary writes by comparing before copying; reduces risk of accidental overwrites."
+
+[[flag]]
+applies_to = "install"
+flag = "-p"
+translation_modifier = "preserving the original file's access and modification times"
+verdict = "allow"
+rationale = "Keeps timestamps from the source file; no destructive effect."
+
+[[flag]]
+applies_to = "install"
+flag = "-S"
+translation_modifier = "flushing each file to disk immediately after copying"
+verdict = "allow"
+rationale = "Ensures data is written to disk right away, reducing risk of data loss from a crash."
+
+[[flag]]
+applies_to = "install"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Prints the names of files as they are installed; purely informational."
+
+[[flag]]
+applies_to = "install"
+flag = "-B"
+translation_modifier = "using a custom suffix for backup files instead of the default"
+verdict = "allow"
+rationale = "Only changes the naming convention for backup files created with -b."

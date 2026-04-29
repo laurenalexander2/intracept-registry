@@ -1,0 +1,7 @@
+# tools/bzmore.toml
+
+[[command]]
+path = "bzmore"
+translation = "View bzip2-compressed files one page at a time."
+verdict = "allow"
+rationale = "Read-only pager for compressed files."

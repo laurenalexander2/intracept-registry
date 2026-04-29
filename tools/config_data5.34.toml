@@ -1,0 +1,7 @@
+# tools/config_data5.34.toml
+
+[[command]]
+path = "config_data5.34"
+translation = "Retrieve Perl 5.34 module configuration data."
+verdict = "allow"
+rationale = "Read-only display of Perl module configuration."

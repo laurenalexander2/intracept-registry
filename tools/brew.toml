@@ -1,0 +1,294 @@
+# tools/brew.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew"
+translation = "Run the Homebrew package manager for macOS."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Installing ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew install"
+translation = "Install a formula or cask from the Homebrew repository."
+verdict = "require_approval"
+rationale = "Downloads and installs software that may include post-install scripts with system access."
+
+[[flag]]
+applies_to = "brew install"
+flag = "--cask"
+translation_modifier = "installing a macOS application instead of a command-line formula"
+verdict = "allow"
+rationale = "Installs a graphical application; may require elevated permissions for system integration."
+
+[[flag]]
+applies_to = "brew install"
+flag = "--force"
+translation_modifier = "overwriting an existing installation"
+verdict = "allow"
+rationale = "Replaces already-installed software, which may disrupt dependent tools or configurations."
+
+[[flag]]
+applies_to = "brew install"
+flag = "--build-from-source"
+translation_modifier = "compiling from source code instead of using a pre-built binary"
+verdict = "allow"
+rationale = "Builds locally; slower but does not increase risk beyond the standard install."
+
+[[flag]]
+applies_to = "brew install"
+flag = "--HEAD"
+translation_modifier = "installing the latest development version from the source repository"
+verdict = "allow"
+rationale = "Development versions may be unstable and introduce regressions or breaking changes."
+
+# ── Uninstalling ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew uninstall"
+translation = "Remove an installed formula or cask."
+verdict = "allow"
+rationale = "Removes software and may run uninstall scripts that delete associated files."
+
+[[flag]]
+applies_to = "brew uninstall"
+flag = "--force"
+translation_modifier = "removing all versions of the formula and ignoring dependencies"
+verdict = "require_approval"
+rationale = "Removes all installed versions and skips dependency checks, which may break other installed software."
+
+[[flag]]
+applies_to = "brew uninstall"
+flag = "--zap"
+translation_modifier = "also removing all associated files, preferences, and caches"
+verdict = "require_approval"
+rationale = "Performs aggressive cleanup that deletes application data and configuration beyond the formula itself."
+
+# ── Upgrading ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew upgrade"
+translation = "Upgrade installed formulas and casks to their latest versions."
+verdict = "allow"
+rationale = "Replaces installed software with newer versions that may introduce breaking changes."
+
+[[flag]]
+applies_to = "brew upgrade"
+flag = "--greedy"
+translation_modifier = "also upgrading casks that auto-update themselves"
+verdict = "allow"
+rationale = "Expands upgrade scope to include auto-updating casks that would normally be skipped."
+
+[[flag]]
+applies_to = "brew upgrade"
+flag = "--force"
+translation_modifier = "reinstalling even if already at the latest version"
+verdict = "allow"
+rationale = "Re-runs installation scripts unnecessarily; may disrupt currently working software."
+
+# ── Updating ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew update"
+translation = "Fetch the latest Homebrew formula definitions from the repository."
+verdict = "allow"
+rationale = "Updates the local formula index; does not install or modify any software."
+
+# ── Searching and inspecting ─────────────────────────────────────────────────
+
+[[command]]
+path = "brew list"
+translation = "List all installed formulas and casks."
+verdict = "allow"
+rationale = "Read-only listing of installed packages."
+
+[[command]]
+path = "brew search"
+translation = "Search for available formulas and casks."
+verdict = "allow"
+rationale = "Read-only search of the Homebrew repository."
+
+[[command]]
+path = "brew info"
+translation = "Display information about a formula or cask."
+verdict = "allow"
+rationale = "Read-only display of package metadata."
+
+[[command]]
+path = "brew deps"
+translation = "Show the dependencies of a formula."
+verdict = "allow"
+rationale = "Read-only display of dependency information."
+
+[[flag]]
+applies_to = "brew deps"
+flag = "--tree"
+translation_modifier = "displaying dependencies in a tree structure"
+verdict = "allow"
+rationale = "Changes the output format; still read-only."
+
+[[flag]]
+applies_to = "brew deps"
+flag = "--installed"
+translation_modifier = "showing dependencies for all installed formulas"
+verdict = "allow"
+rationale = "Widens the scope of the listing; still read-only."
+
+[[command]]
+path = "brew leaves"
+translation = "List installed formulas that are not dependencies of other formulas."
+verdict = "allow"
+rationale = "Read-only listing of top-level installed packages."
+
+[[command]]
+path = "brew outdated"
+translation = "List installed formulas and casks that have newer versions available."
+verdict = "allow"
+rationale = "Read-only listing of outdated packages."
+
+# ── Diagnostics ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew doctor"
+translation = "Check the Homebrew installation for potential problems."
+verdict = "allow"
+rationale = "Read-only inspection that reports issues without changing anything."
+
+[[command]]
+path = "brew config"
+translation = "Show Homebrew and system configuration details."
+verdict = "allow"
+rationale = "Read-only display of configuration."
+
+# ── Cleanup ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew cleanup"
+translation = "Remove old versions of installed formulas and clear the download cache."
+verdict = "allow"
+rationale = "Deletes cached downloads and old formula versions from disk."
+
+[[flag]]
+applies_to = "brew cleanup"
+flag = "--prune"
+translation_modifier = "removing all cache files older than the specified number of days"
+verdict = "allow"
+rationale = "Widens the scope of cache deletion based on age."
+
+[[flag]]
+applies_to = "brew cleanup"
+flag = "-s"
+translation_modifier = "also removing the download cache for the latest versions"
+verdict = "allow"
+rationale = "Removes all cached downloads, not just outdated ones; forces re-downloading on next install."
+
+[[command]]
+path = "brew autoremove"
+translation = "Remove formulas that were installed as dependencies but are no longer needed."
+verdict = "allow"
+rationale = "Uninstalls packages that may still be used by non-Homebrew software."
+
+# ── Services ─────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew services"
+translation = "Manage background services installed by Homebrew formulas."
+verdict = "allow"
+rationale = "The bare subcommand lists running services."
+
+[[command]]
+path = "brew services start"
+translation = "Start a background service installed by a Homebrew formula."
+verdict = "allow"
+rationale = "Starts a background process that runs continuously and survives reboots."
+
+[[command]]
+path = "brew services stop"
+translation = "Stop a running Homebrew background service."
+verdict = "allow"
+rationale = "Stops a background process, which may interrupt dependent applications."
+
+[[command]]
+path = "brew services restart"
+translation = "Restart a Homebrew background service."
+verdict = "allow"
+rationale = "Briefly interrupts the service during the restart cycle."
+
+[[command]]
+path = "brew services list"
+translation = "List all managed Homebrew background services and their status."
+verdict = "allow"
+rationale = "Read-only listing of service status."
+
+# ── Taps (third-party repositories) ─────────────────────────────────────────
+
+[[command]]
+path = "brew tap"
+translation = "Add a third-party formula repository to Homebrew."
+verdict = "allow"
+rationale = "Registers a new source of formulas; does not install any software."
+
+[[command]]
+path = "brew untap"
+translation = "Remove a third-party formula repository from Homebrew."
+verdict = "allow"
+rationale = "Removes the repository; installed formulas from it remain on disk."
+
+# ── Pinning ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew pin"
+translation = "Prevent a formula from being upgraded."
+verdict = "allow"
+rationale = "Locks the formula at its current version; a safety measure."
+
+[[command]]
+path = "brew unpin"
+translation = "Allow a previously pinned formula to be upgraded."
+verdict = "allow"
+rationale = "Removes the upgrade lock; the formula can now be upgraded normally."
+
+# ── Linking ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew link"
+translation = "Create symbolic links for an installed formula in the Homebrew prefix."
+verdict = "allow"
+rationale = "Creates symbolic links so the formula's executables are available in the terminal."
+
+[[command]]
+path = "brew unlink"
+translation = "Remove symbolic links for a formula from the Homebrew prefix."
+verdict = "allow"
+rationale = "Removes symbolic links; the formula remains installed but its executables are not in the path."
+
+[[flag]]
+applies_to = "brew link"
+flag = "--overwrite"
+translation_modifier = "overwriting existing files in the Homebrew prefix"
+verdict = "allow"
+rationale = "Replaces existing files with symbolic links, which may break other installations."
+
+[[flag]]
+applies_to = "brew link"
+flag = "--force"
+translation_modifier = "linking even if the formula is keg-only"
+verdict = "allow"
+rationale = "Overrides the keg-only restriction, which may conflict with system-provided software."
+
+# ── Cask-specific ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "brew reinstall"
+translation = "Uninstall and then reinstall a formula or cask."
+verdict = "allow"
+rationale = "Removes and re-installs software; briefly unavailable during the process."
+
+[[flag]]
+applies_to = "brew reinstall"
+flag = "--cask"
+translation_modifier = "reinstalling a macOS application instead of a command-line formula"
+verdict = "allow"
+rationale = "Reinstalls a graphical application; may require elevated permissions."

@@ -1,0 +1,7 @@
+# tools/python3-config.toml
+
+[[command]]
+path = "python3-config"
+translation = "Display compiler and linker flags for building Python 3 extensions."
+verdict = "allow"
+rationale = "Read-only output of build configuration values."

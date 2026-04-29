@@ -1,0 +1,35 @@
+# tools/clang.toml
+
+[[command]]
+path = "clang"
+translation = "Compile C, C++, and Objective-C source code."
+verdict = "allow"
+rationale = "Compiles code locally; does not execute the resulting binary."
+
+[[flag]]
+applies_to = "clang"
+flag = "-o"
+translation_modifier = "writing the output to a specified file"
+verdict = "allow"
+rationale = "Specifies the output filename; may overwrite an existing file at that path."
+
+[[flag]]
+applies_to = "clang"
+flag = "-c"
+translation_modifier = "compiling to object files without linking"
+verdict = "allow"
+rationale = "Produces object files only; does not create an executable."
+
+[[flag]]
+applies_to = "clang"
+flag = "-O2"
+translation_modifier = "with moderate optimizations enabled"
+verdict = "allow"
+rationale = "Increases optimization level; does not change the compilation model."
+
+[[flag]]
+applies_to = "clang"
+flag = "-Wall"
+translation_modifier = "enabling all common compiler warnings"
+verdict = "allow"
+rationale = "Adds diagnostic messages; does not change generated code."

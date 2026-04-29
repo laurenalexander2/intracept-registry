@@ -1,0 +1,7 @@
+# tools/pod2html.toml
+
+[[command]]
+path = "pod2html"
+translation = "Convert Perl Pod documentation to HTML format."
+verdict = "allow"
+rationale = "Read-only conversion that writes HTML to the terminal or a specified file."

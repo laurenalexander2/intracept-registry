@@ -1,0 +1,98 @@
+# tools/nc.toml
+
+[[command]]
+path = "nc"
+translation = "Read and write data across network connections."
+verdict = "require_approval"
+rationale = "Opens arbitrary network connections that can send and receive data."
+
+[[flag]]
+applies_to = "nc"
+flag = "-l"
+translation_modifier = "listening for incoming connections instead of initiating one"
+verdict = "allow"
+rationale = "Opens a listening port that accepts connections from other hosts."
+
+[[flag]]
+applies_to = "nc"
+flag = "-z"
+translation_modifier = "scanning for open ports without sending data"
+verdict = "allow"
+rationale = "Only checks if a port is open; no data is transmitted."
+
+[[flag]]
+applies_to = "nc"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output verbosity; does not change behavior."
+
+[[flag]]
+applies_to = "nc"
+flag = "-u"
+translation_modifier = "using UDP instead of TCP"
+verdict = "allow"
+rationale = "Switches the transport protocol; does not change the connection's capabilities."
+
+[[flag]]
+applies_to = "nc"
+flag = "-k"
+translation_modifier = "continuing to listen for additional connections after the current one closes"
+verdict = "allow"
+rationale = "Keeps the listening port open indefinitely, which may expose the port longer than intended."
+
+[[flag]]
+applies_to = "nc"
+flag = "-w"
+translation_modifier = "closing the connection after a specified number of idle seconds"
+verdict = "allow"
+rationale = "Limits connection duration; a scope-reducing option."
+
+[[flag]]
+applies_to = "nc"
+flag = "-n"
+translation_modifier = "without resolving hostnames or service names"
+verdict = "allow"
+rationale = "Skips DNS lookups; does not change the connection's capabilities."
+
+[[flag]]
+applies_to = "nc"
+flag = "-p"
+translation_modifier = "using a specified source port"
+verdict = "allow"
+rationale = "Sets the local port number; does not add destructive capability."
+
+[[flag]]
+applies_to = "nc"
+flag = "-4"
+translation_modifier = "using only IPv4 addresses"
+verdict = "allow"
+rationale = "Restricts the network protocol; does not change connection capabilities."
+
+[[flag]]
+applies_to = "nc"
+flag = "-6"
+translation_modifier = "using only IPv6 addresses"
+verdict = "allow"
+rationale = "Restricts the network protocol; does not change connection capabilities."
+
+[[flag]]
+applies_to = "nc"
+flag = "-d"
+translation_modifier = "without reading from standard input"
+verdict = "allow"
+rationale = "Disables input; useful for background connections."
+
+[[flag]]
+applies_to = "nc"
+flag = "-X"
+translation_modifier = "connecting through a proxy using a specified protocol"
+verdict = "allow"
+rationale = "Routes the connection through a proxy; does not add destructive capability."
+
+[[flag]]
+applies_to = "nc"
+flag = "-x"
+translation_modifier = "connecting through a specified proxy server"
+verdict = "allow"
+rationale = "Specifies the proxy address; does not add destructive capability."

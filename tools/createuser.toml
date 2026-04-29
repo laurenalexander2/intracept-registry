@@ -1,0 +1,7 @@
+# tools/createuser.toml
+
+[[command]]
+path = "createuser"
+translation = "Create a new PostgreSQL user role."
+verdict = "require_approval"
+rationale = "Creates a new database role that can be granted permissions to access data."

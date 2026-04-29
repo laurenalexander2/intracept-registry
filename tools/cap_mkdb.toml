@@ -1,0 +1,7 @@
+# tools/cap_mkdb.toml
+
+[[command]]
+path = "cap_mkdb"
+translation = "Build a capability database."
+verdict = "allow"
+rationale = "Creates a database file from capability definitions."

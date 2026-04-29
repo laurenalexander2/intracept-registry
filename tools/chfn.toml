@@ -1,0 +1,7 @@
+# tools/chfn.toml
+
+[[command]]
+path = "chfn"
+translation = "Change a user's finger information."
+verdict = "allow"
+rationale = "Updates user information in the password database."

@@ -1,0 +1,122 @@
+# tools/python.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "python"
+translation = "Run the Python interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary Python code with full access to the user's environment and files."
+
+# ── Execution modes ──────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "python"
+flag = "-c"
+translation_modifier = "executing a Python statement passed as an argument"
+verdict = "allow"
+rationale = "Runs inline code directly; the risk depends on what the code does."
+
+[[flag]]
+applies_to = "python"
+flag = "-m"
+translation_modifier = "running a Python module as a script"
+verdict = "allow"
+rationale = "Executes a module's main entry point; the risk depends on the module."
+
+[[flag]]
+applies_to = "python"
+flag = "-i"
+translation_modifier = "entering interactive mode after running the script"
+verdict = "allow"
+rationale = "Opens an interactive prompt after execution; useful for debugging."
+
+# ── Environment and isolation ────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "python"
+flag = "-E"
+translation_modifier = "ignoring all PYTHON environment variables"
+verdict = "allow"
+rationale = "Runs in a cleaner environment by ignoring user-set Python variables."
+
+[[flag]]
+applies_to = "python"
+flag = "-I"
+translation_modifier = "in isolated mode, ignoring environment variables and user site-packages"
+verdict = "allow"
+rationale = "Maximum isolation from the user's environment; a safety-enhancing measure."
+
+[[flag]]
+applies_to = "python"
+flag = "-s"
+translation_modifier = "without adding the user site-packages directory to the module search path"
+verdict = "allow"
+rationale = "Excludes user-installed packages; reduces unexpected behavior from user packages."
+
+[[flag]]
+applies_to = "python"
+flag = "-S"
+translation_modifier = "without importing the site module on startup"
+verdict = "allow"
+rationale = "Skips site-specific customizations; useful for minimal environments."
+
+[[flag]]
+applies_to = "python"
+flag = "-P"
+translation_modifier = "without adding a potentially unsafe path to the module search path"
+verdict = "allow"
+rationale = "Prevents the current directory from being added to sys.path; a security measure."
+
+# ── Output and optimization ──────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "python"
+flag = "-u"
+translation_modifier = "with unbuffered standard output and error streams"
+verdict = "allow"
+rationale = "Disables output buffering; does not change what code is executed."
+
+[[flag]]
+applies_to = "python"
+flag = "-O"
+translation_modifier = "with basic optimizations enabled, removing assert statements"
+verdict = "allow"
+rationale = "Removes assert statements and debug code; may change behavior if asserts have side effects."
+
+[[flag]]
+applies_to = "python"
+flag = "-OO"
+translation_modifier = "with additional optimizations enabled, also removing documentation strings"
+verdict = "allow"
+rationale = "Removes docstrings in addition to asserts; may break code that relies on docstring availability."
+
+[[flag]]
+applies_to = "python"
+flag = "-B"
+translation_modifier = "without writing compiled bytecode cache files"
+verdict = "allow"
+rationale = "Prevents creation of .pyc files; avoids disk writes in read-only environments."
+
+# ── Warnings and debugging ───────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "python"
+flag = "-W"
+translation_modifier = "with a specific warning control filter applied"
+verdict = "allow"
+rationale = "Configures how warnings are displayed; does not change program behavior."
+
+[[flag]]
+applies_to = "python"
+flag = "-b"
+translation_modifier = "issuing warnings about bytes and string comparisons"
+verdict = "allow"
+rationale = "Adds diagnostic warnings; does not change program execution."
+
+[[flag]]
+applies_to = "python"
+flag = "-X"
+translation_modifier = "with a specific implementation option enabled"
+verdict = "allow"
+rationale = "Sets internal Python options; individual options vary but are generally diagnostic."

@@ -1,0 +1,7 @@
+# tools/apply.toml
+
+[[command]]
+path = "apply"
+translation = "Apply a command to each argument."
+verdict = "allow"
+rationale = "Executes a command for each argument; the risk depends on the command."

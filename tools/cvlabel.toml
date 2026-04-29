@@ -1,0 +1,7 @@
+# tools/cvlabel.toml
+
+[[command]]
+path = "cvlabel"
+translation = "Label Xsan storage devices."
+verdict = "allow"
+rationale = "Writes labels to storage devices for Xsan identification."

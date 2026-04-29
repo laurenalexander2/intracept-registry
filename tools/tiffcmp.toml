@@ -1,0 +1,7 @@
+# tools/tiffcmp.toml
+
+[[command]]
+path = "tiffcmp"
+translation = "Compare two TIFF images and report differences."
+verdict = "allow"
+rationale = "Read-only comparison; modifies nothing."

@@ -1,0 +1,7 @@
+# tools/tiffset.toml
+
+[[command]]
+path = "tiffset"
+translation = "Set or modify TIFF image metadata tags."
+verdict = "allow"
+rationale = "Modifies metadata in the TIFF file in place; original tag values are overwritten."

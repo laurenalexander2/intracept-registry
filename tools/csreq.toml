@@ -1,0 +1,7 @@
+# tools/csreq.toml
+
+[[command]]
+path = "csreq"
+translation = "Create or inspect code signing requirements."
+verdict = "allow"
+rationale = "Generates or displays code signing requirement expressions."

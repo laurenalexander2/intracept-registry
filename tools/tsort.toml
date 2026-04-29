@@ -1,0 +1,7 @@
+# tools/tsort.toml
+
+[[command]]
+path = "tsort"
+translation = "Perform a topological sort on a directed graph."
+verdict = "allow"
+rationale = "Reads pairs from input and writes sorted output to the terminal; modifies nothing."

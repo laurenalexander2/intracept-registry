@@ -1,0 +1,28 @@
+# tools/export.toml
+
+[[command]]
+path = "export"
+translation = "Mark a shell variable so it is passed to any programs started from this shell."
+verdict = "allow"
+rationale = "Sets environment variables in the current shell session; does not modify files or persist beyond the session."
+
+[[flag]]
+applies_to = "export"
+flag = "-n"
+translation_modifier = "removing the export property so the variable is no longer passed to child processes"
+verdict = "allow"
+rationale = "Unmarks a variable for export; the variable still exists in the shell but is no longer inherited."
+
+[[flag]]
+applies_to = "export"
+flag = "-f"
+translation_modifier = "marking a shell function instead of a variable"
+verdict = "allow"
+rationale = "Exports a function definition to child processes; no files are modified."
+
+[[flag]]
+applies_to = "export"
+flag = "-p"
+translation_modifier = "listing all currently exported variables"
+verdict = "allow"
+rationale = "Read-only display of exported variables."

@@ -1,0 +1,7 @@
+# tools/pcre2-config.toml — PCRE2 build configuration
+
+[[command]]
+path = "pcre2-config"
+translation = "Display compiler and linker flags needed to build applications against the PCRE2 library."
+verdict = "allow"
+rationale = "Read-only output of build configuration values."

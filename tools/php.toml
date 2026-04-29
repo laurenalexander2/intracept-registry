@@ -1,0 +1,77 @@
+# tools/php.toml
+
+[[command]]
+path = "php"
+translation = "Run the php scripting language interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary scripting code, which can modify files, make network requests, or run system commands."
+
+[[flag]]
+applies_to = "php"
+flag = "-r"
+translation_modifier = "executing a code string passed as an argument"
+verdict = "allow"
+rationale = "Runs inline code directly; the risk depends on what the code does."
+
+[[flag]]
+applies_to = "php"
+flag = "-S"
+translation_modifier = "starting a built-in web server on the specified address and port"
+verdict = "allow"
+rationale = "Opens a network listener that serves files and executes scripts from the document root."
+
+[[flag]]
+applies_to = "php"
+flag = "-l"
+translation_modifier = "only checking syntax without executing"
+verdict = "allow"
+rationale = "Validates syntax without running the code; no side effects."
+
+[[flag]]
+applies_to = "php"
+flag = "-a"
+translation_modifier = "starting an interactive shell"
+verdict = "allow"
+rationale = "Opens an interactive session where arbitrary code can be executed."
+
+[[flag]]
+applies_to = "php"
+flag = "-i"
+translation_modifier = "displaying the full configuration information"
+verdict = "allow"
+rationale = "Read-only display of configuration; does not execute user code."
+
+[[flag]]
+applies_to = "php"
+flag = "-m"
+translation_modifier = "listing all loaded modules and extensions"
+verdict = "allow"
+rationale = "Read-only listing; does not execute any code."
+
+[[flag]]
+applies_to = "php"
+flag = "-v"
+translation_modifier = "printing the version and exiting"
+verdict = "allow"
+rationale = "Read-only version display; nothing is executed."
+
+[[flag]]
+applies_to = "php"
+flag = "-c"
+translation_modifier = "using a specific configuration file or directory"
+verdict = "allow"
+rationale = "Only changes which configuration is loaded; does not execute code by itself."
+
+[[flag]]
+applies_to = "php"
+flag = "-d"
+translation_modifier = "overriding a configuration setting"
+verdict = "allow"
+rationale = "Changes a runtime setting; the effect depends on which setting is changed."
+
+[[flag]]
+applies_to = "php"
+flag = "-n"
+translation_modifier = "ignoring the configuration file entirely"
+verdict = "allow"
+rationale = "Runs with default settings only; increases predictability."

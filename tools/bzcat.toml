@@ -1,0 +1,7 @@
+# tools/bzcat.toml
+
+[[command]]
+path = "bzcat"
+translation = "Display the contents of bzip2-compressed files."
+verdict = "allow"
+rationale = "Outputs decompressed data to the terminal without modifying files."

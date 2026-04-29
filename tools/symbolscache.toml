@@ -1,0 +1,14 @@
+# tools/symbolscache.toml
+
+[[command]]
+path = "symbolscache"
+translation = "Manage the local cache of debug symbols."
+verdict = "allow"
+rationale = "Manages cached symbol files for debugging; clearing the cache only requires re-downloading symbols."
+
+[[flag]]
+applies_to = "symbolscache"
+flag = "--delete"
+translation_modifier = "deleting cached symbol files"
+verdict = "allow"
+rationale = "Removes cached debug symbols; they must be re-downloaded for future debugging."

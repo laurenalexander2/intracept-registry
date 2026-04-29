@@ -1,0 +1,7 @@
+# tools/sha224.toml
+
+[[command]]
+path = "sha224"
+translation = "Compute SHA-224 message digests for files."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."

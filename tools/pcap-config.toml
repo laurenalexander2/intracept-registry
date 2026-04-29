@@ -1,0 +1,7 @@
+# tools/pcap-config.toml — libpcap build configuration
+
+[[command]]
+path = "pcap-config"
+translation = "Display compiler and linker flags needed to build applications against libpcap."
+verdict = "allow"
+rationale = "Read-only output of build configuration values."

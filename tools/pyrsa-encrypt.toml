@@ -1,0 +1,7 @@
+# tools/pyrsa-encrypt.toml
+
+[[command]]
+path = "pyrsa-encrypt"
+translation = "Encrypt data using an RSA public key."
+verdict = "allow"
+rationale = "Read-only encryption that writes ciphertext to the terminal."

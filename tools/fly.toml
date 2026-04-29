@@ -1,0 +1,151 @@
+# tools/fly.toml
+
+[[command]]
+path = "fly"
+translation = "Run the Fly.io cloud platform command-line tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "fly launch"
+translation = "Create and configure a new Fly.io application from source code or a Docker image."
+verdict = "require_approval"
+rationale = "Creates a new application and may deploy it to the Fly.io platform."
+
+[[command]]
+path = "fly deploy"
+translation = "Deploy the current application to Fly.io."
+verdict = "require_approval"
+rationale = "Builds and deploys code to a live service that receives production traffic."
+
+[[command]]
+path = "fly apps"
+translation = "Manage Fly.io applications."
+verdict = "allow"
+rationale = "The bare subcommand lists applications."
+
+[[command]]
+path = "fly apps create"
+translation = "Create a new Fly.io application."
+verdict = "require_approval"
+rationale = "Creates a new application resource on the platform."
+
+[[command]]
+path = "fly apps destroy"
+translation = "Permanently destroy a Fly.io application."
+verdict = "require_approval"
+rationale = "Irrecoverably removes the application, all its machines, volumes, and configuration."
+
+[[command]]
+path = "fly status"
+translation = "Show the status of a Fly.io application."
+verdict = "allow"
+rationale = "Read-only display of application status."
+
+[[command]]
+path = "fly logs"
+translation = "View logs from a Fly.io application."
+verdict = "allow"
+rationale = "Read-only display of application logs."
+
+[[command]]
+path = "fly secrets"
+translation = "Manage application secrets on Fly.io."
+verdict = "allow"
+rationale = "The bare subcommand lists secrets."
+
+[[command]]
+path = "fly secrets set"
+translation = "Set one or more secrets for a Fly.io application."
+verdict = "require_approval"
+rationale = "Modifies application secrets and triggers a redeployment."
+
+[[command]]
+path = "fly secrets unset"
+translation = "Remove one or more secrets from a Fly.io application."
+verdict = "require_approval"
+rationale = "Removes secrets and triggers a redeployment; the application may break if it depends on them."
+
+[[command]]
+path = "fly scale"
+translation = "Scale Fly.io application resources."
+verdict = "require_approval"
+rationale = "Changes the number or size of machines, affecting availability and billing."
+
+[[command]]
+path = "fly volumes"
+translation = "Manage persistent storage volumes on Fly.io."
+verdict = "allow"
+rationale = "The bare subcommand lists volumes."
+
+[[command]]
+path = "fly volumes create"
+translation = "Create a new persistent storage volume on Fly.io."
+verdict = "require_approval"
+rationale = "Provisions storage that incurs billing."
+
+[[command]]
+path = "fly volumes destroy"
+translation = "Permanently destroy a Fly.io volume."
+verdict = "require_approval"
+rationale = "Irrecoverably deletes the volume and all data stored on it."
+
+[[command]]
+path = "fly ssh console"
+translation = "Open an SSH console on a Fly.io machine."
+verdict = "allow"
+rationale = "Provides remote shell access to a running machine."
+
+[[command]]
+path = "fly machine"
+translation = "Manage Fly.io machines."
+verdict = "allow"
+rationale = "The bare subcommand lists machines."
+
+[[command]]
+path = "fly machine destroy"
+translation = "Permanently destroy a Fly.io machine."
+verdict = "require_approval"
+rationale = "Removes the machine and its local state; persistent data on volumes is preserved."
+
+[[command]]
+path = "fly machine stop"
+translation = "Stop a running Fly.io machine."
+verdict = "require_approval"
+rationale = "Halts the machine, interrupting any running workloads."
+
+[[command]]
+path = "fly machine start"
+translation = "Start a stopped Fly.io machine."
+verdict = "require_approval"
+rationale = "Resumes a machine that will begin serving traffic."
+
+[[command]]
+path = "fly auth login"
+translation = "Log in to your Fly.io account."
+verdict = "allow"
+rationale = "Stores credentials locally; does not modify applications."
+
+[[command]]
+path = "fly auth logout"
+translation = "Log out of your Fly.io account."
+verdict = "allow"
+rationale = "Removes locally stored authentication credentials, requiring the user to log in again."
+
+[[command]]
+path = "fly postgres"
+translation = "Manage Fly.io PostgreSQL database clusters."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "fly postgres create"
+translation = "Create a new PostgreSQL cluster on Fly.io."
+verdict = "require_approval"
+rationale = "Provisions a database cluster that incurs billing."
+
+[[command]]
+path = "fly postgres destroy"
+translation = "Destroy a PostgreSQL cluster on Fly.io."
+verdict = "require_approval"
+rationale = "Permanently removes the database and all its data."

@@ -1,0 +1,7 @@
+# tools/db_recover.toml
+
+[[command]]
+path = "db_recover"
+translation = "Recover a Berkeley DB environment after a failure."
+verdict = "require_approval"
+rationale = "Modifies database files to restore consistency; may lose uncommitted transactions."

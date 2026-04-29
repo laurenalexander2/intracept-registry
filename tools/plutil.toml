@@ -1,0 +1,112 @@
+# tools/plutil.toml
+
+[[command]]
+path = "plutil"
+translation = "Check syntax, convert formats, and modify property list files."
+verdict = "allow"
+rationale = "By default performs a read-only lint check; conversion and modification require explicit command options."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-lint"
+translation_modifier = "checking the file for syntax errors"
+verdict = "allow"
+rationale = "Read-only validation; no files are modified."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-p"
+translation_modifier = "printing the file in human-readable format"
+verdict = "allow"
+rationale = "Read-only display; no files are modified."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-convert"
+translation_modifier = "converting the file to a different plist format in place"
+verdict = "allow"
+rationale = "Overwrites the file with the converted format; the original format is lost."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-insert"
+translation_modifier = "inserting a value at a specified key path"
+verdict = "allow"
+rationale = "Modifies the plist file by adding a new key-value pair."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-replace"
+translation_modifier = "overwriting the value at a specified key path"
+verdict = "allow"
+rationale = "Overwrites an existing value in the plist file."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-remove"
+translation_modifier = "removing the value at a specified key path"
+verdict = "allow"
+rationale = "Deletes a key-value pair from the plist file."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-extract"
+translation_modifier = "outputting the value at a specified key path as a new plist"
+verdict = "allow"
+rationale = "Read-only extraction; the source file is not modified."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-type"
+translation_modifier = "displaying the type of the value at a specified key path"
+verdict = "allow"
+rationale = "Read-only display of the value type."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-create"
+translation_modifier = "creating a new empty property list file"
+verdict = "allow"
+rationale = "Creates a new file; may overwrite an existing file at the same path."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-o"
+translation_modifier = "writing the output to a different file instead of modifying in place"
+verdict = "allow"
+rationale = "Preserves the original file by directing output elsewhere."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-s"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses success messages; does not change behavior."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-r"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Adds whitespace and indentation to JSON output for readability."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-e"
+translation_modifier = "using a custom file extension for converted files"
+verdict = "allow"
+rationale = "Changes the output filename extension; does not affect the conversion itself."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-append"
+translation_modifier = "appending the value to an array instead of inserting at a key path"
+verdict = "allow"
+rationale = "Modifies the plist file by adding an element to the end of an array."
+
+[[flag]]
+applies_to = "plutil"
+flag = "-expect"
+translation_modifier = "failing if the value at the key path does not match the expected type"
+verdict = "allow"
+rationale = "Adds a type check; does not modify the file."

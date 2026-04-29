@@ -1,0 +1,7 @@
+# tools/cmp.toml
+
+[[command]]
+path = "cmp"
+translation = "Compare two files byte by byte."
+verdict = "allow"
+rationale = "Read-only comparison that reports differences."

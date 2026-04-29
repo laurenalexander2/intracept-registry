@@ -1,0 +1,7 @@
+# tools/zgrep.toml
+
+[[command]]
+path = "zgrep"
+translation = "Search for patterns in gzip-compressed files."
+verdict = "allow"
+rationale = "Read-only search; modifies nothing."

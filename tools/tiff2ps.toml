@@ -1,0 +1,7 @@
+# tools/tiff2ps.toml
+
+[[command]]
+path = "tiff2ps"
+translation = "Convert a TIFF image to PostScript format."
+verdict = "allow"
+rationale = "Writes PostScript to the terminal; the original TIFF is unchanged."

@@ -1,0 +1,7 @@
+# tools/cvaffinity.toml
+
+[[command]]
+path = "cvaffinity"
+translation = "Manage Xsan storage pool affinity."
+verdict = "allow"
+rationale = "Changes storage allocation preferences for Xsan volumes."

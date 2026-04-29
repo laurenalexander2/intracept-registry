@@ -1,0 +1,14 @@
+# tools/msgfilter.toml — GNU gettext message filter
+
+[[command]]
+path = "msgfilter"
+translation = "Apply a text filter command to all translations in a catalog file."
+verdict = "allow"
+rationale = "Executes an arbitrary filter command for each translation string."
+
+[[flag]]
+applies_to = "msgfilter"
+flag = "--force"
+translation_modifier = "overwriting existing output files"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing existing output files."

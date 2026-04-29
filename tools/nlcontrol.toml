@@ -1,0 +1,31 @@
+# tools/nlcontrol.toml — NETLOGON secure channel utility
+
+[[command]]
+path = "nlcontrol"
+translation = "Manage the NETLOGON secure channel connection to a Windows Domain Controller."
+verdict = "allow"
+rationale = "The bare command prints help text."
+
+[[command]]
+path = "nlcontrol status"
+translation = "Display the current status of the NETLOGON secure channel."
+verdict = "allow"
+rationale = "Read-only operation that displays the current network link control status without making changes."
+
+[[command]]
+path = "nlcontrol verify"
+translation = "Verify that the NETLOGON secure channel is working correctly."
+verdict = "allow"
+rationale = "Tests the channel without modifying it."
+
+[[command]]
+path = "nlcontrol change-password"
+translation = "Change the machine account password used for the NETLOGON secure channel."
+verdict = "allow"
+rationale = "Changes the machine authentication credential, which could temporarily disrupt domain authentication."
+
+[[command]]
+path = "nlcontrol reconfigure"
+translation = "Force the NETLOGON service to re-read its configuration."
+verdict = "allow"
+rationale = "Triggers a configuration reload; the service handles this gracefully."

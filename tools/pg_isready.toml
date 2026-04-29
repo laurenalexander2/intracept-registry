@@ -1,0 +1,49 @@
+# tools/pg_isready.toml
+
+[[command]]
+path = "pg_isready"
+translation = "Check whether a PostgreSQL server is ready to accept connections."
+verdict = "allow"
+rationale = "Read-only connection check that does not modify anything."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-h"
+translation_modifier = "checking a specified server host"
+verdict = "allow"
+rationale = "Specifies which server to check; read-only operation."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-p"
+translation_modifier = "checking on a specified port"
+verdict = "allow"
+rationale = "Specifies which port to check; read-only operation."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-d"
+translation_modifier = "checking a specified database"
+verdict = "allow"
+rationale = "Specifies which database to test the connection against; read-only operation."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-U"
+translation_modifier = "connecting as a specified user"
+verdict = "allow"
+rationale = "Specifies the user identity for the connection check; read-only operation."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-t"
+translation_modifier = "waiting up to a specified number of seconds before giving up"
+verdict = "allow"
+rationale = "Sets a timeout for the connection attempt; read-only operation."
+
+[[flag]]
+applies_to = "pg_isready"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses the status message; only the exit code indicates the result."

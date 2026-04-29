@@ -1,0 +1,77 @@
+# tools/hexdump.toml
+
+[[command]]
+path = "hexdump"
+translation = "Display the contents of a file in hexadecimal, octal, or ASCII format."
+verdict = "allow"
+rationale = "Read-only display of file contents in various formats."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-C"
+translation_modifier = "showing both hexadecimal and ASCII representations side by side"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-n"
+translation_modifier = "limiting output to a specific number of bytes"
+verdict = "allow"
+rationale = "Only restricts how much of the file is displayed."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-s"
+translation_modifier = "skipping a specified number of bytes from the beginning"
+verdict = "allow"
+rationale = "Only changes the starting offset for display."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-b"
+translation_modifier = "displaying each byte as a three-digit octal number"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-c"
+translation_modifier = "displaying each byte as an ASCII character"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-d"
+translation_modifier = "displaying two-byte units in unsigned decimal"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-o"
+translation_modifier = "displaying two-byte units in octal"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-x"
+translation_modifier = "displaying two-byte units in hexadecimal"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-v"
+translation_modifier = "showing all data including repeated identical lines"
+verdict = "allow"
+rationale = "Only disables line deduplication in the output."
+
+[[flag]]
+applies_to = "hexdump"
+flag = "-e"
+translation_modifier = "using a custom format string to control the display"
+verdict = "allow"
+rationale = "Only changes the output format using a user-specified template."

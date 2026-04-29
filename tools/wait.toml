@@ -1,0 +1,7 @@
+# tools/wait.toml
+
+[[command]]
+path = "wait"
+translation = "Pause the shell until one or more background processes finish."
+verdict = "allow"
+rationale = "Only waits for existing processes to complete; modifies nothing."

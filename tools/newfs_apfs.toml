@@ -1,0 +1,35 @@
+# tools/newfs_apfs.toml — APFS filesystem constructor
+
+[[command]]
+path = "newfs_apfs"
+translation = "Create a new APFS container or add a volume to an existing APFS container."
+verdict = "require_approval"
+rationale = "Formats a device as APFS, destroying all existing data on the partition."
+
+[[flag]]
+applies_to = "newfs_apfs"
+flag = "-A"
+translation_modifier = "adding a volume to an existing container instead of creating a new one"
+verdict = "allow"
+rationale = "Non-destructively adds a volume; existing data in the container is preserved."
+
+[[flag]]
+applies_to = "newfs_apfs"
+flag = "-C"
+translation_modifier = "creating a container only, with no volumes"
+verdict = "require_approval"
+rationale = "Formats the device as an empty container, destroying existing data."
+
+[[flag]]
+applies_to = "newfs_apfs"
+flag = "-E"
+translation_modifier = "with encryption enabled"
+verdict = "allow"
+rationale = "Enables volume encryption; losing the key makes data unrecoverable."
+
+[[flag]]
+applies_to = "newfs_apfs"
+flag = "-v"
+translation_modifier = "with a specified volume name"
+verdict = "allow"
+rationale = "Sets the volume label; no additional risk."

@@ -1,0 +1,7 @@
+# tools/sutf-benchmark.toml
+
+[[command]]
+path = "sutf-benchmark"
+translation = "Run performance benchmarks for the Simple Unicode Text Format encoding library."
+verdict = "allow"
+rationale = "Executes read-only benchmark tests; modifies nothing."

@@ -1,0 +1,98 @@
+# tools/ruby.toml
+
+[[command]]
+path = "ruby"
+translation = "Run the Ruby interpreter."
+verdict = "allow"
+rationale = "Executes arbitrary Ruby code, which can modify files, make network requests, or run system commands."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-e"
+translation_modifier = "executing a command string passed as an argument"
+verdict = "allow"
+rationale = "Runs inline code directly; the risk depends on what the code does."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-c"
+translation_modifier = "only checking syntax without executing"
+verdict = "allow"
+rationale = "Validates syntax without running the code; no side effects."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-i"
+translation_modifier = "editing files in place"
+verdict = "require_approval"
+rationale = "Modifies files directly on disk; original content may be lost without a backup extension."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-n"
+translation_modifier = "wrapping the script in an implicit input-reading loop"
+verdict = "allow"
+rationale = "Changes how input is read but does not add destructive capability."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-p"
+translation_modifier = "wrapping the script in an implicit loop that also prints each line"
+verdict = "allow"
+rationale = "Adds automatic printing; does not change destructive potential."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-w"
+translation_modifier = "enabling additional warnings"
+verdict = "allow"
+rationale = "Turns on extra diagnostic messages; does not change program behavior."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-r"
+translation_modifier = "loading a library before running the script"
+verdict = "allow"
+rationale = "Pre-loads a library module; the risk depends on what the library does."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-a"
+translation_modifier = "splitting each input line into fields automatically"
+verdict = "allow"
+rationale = "Enables auto-split mode for text processing; does not add destructive capability."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-l"
+translation_modifier = "automatically stripping newlines from input and adding them to output"
+verdict = "allow"
+rationale = "Changes line-ending handling; does not affect safety."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-v"
+translation_modifier = "printing the version and enabling verbose mode"
+verdict = "allow"
+rationale = "Adds diagnostic output and prints the version; does not change program behavior."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-I"
+translation_modifier = "adding a directory to the library search path"
+verdict = "allow"
+rationale = "Only changes where Ruby looks for libraries."
+
+[[flag]]
+applies_to = "ruby"
+flag = "-T"
+translation_modifier = "enabling taint checking for untrusted input"
+verdict = "allow"
+rationale = "Adds security restrictions on data from external sources; a safety-enhancing option."
+
+[[flag]]
+applies_to = "ruby"
+flag = "--version"
+translation_modifier = "printing the version and exiting"
+verdict = "allow"
+rationale = "Read-only version display; nothing is executed."

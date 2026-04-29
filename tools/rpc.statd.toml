@@ -1,0 +1,7 @@
+# tools/rpc.statd.toml
+
+[[command]]
+path = "rpc.statd"
+translation = "Run the NFS status monitoring background service."
+verdict = "allow"
+rationale = "System background service for NFS crash recovery notifications."

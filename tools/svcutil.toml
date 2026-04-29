@@ -1,0 +1,7 @@
+# tools/svcutil.toml
+
+[[command]]
+path = "svcutil"
+translation = "Generate .NET service client proxy code from web service description metadata."
+verdict = "allow"
+rationale = "Generates source code files from service definitions; does not modify existing code."

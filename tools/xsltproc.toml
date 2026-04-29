@@ -1,0 +1,7 @@
+# tools/xsltproc.toml
+
+[[command]]
+path = "xsltproc"
+translation = "Apply transformation stylesheets to transform XML documents."
+verdict = "allow"
+rationale = "Transforms XML and writes output to the terminal or a file; does not modify input files."

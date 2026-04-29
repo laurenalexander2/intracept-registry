@@ -1,0 +1,28 @@
+# tools/sdp.toml
+
+[[command]]
+path = "sdp"
+translation = "Process a scripting definition file into various output formats."
+verdict = "allow"
+rationale = "Transforms an sdef file into header or resource files; creates new files without modifying originals."
+
+[[flag]]
+applies_to = "sdp"
+flag = "-f"
+translation_modifier = "specifying the output format"
+verdict = "allow"
+rationale = "Selects which format to generate; no destructive action."
+
+[[flag]]
+applies_to = "sdp"
+flag = "-o"
+translation_modifier = "writing output to a specified directory or file"
+verdict = "allow"
+rationale = "Directs output location; may overwrite existing files but creates development artifacts only."
+
+[[flag]]
+applies_to = "sdp"
+flag = "-A"
+translation_modifier = "including hidden definitions in the output"
+verdict = "allow"
+rationale = "Expands output scope; no state modification."

@@ -1,0 +1,25 @@
+# tools/mkdir.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "mkdir"
+translation = "Create new directories."
+verdict = "allow"
+rationale = "Creates empty directories; does not modify or overwrite existing files or directories."
+
+# ── Flags ────────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "mkdir"
+flag = "-p"
+translation_modifier = "creating parent directories as needed without errors if they already exist"
+verdict = "allow"
+rationale = "Creates the full directory path; safe because it does not overwrite anything."
+
+[[flag]]
+applies_to = "mkdir"
+flag = "-m"
+translation_modifier = "setting the specified permissions on the new directory"
+verdict = "allow"
+rationale = "Sets permissions at creation time; does not affect existing files or directories."

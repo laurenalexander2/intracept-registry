@@ -1,0 +1,7 @@
+# tools/uuidgen.toml
+
+[[command]]
+path = "uuidgen"
+translation = "Generate a new universally unique identifier."
+verdict = "allow"
+rationale = "Outputs a random UUID to the terminal; modifies nothing."

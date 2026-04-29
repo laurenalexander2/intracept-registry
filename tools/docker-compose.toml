@@ -1,0 +1,317 @@
+# tools/docker-compose.toml
+
+# ── Base command ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose"
+translation = "Run the Docker Compose multi-container application tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Lifecycle ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose up"
+translation = "Create and start all containers defined in the Compose file."
+verdict = "allow"
+rationale = "Starts or recreates containers and networks, modifying the local Docker environment."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "-d"
+translation_modifier = "running containers in the background"
+verdict = "allow"
+rationale = "Detaches from the terminal but does not change what is created or started."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "--build"
+translation_modifier = "rebuilding images before starting"
+verdict = "allow"
+rationale = "Triggers an image build; does not add destructive capability."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "--force-recreate"
+translation_modifier = "recreating all containers even if unchanged"
+verdict = "allow"
+rationale = "Destroys and recreates containers, losing any ephemeral state inside them."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "--remove-orphans"
+translation_modifier = "removing containers for services no longer defined in the Compose file"
+verdict = "allow"
+rationale = "Deletes containers that are not in the current configuration, which may still hold data."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "-V"
+translation_modifier = "recreating anonymous volumes instead of reusing data from previous containers"
+verdict = "require_approval"
+rationale = "Destroys and recreates anonymous volumes, permanently losing any data stored in them."
+
+[[flag]]
+applies_to = "docker-compose up"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually creating or starting anything"
+verdict = "allow"
+rationale = "No containers are created or started; only shows what would happen."
+
+[[command]]
+path = "docker-compose down"
+translation = "Stop and remove all containers and networks defined in the Compose file."
+verdict = "allow"
+rationale = "Stops running containers and removes them along with their networks."
+
+[[flag]]
+applies_to = "docker-compose down"
+flag = "-v"
+translation_modifier = "also removing named and anonymous volumes"
+verdict = "require_approval"
+rationale = "Destroys persistent data stored in volumes, which may be irrecoverable."
+
+[[flag]]
+applies_to = "docker-compose down"
+flag = "--rmi"
+translation_modifier = "also removing images used by the services"
+verdict = "allow"
+rationale = "Deletes images that can be re-pulled or rebuilt, but adds cleanup time."
+
+[[flag]]
+applies_to = "docker-compose down"
+flag = "--remove-orphans"
+translation_modifier = "also removing containers for services no longer in the Compose file"
+verdict = "allow"
+rationale = "Deletes containers not in the current configuration."
+
+[[flag]]
+applies_to = "docker-compose down"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually stopping or removing anything"
+verdict = "allow"
+rationale = "No containers or networks are affected; only shows what would happen."
+
+[[command]]
+path = "docker-compose start"
+translation = "Start existing containers for services defined in the Compose file."
+verdict = "allow"
+rationale = "Starts previously created containers, resuming their processes."
+
+[[command]]
+path = "docker-compose stop"
+translation = "Stop running containers without removing them."
+verdict = "allow"
+rationale = "Interrupts running services; containers can be restarted."
+
+[[command]]
+path = "docker-compose restart"
+translation = "Restart service containers."
+verdict = "allow"
+rationale = "Briefly interrupts running services during the restart cycle."
+
+[[command]]
+path = "docker-compose pause"
+translation = "Pause all processes in the service containers."
+verdict = "allow"
+rationale = "Freezes container processes; may cause timeouts in dependent services."
+
+[[command]]
+path = "docker-compose unpause"
+translation = "Resume paused service containers."
+verdict = "allow"
+rationale = "Resumes previously paused containers; restores normal operation."
+
+# ── Container management ─────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose create"
+translation = "Create containers for services without starting them."
+verdict = "allow"
+rationale = "Creates containers but does not start any processes."
+
+[[command]]
+path = "docker-compose rm"
+translation = "Remove stopped service containers."
+verdict = "allow"
+rationale = "Deletes stopped containers; any data not in a volume is lost."
+
+[[flag]]
+applies_to = "docker-compose rm"
+flag = "-f"
+translation_modifier = "without asking for confirmation"
+verdict = "allow"
+rationale = "Bypasses the confirmation prompt on container removal, which deletes container state."
+
+[[flag]]
+applies_to = "docker-compose rm"
+flag = "-s"
+translation_modifier = "stopping the containers first if they are running"
+verdict = "allow"
+rationale = "Stops running containers before removing them, interrupting active services."
+
+[[flag]]
+applies_to = "docker-compose rm"
+flag = "-v"
+translation_modifier = "also removing anonymous volumes attached to the containers"
+verdict = "require_approval"
+rationale = "Destroys anonymous volumes, permanently losing any data stored in them."
+
+[[flag]]
+applies_to = "docker-compose rm"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually removing anything"
+verdict = "allow"
+rationale = "No containers are removed; only shows what would happen."
+
+[[command]]
+path = "docker-compose kill"
+translation = "Force stop service containers by sending a signal."
+verdict = "allow"
+rationale = "Immediately terminates containers without allowing graceful shutdown."
+
+[[flag]]
+applies_to = "docker-compose kill"
+flag = "-s"
+translation_modifier = "using a specified signal instead of immediate termination signal"
+verdict = "allow"
+rationale = "Allows choosing a different signal; does not increase destructive potential."
+
+[[command]]
+path = "docker-compose scale"
+translation = "Change the number of running containers for a service."
+verdict = "allow"
+rationale = "Creates or removes containers to match the desired count."
+
+# ── Execution ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose run"
+translation = "Run a one-off command in a new service container."
+verdict = "allow"
+rationale = "Creates a new container and executes a command; the command runs with the service's permissions."
+
+[[flag]]
+applies_to = "docker-compose run"
+flag = "--rm"
+translation_modifier = "automatically removing the container when it exits"
+verdict = "allow"
+rationale = "Cleans up the temporary container after use; prevents container accumulation."
+
+[[flag]]
+applies_to = "docker-compose run"
+flag = "--no-deps"
+translation_modifier = "without starting linked services"
+verdict = "allow"
+rationale = "Reduces the scope of what is started; a safety measure."
+
+[[flag]]
+applies_to = "docker-compose run"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually running anything"
+verdict = "allow"
+rationale = "No container is created; only shows what would happen."
+
+[[command]]
+path = "docker-compose exec"
+translation = "Execute a command inside a running service container."
+verdict = "allow"
+rationale = "Runs arbitrary commands inside an existing container with the container's permissions."
+
+[[flag]]
+applies_to = "docker-compose exec"
+flag = "--privileged"
+translation_modifier = "with extended Linux kernel privileges"
+verdict = "require_approval"
+rationale = "Grants near-root access to the host system from within the container."
+
+[[flag]]
+applies_to = "docker-compose exec"
+flag = "-u"
+translation_modifier = "as a specified user"
+verdict = "allow"
+rationale = "Changes the user context for the command but does not add destructive capability."
+
+# ── Build and images ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose build"
+translation = "Build or rebuild images for services defined in the Compose file."
+verdict = "allow"
+rationale = "Builds images locally; does not start containers or modify running services."
+
+[[command]]
+path = "docker-compose pull"
+translation = "Pull the latest images for services defined in the Compose file."
+verdict = "allow"
+rationale = "Downloads images from a registry; does not modify running containers."
+
+[[command]]
+path = "docker-compose push"
+translation = "Push service images to a registry."
+verdict = "require_approval"
+rationale = "Publishes images to a remote registry where others may consume them."
+
+[[command]]
+path = "docker-compose images"
+translation = "List images used by the Compose project containers."
+verdict = "allow"
+rationale = "Read-only operation that lists images used by the defined services without modifying anything."
+
+# ── Information ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose ps"
+translation = "List containers in the Compose project."
+verdict = "allow"
+rationale = "Read-only listing of container status."
+
+[[command]]
+path = "docker-compose logs"
+translation = "View log output from service containers."
+verdict = "allow"
+rationale = "Read-only display of container logs."
+
+[[command]]
+path = "docker-compose top"
+translation = "Display the running processes inside service containers."
+verdict = "allow"
+rationale = "Read-only display of container processes."
+
+[[command]]
+path = "docker-compose config"
+translation = "Parse and display the resolved Compose configuration."
+verdict = "allow"
+rationale = "Read-only validation and display of the Compose file."
+
+[[command]]
+path = "docker-compose events"
+translation = "Stream real-time events from service containers."
+verdict = "allow"
+rationale = "Read-only operation that streams real-time container events without modifying any services."
+
+[[command]]
+path = "docker-compose port"
+translation = "Print the public port mapped to a container's internal port."
+verdict = "allow"
+rationale = "Read-only display of port mappings."
+
+[[command]]
+path = "docker-compose ls"
+translation = "List running Compose projects."
+verdict = "allow"
+rationale = "Read-only listing of projects."
+
+[[command]]
+path = "docker-compose version"
+translation = "Show the Docker Compose version."
+verdict = "allow"
+rationale = "Read-only display of version information."
+
+# ── File operations ──────────────────────────────────────────────────────────
+
+[[command]]
+path = "docker-compose cp"
+translation = "Copy files between a service container and the local filesystem."
+verdict = "allow"
+rationale = "Transfers files in or out of containers, which may overwrite existing files."

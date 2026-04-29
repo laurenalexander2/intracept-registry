@@ -1,0 +1,7 @@
+# tools/rdjpgcom.toml
+
+[[command]]
+path = "rdjpgcom"
+translation = "Display text comments embedded in a JPEG image file."
+verdict = "allow"
+rationale = "Read-only extraction of JPEG metadata."

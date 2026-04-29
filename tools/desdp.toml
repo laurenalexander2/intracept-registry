@@ -1,0 +1,7 @@
+# tools/desdp.toml
+
+[[command]]
+path = "desdp"
+translation = "Display Bonjour service discovery data."
+verdict = "allow"
+rationale = "Read-only display of network service information."

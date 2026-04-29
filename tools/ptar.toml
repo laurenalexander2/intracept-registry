@@ -1,0 +1,7 @@
+# tools/ptar.toml
+
+[[command]]
+path = "ptar"
+translation = "Create, list, or extract tar archives using a Perl implementation."
+verdict = "allow"
+rationale = "Can extract files that overwrite existing data, or create archives from the filesystem."

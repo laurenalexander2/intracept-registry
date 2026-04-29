@@ -1,0 +1,21 @@
+# tools/unexpand.toml
+
+[[command]]
+path = "unexpand"
+translation = "Convert spaces to tabs in text input."
+verdict = "allow"
+rationale = "Writes converted text to the terminal; does not modify input files."
+
+[[flag]]
+applies_to = "unexpand"
+flag = "-a"
+translation_modifier = "converting all sequences of spaces instead of only leading ones"
+verdict = "allow"
+rationale = "Expands the scope of conversion but still only affects output text."
+
+[[flag]]
+applies_to = "unexpand"
+flag = "-t"
+translation_modifier = "using custom tab stop positions"
+verdict = "allow"
+rationale = "Only changes tab stop spacing; no additional risk."

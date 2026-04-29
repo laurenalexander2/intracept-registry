@@ -1,0 +1,7 @@
+# tools/corelist.toml
+
+[[command]]
+path = "corelist"
+translation = "Display which Perl core modules are included in each Perl version."
+verdict = "allow"
+rationale = "Read-only display of Perl core module information."

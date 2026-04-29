@@ -1,0 +1,7 @@
+# tools/rs.toml
+
+[[command]]
+path = "rs"
+translation = "Reshape a data array by rearranging rows and columns."
+verdict = "allow"
+rationale = "Read-only text transformation that writes to the terminal."

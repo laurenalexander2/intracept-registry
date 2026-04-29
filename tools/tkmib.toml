@@ -1,0 +1,7 @@
+# tools/tkmib.toml
+
+[[command]]
+path = "tkmib"
+translation = "Browse and query SNMP MIB trees using a graphical Tk interface."
+verdict = "allow"
+rationale = "Read-only MIB browser; does not modify SNMP devices."

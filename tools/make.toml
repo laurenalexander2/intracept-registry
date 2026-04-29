@@ -1,0 +1,56 @@
+# tools/make.toml
+
+[[command]]
+path = "make"
+translation = "Build targets by running commands defined in a Makefile."
+verdict = "allow"
+rationale = "Executes arbitrary shell commands defined in the Makefile, which may modify files or run programs."
+
+[[flag]]
+applies_to = "make"
+flag = "-n"
+translation_modifier = "simulating the build without actually running any commands"
+verdict = "allow"
+rationale = "Dry-run mode; only prints the commands that would be executed."
+
+[[flag]]
+applies_to = "make"
+flag = "-B"
+translation_modifier = "unconditionally rebuilding all targets regardless of timestamps"
+verdict = "allow"
+rationale = "Forces a full rebuild, which re-runs all build commands including potentially destructive ones."
+
+[[flag]]
+applies_to = "make"
+flag = "-j"
+translation_modifier = "running multiple build jobs in parallel"
+verdict = "allow"
+rationale = "Increases build concurrency; does not change what commands are executed."
+
+[[flag]]
+applies_to = "make"
+flag = "-k"
+translation_modifier = "continuing to build other targets even after errors"
+verdict = "allow"
+rationale = "Changes error handling behavior but does not add destructive capability."
+
+[[flag]]
+applies_to = "make"
+flag = "-i"
+translation_modifier = "ignoring errors from all commands"
+verdict = "allow"
+rationale = "Continues past failures, which may result in an inconsistent build state."
+
+[[flag]]
+applies_to = "make"
+flag = "-f"
+translation_modifier = "using a specified file as the Makefile"
+verdict = "allow"
+rationale = "Changes which Makefile is read; does not add destructive capability."
+
+[[flag]]
+applies_to = "make"
+flag = "-C"
+translation_modifier = "changing to a specified directory before building"
+verdict = "allow"
+rationale = "Changes the working directory; does not add destructive capability."

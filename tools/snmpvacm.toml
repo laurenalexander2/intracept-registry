@@ -1,0 +1,28 @@
+# tools/snmpvacm.toml
+
+[[command]]
+path = "snmpvacm"
+translation = "Manage SNMP access control rules on a network device."
+verdict = "require_approval"
+rationale = "Modifies access control rules on network devices; incorrect changes can expose sensitive data or lock out management access."
+
+[[flag]]
+applies_to = "snmpvacm"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmpvacm"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmpvacm"
+flag = "-Ce"
+translation_modifier = "marking a view subtree as excluded instead of included"
+verdict = "allow"
+rationale = "Changes whether an object tree is blocked or allowed in a view, which directly affects access control."

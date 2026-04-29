@@ -1,0 +1,7 @@
+# tools/mount_exfat.toml — exFAT filesystem mount
+
+[[command]]
+path = "mount_exfat"
+translation = "Mount an exFAT filesystem."
+verdict = "allow"
+rationale = "Attaches a read-write filesystem to the directory tree; files on the volume can be modified."

@@ -1,0 +1,7 @@
+# tools/wsdl.toml
+
+[[command]]
+path = "wsdl"
+translation = "Generate .NET proxy client code from a web service description definition."
+verdict = "allow"
+rationale = "Generates source code files from a service definition; does not modify existing code."

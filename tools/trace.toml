@@ -1,0 +1,7 @@
+# tools/trace.toml
+
+[[command]]
+path = "trace"
+translation = "Record and display kernel trace events for performance analysis."
+verdict = "allow"
+rationale = "Read-only kernel tracing that writes events to a file; does not modify system state."

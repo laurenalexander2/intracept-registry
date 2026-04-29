@@ -1,0 +1,238 @@
+# tools/find.toml
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "find"
+translation = "Search for files and directories matching specified criteria."
+verdict = "allow"
+rationale = "Read-only search that lists matching files without modifying them."
+
+# ── Name and path filters ────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-name"
+translation_modifier = "matching files by name pattern"
+verdict = "allow"
+rationale = "Filters search results by filename; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-iname"
+translation_modifier = "matching files by name pattern, ignoring case"
+verdict = "allow"
+rationale = "Case-insensitive filename filter; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-path"
+translation_modifier = "matching files by their full path pattern"
+verdict = "allow"
+rationale = "Filters by full pathname; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-regex"
+translation_modifier = "matching files whose full path matches a regular expression"
+verdict = "allow"
+rationale = "Filters by regex on the entire path; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-iregex"
+translation_modifier = "matching files whose full path matches a regular expression, ignoring case"
+verdict = "allow"
+rationale = "Case-insensitive regex filter on the full path; does not modify files."
+
+# ── Type and attribute filters ───────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-type"
+translation_modifier = "matching only the specified file type"
+verdict = "allow"
+rationale = "Filters by type (file, directory, symbolic link, etc.); does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-empty"
+translation_modifier = "matching only empty files or directories"
+verdict = "allow"
+rationale = "Filters to empty items; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-size"
+translation_modifier = "matching files by size"
+verdict = "allow"
+rationale = "Filters by file size; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-perm"
+translation_modifier = "matching files by permission bits"
+verdict = "allow"
+rationale = "Filters by file permissions; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-user"
+translation_modifier = "matching files owned by a specific user"
+verdict = "allow"
+rationale = "Filters by file owner; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-group"
+translation_modifier = "matching files belonging to a specific group"
+verdict = "allow"
+rationale = "Filters by file group; does not modify files."
+
+# ── Time filters ─────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-mtime"
+translation_modifier = "matching files by last modification time"
+verdict = "allow"
+rationale = "Filters by modification date; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-mmin"
+translation_modifier = "matching files modified within a specified number of minutes"
+verdict = "allow"
+rationale = "Filters by recent modification time; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-ctime"
+translation_modifier = "matching files by last status change time"
+verdict = "allow"
+rationale = "Filters by inode change date; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-atime"
+translation_modifier = "matching files by last access time"
+verdict = "allow"
+rationale = "Filters by access date; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-newer"
+translation_modifier = "matching files modified more recently than a reference file"
+verdict = "allow"
+rationale = "Compares modification times; does not modify files."
+
+# ── Depth and traversal control ──────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-maxdepth"
+translation_modifier = "limiting the search to a specified number of directory levels"
+verdict = "allow"
+rationale = "Restricts the search depth; a scope-limiting option."
+
+[[flag]]
+applies_to = "find"
+flag = "-mindepth"
+translation_modifier = "skipping results above a specified directory depth"
+verdict = "allow"
+rationale = "Excludes shallow results from the output; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-depth"
+translation_modifier = "processing directory contents before the directory itself"
+verdict = "allow"
+rationale = "Changes traversal order; does not modify files on its own."
+
+[[flag]]
+applies_to = "find"
+flag = "-prune"
+translation_modifier = "skipping the contents of matched directories"
+verdict = "allow"
+rationale = "Prevents descent into matching directories; a scope-limiting option."
+
+[[flag]]
+applies_to = "find"
+flag = "-L"
+translation_modifier = "following symbolic links during traversal"
+verdict = "allow"
+rationale = "Follows symbolic links, which may expand the search scope but remains read-only by default."
+
+[[flag]]
+applies_to = "find"
+flag = "-x"
+translation_modifier = "without crossing filesystem boundaries"
+verdict = "allow"
+rationale = "Restricts search to the current filesystem; a scope-limiting option."
+
+# ── Boolean operators ────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-not"
+translation_modifier = "inverting the next condition"
+verdict = "allow"
+rationale = "Negates a filter expression; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-or"
+translation_modifier = "matching if either the previous or the next condition is true"
+verdict = "allow"
+rationale = "Combines filter expressions with logical OR; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-and"
+translation_modifier = "requiring both the previous and the next condition to be true"
+verdict = "allow"
+rationale = "Combines filter expressions with logical AND; does not modify files."
+
+# ── Actions ──────────────────────────────────────────────────────────────────
+
+[[flag]]
+applies_to = "find"
+flag = "-print"
+translation_modifier = "printing each matching path on its own line"
+verdict = "allow"
+rationale = "Default action; outputs matching paths without modifying files."
+
+[[flag]]
+applies_to = "find"
+flag = "-print0"
+translation_modifier = "separating results with null characters instead of newlines"
+verdict = "allow"
+rationale = "Changes output formatting for safe piping to xargs; does not modify files."
+
+[[flag]]
+applies_to = "find"
+flag = "-exec"
+translation_modifier = "running a specified command on each matching file"
+verdict = "allow"
+rationale = "Executes an arbitrary command for each result; the risk depends entirely on the command being run."
+
+[[flag]]
+applies_to = "find"
+flag = "-execdir"
+translation_modifier = "running a specified command from each matching file's directory"
+verdict = "allow"
+rationale = "Executes a command from the file's directory; slightly safer than -exec but risk still depends on the command."
+
+[[flag]]
+applies_to = "find"
+flag = "-ok"
+translation_modifier = "prompting for confirmation before running a command on each matching file"
+verdict = "allow"
+rationale = "Like -exec but asks before each execution, preventing accidental operations."
+
+[[flag]]
+applies_to = "find"
+flag = "-delete"
+translation_modifier = "deleting every matching file"
+verdict = "require_approval"
+rationale = "Permanently removes all files matching the search criteria without confirmation or recoverability."

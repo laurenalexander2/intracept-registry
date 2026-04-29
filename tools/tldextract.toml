@@ -1,0 +1,7 @@
+# tools/tldextract.toml
+
+[[command]]
+path = "tldextract"
+translation = "Extract the top-level domain, domain, and subdomain from a URL."
+verdict = "allow"
+rationale = "Read-only URL parsing; modifies nothing."

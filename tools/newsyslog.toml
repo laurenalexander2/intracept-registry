@@ -1,0 +1,14 @@
+# tools/newsyslog.toml — Log file rotation utility
+
+[[command]]
+path = "newsyslog"
+translation = "Rotate, compress, and manage system log files to keep them at manageable sizes."
+verdict = "allow"
+rationale = "Archives and truncates log files, which may remove recent log data if misconfigured."
+
+[[flag]]
+applies_to = "newsyslog"
+flag = "-n"
+translation_modifier = "only printing what would be done without actually rotating any logs"
+verdict = "allow"
+rationale = "Dry run that does not modify any log files."

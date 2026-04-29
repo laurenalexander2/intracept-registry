@@ -1,0 +1,84 @@
+# tools/snmptable.toml
+
+[[command]]
+path = "snmptable"
+translation = "Retrieve and display a table of management data from a network device using SNMP."
+verdict = "allow"
+rationale = "Read-only table query; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Cb"
+translation_modifier = "showing abbreviated column headings"
+verdict = "allow"
+rationale = "Only changes the display format."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-CB"
+translation_modifier = "using individual requests instead of bulk requests"
+verdict = "allow"
+rationale = "Only changes the retrieval method; still read-only."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Cf"
+translation_modifier = "using a custom column separator for machine-readable output"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Ch"
+translation_modifier = "showing only the column headings without data"
+verdict = "allow"
+rationale = "Only restricts what is displayed."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-CH"
+translation_modifier = "hiding the column headings"
+verdict = "allow"
+rationale = "Only changes the display format."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Ci"
+translation_modifier = "including the row index in the output"
+verdict = "allow"
+rationale = "Only adds additional read-only information to the display."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Cl"
+translation_modifier = "left-justifying the data in each column"
+verdict = "allow"
+rationale = "Only changes the display alignment."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Cr"
+translation_modifier = "setting the number of rows to retrieve per request"
+verdict = "allow"
+rationale = "Only controls the batch size; still read-only."
+
+[[flag]]
+applies_to = "snmptable"
+flag = "-Cw"
+translation_modifier = "wrapping the table to fit within a specific line width"
+verdict = "allow"
+rationale = "Only changes the display layout."

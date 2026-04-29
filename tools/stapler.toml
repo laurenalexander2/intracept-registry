@@ -1,0 +1,47 @@
+# tools/stapler.toml
+
+[[command]]
+path = "stapler"
+translation = "Attach or validate notarization tickets on macOS applications and installers."
+verdict = "allow"
+rationale = "Modifies signed bundles and disk images by attaching notarization tickets; the code itself is unchanged."
+
+[[command]]
+path = "stapler staple"
+translation = "Retrieve and attach a notarization ticket to a signed file."
+verdict = "allow"
+rationale = "Modifies the file by embedding the notarization ticket; reversible by re-signing."
+
+[[command]]
+path = "stapler validate"
+translation = "Validate an existing stapled notarization ticket."
+verdict = "allow"
+rationale = "Read-only validation of the attached ticket."
+
+[[flag]]
+applies_to = "stapler staple"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of diagnostic output displayed."
+
+[[flag]]
+applies_to = "stapler staple"
+flag = "-q"
+translation_modifier = "suppressing all output and returning only an exit code"
+verdict = "allow"
+rationale = "Only reduces the amount of output; does not change behavior."
+
+[[flag]]
+applies_to = "stapler validate"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only increases the amount of diagnostic output displayed."
+
+[[flag]]
+applies_to = "stapler validate"
+flag = "-q"
+translation_modifier = "suppressing all output and returning only an exit code"
+verdict = "allow"
+rationale = "Only reduces the amount of output; does not change behavior."

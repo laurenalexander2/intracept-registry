@@ -1,0 +1,77 @@
+# tools/test.toml
+
+[[command]]
+path = "test"
+translation = "Evaluate a condition and return success or failure."
+verdict = "allow"
+rationale = "Read-only evaluation that only sets an exit code; modifies nothing."
+
+[[flag]]
+applies_to = "test"
+flag = "-e"
+translation_modifier = "checking whether a file exists"
+verdict = "allow"
+rationale = "Read-only file existence check."
+
+[[flag]]
+applies_to = "test"
+flag = "-f"
+translation_modifier = "checking whether a path is a regular file"
+verdict = "allow"
+rationale = "Read-only file type check."
+
+[[flag]]
+applies_to = "test"
+flag = "-d"
+translation_modifier = "checking whether a path is a directory"
+verdict = "allow"
+rationale = "Read-only directory check."
+
+[[flag]]
+applies_to = "test"
+flag = "-r"
+translation_modifier = "checking whether a file is readable"
+verdict = "allow"
+rationale = "Read-only permission check."
+
+[[flag]]
+applies_to = "test"
+flag = "-w"
+translation_modifier = "checking whether a file is writable"
+verdict = "allow"
+rationale = "Read-only permission check."
+
+[[flag]]
+applies_to = "test"
+flag = "-x"
+translation_modifier = "checking whether a file is executable"
+verdict = "allow"
+rationale = "Read-only permission check."
+
+[[flag]]
+applies_to = "test"
+flag = "-s"
+translation_modifier = "checking whether a file exists and is not empty"
+verdict = "allow"
+rationale = "Read-only size check."
+
+[[flag]]
+applies_to = "test"
+flag = "-L"
+translation_modifier = "checking whether a path is a symbolic link"
+verdict = "allow"
+rationale = "Read-only link check."
+
+[[flag]]
+applies_to = "test"
+flag = "-z"
+translation_modifier = "checking whether a string is empty"
+verdict = "allow"
+rationale = "Read-only string length check."
+
+[[flag]]
+applies_to = "test"
+flag = "-n"
+translation_modifier = "checking whether a string is non-empty"
+verdict = "allow"
+rationale = "Read-only string length check."

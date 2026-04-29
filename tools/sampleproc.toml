@@ -1,0 +1,7 @@
+# tools/sampleproc.toml
+
+[[command]]
+path = "sampleproc"
+translation = "Sample running processes at regular intervals using DTrace."
+verdict = "allow"
+rationale = "Read-only profiling of process execution."

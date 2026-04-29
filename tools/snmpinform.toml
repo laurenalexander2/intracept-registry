@@ -1,0 +1,7 @@
+# tools/snmpinform.toml
+
+[[command]]
+path = "snmpinform"
+translation = "Send an SNMP inform notification to a remote manager with acknowledgment."
+verdict = "allow"
+rationale = "Sends a notification to a monitoring system; may trigger alerts or automated responses."

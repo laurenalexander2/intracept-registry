@@ -1,0 +1,7 @@
+# tools/dbilogstrip5.34.toml
+
+[[command]]
+path = "dbilogstrip5.34"
+translation = "Strip timestamps from DBI log files for Perl 5.34."
+verdict = "allow"
+rationale = "Text processing tool that outputs to the terminal."

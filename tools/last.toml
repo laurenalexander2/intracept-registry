@@ -1,0 +1,63 @@
+# tools/last.toml
+
+[[command]]
+path = "last"
+translation = "Display a list of previous user login sessions."
+verdict = "allow"
+rationale = "Read-only query of the login history database."
+
+[[flag]]
+applies_to = "last"
+flag = "-n"
+translation_modifier = "limiting the output to a specific number of entries"
+verdict = "allow"
+rationale = "Only restricts how many entries are displayed."
+
+[[flag]]
+applies_to = "last"
+flag = "-f"
+translation_modifier = "reading login records from a specific file instead of the default"
+verdict = "allow"
+rationale = "Only changes which log file is read; still a read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-d"
+translation_modifier = "showing a snapshot of who was logged in at a specific date and time"
+verdict = "allow"
+rationale = "Only filters the output to a point in time; read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-h"
+translation_modifier = "filtering results to a specific remote host"
+verdict = "allow"
+rationale = "Only restricts which entries are displayed; read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-t"
+translation_modifier = "filtering results to a specific terminal"
+verdict = "allow"
+rationale = "Only restricts which entries are displayed; read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-s"
+translation_modifier = "showing session durations in seconds"
+verdict = "allow"
+rationale = "Only changes the time format in the output; read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-w"
+translation_modifier = "showing seconds in the duration field along with days, hours, and minutes"
+verdict = "allow"
+rationale = "Only widens the time format in the output; read-only operation."
+
+[[flag]]
+applies_to = "last"
+flag = "-y"
+translation_modifier = "showing the year in session start times"
+verdict = "allow"
+rationale = "Only adds the year to the output; read-only operation."

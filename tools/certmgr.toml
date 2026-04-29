@@ -1,0 +1,7 @@
+# tools/certmgr.toml
+
+[[command]]
+path = "certmgr"
+translation = "Manage Mono certificate stores."
+verdict = "allow"
+rationale = "Adds or removes certificates from the Mono trust store."

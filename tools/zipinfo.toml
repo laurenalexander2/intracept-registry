@@ -1,0 +1,7 @@
+# tools/zipinfo.toml
+
+[[command]]
+path = "zipinfo"
+translation = "Display detailed information about files within a zip archive."
+verdict = "allow"
+rationale = "Read-only display of archive metadata; modifies nothing."

@@ -1,0 +1,35 @@
+# tools/pg_ctl.toml — PostgreSQL utility
+
+[[command]]
+path = "pg_ctl"
+translation = "Initialize, start, stop, or control a PostgreSQL database server."
+verdict = "allow"
+rationale = "Controls the lifecycle of a database server; stopping it interrupts all connections."
+
+[[flag]]
+applies_to = "pg_ctl"
+flag = "start"
+translation_modifier = "starting the database server"
+verdict = "allow"
+rationale = "Starts the server, which begins accepting connections and consuming resources."
+
+[[flag]]
+applies_to = "pg_ctl"
+flag = "stop"
+translation_modifier = "stopping the database server"
+verdict = "allow"
+rationale = "Shuts down the server, disconnecting all active clients."
+
+[[flag]]
+applies_to = "pg_ctl"
+flag = "restart"
+translation_modifier = "restarting the database server"
+verdict = "allow"
+rationale = "Stops and starts the server, briefly interrupting all connections."
+
+[[flag]]
+applies_to = "pg_ctl"
+flag = "promote"
+translation_modifier = "promoting a standby server to primary"
+verdict = "require_approval"
+rationale = "Permanently changes a replica to a writable primary, which cannot be reversed without re-creating the standby."

@@ -1,0 +1,35 @@
+# tools/mdfind.toml
+
+[[command]]
+path = "mdfind"
+translation = "Search for files using the macOS Spotlight metadata index."
+verdict = "allow"
+rationale = "Read-only search of the Spotlight index; does not modify any files."
+
+[[flag]]
+applies_to = "mdfind"
+flag = "-onlyin"
+translation_modifier = "limiting the search to a specific directory"
+verdict = "allow"
+rationale = "Only narrows the search scope."
+
+[[flag]]
+applies_to = "mdfind"
+flag = "-name"
+translation_modifier = "searching only by file name"
+verdict = "allow"
+rationale = "Only changes what metadata is searched."
+
+[[flag]]
+applies_to = "mdfind"
+flag = "-count"
+translation_modifier = "showing only the number of matching files"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "mdfind"
+flag = "-live"
+translation_modifier = "continuously updating the count as files change"
+verdict = "allow"
+rationale = "Keeps monitoring for changes; still a read-only operation."

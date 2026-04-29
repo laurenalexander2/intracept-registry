@@ -1,0 +1,7 @@
+# tools/crlrefresh.toml
+
+[[command]]
+path = "crlrefresh"
+translation = "Refresh certificate revocation lists."
+verdict = "allow"
+rationale = "Updates cached CRL data; does not modify certificates."

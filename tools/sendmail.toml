@@ -1,0 +1,77 @@
+# tools/sendmail.toml
+
+[[command]]
+path = "sendmail"
+translation = "Send email messages via the Postfix mail system."
+verdict = "require_approval"
+rationale = "Delivers email to recipients; messages cannot be unsent once delivered."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-bp"
+translation_modifier = "listing the mail queue instead of sending"
+verdict = "allow"
+rationale = "Read-only display of queued messages."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-bs"
+translation_modifier = "running as a stand-alone SMTP server on standard input and output"
+verdict = "allow"
+rationale = "Accepts SMTP commands which can relay mail; access controls are disabled by default in this mode."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-bv"
+translation_modifier = "verifying recipient addresses without delivering"
+verdict = "allow"
+rationale = "Only checks address validity and sends a report; no message is delivered."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-bd"
+translation_modifier = "starting as a mail server background process"
+verdict = "allow"
+rationale = "Starts the mail system to accept incoming connections; equivalent to postfix start."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-f"
+translation_modifier = "setting the envelope sender address"
+verdict = "allow"
+rationale = "Specifies return address for bounce messages; no destructive action."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-i"
+translation_modifier = "without treating a line with only a dot as end of input"
+verdict = "allow"
+rationale = "Changes input parsing behavior; no state modification."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-t"
+translation_modifier = "extracting recipients from message headers"
+verdict = "allow"
+rationale = "Reads To/Cc/Bcc headers for delivery; no additional risk beyond normal sending."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-N"
+translation_modifier = "controlling which delivery status notifications are sent back"
+verdict = "allow"
+rationale = "Only changes when bounce notifications are generated."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-G"
+translation_modifier = "treating the message as a relay submission instead of an initial user submission"
+verdict = "allow"
+rationale = "Changes address rewriting behavior; does not alter the message content."
+
+[[flag]]
+applies_to = "sendmail"
+flag = "-F"
+translation_modifier = "setting the sender's full display name"
+verdict = "allow"
+rationale = "Only changes the display name on outgoing messages."

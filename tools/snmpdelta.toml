@@ -1,0 +1,91 @@
+# tools/snmpdelta.toml
+
+[[command]]
+path = "snmpdelta"
+translation = "Monitor how counter values change over time on a network device using SNMP."
+verdict = "allow"
+rationale = "Read-only monitoring of SNMP counters; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-v"
+translation_modifier = "using a specific SNMP protocol version"
+verdict = "allow"
+rationale = "Only selects which version of the protocol to use."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-c"
+translation_modifier = "authenticating with a specific community string"
+verdict = "allow"
+rationale = "Only specifies the credential used to authenticate."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Cf"
+translation_modifier = "stopping on errors instead of retrying without the failed item"
+verdict = "allow"
+rationale = "Only changes error-handling behavior on the client side."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Ct"
+translation_modifier = "using the device's own clock to measure time intervals"
+verdict = "allow"
+rationale = "Only changes how time intervals are calculated."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Cs"
+translation_modifier = "including a timestamp in the output"
+verdict = "allow"
+rationale = "Only adds timing information to the display."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-CS"
+translation_modifier = "including a total sum of all counters in addition to individual values"
+verdict = "allow"
+rationale = "Only adds summary information to the display."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Cm"
+translation_modifier = "printing the highest value ever seen for each counter"
+verdict = "allow"
+rationale = "Only adds peak information to the display."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Cp"
+translation_modifier = "setting the number of seconds between each poll"
+verdict = "allow"
+rationale = "Only controls how often the device is queried."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-CP"
+translation_modifier = "grouping multiple polls into a reporting period and showing averages"
+verdict = "allow"
+rationale = "Only changes how results are summarized in the display."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-CT"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Only changes the output to a tabular format."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-Cl"
+translation_modifier = "writing output to files named after each monitored counter"
+verdict = "allow"
+rationale = "Creates log files on the local system; does not modify the remote device."
+
+[[flag]]
+applies_to = "snmpdelta"
+flag = "-CF"
+translation_modifier = "reading monitoring settings from a configuration file"
+verdict = "allow"
+rationale = "Only changes where input parameters are read from."

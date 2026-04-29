@@ -1,0 +1,7 @@
+# tools/snmp-bridge-mib.toml
+
+[[command]]
+path = "snmp-bridge-mib"
+translation = "Provide SNMP bridge MIB information from the local system."
+verdict = "allow"
+rationale = "Read-only bridge MIB data provider; does not modify network configuration."

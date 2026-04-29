@@ -1,0 +1,7 @@
+# tools/dnctl.toml
+
+[[command]]
+path = "dnctl"
+translation = "Manage dummynet traffic shaping rules."
+verdict = "require_approval"
+rationale = "Modifies network traffic shaping rules that affect all network connections."

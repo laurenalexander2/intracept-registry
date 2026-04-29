@@ -1,0 +1,7 @@
+# tools/ncal.toml — Calendar display
+
+[[command]]
+path = "ncal"
+translation = "Display a calendar in a compact format."
+verdict = "allow"
+rationale = "Read-only display of calendar information; modifies nothing."

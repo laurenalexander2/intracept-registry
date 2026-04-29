@@ -1,0 +1,7 @@
+# tools/syslog.toml
+
+[[command]]
+path = "syslog"
+translation = "Query and manage the system log."
+verdict = "allow"
+rationale = "Primarily reads log entries; can send log messages but does not modify existing logs."

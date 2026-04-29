@@ -1,0 +1,7 @@
+# tools/dash.toml
+
+[[command]]
+path = "dash"
+translation = "Run the Debian Almquist shell, a lightweight standards-compliant shell."
+verdict = "allow"
+rationale = "Executes arbitrary shell commands with full system access."

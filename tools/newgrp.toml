@@ -1,0 +1,7 @@
+# tools/newgrp.toml — Group change utility
+
+[[command]]
+path = "newgrp"
+translation = "Start a new shell session with a different group identity."
+verdict = "allow"
+rationale = "Changes the effective group for the new shell session; the original session is unaffected."

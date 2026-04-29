@@ -1,0 +1,7 @@
+# tools/dmcs.toml
+
+[[command]]
+path = "dmcs"
+translation = "Mono C# compiler for .NET 4.0."
+verdict = "allow"
+rationale = "Compiles C# source code locally."

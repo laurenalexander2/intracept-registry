@@ -1,0 +1,7 @@
+# tools/dtd2xsd.toml
+
+[[command]]
+path = "dtd2xsd"
+translation = "Convert document type definition schemas to XML schema format."
+verdict = "allow"
+rationale = "Schema conversion that outputs to the terminal."

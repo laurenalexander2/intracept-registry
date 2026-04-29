@@ -1,0 +1,7 @@
+# tools/parl5.34.toml — PAR loader (Perl 5.34)
+
+[[command]]
+path = "parl5.34"
+translation = "Run the PAR Perl archive loader using Perl 5.34."
+verdict = "allow"
+rationale = "Executes arbitrary Perl code from an archive."

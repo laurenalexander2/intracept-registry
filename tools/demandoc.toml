@@ -1,0 +1,7 @@
+# tools/demandoc.toml
+
+[[command]]
+path = "demandoc"
+translation = "Extract text from manual pages."
+verdict = "allow"
+rationale = "Read-only text extraction from man page files."

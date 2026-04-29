@@ -1,0 +1,35 @@
+# tools/monop.toml — Mono type inspector
+
+[[command]]
+path = "monop"
+translation = "Display the public members and definition of a .NET type or assembly."
+verdict = "allow"
+rationale = "Read-only inspection of assembly types; produces only text output."
+
+[[flag]]
+applies_to = "monop"
+flag = "-d"
+translation_modifier = "showing only members declared in the type itself"
+verdict = "allow"
+rationale = "Filters output to exclude inherited members; still read-only."
+
+[[flag]]
+applies_to = "monop"
+flag = "-p"
+translation_modifier = "including private members"
+verdict = "allow"
+rationale = "Shows additional member details; still read-only."
+
+[[flag]]
+applies_to = "monop"
+flag = "--refs"
+translation_modifier = "listing the referenced assemblies instead of type members"
+verdict = "allow"
+rationale = "Read-only listing of assembly references."
+
+[[flag]]
+applies_to = "monop"
+flag = "-s"
+translation_modifier = "searching across all available scopes"
+verdict = "allow"
+rationale = "Broadens the type search; still read-only."

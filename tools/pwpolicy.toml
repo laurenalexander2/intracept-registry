@@ -1,0 +1,7 @@
+# tools/pwpolicy.toml
+
+[[command]]
+path = "pwpolicy"
+translation = "View or set password policies for macOS user accounts."
+verdict = "require_approval"
+rationale = "Changes password requirements that can lock out users who do not meet the new policy."

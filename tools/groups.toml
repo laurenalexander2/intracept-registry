@@ -1,0 +1,7 @@
+# tools/groups.toml
+
+[[command]]
+path = "groups"
+translation = "Display the group memberships of a user."
+verdict = "allow"
+rationale = "Read-only query that prints group names."

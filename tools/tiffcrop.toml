@@ -1,0 +1,7 @@
+# tools/tiffcrop.toml
+
+[[command]]
+path = "tiffcrop"
+translation = "Crop and extract regions from TIFF images."
+verdict = "allow"
+rationale = "Creates a new output file with cropped content; original is unchanged."

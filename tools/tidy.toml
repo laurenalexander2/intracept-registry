@@ -1,0 +1,14 @@
+# tools/tidy.toml
+
+[[command]]
+path = "tidy"
+translation = "Clean up and reformat HTML and XML files."
+verdict = "allow"
+rationale = "Writes reformatted output to the terminal by default; original files are unchanged unless -m is used."
+
+[[flag]]
+applies_to = "tidy"
+flag = "-m"
+translation_modifier = "modifying the input file in place"
+verdict = "allow"
+rationale = "Overwrites the original file with the tidied version; original formatting is lost."

@@ -1,0 +1,61 @@
+# tools/swift.toml
+
+[[command]]
+path = "swift"
+translation = "Run the Swift programming language compiler and interpreter."
+verdict = "allow"
+rationale = "Can compile and execute arbitrary Swift code with full system access."
+
+[[command]]
+path = "swift build"
+translation = "Compile a Swift package and its dependencies."
+verdict = "allow"
+rationale = "Compiles code locally; does not execute the built binary."
+
+[[command]]
+path = "swift run"
+translation = "Compile and execute a Swift package's executable target."
+verdict = "allow"
+rationale = "Builds and runs the program, which may perform any action depending on the code."
+
+[[command]]
+path = "swift test"
+translation = "Run the tests for a Swift package."
+verdict = "allow"
+rationale = "Compiles and runs test code locally."
+
+[[command]]
+path = "swift package"
+translation = "Manage Swift package dependencies and configuration."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "swift package init"
+translation = "Create a new Swift package in the current directory."
+verdict = "allow"
+rationale = "Creates template files; does not overwrite existing files."
+
+[[command]]
+path = "swift package update"
+translation = "Update package dependencies to their latest allowed versions."
+verdict = "allow"
+rationale = "Changes resolved dependency versions, which may introduce breaking changes."
+
+[[command]]
+path = "swift package resolve"
+translation = "Resolve package dependencies without building."
+verdict = "allow"
+rationale = "Downloads dependency source code but does not compile or execute anything."
+
+[[command]]
+path = "swift package clean"
+translation = "Remove the build artifacts directory for the Swift package."
+verdict = "allow"
+rationale = "Deletes only the build cache; source code is untouched."
+
+[[command]]
+path = "swift package reset"
+translation = "Reset the complete cache and build directory for the Swift package."
+verdict = "allow"
+rationale = "Deletes all cached data including resolved dependencies; everything is re-fetched on next build."

@@ -1,0 +1,7 @@
+# tools/mount_tmpfs.toml — tmpfs (memory-backed) filesystem mount
+
+[[command]]
+path = "mount_tmpfs"
+translation = "Mount a temporary memory-backed filesystem."
+verdict = "allow"
+rationale = "Creates a read-write filesystem in memory; data is lost on unmount or reboot."

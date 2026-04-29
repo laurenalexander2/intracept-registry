@@ -1,0 +1,7 @@
+# tools/dbiproxy.toml
+
+[[command]]
+path = "dbiproxy"
+translation = "Proxy DBI database connections over the network."
+verdict = "allow"
+rationale = "Opens a network service that forwards database connections."

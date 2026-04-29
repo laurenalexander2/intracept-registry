@@ -1,0 +1,14 @@
+# tools/pod2readme.toml
+
+[[command]]
+path = "pod2readme"
+translation = "Convert Perl Pod documentation to a plain text readme file."
+verdict = "allow"
+rationale = "Read-only conversion that writes to the terminal."
+
+[[flag]]
+applies_to = "pod2readme"
+flag = "--force"
+translation_modifier = "overwriting the existing output file"
+verdict = "allow"
+rationale = "Bypasses the overwrite prompt, silently replacing the existing output file."

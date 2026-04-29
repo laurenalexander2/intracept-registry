@@ -1,0 +1,7 @@
+# tools/aea.toml
+
+[[command]]
+path = "aea"
+translation = "Create or extract Apple Encrypted Archives."
+verdict = "allow"
+rationale = "Creates or extracts encrypted archives."

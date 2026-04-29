@@ -1,0 +1,7 @@
+# tools/sha384.toml
+
+[[command]]
+path = "sha384"
+translation = "Compute SHA-384 message digests for files."
+verdict = "allow"
+rationale = "Read-only hash computation; modifies nothing."

@@ -1,0 +1,84 @@
+# tools/lpadmin.toml
+
+[[command]]
+path = "lpadmin"
+translation = "Configure CUPS printers and printer classes."
+verdict = "allow"
+rationale = "Modifies the print system configuration, adding, removing, or changing printers."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-d"
+translation_modifier = "setting the default printer"
+verdict = "allow"
+rationale = "Only changes which printer is used by default."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-p"
+translation_modifier = "configuring a specific printer"
+verdict = "allow"
+rationale = "Creates or modifies a printer queue's settings."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-x"
+translation_modifier = "deleting a printer or class and canceling its pending jobs"
+verdict = "require_approval"
+rationale = "Permanently removes a printer and discards all its pending print jobs."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-v"
+translation_modifier = "setting the device address for the printer"
+verdict = "allow"
+rationale = "Changes where print jobs are sent; an incorrect address will cause print failures."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-m"
+translation_modifier = "setting the printer driver model"
+verdict = "allow"
+rationale = "Changes how print data is formatted for the printer."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-E"
+translation_modifier = "enabling the printer to accept and process jobs"
+verdict = "allow"
+rationale = "Activates the printer queue so it begins accepting and printing jobs."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-c"
+translation_modifier = "adding the printer to a class"
+verdict = "allow"
+rationale = "Groups the printer with others; creates the class if it does not exist."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-r"
+translation_modifier = "removing the printer from a class"
+verdict = "allow"
+rationale = "Removes the printer from a group and deletes the class if it becomes empty."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-u"
+translation_modifier = "setting user-level access controls on the printer"
+verdict = "allow"
+rationale = "Restricts or grants printing access for specific users or groups."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-D"
+translation_modifier = "setting a text description for the printer"
+verdict = "allow"
+rationale = "Only changes the display description; does not affect printing behavior."
+
+[[flag]]
+applies_to = "lpadmin"
+flag = "-L"
+translation_modifier = "setting a text location for the printer"
+verdict = "allow"
+rationale = "Only changes the display location; does not affect printing behavior."

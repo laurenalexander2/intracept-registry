@@ -1,0 +1,7 @@
+# tools/setuids.d.toml
+
+[[command]]
+path = "setuids.d"
+translation = "Monitor privilege-elevation system calls as they occur using DTrace."
+verdict = "allow"
+rationale = "Read-only monitoring of privilege-elevation events; modifies nothing."

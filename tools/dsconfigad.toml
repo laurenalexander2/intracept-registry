@@ -1,0 +1,7 @@
+# tools/dsconfigad.toml
+
+[[command]]
+path = "dsconfigad"
+translation = "Configure Active Directory binding on macOS."
+verdict = "require_approval"
+rationale = "Modifies domain binding that affects user authentication."

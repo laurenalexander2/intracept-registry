@@ -1,0 +1,56 @@
+# tools/vacuumlo.toml
+
+[[command]]
+path = "vacuumlo"
+translation = "Remove orphaned large objects from a PostgreSQL database."
+verdict = "require_approval"
+rationale = "Permanently deletes large objects that are not referenced; incorrect detection may remove needed data."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-n"
+translation_modifier = "simulating the removal without actually deleting anything"
+verdict = "allow"
+rationale = "No data is removed; only shows what would be done."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-l"
+translation_modifier = "limiting the number of large objects removed per transaction"
+verdict = "allow"
+rationale = "Reduces the number of deletions per transaction, lowering lock contention."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-v"
+translation_modifier = "displaying detailed progress information"
+verdict = "allow"
+rationale = "Adds verbose diagnostic output; does not change the operation."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-h"
+translation_modifier = "on a specified database server host"
+verdict = "allow"
+rationale = "Specifies which server to connect to; does not change the operation."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-p"
+translation_modifier = "on a specified port"
+verdict = "allow"
+rationale = "Specifies which port to connect on; does not change the operation."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-U"
+translation_modifier = "connecting as a specified user"
+verdict = "allow"
+rationale = "Specifies the authentication identity; the user's permissions determine what is allowed."
+
+[[flag]]
+applies_to = "vacuumlo"
+flag = "-w"
+translation_modifier = "without prompting for a password"
+verdict = "allow"
+rationale = "Relies on passwordless authentication methods, which may indicate a less secure connection configuration."

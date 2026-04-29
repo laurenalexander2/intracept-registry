@@ -1,0 +1,84 @@
+# tools/pmset.toml
+
+[[command]]
+path = "pmset"
+translation = "View or change macOS power management settings such as sleep timers and wake behavior."
+verdict = "require_approval"
+rationale = "Modifies system power settings that affect sleep, wake, and energy behavior."
+
+[[flag]]
+applies_to = "pmset"
+flag = "-g"
+translation_modifier = "displaying current power management settings"
+verdict = "allow"
+rationale = "Read-only display of current settings."
+
+[[flag]]
+applies_to = "pmset"
+flag = "-a"
+translation_modifier = "applying the setting to all power sources"
+verdict = "allow"
+rationale = "Widens the scope of changes to battery, charger, and backup battery power sources."
+
+[[flag]]
+applies_to = "pmset"
+flag = "-b"
+translation_modifier = "applying the setting only when running on battery"
+verdict = "allow"
+rationale = "Limits the scope of changes to battery power only."
+
+[[flag]]
+applies_to = "pmset"
+flag = "-c"
+translation_modifier = "applying the setting only when connected to wall power"
+verdict = "allow"
+rationale = "Limits the scope of changes to charger power only."
+
+[[flag]]
+applies_to = "pmset"
+flag = "-u"
+translation_modifier = "applying the setting only when running on backup battery power"
+verdict = "allow"
+rationale = "Limits the scope of changes to backup battery power only."
+
+[[flag]]
+applies_to = "pmset"
+flag = "sleepnow"
+translation_modifier = "putting the system to sleep immediately"
+verdict = "allow"
+rationale = "Immediately sleeps the system, interrupting all active work."
+
+[[flag]]
+applies_to = "pmset"
+flag = "displaysleepnow"
+translation_modifier = "putting the display to sleep immediately"
+verdict = "allow"
+rationale = "Only turns off the display; the system continues running."
+
+[[flag]]
+applies_to = "pmset"
+flag = "restoredefaults"
+translation_modifier = "resetting all power management settings to factory defaults"
+verdict = "allow"
+rationale = "Overwrites all customized power settings; reversible by reconfiguring."
+
+[[flag]]
+applies_to = "pmset"
+flag = "schedule"
+translation_modifier = "scheduling a future sleep, wake, shutdown, or power-on event"
+verdict = "allow"
+rationale = "Schedules an automatic power event that may interrupt work or shut down the system."
+
+[[flag]]
+applies_to = "pmset"
+flag = "repeat"
+translation_modifier = "scheduling recurring daily or weekly power events"
+verdict = "allow"
+rationale = "Sets up repeating power on/off events that will occur automatically."
+
+[[flag]]
+applies_to = "pmset"
+flag = "noidle"
+translation_modifier = "preventing the system from sleeping until cancelled"
+verdict = "allow"
+rationale = "Keeps the system awake; no destructive action."

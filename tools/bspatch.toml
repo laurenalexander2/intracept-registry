@@ -1,0 +1,7 @@
+# tools/bspatch.toml
+
+[[command]]
+path = "bspatch"
+translation = "Apply a binary patch to a file."
+verdict = "allow"
+rationale = "Modifies a file by applying a binary diff."

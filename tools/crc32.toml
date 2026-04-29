@@ -1,0 +1,7 @@
+# tools/crc32.toml
+
+[[command]]
+path = "crc32"
+translation = "Compute CRC32 checksums."
+verdict = "allow"
+rationale = "Read-only checksum computation."

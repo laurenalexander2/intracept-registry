@@ -1,0 +1,7 @@
+# tools/nmedit.toml — Symbol visibility editor
+
+[[command]]
+path = "nmedit"
+translation = "Change global symbols to local symbols in an object file to control exported interfaces."
+verdict = "allow"
+rationale = "Modifies the symbol table of an object file, which affects what other code can link against it."

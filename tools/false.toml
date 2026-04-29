@@ -1,0 +1,7 @@
+# tools/false.toml
+
+[[command]]
+path = "false"
+translation = "Exit with a non-zero status code indicating failure."
+verdict = "allow"
+rationale = "Does nothing except return a failure exit code."

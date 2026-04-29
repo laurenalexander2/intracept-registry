@@ -1,0 +1,7 @@
+# tools/docutils.toml
+
+[[command]]
+path = "docutils"
+translation = "Convert reStructuredText documents to various formats."
+verdict = "allow"
+rationale = "Generates output files from documentation source; does not modify originals."

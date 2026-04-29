@@ -1,0 +1,7 @@
+# tools/resgen.toml
+
+[[command]]
+path = "resgen"
+translation = "Convert between .NET resource file formats."
+verdict = "allow"
+rationale = "Creates a new resource file; does not modify the source."

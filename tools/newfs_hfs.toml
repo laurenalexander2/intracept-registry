@@ -1,0 +1,42 @@
+# tools/newfs_hfs.toml
+
+[[command]]
+path = "newfs_hfs"
+translation = "Create a new HFS Plus filesystem on a device."
+verdict = "require_approval"
+rationale = "Formats a device, destroying all existing data on the partition."
+
+[[flag]]
+applies_to = "newfs_hfs"
+flag = "-N"
+translation_modifier = "only printing parameters without actually creating the filesystem"
+verdict = "allow"
+rationale = "Dry run that does not modify the device."
+
+[[flag]]
+applies_to = "newfs_hfs"
+flag = "-J"
+translation_modifier = "with journaling enabled"
+verdict = "allow"
+rationale = "Enables journaling for crash recovery; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "newfs_hfs"
+flag = "-s"
+translation_modifier = "as a case-sensitive filesystem"
+verdict = "allow"
+rationale = "Changes filename comparison behavior; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "newfs_hfs"
+flag = "-v"
+translation_modifier = "with a specified volume name"
+verdict = "allow"
+rationale = "Only sets the display name of the new volume; no additional risk."
+
+[[flag]]
+applies_to = "newfs_hfs"
+flag = "-b"
+translation_modifier = "with a specified allocation block size"
+verdict = "allow"
+rationale = "Sets the block size for the new filesystem; no additional risk beyond the base command."

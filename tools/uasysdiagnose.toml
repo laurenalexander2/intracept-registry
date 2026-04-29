@@ -1,0 +1,7 @@
+# tools/uasysdiagnose.toml
+
+[[command]]
+path = "uasysdiagnose"
+translation = "Collect diagnostic information about Universal Access services."
+verdict = "allow"
+rationale = "Read-only diagnostic data collection; does not modify accessibility settings."

@@ -1,0 +1,7 @@
+# tools/notifyd.toml — macOS notification daemon
+
+[[command]]
+path = "notifyd"
+translation = "Run the macOS notification server background service for inter-process event delivery."
+verdict = "allow"
+rationale = "A system background service typically managed by launchd; does not modify user data."

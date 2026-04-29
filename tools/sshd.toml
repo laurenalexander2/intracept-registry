@@ -1,0 +1,7 @@
+# tools/sshd.toml
+
+[[command]]
+path = "sshd"
+translation = "Run the SSH server background service to accept incoming secure shell connections."
+verdict = "allow"
+rationale = "Opens a network listener for remote access; normally managed by launchd."

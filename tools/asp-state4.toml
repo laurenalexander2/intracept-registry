@@ -1,0 +1,7 @@
+# tools/asp-state4.toml
+
+[[command]]
+path = "asp-state4"
+translation = "Mono ASP.NET session state server version 4."
+verdict = "allow"
+rationale = "Runs a session state service; primarily a server component."

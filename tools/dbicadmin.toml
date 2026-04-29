@@ -1,0 +1,7 @@
+# tools/dbicadmin.toml
+
+[[command]]
+path = "dbicadmin"
+translation = "Administer DBI data sources for Perl."
+verdict = "allow"
+rationale = "Manages Perl database interface configurations."

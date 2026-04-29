@@ -1,0 +1,7 @@
+# tools/cjpeg.toml
+
+[[command]]
+path = "cjpeg"
+translation = "Compress image files to JPEG format."
+verdict = "allow"
+rationale = "Creates a new JPEG file without modifying the original."

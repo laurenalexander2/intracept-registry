@@ -1,0 +1,21 @@
+# tools/fuser.toml
+
+[[command]]
+path = "fuser"
+translation = "List the process IDs of all processes that have a specified file open."
+verdict = "allow"
+rationale = "Read-only query that reports which processes are using a file."
+
+[[flag]]
+applies_to = "fuser"
+flag = "-c"
+translation_modifier = "treating the file as a mount point and reporting all open files on that filesystem"
+verdict = "allow"
+rationale = "Expands the scope to an entire filesystem; still a read-only operation."
+
+[[flag]]
+applies_to = "fuser"
+flag = "-u"
+translation_modifier = "including the username of each process"
+verdict = "allow"
+rationale = "Only adds user information to the output."

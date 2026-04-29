@@ -1,0 +1,91 @@
+# tools/sftp.toml
+
+[[command]]
+path = "sftp"
+translation = "Open an interactive secure file transfer session with a remote server."
+verdict = "require_approval"
+rationale = "Provides interactive file transfer capabilities that can upload, download, and delete remote files."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-i"
+translation_modifier = "using a specified private key file for authentication"
+verdict = "allow"
+rationale = "Selects an identity file; does not change the session's capabilities."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-P"
+translation_modifier = "connecting to a specified port"
+verdict = "allow"
+rationale = "Changes the target port; does not add destructive capability."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-b"
+translation_modifier = "executing commands from a batch file instead of interactively"
+verdict = "allow"
+rationale = "Runs a series of file transfer commands without user interaction."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-r"
+translation_modifier = "recursively transferring entire directories"
+verdict = "allow"
+rationale = "Copies directory trees, increasing the scope of files transferred."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-C"
+translation_modifier = "compressing data during transfer"
+verdict = "allow"
+rationale = "Reduces bandwidth usage; does not change what is transferred."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-l"
+translation_modifier = "limiting the transfer bandwidth to a specified rate"
+verdict = "allow"
+rationale = "Throttles the transfer speed; a scope-reducing option."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-a"
+translation_modifier = "resuming interrupted transfers instead of overwriting partial files"
+verdict = "allow"
+rationale = "Attempts to continue from where a previous transfer stopped; a safety-enhancing option."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-f"
+translation_modifier = "flushing files to disk immediately after transfer"
+verdict = "allow"
+rationale = "Ensures data is written to disk; does not change transfer scope."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output verbosity for debugging; does not change transfer behavior."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-q"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Suppresses output messages; does not change transfer behavior."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-4"
+translation_modifier = "using only IPv4 addresses"
+verdict = "allow"
+rationale = "Restricts the network protocol; does not change transfer capabilities."
+
+[[flag]]
+applies_to = "sftp"
+flag = "-6"
+translation_modifier = "using only IPv6 addresses"
+verdict = "allow"
+rationale = "Restricts the network protocol; does not change transfer capabilities."

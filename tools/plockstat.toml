@@ -1,0 +1,7 @@
+# tools/plockstat.toml
+
+[[command]]
+path = "plockstat"
+translation = "Trace lock statistics for user-level lock primitives using DTrace."
+verdict = "allow"
+rationale = "Read-only tracing of lock contention; requires root but does not modify anything."

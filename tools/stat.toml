@@ -1,0 +1,77 @@
+# tools/stat.toml
+
+[[command]]
+path = "stat"
+translation = "Display detailed information about a file, such as its size, permissions, and timestamps."
+verdict = "allow"
+rationale = "Read-only display of file metadata that does not modify anything."
+
+[[flag]]
+applies_to = "stat"
+flag = "-f"
+translation_modifier = "using a custom output format"
+verdict = "allow"
+rationale = "Changes which fields are displayed; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-l"
+translation_modifier = "showing output in a detailed list format"
+verdict = "allow"
+rationale = "Displays information in a long listing style; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-L"
+translation_modifier = "showing information about the target of a shortcut instead of the shortcut itself"
+verdict = "allow"
+rationale = "Follows shortcuts to report on the actual target file; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-r"
+translation_modifier = "showing raw numeric values instead of formatted text"
+verdict = "allow"
+rationale = "Outputs unformatted numeric data; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-s"
+translation_modifier = "showing output as variable assignments suitable for use in scripts"
+verdict = "allow"
+rationale = "Formats output for script consumption; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-x"
+translation_modifier = "showing extra-detailed information in a verbose layout"
+verdict = "allow"
+rationale = "Expands output with additional fields; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-t"
+translation_modifier = "formatting timestamps with a specified pattern"
+verdict = "allow"
+rationale = "Changes how dates and times appear; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-F"
+translation_modifier = "adding a trailing symbol to indicate each file's type"
+verdict = "allow"
+rationale = "Appends a type indicator character to file names; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-q"
+translation_modifier = "hiding error messages for files that cannot be examined"
+verdict = "allow"
+rationale = "Suppresses error output; still read-only."
+
+[[flag]]
+applies_to = "stat"
+flag = "-n"
+translation_modifier = "omitting the trailing newline from the output"
+verdict = "allow"
+rationale = "Adjusts output formatting for piping; still read-only."

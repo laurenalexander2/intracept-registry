@@ -1,0 +1,7 @@
+# tools/mount_fdesc.toml — File descriptor filesystem mount
+
+[[command]]
+path = "mount_fdesc"
+translation = "Mount the open file reference pseudo-filesystem."
+verdict = "allow"
+rationale = "Mounts a virtual filesystem that provides access to open file references; no real data is modified."

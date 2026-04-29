@@ -1,0 +1,592 @@
+# exemplars/kubectl.toml — Kubernetes CLI exemplar
+
+# ── Base command ──────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl"
+translation = "Run the Kubernetes command-line tool."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+# ── Reading resources ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl get"
+translation = "Display one or more Kubernetes resources in a summary table."
+verdict = "allow"
+rationale = "Read-only query that lists resource information."
+
+[[flag]]
+applies_to = "kubectl get"
+flag = "--all-namespaces"
+translation_modifier = "across every isolated group in the cluster"
+verdict = "allow"
+rationale = "Widens the read-only query but does not modify anything."
+
+[[flag]]
+applies_to = "kubectl get"
+flag = "-n"
+translation_modifier = "in a specific isolated group"
+verdict = "allow"
+rationale = "Narrows the query scope to a single isolated group."
+
+[[flag]]
+applies_to = "kubectl get"
+flag = "-o"
+translation_modifier = "formatted as the specified output type"
+verdict = "allow"
+rationale = "Changes output format only; no resources are modified."
+
+[[command]]
+path = "kubectl describe"
+translation = "Show detailed information about a specific Kubernetes resource."
+verdict = "allow"
+rationale = "Read-only display of resource details and events."
+
+[[command]]
+path = "kubectl logs"
+translation = "Print the log output from a container in a pod."
+verdict = "allow"
+rationale = "Read-only access to container logs."
+
+[[flag]]
+applies_to = "kubectl logs"
+flag = "-f"
+translation_modifier = "streaming new log lines as they are produced"
+verdict = "allow"
+rationale = "Follows the log stream; still a read-only operation."
+
+[[flag]]
+applies_to = "kubectl logs"
+flag = "--all-containers"
+translation_modifier = "from every container in the pod"
+verdict = "allow"
+rationale = "Widens log output to all containers; still read-only."
+
+[[command]]
+path = "kubectl top"
+translation = "Display CPU and memory usage for nodes or pods."
+verdict = "allow"
+rationale = "Read-only metrics query from the Metrics Server."
+
+# ── Creating and applying resources ──────────────────────────────────────────
+
+[[command]]
+path = "kubectl create"
+translation = "Create a Kubernetes resource from a file or command-line input."
+verdict = "require_approval"
+rationale = "Adds new resources to the cluster such as pods, deployments, or services."
+
+[[flag]]
+applies_to = "kubectl create"
+flag = "-f"
+translation_modifier = "from a specified file or URL"
+verdict = "allow"
+rationale = "Creates whatever resources are defined in the file; the user should review the file contents."
+
+[[flag]]
+applies_to = "kubectl create"
+flag = "--dry-run"
+translation_modifier = "simulating the creation without actually submitting it to the cluster"
+verdict = "allow"
+rationale = "No resources are created; only validates and prints the result."
+
+[[command]]
+path = "kubectl apply"
+translation = "Create or update Kubernetes resources to match a configuration file."
+verdict = "require_approval"
+rationale = "Modifies live cluster resources to match the declared state."
+
+[[flag]]
+applies_to = "kubectl apply"
+flag = "-f"
+translation_modifier = "from a specified file or URL"
+verdict = "allow"
+rationale = "Applies whatever configuration is defined in the file."
+
+[[flag]]
+applies_to = "kubectl apply"
+flag = "--force"
+translation_modifier = "deleting and recreating the resource if it cannot be patched"
+verdict = "require_approval"
+rationale = "Destroys and recreates resources, causing downtime and potential data loss."
+
+[[flag]]
+applies_to = "kubectl apply"
+flag = "--dry-run"
+translation_modifier = "simulating the apply without actually modifying the cluster"
+verdict = "allow"
+rationale = "No resources are changed; only validates the configuration."
+
+[[flag]]
+applies_to = "kubectl apply"
+flag = "--prune"
+translation_modifier = "deleting cluster resources not present in the configuration file"
+verdict = "require_approval"
+rationale = "Removes resources from the cluster that are not in the applied manifest, which may delete critical workloads."
+
+[[flag]]
+applies_to = "kubectl apply"
+flag = "--recursive"
+translation_modifier = "processing all files in subdirectories"
+verdict = "allow"
+rationale = "Applies every manifest found recursively, increasing the scope of changes."
+
+# ── Deleting resources ────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl delete"
+translation = "Remove one or more resources from the Kubernetes cluster."
+verdict = "require_approval"
+rationale = "Permanently removes resources; pods, services, and deployments are destroyed."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "-f"
+translation_modifier = "matching the resources defined in a file"
+verdict = "allow"
+rationale = "Specifies which resources to delete from a file; the destructive risk is in the base command."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--all"
+translation_modifier = "targeting every resource of the specified type in the current isolated group"
+verdict = "require_approval"
+rationale = "Deletes all resources of a type, which can destroy an entire application or environment."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--all-namespaces"
+translation_modifier = "across every isolated group in the cluster"
+verdict = "require_approval"
+rationale = "Combined with a resource type, deletes those resources cluster-wide."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--force"
+translation_modifier = "bypassing graceful deletion and immediately removing the resource"
+verdict = "require_approval"
+rationale = "Skips graceful shutdown, which can cause data corruption in stateful applications."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--grace-period=0"
+translation_modifier = "with no grace period for shutdown"
+verdict = "allow"
+rationale = "Sets the grace period to zero, but has no additional effect without --force."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--cascade"
+translation_modifier = "controlling whether dependent resources are also deleted"
+verdict = "allow"
+rationale = "A control parameter that changes cascade behavior; the default (background cascade) is the standard expectation."
+
+# ── Editing resources ─────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl edit"
+translation = "Open a Kubernetes resource in a text editor for live modification."
+verdict = "require_approval"
+rationale = "Directly modifies live resources; changes take effect immediately on save."
+
+# ── Executing in containers ──────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl exec"
+translation = "Run a command inside a container in a running pod."
+verdict = "allow"
+rationale = "Executes arbitrary commands inside a live container, which could modify application state."
+
+# ── Port forwarding ──────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl port-forward"
+translation = "Forward a local port to a port on a pod or service."
+verdict = "allow"
+rationale = "Exposes a cluster-internal service to the local machine, bypassing normal network access controls."
+
+# ── Rollout management ───────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl rollout"
+translation = "Manage the rollout of a deployment, daemonset, or statefulset."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "kubectl rollout status"
+translation = "Show the current status of a rollout."
+verdict = "allow"
+rationale = "Read-only display of rollout progress."
+
+[[command]]
+path = "kubectl rollout history"
+translation = "View the revision history of a rollout."
+verdict = "allow"
+rationale = "Read-only display of past rollout revisions."
+
+[[command]]
+path = "kubectl rollout undo"
+translation = "Roll back a deployment, daemonset, or statefulset to a previous revision."
+verdict = "allow"
+rationale = "Reverts to a previous version; reversible by rolling forward again. Standard recovery operation."
+
+[[command]]
+path = "kubectl rollout restart"
+translation = "Trigger a rolling restart of a deployment, daemonset, or statefulset."
+verdict = "require_approval"
+rationale = "Restarts all pods in the workload, causing brief unavailability if not enough replicas exist."
+
+[[command]]
+path = "kubectl rollout pause"
+translation = "Pause the rollout of a resource to prevent further updates."
+verdict = "allow"
+rationale = "Halts rollout progress; the workload may be left in a partially updated state."
+
+# ── Scaling ───────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl scale"
+translation = "Change the number of replicas for a deployment, replica set, or stateful set."
+verdict = "require_approval"
+rationale = "Changing replica count directly affects application capacity and availability."
+
+[[flag]]
+applies_to = "kubectl scale"
+flag = "--all"
+translation_modifier = "for every resource of the specified type in the current isolated group"
+verdict = "require_approval"
+rationale = "Scales all matching resources at once, which could cause widespread service disruption."
+
+# ── Node management ──────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl drain"
+translation = "Evict all pods from a node to prepare it for maintenance."
+verdict = "require_approval"
+rationale = "Removes all workloads from a node, causing service disruption if insufficient capacity exists elsewhere."
+
+[[flag]]
+applies_to = "kubectl drain"
+flag = "--force"
+translation_modifier = "even if there are unmanaged pods that would be permanently deleted"
+verdict = "require_approval"
+rationale = "Deletes pods not managed by a controller, which cannot be automatically recreated."
+
+[[flag]]
+applies_to = "kubectl drain"
+flag = "--ignore-daemonsets"
+translation_modifier = "skipping daemonset-managed pods"
+verdict = "allow"
+rationale = "Allows the drain to proceed past daemonset pods, which will be recreated automatically."
+
+[[flag]]
+applies_to = "kubectl drain"
+flag = "--delete-emptydir-data"
+translation_modifier = "even if pods use emptyDir volumes that will lose their data"
+verdict = "require_approval"
+rationale = "Allows eviction of pods with local data stored in emptyDir volumes, causing data loss."
+
+[[command]]
+path = "kubectl cordon"
+translation = "Mark a node as unschedulable so no new pods will be placed on it."
+verdict = "require_approval"
+rationale = "Prevents new workloads from running on the node; existing pods are not affected."
+
+[[flag]]
+applies_to = "kubectl cordon"
+flag = "--dry-run"
+translation_modifier = "simulating the operation without actually cordoning the node"
+verdict = "allow"
+rationale = "No changes are made; only shows what would happen."
+
+[[command]]
+path = "kubectl uncordon"
+translation = "Mark a node as schedulable so new pods can be placed on it again."
+verdict = "allow"
+rationale = "Restores normal scheduling to a previously cordoned node."
+
+[[command]]
+path = "kubectl taint"
+translation = "Add or remove a taint on a node to control which pods can be scheduled on it."
+verdict = "require_approval"
+rationale = "Taints affect pod scheduling across the cluster; incorrect taints can prevent workloads from running."
+
+[[flag]]
+applies_to = "kubectl taint"
+flag = "--all"
+translation_modifier = "on every node in the cluster"
+verdict = "require_approval"
+rationale = "Applies the taint to all nodes, which could make the entire cluster unschedulable for affected pods."
+
+# ── Labeling and annotating ──────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl label"
+translation = "Add or update labels on a Kubernetes resource."
+verdict = "require_approval"
+rationale = "Labels can affect service routing, scheduling, and policy enforcement; incorrect labels may disrupt traffic."
+
+[[flag]]
+applies_to = "kubectl label"
+flag = "--all"
+translation_modifier = "on every resource of the specified type in the current isolated group"
+verdict = "allow"
+rationale = "Applies the label change to all matching resources, which may affect selectors and routing."
+
+[[flag]]
+applies_to = "kubectl label"
+flag = "--overwrite"
+translation_modifier = "replacing existing label values"
+verdict = "allow"
+rationale = "Overwrites current labels, which may break service selectors or scheduling constraints."
+
+[[command]]
+path = "kubectl annotate"
+translation = "Add or update annotations on a Kubernetes resource."
+verdict = "allow"
+rationale = "Modifies metadata annotations, which are informational and typically not used for scheduling."
+
+[[flag]]
+applies_to = "kubectl annotate"
+flag = "--all"
+translation_modifier = "on every resource of the specified type in the current isolated group"
+verdict = "allow"
+rationale = "Applies the annotation to all matching resources in the current isolated group."
+
+[[flag]]
+applies_to = "kubectl annotate"
+flag = "--overwrite"
+translation_modifier = "replacing existing annotation values"
+verdict = "allow"
+rationale = "Overwrites current annotations; annotations are generally informational."
+
+# ── Configuration ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl config"
+translation = "View or modify the kubeconfig file that controls cluster access."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "kubectl config use-context"
+translation = "Switch the active cluster context in the kubeconfig file."
+verdict = "allow"
+rationale = "Changes which cluster subsequent commands target; running commands against the wrong cluster can be dangerous."
+
+[[command]]
+path = "kubectl config current-context"
+translation = "Display the name of the currently active cluster context."
+verdict = "allow"
+rationale = "Read-only display of the current context."
+
+[[command]]
+path = "kubectl config view"
+translation = "Display the merged kubeconfig settings."
+verdict = "allow"
+rationale = "Read-only display of configuration; secrets may be shown unless redacted."
+
+[[command]]
+path = "kubectl config delete-context"
+translation = "Remove a context entry from the kubeconfig file."
+verdict = "allow"
+rationale = "Deletes a cluster context reference; the cluster itself is not affected."
+
+# ── Authorization ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl auth"
+translation = "Inspect authorization settings in the cluster."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+
+[[command]]
+path = "kubectl auth can-i"
+translation = "Check whether a specific action is allowed for the current user."
+verdict = "allow"
+rationale = "Read-only authorization check that does not modify any resources."
+
+# ── File copying ─────────────────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl cp"
+translation = "Copy files between a local filesystem and a container in a pod."
+verdict = "allow"
+rationale = "Transfers files into or out of a running container, which could modify application state or exfiltrate data."
+
+# ── Proxying and debugging ──────────────────────────────────────────────────
+
+[[command]]
+path = "kubectl proxy"
+translation = "Start a local proxy to the Kubernetes API server."
+verdict = "allow"
+rationale = "Exposes the full Kubernetes API on localhost without authentication, allowing any local process to make API calls."
+
+[[command]]
+path = "kubectl attach"
+translation = "Attach to a running process inside a container in a pod."
+verdict = "allow"
+rationale = "Connects to the container's main process; input may affect a running application."
+
+[[command]]
+path = "kubectl debug"
+translation = "Create a debugging container attached to a running pod or node."
+verdict = "allow"
+rationale = "Creates a temporary debugging container with potential access to the pod's filesystem and network."
+
+# ── Missing important commands ──────────────────────────────────────────────
+
+[[command]]
+path = "kubectl patch"
+translation = "Update specific fields of a Kubernetes resource using a partial specification."
+verdict = "require_approval"
+rationale = "Modifies live resources; changes take effect immediately."
+
+[[flag]]
+applies_to = "kubectl patch"
+flag = "--type"
+translation_modifier = "using a specific patch strategy"
+verdict = "allow"
+rationale = "Controls how the patch is applied; does not add destructive capability."
+
+[[flag]]
+applies_to = "kubectl patch"
+flag = "--dry-run"
+translation_modifier = "simulating the patch without actually modifying the resource"
+verdict = "allow"
+rationale = "No resources are changed; only validates the patch."
+
+[[command]]
+path = "kubectl replace"
+translation = "Replace a Kubernetes resource with a new definition from a file."
+verdict = "require_approval"
+rationale = "Completely replaces the resource specification, which may remove fields or settings not in the new definition."
+
+[[flag]]
+applies_to = "kubectl replace"
+flag = "--force"
+translation_modifier = "deleting and recreating the resource instead of updating it"
+verdict = "require_approval"
+rationale = "Destroys and recreates the resource, causing downtime and potential data loss."
+
+[[flag]]
+applies_to = "kubectl replace"
+flag = "-f"
+translation_modifier = "from a specified file or URL"
+verdict = "allow"
+rationale = "Replaces the resource with whatever is defined in the file."
+
+[[command]]
+path = "kubectl run"
+translation = "Create and run a pod with a specified container image."
+verdict = "require_approval"
+rationale = "Creates a new pod that consumes cluster resources and runs arbitrary container images."
+
+[[flag]]
+applies_to = "kubectl run"
+flag = "--rm"
+translation_modifier = "automatically deleting the pod after it exits"
+verdict = "allow"
+rationale = "Cleans up the pod on exit, preventing orphaned resources."
+
+[[flag]]
+applies_to = "kubectl run"
+flag = "--dry-run"
+translation_modifier = "simulating the creation without actually submitting it to the cluster"
+verdict = "allow"
+rationale = "No resources are created; only validates and prints the result."
+
+[[command]]
+path = "kubectl expose"
+translation = "Create a new service to expose a running application to network traffic."
+verdict = "require_approval"
+rationale = "Makes a workload accessible over the network, potentially exposing it to external traffic."
+
+[[command]]
+path = "kubectl diff"
+translation = "Show the differences between the current live resource and a proposed configuration."
+verdict = "allow"
+rationale = "Read-only comparison that does not modify any resources."
+
+[[command]]
+path = "kubectl wait"
+translation = "Wait for a specific condition on one or more Kubernetes resources."
+verdict = "allow"
+rationale = "Read-only polling operation that blocks until a condition is met."
+
+[[command]]
+path = "kubectl rollout resume"
+translation = "Resume a paused rollout so updates continue."
+verdict = "allow"
+rationale = "Resumes a previously paused rollout, applying pending changes to the workload."
+
+[[command]]
+path = "kubectl cluster-info"
+translation = "Display the addresses of the control plane and cluster services."
+verdict = "allow"
+rationale = "Read-only display of cluster endpoint information."
+
+[[command]]
+path = "kubectl api-resources"
+translation = "List the resource types available in the Kubernetes cluster."
+verdict = "allow"
+rationale = "Read-only display of available API resources."
+
+[[command]]
+path = "kubectl events"
+translation = "List events from the Kubernetes cluster."
+verdict = "allow"
+rationale = "Read-only display of cluster events."
+
+# ── Missing flags on existing commands ──────────────────────────────────────
+
+[[flag]]
+applies_to = "kubectl exec"
+flag = "-it"
+translation_modifier = "with an interactive terminal attached"
+verdict = "allow"
+rationale = "Allocates a terminal for interactive use; no additional risk beyond the base command."
+
+[[flag]]
+applies_to = "kubectl logs"
+flag = "--previous"
+translation_modifier = "from the previous instance of the container"
+verdict = "allow"
+rationale = "Shows logs from a crashed or restarted container; still read-only."
+
+[[flag]]
+applies_to = "kubectl logs"
+flag = "--tail"
+translation_modifier = "showing only the specified number of most recent lines"
+verdict = "allow"
+rationale = "Limits output to recent lines; read-only operation."
+
+[[flag]]
+applies_to = "kubectl delete"
+flag = "--dry-run"
+translation_modifier = "simulating the deletion without actually removing any resources"
+verdict = "allow"
+rationale = "No resources are deleted; only validates the request."
+
+[[flag]]
+applies_to = "kubectl get"
+flag = "-w"
+translation_modifier = "watching for changes and streaming updates"
+verdict = "allow"
+rationale = "Follows resource changes in real time; still a read-only operation."
+
+[[flag]]
+applies_to = "kubectl get"
+flag = "-l"
+translation_modifier = "filtered by label selector"
+verdict = "allow"
+rationale = "Narrows the query to matching labels; still read-only."
+
+[[flag]]
+applies_to = "kubectl scale"
+flag = "--replicas"
+translation_modifier = "to the specified number of replicas"
+verdict = "allow"
+rationale = "Setting replicas to zero effectively shuts down the application."

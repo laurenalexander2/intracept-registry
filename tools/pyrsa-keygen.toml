@@ -1,0 +1,7 @@
+# tools/pyrsa-keygen.toml
+
+[[command]]
+path = "pyrsa-keygen"
+translation = "Generate a new RSA public and private key pair."
+verdict = "allow"
+rationale = "Creates new key files; does not modify existing keys."

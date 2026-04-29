@@ -1,0 +1,7 @@
+# tools/usdtree.toml
+
+[[command]]
+path = "usdtree"
+translation = "Display the hierarchy of prims in a Universal Scene Description file."
+verdict = "allow"
+rationale = "Read-only display of USD scene hierarchy; modifies nothing."

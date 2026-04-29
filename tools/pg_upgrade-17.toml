@@ -1,0 +1,7 @@
+# tools/pg_upgrade-17.toml — PostgreSQL 17 utility
+
+[[command]]
+path = "pg_upgrade-17"
+translation = "Upgrade a PostgreSQL database cluster to a new major version."
+verdict = "require_approval"
+rationale = "Modifies the database cluster in place; a failed upgrade can leave the cluster in an unusable state."

@@ -1,0 +1,7 @@
+# tools/rust-gdbgui.toml
+
+[[command]]
+path = "rust-gdbgui"
+translation = "Launch a graphical GDB debugging interface for Rust programs."
+verdict = "allow"
+rationale = "Starts a debugging interface; does not modify program binaries."

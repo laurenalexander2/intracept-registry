@@ -1,0 +1,7 @@
+# tools/rust-lldb.toml
+
+[[command]]
+path = "rust-lldb"
+translation = "Launch the LLDB debugger with Rust-specific formatting support."
+verdict = "allow"
+rationale = "Starts a debugging session; does not modify program binaries."

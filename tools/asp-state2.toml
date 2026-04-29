@@ -1,0 +1,7 @@
+# tools/asp-state2.toml
+
+[[command]]
+path = "asp-state2"
+translation = "Mono ASP.NET session state server version 2."
+verdict = "allow"
+rationale = "Runs a session state service; primarily a server component."

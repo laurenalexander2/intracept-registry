@@ -1,0 +1,7 @@
+# tools/afida.toml
+
+[[command]]
+path = "afida"
+translation = "Identify the audio format of a file."
+verdict = "allow"
+rationale = "Read-only format identification."

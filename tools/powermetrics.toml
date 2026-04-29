@@ -1,0 +1,105 @@
+# tools/powermetrics.toml
+
+[[command]]
+path = "powermetrics"
+translation = "Display detailed CPU, GPU, and power usage statistics for the system."
+verdict = "allow"
+rationale = "Read-only monitoring of system power and performance metrics."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-i"
+translation_modifier = "sampling at a specified interval in milliseconds"
+verdict = "allow"
+rationale = "Only changes how frequently data is collected."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--sample-rate"
+translation_modifier = "sampling at a specified interval in milliseconds"
+verdict = "allow"
+rationale = "Only changes how frequently data is collected."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-n"
+translation_modifier = "collecting only a specified number of samples before exiting"
+verdict = "allow"
+rationale = "Only limits how long the tool runs."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-o"
+translation_modifier = "writing output to a specified file instead of the terminal"
+verdict = "allow"
+rationale = "Only changes where the output is written."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-s"
+translation_modifier = "collecting data from only specified categories of samplers"
+verdict = "allow"
+rationale = "Only filters which metrics are displayed."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--samplers"
+translation_modifier = "collecting data from only specified categories of samplers"
+verdict = "allow"
+rationale = "Only filters which metrics are displayed."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-r"
+translation_modifier = "ordering the process list by a specified sorting method"
+verdict = "allow"
+rationale = "Only changes the display order of processes."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-f"
+translation_modifier = "formatting output as a specified type such as text or property list"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "-a"
+translation_modifier = "displaying a power average every specified number of samples"
+verdict = "allow"
+rationale = "Only changes how frequently averages are shown."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--show-process-io"
+translation_modifier = "including per-process disk activity information"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--show-process-gpu"
+translation_modifier = "including per-process GPU usage information"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--show-process-netstats"
+translation_modifier = "including per-process network activity information"
+verdict = "allow"
+rationale = "Only adds more detail to the output."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--show-usage-summary"
+translation_modifier = "printing a final usage summary when exiting"
+verdict = "allow"
+rationale = "Only adds a summary at the end of the output."
+
+[[flag]]
+applies_to = "powermetrics"
+flag = "--show-process-coalition"
+translation_modifier = "grouping processes by coalition and showing per-coalition totals"
+verdict = "allow"
+rationale = "Only changes how processes are grouped in the output."

@@ -1,0 +1,7 @@
+# tools/cvgather.toml
+
+[[command]]
+path = "cvgather"
+translation = "Collect Xsan diagnostic information."
+verdict = "allow"
+rationale = "Read-only gathering of diagnostic data."

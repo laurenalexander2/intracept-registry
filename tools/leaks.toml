@@ -1,0 +1,84 @@
+# tools/leaks.toml
+
+[[command]]
+path = "leaks"
+translation = "Search a process's memory for unreferenced allocations that can never be freed."
+verdict = "allow"
+rationale = "Read-only inspection of process memory; does not modify the target process."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-atExit"
+translation_modifier = "running a command and checking for leaks when it exits"
+verdict = "allow"
+rationale = "Launches and runs an executable, which may modify system state."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-list"
+translation_modifier = "printing leaks as a flat list instead of a tree"
+verdict = "allow"
+rationale = "Only changes the output format."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-groupByType"
+translation_modifier = "grouping leaked objects by type instead of showing individual instances"
+verdict = "allow"
+rationale = "Only changes how results are organized in the output."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-nostacks"
+translation_modifier = "hiding allocation backtraces from the output"
+verdict = "allow"
+rationale = "Only reduces the information displayed."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-quiet"
+translation_modifier = "hiding the process description header and library list"
+verdict = "allow"
+rationale = "Only reduces the information displayed."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-exclude"
+translation_modifier = "ignoring leaks whose allocation backtraces include a specified function"
+verdict = "allow"
+rationale = "Only filters which leaks are reported."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-outputGraph"
+translation_modifier = "saving a memory graph file for later analysis"
+verdict = "allow"
+rationale = "Creates a diagnostic file on disk; does not modify the target process."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-fullContent"
+translation_modifier = "including full descriptions of object contents in the output or memory graph"
+verdict = "allow"
+rationale = "Adds more detail but may expose sensitive data from the process's memory."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-noContent"
+translation_modifier = "hiding descriptions of leaked memory contents"
+verdict = "allow"
+rationale = "Only reduces the information displayed; useful for avoiding sensitive data exposure."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-traceTree"
+translation_modifier = "printing a reverse reference tree from a specified memory address to its roots"
+verdict = "allow"
+rationale = "Read-only analysis showing how a specific allocation is referenced."
+
+[[flag]]
+applies_to = "leaks"
+flag = "-referenceTree"
+translation_modifier = "printing a top-down tree of all allocations in the process"
+verdict = "allow"
+rationale = "Read-only analysis showing the full memory reference structure."

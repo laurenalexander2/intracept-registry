@@ -1,0 +1,7 @@
+# tools/rustdoc.toml
+
+[[command]]
+path = "rustdoc"
+translation = "Generate HTML documentation from Rust source code and doc comments."
+verdict = "allow"
+rationale = "Creates documentation files; does not modify source code."

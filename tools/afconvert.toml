@@ -1,0 +1,70 @@
+# tools/afconvert.toml
+
+[[command]]
+path = "afconvert"
+translation = "Convert audio files between formats."
+verdict = "allow"
+rationale = "Creates a new output file by default; does not modify the original."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-d"
+translation_modifier = "using a specified audio data format and sample rate"
+verdict = "allow"
+rationale = "Controls the output encoding; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-c"
+translation_modifier = "with a specified number of audio channels"
+verdict = "allow"
+rationale = "Controls channel count in the output; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-l"
+translation_modifier = "using a specified channel layout"
+verdict = "allow"
+rationale = "Controls channel mapping in the output; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-b"
+translation_modifier = "at a specified total bit rate"
+verdict = "allow"
+rationale = "Controls output quality and file size; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-q"
+translation_modifier = "at a specified codec quality level"
+verdict = "allow"
+rationale = "Controls encoding quality; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-r"
+translation_modifier = "using a specified sample rate converter quality"
+verdict = "allow"
+rationale = "Controls resampling quality; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-s"
+translation_modifier = "using a specified bitrate allocation strategy"
+verdict = "allow"
+rationale = "Selects constant, average, or variable bitrate encoding; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-o"
+translation_modifier = "writing to a specified output file"
+verdict = "allow"
+rationale = "Explicitly names the output file; does not affect the source file."
+
+[[flag]]
+applies_to = "afconvert"
+flag = "-m"
+translation_modifier = "remapping input channels to specified output channels"
+verdict = "allow"
+rationale = "Controls which input channels appear in the output; does not affect the source file."

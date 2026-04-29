@@ -1,0 +1,262 @@
+# tools/openssl.toml
+
+[[command]]
+path = "openssl"
+translation = "Run the OpenSSL cryptography toolkit."
+verdict = "allow"
+rationale = "The bare command prints help text and modifies nothing."
+
+[[command]]
+path = "openssl genrsa"
+translation = "Generate a new RSA private key."
+verdict = "allow"
+rationale = "Creates a private key file that grants access to encrypted data or authenticated services."
+
+[[flag]]
+applies_to = "openssl genrsa"
+flag = "-out"
+translation_modifier = "writing the key to a specified file"
+verdict = "allow"
+rationale = "May overwrite an existing key file, which could lock out access to systems using the old key."
+
+[[flag]]
+applies_to = "openssl genrsa"
+flag = "-aes256"
+translation_modifier = "encrypting the private key with a passphrase using AES-256"
+verdict = "allow"
+rationale = "Adds passphrase protection to the generated key; a security-enhancing option."
+
+[[flag]]
+applies_to = "openssl genrsa"
+flag = "-passout"
+translation_modifier = "using a specified passphrase source for key encryption"
+verdict = "allow"
+rationale = "Provides the passphrase non-interactively; does not change the key generation."
+
+[[command]]
+path = "openssl req"
+translation = "Create or process certificate signing requests."
+verdict = "allow"
+rationale = "Generates certificate requests or self-signed certificates; local file operation."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-new"
+translation_modifier = "generating a new certificate signing request"
+verdict = "allow"
+rationale = "Creates a new request; does not modify existing certificates or keys."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-x509"
+translation_modifier = "generating a self-signed certificate instead of a signing request"
+verdict = "allow"
+rationale = "Creates a certificate directly; a local file operation."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-nodes"
+translation_modifier = "without encrypting the private key with a passphrase"
+verdict = "allow"
+rationale = "Leaves the private key unprotected on disk, which poses a security risk if the file is exposed."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-key"
+translation_modifier = "using a specified private key file"
+verdict = "allow"
+rationale = "Selects which key to use; does not modify the key."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-out"
+translation_modifier = "writing output to a specified file"
+verdict = "allow"
+rationale = "Specifies the output destination; may overwrite an existing file."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-days"
+translation_modifier = "setting the certificate validity period in days"
+verdict = "allow"
+rationale = "Controls how long the certificate is valid; does not change other behavior."
+
+[[flag]]
+applies_to = "openssl req"
+flag = "-subj"
+translation_modifier = "setting the certificate subject fields on the command line instead of prompting"
+verdict = "allow"
+rationale = "Provides subject information non-interactively; does not change the operation."
+
+[[command]]
+path = "openssl x509"
+translation = "Display or manipulate X.509 certificates."
+verdict = "allow"
+rationale = "Reads, converts, or signs certificates; primarily informational."
+
+[[flag]]
+applies_to = "openssl x509"
+flag = "-in"
+translation_modifier = "reading a certificate from a specified file"
+verdict = "allow"
+rationale = "Specifies the input file; read-only operation."
+
+[[flag]]
+applies_to = "openssl x509"
+flag = "-text"
+translation_modifier = "displaying the certificate details in human-readable form"
+verdict = "allow"
+rationale = "Read-only display of certificate information."
+
+[[flag]]
+applies_to = "openssl x509"
+flag = "-noout"
+translation_modifier = "suppressing the encoded certificate output"
+verdict = "allow"
+rationale = "Reduces output; does not change behavior."
+
+[[command]]
+path = "openssl enc"
+translation = "Encrypt or decrypt data using symmetric ciphers."
+verdict = "allow"
+rationale = "Transforms file contents; the output replaces or creates files."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-d"
+translation_modifier = "decrypting instead of encrypting"
+verdict = "allow"
+rationale = "Reverses encryption; output may overwrite files."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-in"
+translation_modifier = "reading input from a specified file"
+verdict = "allow"
+rationale = "Specifies the input source; does not change the operation."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-out"
+translation_modifier = "writing output to a specified file"
+verdict = "allow"
+rationale = "May overwrite an existing file at the destination."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-a"
+translation_modifier = "encoding the output in base64 text format"
+verdict = "allow"
+rationale = "Changes output encoding only; does not affect the encryption."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-pass"
+translation_modifier = "using a specified passphrase source"
+verdict = "allow"
+rationale = "Provides the passphrase non-interactively; does not change the encryption."
+
+[[flag]]
+applies_to = "openssl enc"
+flag = "-pbkdf2"
+translation_modifier = "using a stronger key derivation method for the passphrase"
+verdict = "allow"
+rationale = "Improves security of passphrase-based encryption; a security-enhancing option."
+
+[[command]]
+path = "openssl s_client"
+translation = "Connect to a remote server and display its TLS certificate details."
+verdict = "allow"
+rationale = "Diagnostic tool for inspecting TLS connections; primarily read-only."
+
+[[flag]]
+applies_to = "openssl s_client"
+flag = "-connect"
+translation_modifier = "connecting to a specified host and port"
+verdict = "allow"
+rationale = "Specifies the connection target; a required parameter for most uses."
+
+[[flag]]
+applies_to = "openssl s_client"
+flag = "-showcerts"
+translation_modifier = "displaying the full certificate chain from the server"
+verdict = "allow"
+rationale = "Shows additional certificate data; still a read-only operation."
+
+[[flag]]
+applies_to = "openssl s_client"
+flag = "-servername"
+translation_modifier = "sending a specific hostname for TLS server name indication"
+verdict = "allow"
+rationale = "Sets the server name; does not change the diagnostic nature of the connection."
+
+[[flag]]
+applies_to = "openssl s_client"
+flag = "-verify"
+translation_modifier = "setting the maximum depth for certificate chain verification"
+verdict = "allow"
+rationale = "Controls verification depth; a read-only diagnostic setting."
+
+[[flag]]
+applies_to = "openssl s_client"
+flag = "-CAfile"
+translation_modifier = "using a specified file of trusted certificates for verification"
+verdict = "allow"
+rationale = "Provides trusted certificates for chain validation; does not modify anything."
+
+[[command]]
+path = "openssl dgst"
+translation = "Compute a message digest or hash of a file."
+verdict = "allow"
+rationale = "Read-only computation of cryptographic hashes."
+
+[[command]]
+path = "openssl rand"
+translation = "Generate random bytes."
+verdict = "allow"
+rationale = "Outputs random data; does not modify existing files."
+
+[[flag]]
+applies_to = "openssl rand"
+flag = "-base64"
+translation_modifier = "encoding the output in base64 text format"
+verdict = "allow"
+rationale = "Changes output encoding; does not affect the random data generation."
+
+[[flag]]
+applies_to = "openssl rand"
+flag = "-hex"
+translation_modifier = "encoding the output in hexadecimal text format"
+verdict = "allow"
+rationale = "Changes output encoding; does not affect the random data generation."
+
+[[flag]]
+applies_to = "openssl rand"
+flag = "-out"
+translation_modifier = "writing the random bytes to a specified file"
+verdict = "allow"
+rationale = "Creates a new file; may overwrite an existing file at the destination."
+
+[[command]]
+path = "openssl rsa"
+translation = "Process and convert RSA key files."
+verdict = "allow"
+rationale = "Reads and writes key files, which may expose private key material if misused."
+
+[[command]]
+path = "openssl pkcs12"
+translation = "Create or parse PKCS#12 certificate bundles."
+verdict = "allow"
+rationale = "Handles certificate and key bundles; may export private keys."
+
+[[command]]
+path = "openssl verify"
+translation = "Verify a certificate against a certificate authority chain."
+verdict = "allow"
+rationale = "Read-only validation of certificate trust chains."
+
+[[command]]
+path = "openssl version"
+translation = "Display the OpenSSL version."
+verdict = "allow"
+rationale = "Read-only display of version information."

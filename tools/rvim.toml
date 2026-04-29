@@ -1,0 +1,7 @@
+# tools/rvim.toml
+
+[[command]]
+path = "rvim"
+translation = "Open the Vim text editor in restricted mode."
+verdict = "allow"
+rationale = "Restricted mode prevents shell commands and external program execution."

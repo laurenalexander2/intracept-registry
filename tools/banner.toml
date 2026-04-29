@@ -1,0 +1,7 @@
+# tools/banner.toml
+
+[[command]]
+path = "banner"
+translation = "Print a large text banner."
+verdict = "allow"
+rationale = "Outputs ASCII art text to the terminal."

@@ -1,0 +1,14 @@
+# tools/date.toml
+
+[[command]]
+path = "date"
+translation = "Display or set the system date and time."
+verdict = "allow"
+rationale = "Without arguments, displays the current date and time."
+
+[[flag]]
+applies_to = "date"
+flag = "-u"
+translation_modifier = "displaying or setting time in UTC instead of local time"
+verdict = "allow"
+rationale = "Changes the timezone for display; does not modify the system clock."

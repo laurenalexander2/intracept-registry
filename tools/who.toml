@@ -1,0 +1,56 @@
+# tools/who.toml
+
+[[command]]
+path = "who"
+translation = "Display information about currently logged-in users."
+verdict = "allow"
+rationale = "Read-only display of login information; modifies nothing."
+
+[[flag]]
+applies_to = "who"
+flag = "-a"
+translation_modifier = "including system boot time, idle time, and message status for all entries"
+verdict = "allow"
+rationale = "Only adds more detail to the output; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-b"
+translation_modifier = "showing the time and date of the last system reboot"
+verdict = "allow"
+rationale = "Only displays reboot information; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-H"
+translation_modifier = "including column headings in the output"
+verdict = "allow"
+rationale = "Only changes output formatting; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-m"
+translation_modifier = "showing only information about the current terminal"
+verdict = "allow"
+rationale = "Only restricts which terminal is displayed; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-q"
+translation_modifier = "showing only login names and a count of logged-in users"
+verdict = "allow"
+rationale = "Only changes the output format to a compact listing; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-T"
+translation_modifier = "showing whether each user is accepting messages"
+verdict = "allow"
+rationale = "Only adds message-status information to the output; read-only operation."
+
+[[flag]]
+applies_to = "who"
+flag = "-u"
+translation_modifier = "showing idle time for each user"
+verdict = "allow"
+rationale = "Only adds idle time information to the output; read-only operation."

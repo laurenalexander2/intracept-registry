@@ -1,0 +1,7 @@
+# tools/mod-mono-server2.toml — Mono ASP.NET server (.NET 4.0)
+
+[[command]]
+path = "mod-mono-server2"
+translation = "Run an embedded ASP.NET web server for use with the Apache mod_mono module."
+verdict = "allow"
+rationale = "Starts a network-facing web server that serves ASP.NET applications."

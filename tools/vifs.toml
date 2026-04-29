@@ -1,0 +1,7 @@
+# tools/vifs.toml
+
+[[command]]
+path = "vifs"
+translation = "Safely edit the file system mount table in /etc/fstab."
+verdict = "require_approval"
+rationale = "Modifies the fstab file which controls automatic file system mounting; errors can prevent volumes from mounting on boot."
