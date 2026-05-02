@@ -14,6 +14,22 @@ VALID_VERDICTS = {"allow", "require_approval"}
 
 COMMAND_REQUIRED = ("path", "translation", "verdict", "rationale")
 FLAG_REQUIRED = ("applies_to", "flag", "translation_modifier", "verdict", "rationale")
+COMBO_REQUIRED = ("path", "translation", "verdict", "rationale")
+
+# --- Tag enums ---
+VALID_SCOPES = {"local", "remote"}
+VALID_EFFECTS = {"read", "write", "create", "delete", "execute"}
+VALID_REVERSIBILITY = {"trivial", "difficult", "impossible"}
+VALID_TARGETS = {"filesystem", "repository", "container", "cluster", "cloud",
+                 "package_registry", "database", "credentials", "network",
+                 "process", "config"}
+TAG_DIMENSIONS = {"scope", "effect", "reversibility", "target", "safety_override"}
+TAG_ENUM_MAP = {
+    "scope": VALID_SCOPES,
+    "effect": VALID_EFFECTS,
+    "reversibility": VALID_REVERSIBILITY,
+    "target": VALID_TARGETS,
+}
 
 IRREVERSIBILITY_KEYWORDS = re.compile(
     r"permanently|irreversible|no recovery|destroys|cannot be undone", re.IGNORECASE
@@ -60,8 +76,10 @@ def lint_file(filepath: Path) -> list[Issue]:
 
     commands = data.get("command", [])
     flags = data.get("flag", [])
+    combos = data.get("combo", [])
 
     command_paths: set[str] = set()
+    flag_tokens: dict[str, set[str]] = {}  # command_path -> set of flag strings
 
     # --- A. Schema compliance for commands ---
     for i, cmd in enumerate(commands):
@@ -94,6 +112,9 @@ def lint_file(filepath: Path) -> list[Issue]:
         if isinstance(rationale, str) and rationale:
             _check_rationale(issues, "command", eid, rationale, translation)
 
+        # --- Tag validation (commands) ---
+        _check_tags(issues, "command", eid, cmd, prefix="tags")
+
     # --- A. Schema compliance for flags ---
     for i, flg in enumerate(flags):
         eid = f"{flg.get('applies_to', '?')} {flg.get('flag', f'flag[{i}]')}"
@@ -122,6 +143,88 @@ def lint_file(filepath: Path) -> list[Issue]:
         translation = flg.get("translation_modifier", "")
         if isinstance(rationale, str) and rationale:
             _check_rationale(issues, "flag", eid, rationale, translation)
+
+        # --- Tag modifier validation (flags) ---
+        _check_tags(issues, "flag", eid, flg, prefix="tag_modifiers")
+
+        # Collect flag tokens for combo validation
+        applies_to = flg.get("applies_to", "")
+        flag_val = flg.get("flag", "")
+        if applies_to and flag_val:
+            flag_tokens.setdefault(applies_to, set()).add(flag_val)
+
+    # --- Combo linting ---
+    combo_paths: set[str] = set()
+    for i, combo in enumerate(combos):
+        eid = combo.get("path", f"combo[{i}]")
+
+        # Required fields
+        for field in COMBO_REQUIRED:
+            val = combo.get(field)
+            if val is None or (isinstance(val, str) and val == ""):
+                issues.append(Issue("ERROR", "combo", eid, f"missing or empty required field '{field}'"))
+
+        # Verdict validation
+        verdict = combo.get("verdict", "")
+        if verdict and verdict not in VALID_VERDICTS:
+            issues.append(Issue("ERROR", "combo", eid, f"invalid verdict '{verdict}' (must be one of {sorted(VALID_VERDICTS)})"))
+
+        # Translation rules for combos
+        translation = combo.get("translation", "")
+        if isinstance(translation, str) and translation:
+            if not translation.endswith("."):
+                issues.append(Issue("ERROR", "combo", eid, "translation must end with a period"))
+            length = len(translation)
+            if length < 5:
+                issues.append(Issue("ERROR", "combo", eid, f"translation too short ({length} chars, min 5)"))
+            if length > 300:
+                issues.append(Issue("ERROR", "combo", eid, f"translation too long ({length} chars, max 300)"))
+
+        # Rationale rules for combos
+        rationale = combo.get("rationale", "")
+        if isinstance(rationale, str) and rationale:
+            rat_len = len(rationale)
+            if rat_len < 20:
+                issues.append(Issue("WARN", "combo", eid, f"rationale too short ({rat_len} chars, min 20)"))
+            if rat_len > 400:
+                issues.append(Issue("WARN", "combo", eid, f"rationale too long ({rat_len} chars, max 400)"))
+
+        # Path must start with a valid command path
+        combo_path = combo.get("path", "")
+        if combo_path:
+            # Duplicate combo paths
+            if combo_path in combo_paths:
+                issues.append(Issue("ERROR", "combo", eid, "duplicate combo path"))
+            combo_paths.add(combo_path)
+
+            # Find the base command: longest command path that is a prefix
+            base_cmd = ""
+            for cp in command_paths:
+                if combo_path == cp or combo_path.startswith(cp + " "):
+                    if len(cp) > len(base_cmd):
+                        base_cmd = cp
+            if not base_cmd:
+                issues.append(Issue("ERROR", "combo", eid, "path does not start with any [[command]] path in this file"))
+            else:
+                # Extract flag tokens from the combo path
+                remainder = combo_path[len(base_cmd):].strip()
+                if remainder:
+                    tokens = remainder.split()
+                    known_flags = flag_tokens.get(base_cmd, set())
+                    for token in tokens:
+                        if token.startswith("-") and token not in known_flags:
+                            issues.append(Issue("ERROR", "combo", eid, f"flag '{token}' not found in [[flag]] entries for '{base_cmd}'"))
+
+        # Tag validation (combos)
+        _check_tags(issues, "combo", eid, combo, prefix="tags")
+
+        # Coherence checks (WARN)
+        _check_coherence(issues, "combo", eid, combo)
+
+    # Coherence checks on commands too
+    for i, cmd in enumerate(commands):
+        eid = cmd.get("path", f"command[{i}]")
+        _check_coherence(issues, "command", eid, cmd)
 
     return issues
 
@@ -167,6 +270,64 @@ def _check_rationale(issues: list[Issue], kind: str, eid: str, rationale: str, t
         issues.append(Issue("WARN", kind, eid, f"rationale too long ({length} chars, max 400)"))
     if rationale == translation:
         issues.append(Issue("WARN", kind, eid, "rationale exactly equals translation"))
+
+
+def _check_tags(issues: list[Issue], kind: str, eid: str, entry: dict, prefix: str) -> None:
+    """Validate tags.* or tag_modifiers.* fields against known enums."""
+    found_dims: set[str] = set()
+    for key, val in entry.items():
+        if not key.startswith(prefix + "."):
+            continue
+        dim = key[len(prefix) + 1:]
+        found_dims.add(dim)
+
+        if dim not in TAG_DIMENSIONS:
+            issues.append(Issue("ERROR", kind, eid, f"unknown tag dimension '{dim}' in {prefix}"))
+            continue
+
+        if dim == "safety_override":
+            if not isinstance(val, bool):
+                issues.append(Issue("ERROR", kind, eid, f"{prefix}.safety_override must be a boolean"))
+        elif dim in TAG_ENUM_MAP:
+            valid = TAG_ENUM_MAP[dim]
+            # effect and target can be lists; scope and reversibility are strings
+            if dim in ("effect", "target"):
+                vals = val if isinstance(val, list) else [val]
+                for v in vals:
+                    if v not in valid:
+                        issues.append(Issue("ERROR", kind, eid, f"invalid value '{v}' for {prefix}.{dim} (must be one of {sorted(valid)})"))
+            else:
+                if val not in valid:
+                    issues.append(Issue("ERROR", kind, eid, f"invalid value '{val}' for {prefix}.{dim} (must be one of {sorted(valid)})"))
+
+    # Tag completeness (WARN): some but not all 5 dimensions → WARN
+    if found_dims and found_dims != TAG_DIMENSIONS:
+        missing = TAG_DIMENSIONS - found_dims
+        issues.append(Issue("WARN", kind, eid, f"incomplete tags: missing {sorted(missing)}"))
+
+
+def _check_coherence(issues: list[Issue], kind: str, eid: str, entry: dict) -> None:
+    """Coherence checks between tags and verdict (WARN level)."""
+    verdict = entry.get("verdict", "")
+    # Determine prefix based on kind
+    prefix = "tags"
+    safety = entry.get(f"{prefix}.safety_override")
+    reversibility = entry.get(f"{prefix}.reversibility")
+    effect = entry.get(f"{prefix}.effect")
+
+    # safety_override=true + verdict="allow" → WARN
+    if safety is True and verdict == "allow":
+        issues.append(Issue("WARN", kind, eid, "safety_override=true but verdict is 'allow'"))
+
+    # reversibility="impossible" + verdict="allow" → WARN
+    if reversibility == "impossible" and verdict == "allow":
+        issues.append(Issue("WARN", kind, eid, "reversibility='impossible' but verdict is 'allow'"))
+
+    # effect only ["read"] + verdict="require_approval" → WARN
+    if isinstance(effect, list) and effect == ["read"] and verdict == "require_approval":
+        issues.append(Issue("WARN", kind, eid, "effect is only ['read'] but verdict is 'require_approval'"))
+    elif effect == "read" and verdict == "require_approval":
+        issues.append(Issue("WARN", kind, eid, "effect is only 'read' but verdict is 'require_approval'"))
 
 
 def collect_files(path: Path) -> list[Path]:
@@ -229,11 +390,12 @@ def main(argv: list[str] | None = None) -> int:
                     data = tomllib.loads(Path(fp).read_text(encoding="utf-8"))
                     nc = len(data.get("command", []))
                     nf = len(data.get("flag", []))
+                    nb = len(data.get("combo", []))
                 except Exception:
-                    nc = nf = 0
+                    nc = nf = nb = 0
                 if not args.quiet:
                     print(f"{fp}:")
-                    print(f"  OK ({nc} commands, {nf} flags)")
+                    print(f"  OK ({nc} commands, {nf} flags, {nb} combos)")
                     print()
             else:
                 print(f"{fp}:")
