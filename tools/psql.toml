@@ -1,10 +1,15 @@
-# exemplars/psql.toml
+# tools/psql.toml
 
 [[command]]
 path = "psql"
 translation = "Connect to a PostgreSQL database."
 verdict = "allow"
 rationale = "Connects to a live database where any SQL statement can be executed, including destructive operations."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "psql"
@@ -26,6 +31,7 @@ flag = "-h"
 translation_modifier = "connecting to a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
+tag_modifiers.scope = "remote"
 
 [[flag]]
 applies_to = "psql"
@@ -68,3 +74,27 @@ flag = "--csv"
 translation_modifier = "formatting query output as comma-separated values"
 verdict = "allow"
 rationale = "Changes output format only; does not affect what queries are executed."
+
+# ── Combos ─────────────────────────���───────────────────────────────��─────────
+
+[[combo]]
+path = "psql -c"
+translation = "Execute a single SQL command against a PostgreSQL database and exit immediately."
+verdict = "require_approval"
+rationale = "Runs arbitrary SQL non-interactively, which may include destructive statements like DROP TABLE or DELETE without review."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
+
+[[combo]]
+path = "psql -f"
+translation = "Execute all SQL commands from a file against a PostgreSQL database and exit."
+verdict = "require_approval"
+rationale = "Runs an entire script that may contain multiple destructive operations, with limited opportunity to review each statement."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false

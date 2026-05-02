@@ -5,6 +5,11 @@ path = "mysql"
 translation = "Connect to a MySQL database."
 verdict = "allow"
 rationale = "Connects to a live database where any SQL statement can be executed, including destructive operations."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "mysql"
@@ -33,6 +38,7 @@ flag = "-h"
 translation_modifier = "connecting to a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
+tag_modifiers.scope = "remote"
 
 [[flag]]
 applies_to = "mysql"
@@ -61,6 +67,7 @@ flag = "--force"
 translation_modifier = "continuing execution even after SQL errors"
 verdict = "allow"
 rationale = "Suppresses error-based stopping, which may allow partially destructive scripts to continue."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "mysql"
@@ -89,3 +96,28 @@ flag = "--local-infile"
 translation_modifier = "allowing the database to import data directly from files on the client machine"
 verdict = "require_approval"
 rationale = "Enables reading arbitrary files from the client filesystem into the database, which may expose sensitive data."
+tag_modifiers.target = ["database", "filesystem"]
+
+# ── Combos ─────────────────────��──────────────────────────────────���──────────
+
+[[combo]]
+path = "mysql -e"
+translation = "Execute a single SQL statement against a MySQL database and exit immediately."
+verdict = "require_approval"
+rationale = "Runs arbitrary SQL non-interactively, which may include destructive statements like DROP TABLE or DELETE without review."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
+
+[[combo]]
+path = "mysql -p -u"
+translation = "Connect to a MySQL database as a specified user, prompting for a password before establishing the session."
+verdict = "allow"
+rationale = "Standard authenticated connection pattern that ensures credentials are provided before any operations can be performed."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false

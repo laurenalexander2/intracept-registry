@@ -1,12 +1,17 @@
 # tools/sqlite3.toml
 
-# ── Base command ──────────────────────────────────────────────────────────────
+# ── Base command ────────────────────���──────────────────────────��──────────────
 
 [[command]]
 path = "sqlite3"
 translation = "Open and interact with a SQLite database."
 verdict = "allow"
 rationale = "Can create, modify, and delete data in SQLite database files; a new database is created if the file does not exist."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
 
 # ── Safety and mode flags ────────────────────────────────────────────────────
 
@@ -16,6 +21,8 @@ flag = "-readonly"
 translation_modifier = "opening the database in read-only mode"
 verdict = "allow"
 rationale = "Prevents any modifications to the database; a safety-enhancing option."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "sqlite3"
@@ -38,7 +45,7 @@ translation_modifier = "forcing interactive mode even when input is not a termin
 verdict = "allow"
 rationale = "Changes the I/O mode to interactive; does not add destructive capability."
 
-# ── Execution flags ──────────────────────────────────────────────────────────
+# ── Execution flags ─────────────���────────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -54,7 +61,16 @@ translation_modifier = "reading and executing commands from a specified file at 
 verdict = "allow"
 rationale = "Executes arbitrary SQL and dot-commands from a file, which may modify the database or filesystem."
 
-# ── File handling flags ──────────────────────────────────────────────────────
+# ── Output formatting ──────────────��────────────────────────────────────────
+
+[[flag]]
+applies_to = "sqlite3"
+flag = "-csv"
+translation_modifier = "formatting query output as comma-separated values"
+verdict = "allow"
+rationale = "Changes output format only; does not affect what queries are executed."
+
+# ── File handling flags ───────────────────────────────���────────────────��─────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -101,3 +117,28 @@ flag = "-unsafe-testing"
 translation_modifier = "enabling unsafe commands and modes intended only for testing"
 verdict = "require_approval"
 rationale = "Unlocks dangerous internal commands that can corrupt databases or access arbitrary memory."
+tag_modifiers.safety_override = true
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "sqlite3 -cmd"
+translation = "Open a SQLite database and execute a specified SQL or dot-command before entering interactive mode."
+verdict = "allow"
+rationale = "Runs an initial command that may modify the database before presenting the interactive prompt."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
+
+[[combo]]
+path = "sqlite3 -csv"
+translation = "Open a SQLite database and format all query output as comma-separated values."
+verdict = "allow"
+rationale = "Standard read-friendly output mode used for data export; does not change what queries can be executed."
+tags.scope = "local"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["database"]
+tags.safety_override = false
