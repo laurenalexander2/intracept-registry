@@ -78,6 +78,7 @@ flag = "-append"
 translation_modifier = "appending the database to the end of the specified file"
 verdict = "allow"
 rationale = "Modifies the target file by appending database content to it."
+tag_modifiers.target = ["database", "filesystem"]
 
 [[flag]]
 applies_to = "sqlite3"

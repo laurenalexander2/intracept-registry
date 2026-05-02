@@ -65,7 +65,7 @@ rationale = "Prevents accidental bulk modifications; a safety-enhancing option."
 applies_to = "mysql"
 flag = "--force"
 translation_modifier = "continuing execution even after SQL errors"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Suppresses error-based stopping, which may allow partially destructive scripts to continue."
 tag_modifiers.safety_override = true
 
@@ -98,7 +98,7 @@ verdict = "require_approval"
 rationale = "Enables reading arbitrary files from the client filesystem into the database, which may expose sensitive data."
 tag_modifiers.target = ["database", "filesystem"]
 
-# ── Combos ─────────────────────��──────────────────────────────────���──────────
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "mysql -e"
