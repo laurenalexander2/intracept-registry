@@ -7,6 +7,11 @@ path = "node"
 translation = "Run the Node.js JavaScript runtime."
 verdict = "allow"
 rationale = "Executes arbitrary JavaScript code with full access to the filesystem and network."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["process", "filesystem"]
+tags.safety_override = false
 
 # ── Execution modes ──────────────────────────────────────────────────────────
 
@@ -30,6 +35,9 @@ flag = "--check"
 translation_modifier = "only checking the script for syntax errors without executing it"
 verdict = "allow"
 rationale = "Validates syntax without running the code; no side effects."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
+tag_modifiers.target = ["filesystem"]
 
 [[flag]]
 applies_to = "node"
@@ -46,6 +54,7 @@ flag = "--inspect"
 translation_modifier = "enabling the debugger on the default port"
 verdict = "allow"
 rationale = "Opens a debug port for local inspection; does not change program behavior."
+tag_modifiers.target = ["process", "filesystem", "network"]
 
 [[flag]]
 applies_to = "node"
@@ -53,6 +62,7 @@ flag = "--inspect-brk"
 translation_modifier = "enabling the debugger and pausing before the first line executes"
 verdict = "allow"
 rationale = "Opens a debug port and pauses execution; does not change program behavior."
+tag_modifiers.target = ["process", "filesystem", "network"]
 
 # ── Security and permissions ─────────────────────────────────────────────────
 
@@ -122,3 +132,27 @@ flag = "--abort-on-uncaught-exception"
 translation_modifier = "crashing with a core dump on unhandled errors instead of exiting gracefully"
 verdict = "allow"
 rationale = "Changes error handling behavior; may produce a core dump file but does not affect normal execution."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "node -e"
+translation = "Evaluate a string of JavaScript code passed directly on the command line and execute it."
+verdict = "allow"
+rationale = "Runs arbitrary inline JavaScript that can perform any operation the runtime supports."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["process", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "node --inspect"
+translation = "Run a Node.js script with the Chrome DevTools debugger listening on the default port for remote inspection."
+verdict = "allow"
+rationale = "Opens a local debug port that allows stepping through code and inspecting state, but does not change program behavior."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["process", "filesystem", "network"]
+tags.safety_override = false

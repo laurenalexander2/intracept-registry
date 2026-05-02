@@ -7,6 +7,11 @@ path = "jq"
 translation = "Process and transform JSON data using filter expressions."
 verdict = "allow"
 rationale = "Reads JSON from input or files and writes transformed results to the terminal; does not modify source files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Input handling ───────────────────────────────────────────────────────────
 
@@ -141,3 +146,38 @@ flag = "-f"
 translation_modifier = "loading the filter expression from a file instead of the command line"
 verdict = "allow"
 rationale = "Changes where the filter is read from; does not modify files."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "jq -e"
+translation = "Process JSON data and set the exit code to indicate whether the result is null or false, for use in conditional scripts."
+verdict = "allow"
+rationale = "Adds exit-code signaling to the read-only JSON filter, enabling shell-level branching on query results."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "jq -r"
+translation = "Process JSON data and output string values without surrounding quotes or JSON formatting."
+verdict = "allow"
+rationale = "Strips JSON quoting from string output, commonly used to extract plain-text values for use in shell pipelines."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "jq -s"
+translation = "Read all JSON inputs into a single array, then process the combined data as one unit."
+verdict = "allow"
+rationale = "Collects multiple JSON values into one array before filtering, useful for cross-document aggregation."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
