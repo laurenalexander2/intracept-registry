@@ -276,7 +276,6 @@ translation_modifier = "simulating the creation without actually opening a pull 
 verdict = "allow"
 rationale = "No pull request is created; only shows what would happen."
 tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
 
 [[command]]
 path = "gh pr list"
@@ -870,7 +869,7 @@ tags.safety_override = false
 [[command]]
 path = "gh run cancel"
 translation = "Cancel a running workflow."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Stops a workflow run that may be performing deployments or other important tasks."
 tags.scope = "remote"
 tags.effect = ["write"]
