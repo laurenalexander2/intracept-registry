@@ -77,13 +77,15 @@ flag = "--force-reinstall"
 translation_modifier = "reinstalling packages even if they are already up to date"
 verdict = "allow"
 rationale = "Overwrites existing installations, which may temporarily break dependent code."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "pip install"
 flag = "--index-url"
 translation_modifier = "using a specified package index instead of the default PyPI"
-verdict = "allow"
-rationale = "Changes the package source, which could point to an untrusted registry."
+verdict = "require_approval"
+rationale = "Overrides the default package source, introducing supply-chain risk from untrusted registries."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "pip uninstall"
