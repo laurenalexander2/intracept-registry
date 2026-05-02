@@ -930,7 +930,7 @@ tags.safety_override = false
 [[combo]]
 path = "kubectl exec -it"
 translation = "Open an interactive terminal session inside a running container, allowing direct command execution."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Provides a live shell into a container where arbitrary commands can be run, potentially modifying application state or accessing sensitive data."
 tags.scope = "remote"
 tags.effect = ["execute"]

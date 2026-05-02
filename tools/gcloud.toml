@@ -150,6 +150,17 @@ tags.safety_override = false
 # ── Projects ─────────────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud projects"
+translation = "Manage Google Cloud projects."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud projects list"
 translation = "List all Google Cloud projects accessible by the active account."
 verdict = "allow"
@@ -190,6 +201,19 @@ rationale = "Schedules the project and all its resources for permanent deletion 
 tags.scope = "remote"
 tags.effect = ["delete"]
 tags.reversibility = "difficult"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+# ── Compute ──────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud compute"
+translation = "Manage Compute Engine resources."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
 tags.target = ["cloud"]
 tags.safety_override = false
 
@@ -290,8 +314,8 @@ tags.safety_override = false
 [[command]]
 path = "gcloud compute instances ssh"
 translation = "Open an SSH session to a Compute Engine instance."
-verdict = "allow"
-rationale = "Establishes a remote shell connection; does not modify the instance configuration."
+verdict = "require_approval"
+rationale = "Opens a remote shell for arbitrary command execution on the instance."
 tags.scope = "remote"
 tags.effect = ["execute"]
 tags.reversibility = "trivial"
@@ -344,6 +368,19 @@ tags.reversibility = "trivial"
 tags.target = ["cloud"]
 tags.safety_override = false
 
+# ── Compute disks ────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud compute disks"
+translation = "Manage Compute Engine persistent disks."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
 # ── Compute firewall ─────────────────────────────────────────────────────────
 
 [[command]]
@@ -391,6 +428,17 @@ tags.target = ["cloud", "network"]
 tags.safety_override = false
 
 # ── Cloud SQL ────────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud sql"
+translation = "Manage Cloud SQL database instances."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "database"]
+tags.safety_override = false
 
 [[command]]
 path = "gcloud sql instances list"
@@ -494,6 +542,17 @@ tags.safety_override = false
 # ── Cloud Storage ────────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud storage"
+translation = "Manage Cloud Storage buckets and objects."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud storage ls"
 translation = "List Cloud Storage buckets or objects."
 verdict = "allow"
@@ -595,6 +654,17 @@ tags.safety_override = false
 # ── GKE / Container ─────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud container"
+translation = "Manage Google Kubernetes Engine resources."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "cluster"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud container clusters list"
 translation = "List Google Kubernetes Engine clusters."
 verdict = "allow"
@@ -674,6 +744,17 @@ tags.safety_override = false
 # ── Cloud Run ────────────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud run"
+translation = "Manage Cloud Run services and jobs."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud run deploy"
 translation = "Create or update a Cloud Run service with a new container image."
 verdict = "require_approval"
@@ -735,6 +816,17 @@ tags.safety_override = false
 # ── Cloud Functions ──────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud functions"
+translation = "Manage Google Cloud Functions."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud functions list"
 translation = "List Google Cloud Functions."
 verdict = "allow"
@@ -792,6 +884,17 @@ tags.safety_override = false
 # ── IAM ──────────────────────────────────────────────────────────────────────
 
 [[command]]
+path = "gcloud iam"
+translation = "Manage IAM service accounts and policies."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "credentials"]
+tags.safety_override = false
+
+[[command]]
 path = "gcloud iam service-accounts list"
 translation = "List IAM service accounts in a project."
 verdict = "allow"
@@ -847,6 +950,17 @@ tags.target = ["cloud", "credentials"]
 tags.safety_override = false
 
 # ── App Engine ───────────────────────────────────────────────────────────────
+
+[[command]]
+path = "gcloud app"
+translation = "Manage App Engine applications."
+verdict = "allow"
+rationale = "The bare subcommand prints help text."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
 
 [[command]]
 path = "gcloud app deploy"
@@ -953,4 +1067,49 @@ tags.effect = ["delete"]
 tags.reversibility = "difficult"
 tags.target = ["cloud"]
 tags.safety_override = false
+
+[[combo]]
+path = "gcloud storage rm --all-versions --recursive"
+translation = "Recursively delete all objects and all historical versions under a Cloud Storage path, making recovery impossible even with versioning."
+verdict = "require_approval"
+rationale = "Destroys both current objects and their version history, eliminating any versioning-based recovery path."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[combo]]
+path = "gcloud compute instances delete --delete-disks"
+translation = "Delete a Compute Engine instance along with its attached disks, permanently destroying all data stored on them."
+verdict = "require_approval"
+rationale = "Combines instance termination with disk deletion, making data recovery impossible."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[combo]]
+path = "gcloud compute instances delete --keep-disks"
+translation = "Delete a Compute Engine instance but preserve its attached disks for reuse or data recovery."
+verdict = "require_approval"
+rationale = "Terminates the instance but retains disk data, reducing data loss risk."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[combo]]
+path = "gcloud run deploy --allow-unauthenticated"
+translation = "Deploy a Cloud Run service and make it publicly accessible without any authentication requirement."
+verdict = "require_approval"
+rationale = "Exposes a live service to the public internet with no access controls, increasing the attack surface."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "network"]
+tags.safety_override = true
+
 

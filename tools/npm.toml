@@ -71,7 +71,7 @@ tags.safety_override = false
 [[command]]
 path = "npm exec"
 translation = "Run a command from a local or remote npm package."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Downloads and executes a package, running arbitrary code even if not previously installed."
 tags.scope = "remote"
 tags.effect = ["execute"]

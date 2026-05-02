@@ -297,7 +297,7 @@ rationale = "The bare subcommand prints help text."
 tags.scope = "remote"
 tags.effect = ["read"]
 tags.reversibility = "trivial"
-tags.target = ["cloud"]
+tags.target = ["cloud", "credentials"]
 tags.safety_override = false
 
 [[command]]
@@ -455,7 +455,7 @@ rationale = "The bare subcommand prints help text."
 tags.scope = "remote"
 tags.effect = ["read"]
 tags.reversibility = "trivial"
-tags.target = ["cloud"]
+tags.target = ["cloud", "credentials"]
 tags.safety_override = false
 
 [[command]]

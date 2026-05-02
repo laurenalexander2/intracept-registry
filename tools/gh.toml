@@ -152,7 +152,7 @@ tags.safety_override = false
 [[command]]
 path = "gh repo edit"
 translation = "Modify settings of a GitHub repository."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Changes repository configuration such as visibility, description, or features."
 tags.scope = "remote"
 tags.effect = ["write"]
@@ -223,7 +223,7 @@ tag_modifiers.safety_override = true
 [[command]]
 path = "gh repo sync"
 translation = "Sync a forked repository with its upstream."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Updates branch refs to match the upstream, which may overwrite divergent local changes."
 tags.scope = "remote"
 tags.effect = ["write"]
@@ -1058,7 +1058,7 @@ tags.safety_override = false
 [[command]]
 path = "gh variable delete"
 translation = "Delete a GitHub Actions variable."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Removes a variable that may be required by running workflows, potentially breaking builds."
 tags.scope = "remote"
 tags.effect = ["delete"]
@@ -1292,7 +1292,7 @@ tags.safety_override = false
 [[command]]
 path = "gh ssh-key delete"
 translation = "Remove an SSH key from your GitHub account."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Revokes access for that key, which may break automated systems that depend on it."
 tags.scope = "remote"
 tags.effect = ["delete"]
@@ -1319,7 +1319,7 @@ flag = "--method"
 translation_modifier = "using a specific HTTP method such as POST, PUT, PATCH, or DELETE"
 verdict = "allow"
 rationale = "Non-GET methods modify or delete remote resources."
-tag_modifiers.effect = ["read", "write"]
+tag_modifiers.effect = ["read", "write", "delete"]
 tag_modifiers.reversibility = "difficult"
 
 [[flag]]
@@ -1422,10 +1422,10 @@ tags.safety_override = true
 [[combo]]
 path = "gh api --method"
 translation = "Make an authenticated request to the GitHub API using a specific HTTP method, which may create, modify, or delete remote resources."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Non-GET methods can mutate any resource the authenticated user has access to; the exact impact depends on the endpoint."
 tags.scope = "remote"
-tags.effect = ["read", "write"]
+tags.effect = ["read", "write", "delete"]
 tags.reversibility = "difficult"
 tags.target = ["repository"]
 tags.safety_override = false

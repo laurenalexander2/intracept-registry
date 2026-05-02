@@ -970,7 +970,8 @@
         ],
         "reversibility": "trivial",
         "target": [
-          "cloud"
+          "cloud",
+          "credentials"
         ],
         "safety_override": false
       }
@@ -1615,7 +1616,8 @@
         ],
         "reversibility": "trivial",
         "target": [
-          "cloud"
+          "cloud",
+          "credentials"
         ],
         "safety_override": false
       }
@@ -6568,6 +6570,23 @@
         "safety_override": false
       }
     },
+    "gcloud app": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage App Engine applications.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
     "gcloud app browse": {
       "tool": "gcloud",
       "verdict": "allow",
@@ -6735,6 +6754,40 @@
         "reversibility": "trivial",
         "target": [
           "filesystem"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Compute Engine resources.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute disks": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Compute Engine persistent disks.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
         ],
         "safety_override": false
       }
@@ -6966,9 +7019,9 @@
     },
     "gcloud compute instances ssh": {
       "tool": "gcloud",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Open an SSH session to a Compute Engine instance.",
-      "rationale": "Establishes a remote shell connection; does not modify the instance configuration.",
+      "rationale": "Opens a remote shell for arbitrary command execution on the instance.",
       "tags": {
         "scope": "remote",
         "effect": [
@@ -7079,6 +7132,24 @@
         "reversibility": "trivial",
         "target": [
           "config"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud container": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Google Kubernetes Engine resources.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud",
+          "cluster"
         ],
         "safety_override": false
       }
@@ -7210,6 +7281,23 @@
         "safety_override": false
       }
     },
+    "gcloud functions": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Google Cloud Functions.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
     "gcloud functions call": {
       "tool": "gcloud",
       "verdict": "require_approval",
@@ -7292,6 +7380,24 @@
         "reversibility": "trivial",
         "target": [
           "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud iam": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage IAM service accounts and policies.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud",
+          "credentials"
         ],
         "safety_override": false
       }
@@ -7420,6 +7526,23 @@
         "safety_override": false
       }
     },
+    "gcloud projects": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Google Cloud projects.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
     "gcloud projects create": {
       "tool": "gcloud",
       "verdict": "require_approval",
@@ -7476,6 +7599,23 @@
       "verdict": "allow",
       "translation": "List all Google Cloud projects accessible by the active account.",
       "rationale": "Read-only listing of projects.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud run": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Cloud Run services and jobs.",
+      "rationale": "The bare subcommand prints help text.",
       "tags": {
         "scope": "remote",
         "effect": [
@@ -7553,6 +7693,24 @@
         "reversibility": "trivial",
         "target": [
           "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud sql": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Cloud SQL database instances.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud",
+          "database"
         ],
         "safety_override": false
       }
@@ -7715,6 +7873,23 @@
         "target": [
           "cloud",
           "database"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud storage": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Manage Cloud Storage buckets and objects.",
+      "rationale": "The bare subcommand prints help text.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "read"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
         ],
         "safety_override": false
       }
@@ -8916,7 +9091,7 @@
     },
     "gh repo edit": {
       "tool": "gh",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Modify settings of a GitHub repository.",
       "rationale": "Changes repository configuration such as visibility, description, or features.",
       "tags": {
@@ -8984,7 +9159,7 @@
     },
     "gh repo sync": {
       "tool": "gh",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Sync a forked repository with its upstream.",
       "rationale": "Updates branch refs to match the upstream, which may overwrite divergent local changes.",
       "tags": {
@@ -9377,7 +9552,7 @@
     },
     "gh ssh-key delete": {
       "tool": "gh",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Remove an SSH key from your GitHub account.",
       "rationale": "Revokes access for that key, which may break automated systems that depend on it.",
       "tags": {
@@ -9428,7 +9603,7 @@
     },
     "gh variable delete": {
       "tool": "gh",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Delete a GitHub Actions variable.",
       "rationale": "Removes a variable that may be required by running workflows, potentially breaking builds.",
       "tags": {
@@ -13924,7 +14099,7 @@
     },
     "npm exec": {
       "tool": "npm",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Run a command from a local or remote npm package.",
       "rationale": "Downloads and executes a package, running arbitrary code even if not previously installed.",
       "tags": {
@@ -28899,7 +29074,8 @@
       "tag_modifiers": {
         "effect": [
           "read",
-          "write"
+          "write",
+          "delete"
         ],
         "reversibility": "difficult"
       }
@@ -50996,6 +51172,76 @@
         "safety_override": false
       }
     },
+    "gcloud compute instances delete --delete-disks": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Delete a Compute Engine instance along with its attached disks, permanently destroying all data stored on them.",
+      "rationale": "Combines instance termination with disk deletion, making data recovery impossible.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "delete"
+        ],
+        "reversibility": "impossible",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute instances delete --keep-disks": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Delete a Compute Engine instance but preserve its attached disks for reuse or data recovery.",
+      "rationale": "Terminates the instance but retains disk data, reducing data loss risk.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "delete"
+        ],
+        "reversibility": "difficult",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud run deploy --allow-unauthenticated": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Deploy a Cloud Run service and make it publicly accessible without any authentication requirement.",
+      "rationale": "Exposes a live service to the public internet with no access controls, increasing the attack surface.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "write",
+          "create"
+        ],
+        "reversibility": "difficult",
+        "target": [
+          "cloud",
+          "network"
+        ],
+        "safety_override": true
+      }
+    },
+    "gcloud storage rm --all-versions --recursive": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Recursively delete all objects and all historical versions under a Cloud Storage path, making recovery impossible even with versioning.",
+      "rationale": "Destroys both current objects and their version history, eliminating any versioning-based recovery path.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "delete"
+        ],
+        "reversibility": "impossible",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
     "gcloud storage rm --recursive": {
       "tool": "gcloud",
       "verdict": "require_approval",
@@ -51015,14 +51261,15 @@
     },
     "gh api --method": {
       "tool": "gh",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Make an authenticated request to the GitHub API using a specific HTTP method, which may create, modify, or delete remote resources.",
       "rationale": "Non-GET methods can mutate any resource the authenticated user has access to; the exact impact depends on the endpoint.",
       "tags": {
         "scope": "remote",
         "effect": [
           "read",
-          "write"
+          "write",
+          "delete"
         ],
         "reversibility": "difficult",
         "target": [
@@ -52025,7 +52272,7 @@
     },
     "kubectl exec -it": {
       "tool": "kubectl",
-      "verdict": "allow",
+      "verdict": "require_approval",
       "translation": "Open an interactive terminal session inside a running container, allowing direct command execution.",
       "rationale": "Provides a live shell into a container where arbitrary commands can be run, potentially modifying application state or accessing sensitive data.",
       "tags": {
