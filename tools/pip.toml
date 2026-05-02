@@ -3,59 +3,66 @@
 [[command]]
 path = "pip"
 translation = "Install and manage Python packages."
+verdict = "allow"
+rationale = "Alias for pip3; the bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
+
+[[command]]
+path = "pip install"
+translation = "Download and install Python packages from a package index."
 verdict = "require_approval"
-rationale = "Alias for pip3; downloads and installs code from the internet that executes during installation."
+rationale = "Downloads and installs code from the internet that executes arbitrary setup scripts during installation."
 tags.scope = "remote"
 tags.effect = ["read", "write", "execute"]
 tags.reversibility = "difficult"
 tags.target = ["package_registry", "filesystem"]
 tags.safety_override = false
 
-[[flag]]
-applies_to = "pip"
-flag = "install"
-translation_modifier = "downloading and installing specified packages"
-verdict = "require_approval"
-rationale = "Downloads packages from PyPI and installs them, executing arbitrary setup code during installation."
-
-[[flag]]
-applies_to = "pip"
-flag = "uninstall"
-translation_modifier = "removing specified packages"
+[[command]]
+path = "pip uninstall"
+translation = "Remove installed Python packages."
 verdict = "require_approval"
 rationale = "Deletes installed packages, which may break dependent applications."
-tag_modifiers.effect = ["delete"]
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "-r"
 translation_modifier = "installing all packages listed in a requirements file"
 verdict = "allow"
 rationale = "Reads a file to determine which packages to install; increases the scope of installation."
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--upgrade"
 translation_modifier = "upgrading packages to the latest available version"
 verdict = "allow"
 rationale = "Replaces installed packages with newer versions, which may introduce breaking changes."
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--user"
 translation_modifier = "installing to the user site-packages directory instead of the system location"
 verdict = "allow"
 rationale = "Limits the installation scope to the current user; does not require elevated privileges."
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--no-deps"
 translation_modifier = "skipping installation of package dependencies"
 verdict = "allow"
 rationale = "Reduces the scope of installation; may leave the package non-functional."
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--dry-run"
 translation_modifier = "simulating the installation without actually installing anything"
 verdict = "allow"
@@ -65,18 +72,26 @@ tag_modifiers.reversibility = "trivial"
 tag_modifiers.scope = "local"
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--force-reinstall"
 translation_modifier = "reinstalling packages even if they are already up to date"
 verdict = "allow"
 rationale = "Overwrites existing installations, which may temporarily break dependent code."
 
 [[flag]]
-applies_to = "pip"
+applies_to = "pip install"
 flag = "--index-url"
 translation_modifier = "using a specified package index instead of the default PyPI"
 verdict = "allow"
 rationale = "Changes the package source, which could point to an untrusted registry."
+
+[[flag]]
+applies_to = "pip uninstall"
+flag = "-y"
+translation_modifier = "skipping the confirmation prompt"
+verdict = "require_approval"
+rationale = "Removes packages without asking for confirmation, bypassing the interactive safety check."
+tag_modifiers.safety_override = true
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
