@@ -7,6 +7,11 @@ path = "terraform"
 translation = "Run the Terraform infrastructure-as-code tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Core workflow ─────────────────────────────────────────────────────────────
 
@@ -15,24 +20,44 @@ path = "terraform init"
 translation = "Initialize a Terraform working directory by downloading providers and modules."
 verdict = "allow"
 rationale = "Sets up local state and downloads dependencies; safe to run repeatedly."
+tags.scope = "remote"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform validate"
 translation = "Check whether the Terraform configuration files are syntactically valid."
 verdict = "allow"
 rationale = "Read-only validation that does not contact remote services or modify state."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform fmt"
 translation = "Reformat Terraform configuration files to the standard style."
 verdict = "allow"
 rationale = "Modifies only whitespace and formatting in local files; semantics are unchanged."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform plan"
 translation = "Generate an execution plan showing what changes Terraform would make to infrastructure."
 verdict = "allow"
 rationale = "Read-only operation that queries providers but does not modify any infrastructure."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform plan"
@@ -74,6 +99,11 @@ path = "terraform apply"
 translation = "Create or update infrastructure to match the Terraform configuration."
 verdict = "require_approval"
 rationale = "Modifies live cloud infrastructure, which may cause service disruption and incur costs."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform apply"
@@ -81,6 +111,7 @@ flag = "-auto-approve"
 translation_modifier = "without asking for interactive confirmation"
 verdict = "require_approval"
 rationale = "Skips the confirmation prompt, immediately applying potentially destructive changes."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "terraform apply"
@@ -109,6 +140,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "terraform apply"
@@ -116,6 +148,7 @@ flag = "-destroy"
 translation_modifier = "destroying all managed infrastructure instead of creating or updating"
 verdict = "require_approval"
 rationale = "Equivalent to terraform destroy; removes all managed resources."
+tag_modifiers.reversibility = "impossible"
 
 [[flag]]
 applies_to = "terraform apply"
@@ -123,6 +156,8 @@ flag = "-refresh-only"
 translation_modifier = "only updating the state file to match real infrastructure without making changes"
 verdict = "allow"
 rationale = "Reconciles state with reality; may cause future plans to show unexpected changes."
+tag_modifiers.effect = ["read", "write"]
+tag_modifiers.reversibility = "trivial"
 
 # ── Destruction ───────────────────────────────────────────────────────────────
 
@@ -131,6 +166,11 @@ path = "terraform destroy"
 translation = "Destroy all infrastructure managed by the current Terraform configuration."
 verdict = "require_approval"
 rationale = "Permanently deletes all managed resources including compute, databases, and networking."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform destroy"
@@ -138,6 +178,7 @@ flag = "-auto-approve"
 translation_modifier = "without asking for interactive confirmation"
 verdict = "require_approval"
 rationale = "Immediately destroys all managed infrastructure without a confirmation prompt."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "terraform destroy"
@@ -153,6 +194,11 @@ path = "terraform import"
 translation = "Bring an existing infrastructure resource under Terraform management."
 verdict = "allow"
 rationale = "Modifies the state file to track an existing resource; does not change infrastructure."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform import"
@@ -160,6 +206,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 # ── State management ─────────────────────────────────────────────────────────
 
@@ -168,24 +215,44 @@ path = "terraform state"
 translation = "Perform advanced operations on the Terraform state file."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform state list"
 translation = "List all resources tracked in the Terraform state."
 verdict = "allow"
 rationale = "Read-only listing of state entries."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform state show"
 translation = "Display the attributes of a single resource in the Terraform state."
 verdict = "allow"
 rationale = "Read-only display of resource details."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform state mv"
 translation = "Move a resource to a different address in the Terraform state."
 verdict = "require_approval"
 rationale = "Renames or restructures resources in state; incorrect moves can cause resources to be recreated."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform state mv"
@@ -193,6 +260,8 @@ flag = "-dry-run"
 translation_modifier = "simulating the move without actually changing the state"
 verdict = "allow"
 rationale = "No state changes are made; only shows what would be moved."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "terraform state mv"
@@ -200,12 +269,18 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 [[command]]
 path = "terraform state rm"
 translation = "Remove a resource from Terraform state without destroying the real infrastructure."
 verdict = "require_approval"
 rationale = "Terraform forgets the resource, which means it will no longer be managed or protected from drift."
+tags.scope = "local"
+tags.effect = ["write", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform state rm"
@@ -213,6 +288,8 @@ flag = "-dry-run"
 translation_modifier = "simulating the removal without actually changing the state"
 verdict = "allow"
 rationale = "No state changes are made; only shows what would be removed."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "terraform state rm"
@@ -220,18 +297,29 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 [[command]]
 path = "terraform state pull"
 translation = "Download the current remote state and print it to standard output."
 verdict = "allow"
 rationale = "Read-only retrieval of the state file."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform state push"
 translation = "Upload a local state file to the configured remote backend."
 verdict = "require_approval"
 rationale = "Overwrites the remote state, which can cause other users to lose track of managed resources."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform state push"
@@ -239,6 +327,8 @@ flag = "-force"
 translation_modifier = "even if the state lineage or serial number does not match"
 verdict = "require_approval"
 rationale = "Bypasses safety checks that prevent overwriting divergent state, risking total state corruption."
+tag_modifiers.safety_override = true
+tag_modifiers.reversibility = "impossible"
 
 # ── Resource lifecycle ────────────────────────────────────────────────────────
 
@@ -247,18 +337,33 @@ path = "terraform taint"
 translation = "Mark a resource instance as degraded so it will be recreated on the next apply."
 verdict = "allow"
 rationale = "Does not destroy the resource immediately, but the next apply will replace it."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform untaint"
 translation = "Remove the tainted status from a resource instance so it will not be recreated."
 verdict = "allow"
 rationale = "Removes the taint mark; prevents unnecessary destruction on the next apply."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform refresh"
 translation = "Update the Terraform state to match the current real-world infrastructure."
 verdict = "allow"
 rationale = "Modifies the state file, which may cause future plans to show unexpected changes."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform refresh"
@@ -273,6 +378,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 # ── Output and graph ─────────────────────────────────────────────────────────
 
@@ -281,18 +387,33 @@ path = "terraform output"
 translation = "Display the output values defined in the Terraform configuration."
 verdict = "allow"
 rationale = "Read-only display of output values from the state."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform graph"
 translation = "Generate a visual dependency graph of Terraform resources."
 verdict = "allow"
 rationale = "Read-only graph generation that does not modify state or infrastructure."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform providers"
 translation = "Show the providers required by the current configuration."
 verdict = "allow"
 rationale = "Read-only display of provider dependencies."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Locking ───────────────────────────────────────────────────────────────────
 
@@ -301,6 +422,11 @@ path = "terraform force-unlock"
 translation = "Manually release a stuck state lock."
 verdict = "require_approval"
 rationale = "Forcibly removes the lock, which may allow conflicting operations to corrupt the state."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = true
 
 [[flag]]
 applies_to = "terraform force-unlock"
@@ -308,6 +434,7 @@ flag = "-force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt; the risk is in the base command, not the prompt bypass."
+tag_modifiers.safety_override = true
 
 # ── Workspaces ────────────────────────────────────────────────────────────────
 
@@ -316,36 +443,66 @@ path = "terraform workspace"
 translation = "Manage Terraform workspaces for isolating state environments."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform workspace list"
 translation = "List all available Terraform workspaces."
 verdict = "allow"
 rationale = "Read-only listing of workspaces."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform workspace show"
 translation = "Display the name of the currently selected workspace."
 verdict = "allow"
 rationale = "Read-only display of the current workspace."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform workspace new"
 translation = "Create a new Terraform workspace."
 verdict = "allow"
 rationale = "Creates a new isolated state environment; does not affect existing workspaces."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform workspace select"
 translation = "Switch to a different Terraform workspace."
 verdict = "allow"
 rationale = "Changes which state file subsequent commands operate on; the wrong workspace may target production."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform workspace delete"
 translation = "Delete a Terraform workspace and its state."
 verdict = "require_approval"
 rationale = "Permanently removes the workspace state; resources tracked in it become unmanaged."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Authentication ────────────────────────────────────────────────────────────
 
@@ -354,6 +511,11 @@ path = "terraform login"
 translation = "Authenticate with a remote Terraform service and save the credentials locally."
 verdict = "allow"
 rationale = "Stores authentication credentials on disk, which could be exposed if the machine is compromised."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 # ── Missing commands ────────────────────────────────────────────────────────
 
@@ -362,36 +524,66 @@ path = "terraform show"
 translation = "Display the current state or a saved plan in human-readable form."
 verdict = "allow"
 rationale = "Read-only display of state or plan data."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform console"
 translation = "Open an interactive console for evaluating Terraform expressions."
 verdict = "allow"
 rationale = "Interactive evaluation environment; does not modify state or infrastructure."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform test"
 translation = "Run integration tests defined for Terraform modules."
 verdict = "allow"
 rationale = "Executes test assertions against the configuration; may create temporary infrastructure in test mode."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform get"
 translation = "Download and update the modules referenced in the configuration."
 verdict = "allow"
 rationale = "Downloads module source code; does not modify state or infrastructure."
+tags.scope = "remote"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform logout"
 translation = "Remove locally stored credentials for a remote Terraform service."
 verdict = "allow"
 rationale = "Deletes local authentication tokens; does not affect remote infrastructure."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "terraform state replace-provider"
 translation = "Replace the provider recorded in the state for existing resources."
 verdict = "require_approval"
 rationale = "Changes which provider manages resources in state; incorrect replacement may cause resources to be recreated."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "terraform state replace-provider"
@@ -399,6 +591,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
+tag_modifiers.safety_override = true
 
 # ── Missing flags on existing commands ──────────────────────────────────────
 
@@ -429,6 +622,7 @@ flag = "-migrate-state"
 translation_modifier = "migrating existing state to the newly configured backend"
 verdict = "require_approval"
 rationale = "Moves state between backends; errors during migration can leave state in an inconsistent location."
+tag_modifiers.reversibility = "difficult"
 
 [[flag]]
 applies_to = "terraform plan"
@@ -450,6 +644,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "require_approval"
 rationale = "Allows concurrent state modifications during destroy, risking state corruption."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "terraform fmt"
@@ -457,6 +652,7 @@ flag = "-check"
 translation_modifier = "only checking if files need formatting without modifying them"
 verdict = "allow"
 rationale = "Read-only check; no files are modified."
+tag_modifiers.effect = ["read"]
 
 [[flag]]
 applies_to = "terraform fmt"
@@ -471,3 +667,115 @@ flag = "-json"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output format to JSON; still a read-only validation."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "terraform apply -auto-approve"
+translation = "Create or update cloud infrastructure immediately without waiting for interactive confirmation, applying all planned changes at once."
+verdict = "require_approval"
+rationale = "Modifies live infrastructure with no confirmation prompt, removing the last guardrail before potentially destructive changes take effect."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform destroy -auto-approve"
+translation = "Destroy all managed cloud infrastructure immediately without waiting for interactive confirmation."
+verdict = "require_approval"
+rationale = "Permanently deletes all managed resources including compute, databases, and networking with no confirmation prompt."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform state push -force"
+translation = "Upload a local state file to the remote backend, overwriting it even if the lineage or serial number does not match."
+verdict = "require_approval"
+rationale = "Bypasses all state consistency checks, risking total corruption of the shared state that tracks all managed infrastructure."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "impossible"
+tags.target = ["config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform init -upgrade"
+translation = "Reinitialize the Terraform working directory and upgrade all provider plugins and modules to the latest allowed versions."
+verdict = "allow"
+rationale = "Downloads newer provider versions that may introduce breaking changes or alter infrastructure behavior on the next apply."
+tags.scope = "remote"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
+
+[[combo]]
+path = "terraform plan -destroy"
+translation = "Generate an execution plan showing what Terraform would delete if a destroy were run, without actually destroying anything."
+verdict = "allow"
+rationale = "Read-only preview of destruction that helps verify which resources would be removed before committing to a destroy."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["cloud", "config"]
+tags.safety_override = false
+
+[[combo]]
+path = "terraform apply -lock=false"
+translation = "Create or update cloud infrastructure without acquiring the state lock, allowing other operations to run concurrently."
+verdict = "require_approval"
+rationale = "Concurrent modifications without locking can corrupt the state file, causing Terraform to lose track of managed resources."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform destroy -lock=false"
+translation = "Destroy all managed cloud infrastructure without acquiring the state lock, allowing other operations to run concurrently."
+verdict = "require_approval"
+rationale = "Combines infrastructure destruction with concurrent state access, risking both data loss and state corruption simultaneously."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform apply -auto-approve -destroy"
+translation = "Destroy all managed cloud infrastructure immediately without confirmation, equivalent to terraform destroy -auto-approve."
+verdict = "require_approval"
+rationale = "Permanently deletes all managed resources with no confirmation prompt, combining the most destructive operation with the removal of all safeguards."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform apply -auto-approve -lock=false"
+translation = "Create or update cloud infrastructure immediately without confirmation and without acquiring the state lock."
+verdict = "require_approval"
+rationale = "Removes both the confirmation prompt and state locking safeguards, maximizing the risk of unintended changes and state corruption."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
+
+[[combo]]
+path = "terraform destroy -auto-approve -lock=false"
+translation = "Destroy all managed cloud infrastructure immediately without confirmation and without acquiring the state lock."
+verdict = "require_approval"
+rationale = "Combines immediate destruction with no locking, risking permanent data loss and state corruption in a single operation."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "impossible"
+tags.target = ["cloud", "config"]
+tags.safety_override = true
