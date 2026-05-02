@@ -318,13 +318,3 @@ tags.reversibility = "difficult"
 tags.target = ["package_registry", "filesystem"]
 tags.safety_override = false
 
-[[combo]]
-path = "yarn cache clean"
-translation = "Delete all locally cached packages used by Yarn, forcing a fresh download on the next install."
-verdict = "allow"
-rationale = "Removes cached package data that can be re-downloaded, but the next install will be significantly slower."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false

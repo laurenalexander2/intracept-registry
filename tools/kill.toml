@@ -5,7 +5,7 @@
 [[command]]
 path = "kill"
 translation = "Send a signal to one or more running processes, typically to stop them."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
 tags.scope = "local"
 tags.effect = ["execute"]
@@ -19,14 +19,14 @@ tags.safety_override = false
 applies_to = "kill"
 flag = "-9"
 translation_modifier = "forcing immediate termination with no chance for the process to clean up"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Immediately stops the process without allowing it to save data or release resources."
 
 [[flag]]
 applies_to = "kill"
 flag = "-KILL"
 translation_modifier = "forcing immediate termination with no chance for the process to clean up"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Same as -9; immediately stops the process without allowing it to save data or release resources."
 
 [[flag]]
@@ -135,7 +135,7 @@ tags.safety_override = false
 [[combo]]
 path = "kill -HUP"
 translation = "Ask a process to reload its configuration files or shut down gracefully."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Commonly used to trigger configuration reloads in daemons; most programs handle this signal gracefully."
 tags.scope = "local"
 tags.effect = ["execute"]
@@ -146,7 +146,7 @@ tags.safety_override = false
 [[combo]]
 path = "kill -TERM"
 translation = "Request a process to shut down gracefully, giving it a chance to save data and release resources."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Sends the default termination signal, which most programs handle by performing an orderly shutdown."
 tags.scope = "local"
 tags.effect = ["execute"]

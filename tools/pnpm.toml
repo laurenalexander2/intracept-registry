@@ -192,7 +192,7 @@ path = "pnpm outdated"
 translation = "Check for outdated packages in the project."
 verdict = "allow"
 rationale = "Read-only comparison of installed versus latest versions."
-tags.scope = "local"
+tags.scope = "remote"
 tags.effect = ["read"]
 tags.reversibility = "trivial"
 tags.target = ["package_registry"]
@@ -281,13 +281,3 @@ tags.reversibility = "trivial"
 tags.target = ["package_registry", "filesystem"]
 tags.safety_override = false
 
-[[combo]]
-path = "pnpm store prune"
-translation = "Delete all packages from the local pnpm store that are no longer referenced by any project on this machine."
-verdict = "allow"
-rationale = "Reclaims disk space by removing orphaned cached packages; they are automatically re-downloaded when needed."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false

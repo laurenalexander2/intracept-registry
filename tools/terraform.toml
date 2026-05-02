@@ -434,7 +434,6 @@ flag = "-force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt; the risk is in the base command, not the prompt bypass."
-tag_modifiers.safety_override = true
 
 # ── Workspaces ────────────────────────────────────────────────────────────────
 

@@ -19,7 +19,7 @@ tags.safety_override = false
 applies_to = "gcloud"
 flag = "--quiet"
 translation_modifier = "without interactive prompts, using defaults for all choices"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Disables confirmation prompts, allowing destructive operations to proceed without user verification."
 tag_modifiers.safety_override = true
 
@@ -231,7 +231,7 @@ tags.safety_override = false
 [[command]]
 path = "gcloud compute instances start"
 translation = "Start a stopped Compute Engine instance."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Resumes a VM that will begin incurring compute charges."
 tags.scope = "remote"
 tags.effect = ["write"]
@@ -944,39 +944,6 @@ tags.safety_override = false
 # ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
-path = "gcloud compute instances delete"
-translation = "Permanently destroy one or more Compute Engine VMs and their boot disks, terminating all running workloads on those instances."
-verdict = "require_approval"
-rationale = "Deletes VMs and their default boot disks irreversibly; data on non-persistent disks is lost immediately."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud projects delete"
-translation = "Schedule an entire Google Cloud project and all of its resources for permanent deletion after a 30-day grace period."
-verdict = "require_approval"
-rationale = "Marks the project for deletion, disabling all APIs and eventually destroying every resource within it."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud iam service-accounts delete"
-translation = "Permanently remove an IAM service account, causing all applications and services that authenticate as it to immediately lose access."
-verdict = "require_approval"
-rationale = "Deletes the identity and its bindings; dependent workloads will fail until a replacement is configured."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
-
-[[combo]]
 path = "gcloud storage rm --recursive"
 translation = "Recursively delete all objects under a Cloud Storage path, potentially wiping the entire contents of a bucket."
 verdict = "require_approval"
@@ -987,68 +954,3 @@ tags.reversibility = "difficult"
 tags.target = ["cloud"]
 tags.safety_override = false
 
-[[combo]]
-path = "gcloud compute disks delete"
-translation = "Permanently destroy one or more Compute Engine persistent disks and all data stored on them."
-verdict = "require_approval"
-rationale = "Disk data is irrecoverably deleted; recovery requires existing snapshots or external backups."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud container clusters delete"
-translation = "Destroy a GKE cluster, terminating all nodes, pods, and running workloads, and releasing associated networking resources."
-verdict = "require_approval"
-rationale = "Permanently removes the cluster and all its compute resources; workloads and in-cluster state are lost."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud sql instances delete"
-translation = "Permanently destroy a Cloud SQL database instance and all databases, users, and data it contains."
-verdict = "require_approval"
-rationale = "Deletes the instance and all data; recovery requires a prior backup or export."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud compute firewall-rules delete"
-translation = "Remove a Compute Engine firewall rule, immediately changing network access for all instances it applied to."
-verdict = "require_approval"
-rationale = "Deletes the rule instantly, which may block legitimate traffic or expose services that relied on the rule for protection."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud functions delete"
-translation = "Permanently remove a Google Cloud Function and all its versions, breaking any event triggers or HTTP endpoints that invoke it."
-verdict = "require_approval"
-rationale = "Destroys the function and its deployed code; dependent event sources and API integrations will stop working."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "gcloud run services delete"
-translation = "Permanently remove a Cloud Run service and all its revisions, causing all incoming traffic to that URL to return errors."
-verdict = "require_approval"
-rationale = "Destroys the service, its revisions, and its endpoint; any traffic routed to it will fail immediately."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false

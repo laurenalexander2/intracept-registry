@@ -37,7 +37,7 @@ rationale = "Installs a graphical application; may require elevated permissions 
 applies_to = "brew install"
 flag = "--force"
 translation_modifier = "overwriting an existing installation"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Replaces already-installed software, which may disrupt dependent tools or configurations."
 tag_modifiers.safety_override = true
 
@@ -108,7 +108,7 @@ rationale = "Expands upgrade scope to include auto-updating casks that would nor
 applies_to = "brew upgrade"
 flag = "--force"
 translation_modifier = "reinstalling even if already at the latest version"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Re-runs installation scripts unnecessarily; may disrupt currently working software."
 tag_modifiers.safety_override = true
 
@@ -402,7 +402,7 @@ tags.safety_override = false
 applies_to = "brew link"
 flag = "--overwrite"
 translation_modifier = "overwriting existing files in the Homebrew prefix"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Replaces existing files with symbolic links, which may break other installations."
 tag_modifiers.safety_override = true
 
@@ -410,7 +410,7 @@ tag_modifiers.safety_override = true
 applies_to = "brew link"
 flag = "--force"
 translation_modifier = "linking even if the formula is keg-only"
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Overrides the keg-only restriction, which may conflict with system-provided software."
 tag_modifiers.safety_override = true
 
@@ -472,7 +472,7 @@ tags.safety_override = true
 [[combo]]
 path = "brew cleanup --prune"
 translation = "Remove old formula versions and delete all cached downloads older than the specified number of days from disk."
-verdict = "require_approval"
+verdict = "allow"
 rationale = "Aggressively prunes the download cache based on age, which may force large re-downloads on the next install or upgrade."
 tags.scope = "local"
 tags.effect = ["delete"]

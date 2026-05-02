@@ -184,8 +184,8 @@ rationale = "Allocates a terminal for interactive use; no additional risk beyond
 [[command]]
 path = "docker stop"
 translation = "Gracefully stop one or more running containers."
-verdict = "allow"
-rationale = "Requests graceful shutdown, then forces termination; stops the containerized service."
+verdict = "require_approval"
+rationale = "Interrupts a running service; the containerized workload is stopped."
 tags.scope = "local"
 tags.effect = ["write"]
 tags.reversibility = "trivial"
@@ -195,7 +195,7 @@ tags.safety_override = false
 [[command]]
 path = "docker kill"
 translation = "Immediately terminate one or more running containers."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Immediately terminates the container without allowing the process to clean up gracefully."
 tags.scope = "local"
 tags.effect = ["write"]
@@ -551,7 +551,6 @@ flag = "--all"
 translation_modifier = "including all unused images, not just dangling ones"
 verdict = "require_approval"
 rationale = "Removes every image not referenced by a container, causing lengthy re-downloads."
-tag_modifiers.reversibility = "difficult"
 
 [[flag]]
 applies_to = "docker image prune"

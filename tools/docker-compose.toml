@@ -528,13 +528,3 @@ tags.reversibility = "trivial"
 tags.target = ["container", "filesystem"]
 tags.safety_override = false
 
-[[combo]]
-path = "docker-compose pull"
-translation = "Download the latest versions of all service images from the container registry to the local machine."
-verdict = "allow"
-rationale = "Fetches updated images without modifying running containers; the local image cache is overwritten with newer versions."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false

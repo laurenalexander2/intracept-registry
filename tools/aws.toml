@@ -961,28 +961,6 @@ tags.target = ["cloud", "database"]
 tags.safety_override = true
 
 [[combo]]
-path = "aws ec2 terminate-instances"
-translation = "Permanently shut down and destroy one or more EC2 instances, deleting instance store volumes and root EBS volumes by default."
-verdict = "require_approval"
-rationale = "Terminates instances irreversibly; data on instance store and default-configured EBS root volumes is lost."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "aws iam delete-role"
-translation = "Permanently remove an IAM role, causing any services or users that assume it to immediately lose all permissions it granted."
-verdict = "require_approval"
-rationale = "Deletes the role and its trust relationship; dependent services will fail until a replacement role is configured."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
-
-[[combo]]
 path = "aws s3 cp --recursive"
 translation = "Copy an entire directory tree between the local filesystem and S3, or between S3 locations, overwriting any existing objects at the destination."
 verdict = "require_approval"
@@ -991,28 +969,6 @@ tags.scope = "remote"
 tags.effect = ["write"]
 tags.reversibility = "difficult"
 tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
-
-[[combo]]
-path = "aws lambda delete-function"
-translation = "Permanently delete a Lambda function including all its versions and aliases, with no way to recover the code."
-verdict = "require_approval"
-rationale = "Destroys the function, its code, and all published versions; any event sources or API integrations will break."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
-[[combo]]
-path = "aws cloudformation delete-stack"
-translation = "Delete a CloudFormation stack and all of its provisioned resources, including compute instances, databases, and networking."
-verdict = "require_approval"
-rationale = "Destroys the entire infrastructure stack; resources without deletion protection are permanently removed."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
 tags.safety_override = false
 
 [[combo]]
@@ -1037,13 +993,3 @@ tags.reversibility = "trivial"
 tags.target = ["cloud"]
 tags.safety_override = false
 
-[[combo]]
-path = "aws sts get-caller-identity"
-translation = "Display the AWS account ID, IAM user or role ARN, and session identity currently being used for API calls."
-verdict = "allow"
-rationale = "Read-only query that reveals the active identity; useful for verifying which credentials are in use."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false

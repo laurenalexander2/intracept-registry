@@ -249,7 +249,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl exec"
 translation = "Run a command inside a container in a running pod."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Executes arbitrary commands inside a live container, which could modify application state."
 tags.scope = "remote"
 tags.effect = ["execute"]
@@ -308,7 +308,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl rollout undo"
 translation = "Roll back a deployment, daemonset, or statefulset to a previous revision."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Reverts to a previous version; reversible by rolling forward again. Standard recovery operation."
 tags.scope = "remote"
 tags.effect = ["write"]
@@ -412,7 +412,6 @@ translation_modifier = "simulating the operation without actually cordoning the 
 verdict = "allow"
 rationale = "No changes are made; only shows what would happen."
 tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
 
 [[command]]
 path = "kubectl uncordon"
@@ -581,7 +580,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl cp"
 translation = "Copy files between a local filesystem and a container in a pod."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Transfers files into or out of a running container, which could modify application state or exfiltrate data."
 tags.scope = "remote"
 tags.effect = ["write"]
@@ -594,7 +593,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl proxy"
 translation = "Start a local proxy to the Kubernetes API server."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Exposes the full Kubernetes API on localhost without authentication, allowing any local process to make API calls."
 tags.scope = "remote"
 tags.effect = ["read"]
@@ -605,7 +604,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl attach"
 translation = "Attach to a running process inside a container in a pod."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Connects to the container's main process; input may affect a running application."
 tags.scope = "remote"
 tags.effect = ["execute"]
@@ -616,7 +615,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl debug"
 translation = "Create a debugging container attached to a running pod or node."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Creates a temporary debugging container with potential access to the pod's filesystem and network."
 tags.scope = "remote"
 tags.effect = ["create", "execute"]
@@ -744,7 +743,7 @@ tags.safety_override = false
 [[command]]
 path = "kubectl rollout resume"
 translation = "Resume a paused rollout so updates continue."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Resumes a previously paused rollout, applying pending changes to the workload."
 tags.scope = "remote"
 tags.effect = ["write"]

@@ -356,6 +356,13 @@ tags.safety_override = false
 
 [[flag]]
 applies_to = "gh pr merge"
+flag = "--merge"
+translation_modifier = "using a merge commit that preserves all individual commits"
+verdict = "allow"
+rationale = "Selects the default merge strategy; does not increase destructive potential."
+
+[[flag]]
+applies_to = "gh pr merge"
 flag = "--squash"
 translation_modifier = "squashing all commits into one before merging"
 verdict = "allow"
@@ -891,8 +898,8 @@ tags.safety_override = false
 [[command]]
 path = "gh run delete"
 translation = "Delete a workflow run and its logs."
-verdict = "allow"
-rationale = "Removes run history and artifacts, which may be needed for auditing."
+verdict = "require_approval"
+rationale = "Permanently removes run history and artifacts, which may be needed for auditing."
 tags.scope = "remote"
 tags.effect = ["delete"]
 tags.reversibility = "impossible"
