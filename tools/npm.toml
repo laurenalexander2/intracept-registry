@@ -1,4 +1,4 @@
-# exemplars/npm.toml
+# tools/npm.toml
 
 # ── Commands ──────────────────────────────────────────────────────────
 
@@ -7,144 +7,264 @@ path = "npm"
 translation = "Run the Node.js package manager."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm install"
 translation = "Install packages and their dependencies into the current project."
 verdict = "require_approval"
 rationale = "Downloads and executes arbitrary code via postinstall scripts from the npm registry."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm ci"
 translation = "Install project dependencies from scratch using the lockfile."
 verdict = "require_approval"
 rationale = "Deletes existing node_modules and reinstalls all dependencies; executes postinstall scripts."
+tags.scope = "remote"
+tags.effect = ["write", "create", "delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm uninstall"
 translation = "Remove a package from the current project."
 verdict = "allow"
 rationale = "Removes files from node_modules and updates package.json; changes are local and reversible."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm update"
 translation = "Update installed packages to their latest allowed versions."
 verdict = "allow"
 rationale = "Fetches and installs new package versions, which may introduce breaking changes or run postinstall scripts."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm run"
 translation = "Execute a script defined in the project's package.json."
 verdict = "allow"
 rationale = "Runs arbitrary shell commands defined in package.json scripts."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm exec"
 translation = "Run a command from a local or remote npm package."
 verdict = "allow"
 rationale = "Downloads and executes a package, running arbitrary code even if not previously installed."
+tags.scope = "remote"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm publish"
 translation = "Upload a package to the npm registry."
 verdict = "require_approval"
 rationale = "Makes code publicly available on the registry; publishing incorrect or sensitive code is difficult to fully retract."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm unpublish"
 translation = "Remove a package version from the npm registry."
 verdict = "require_approval"
 rationale = "Removes a published version from the registry; npm enforces a 72-hour safety window and version restrictions by default."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm audit"
 translation = "Check installed packages for known security vulnerabilities."
 verdict = "allow"
 rationale = "Read-only analysis of the dependency tree against a vulnerability database."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm audit fix"
 translation = "Automatically install patched versions of packages with known vulnerabilities."
 verdict = "allow"
 rationale = "Modifies installed dependencies, which may introduce breaking changes or run postinstall scripts."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm init"
 translation = "Create a new package.json file for a project."
 verdict = "allow"
 rationale = "Generates a configuration file in the current directory; does not install or execute packages."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm link"
 translation = "Create a symbolic link to a local package for development use."
 verdict = "allow"
 rationale = "Modifies the global node_modules directory and can redirect package resolution to unexpected locations."
+tags.scope = "local"
+tags.effect = ["create", "write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm cache clean"
 translation = "Delete all data from the local npm cache."
 verdict = "allow"
 rationale = "Removes cached package data; npm will re-download packages as needed."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm config set"
 translation = "Set a configuration value in the npm configuration file."
 verdict = "allow"
 rationale = "Changes npm behavior including registry URLs, authentication tokens, and script execution settings."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "npm prune"
 translation = "Remove packages not listed as dependencies in package.json."
 verdict = "allow"
 rationale = "Removes extraneous packages from node_modules; reversible by running npm install."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm deprecate"
 translation = "Mark a package version with a deprecation warning on the registry."
 verdict = "require_approval"
 rationale = "Adds a public warning visible to all users of the package; reversal requires republishing."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm dist-tag add"
 translation = "Assign a distribution tag to a specific published package version."
 verdict = "require_approval"
 rationale = "Changes which version users receive by default when installing, potentially directing them to untested code."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm dist-tag rm"
 translation = "Remove a distribution tag from a package on the registry."
 verdict = "require_approval"
 rationale = "Removes a named tag, which may break installation workflows that reference it."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm login"
 translation = "Authenticate to an npm registry and save the credentials locally."
 verdict = "allow"
 rationale = "Stores registry credentials locally; does not modify packages or the registry."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm whoami"
 translation = "Display the username of the currently logged-in npm user."
 verdict = "allow"
 rationale = "Read-only query that prints the authenticated username."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm pack"
 translation = "Create a compressed archive of a package without publishing it."
 verdict = "allow"
 rationale = "Produces a local tarball file; does not upload anything to the registry."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm version"
 translation = "Bump the version number in package.json and create a git tag."
 verdict = "allow"
 rationale = "Modifies package.json, creates a git commit, and tags the repository."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem", "repository"]
+tags.safety_override = false
 
 [[command]]
 path = "npm dedupe"
 translation = "Reduce duplication by restructuring the package dependency tree."
 verdict = "allow"
 rationale = "Reorganizes node_modules to eliminate duplicate packages; does not add or remove dependencies."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Flags ─────────────────────────────────────────────────────────────
 
@@ -161,6 +281,7 @@ flag = "--force"
 translation_modifier = "bypassing cache and overwriting existing packages"
 verdict = "allow"
 rationale = "Ignores cache and allows incompatible dependency resolution, but the result is a local node_modules change recoverable with npm ci."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "npm install"
@@ -168,6 +289,7 @@ flag = "--legacy-peer-deps"
 translation_modifier = "ignoring peer dependency version conflicts"
 verdict = "allow"
 rationale = "Skips peer dependency checks, which may result in incompatible package combinations at runtime."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "npm install"
@@ -189,6 +311,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the installation without making any changes"
 verdict = "allow"
 rationale = "Reports what would be installed without downloading or writing any files."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "npm publish"
@@ -196,6 +320,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the publish without uploading to the registry"
 verdict = "allow"
 rationale = "Shows what would be published without actually uploading the package."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "npm publish"
@@ -210,6 +336,7 @@ flag = "--force"
 translation_modifier = "removing the package even outside the standard safety period"
 verdict = "require_approval"
 rationale = "Bypasses npm's safety restrictions on unpublishing, enabling removal of packages that others may depend on."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "npm audit fix"
@@ -217,6 +344,7 @@ flag = "--force"
 translation_modifier = "installing semver-major updates to fix vulnerabilities"
 verdict = "require_approval"
 rationale = "Upgrades dependencies across major versions, which may introduce breaking API changes."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "npm ci"
@@ -253,120 +381,220 @@ path = "npm test"
 translation = "Run the test script defined in the project's package.json."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands defined as the test script."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm start"
 translation = "Run the start script defined in the project's package.json."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands defined as the start script."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm ls"
 translation = "List all installed packages and their dependencies as a tree."
 verdict = "allow"
 rationale = "Read-only display of the installed dependency tree."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm outdated"
 translation = "Check for installed packages that have newer versions available."
 verdict = "allow"
 rationale = "Read-only comparison of installed versions against the registry."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm view"
 translation = "Display information about a package from the npm registry."
 verdict = "allow"
 rationale = "Read-only query of registry metadata."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm search"
 translation = "Search the npm registry for packages matching a query."
 verdict = "allow"
 rationale = "Read-only search of the registry."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm fund"
 translation = "Display funding information for installed packages."
 verdict = "allow"
 rationale = "Read-only display of package funding URLs."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm doctor"
 translation = "Run diagnostic checks on the npm environment."
 verdict = "allow"
 rationale = "Read-only health check of the npm installation and configuration."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm rebuild"
 translation = "Rebuild all installed native add-on packages."
 verdict = "allow"
 rationale = "Recompiles native modules, which executes build scripts that may run arbitrary code."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm token"
 translation = "Manage authentication tokens for the npm registry."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm token create"
 translation = "Create a new authentication token for the npm registry."
 verdict = "require_approval"
 rationale = "Generates a credential that can be used to publish packages or modify account settings."
+tags.scope = "remote"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm token revoke"
 translation = "Revoke an authentication token for the npm registry."
 verdict = "allow"
 rationale = "Invalidates a token; automation or CI systems using it will lose access immediately."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm token list"
 translation = "List all active authentication tokens for the npm registry."
 verdict = "allow"
 rationale = "Read-only display of existing tokens."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "npm owner"
 translation = "Manage package ownership on the npm registry."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm owner add"
 translation = "Add a user as a maintainer of a package on the npm registry."
 verdict = "require_approval"
 rationale = "Grants another user permission to publish new versions of the package."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm owner rm"
 translation = "Remove a user as a maintainer of a package on the npm registry."
 verdict = "require_approval"
 rationale = "Revokes a user's publish access; may disrupt their workflows."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "npm config get"
 translation = "Display the value of a specific npm configuration setting."
 verdict = "allow"
 rationale = "Read-only display of a configuration value."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "npm config list"
 translation = "Display all current npm configuration settings."
 verdict = "allow"
 rationale = "Read-only display of configuration values."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "npm cache verify"
 translation = "Verify the integrity of the local npm cache."
 verdict = "allow"
 rationale = "Checks cache contents and removes corrupt entries; safe maintenance operation."
+tags.scope = "local"
+tags.effect = ["read", "delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "npm shrinkwrap"
 translation = "Lock down the exact versions of all dependencies into an npm-shrinkwrap.json file."
 verdict = "allow"
 rationale = "Creates a lockfile; does not install or modify packages."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Missing flags on existing commands ──────────────────────────────────────
 
@@ -397,6 +625,7 @@ flag = "--no-git-tag-version"
 translation_modifier = "without creating a git commit or tag"
 verdict = "allow"
 rationale = "Only updates version in package.json without git operations."
+tag_modifiers.target = ["filesystem"]
 
 [[flag]]
 applies_to = "npm audit fix"
@@ -404,6 +633,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the fixes without actually modifying any packages"
 verdict = "allow"
 rationale = "Shows what would be fixed without making changes."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "npm cache clean"
@@ -411,6 +642,7 @@ flag = "--force"
 translation_modifier = "proceeding even though the cache is self-healing"
 verdict = "allow"
 rationale = "Required for cache clean to execute; npm will re-download packages as needed."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "npm update"
@@ -418,3 +650,93 @@ flag = "--save"
 translation_modifier = "updating the version ranges in package.json to match"
 verdict = "allow"
 rationale = "Modifies package.json version constraints, which affects future installs."
+
+# ── Combos ──────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "npm audit fix --dry-run"
+translation = "Simulate fixing known vulnerabilities in installed packages, showing what would change without actually modifying anything."
+verdict = "allow"
+rationale = "No packages are installed or modified; only displays planned fixes."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "npm audit fix --force"
+translation = "Fix known vulnerabilities in installed packages by upgrading across major versions, which may introduce breaking API changes."
+verdict = "require_approval"
+rationale = "Installs semver-major updates that may break existing code, and bypasses the default constraint of staying within compatible version ranges."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "npm install --dry-run"
+translation = "Simulate installing packages, showing what would be downloaded and changed without actually modifying the project."
+verdict = "allow"
+rationale = "No packages are downloaded or installed; only displays the planned installation."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "npm install --force"
+translation = "Install packages while bypassing the local cache and overwriting existing packages, ignoring dependency conflict warnings."
+verdict = "require_approval"
+rationale = "Skips cache validation and forces installation of potentially incompatible dependencies, which may break the project."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "npm install --force -g"
+translation = "Force-install a package globally for all projects on this machine, bypassing the cache and overwriting any existing version."
+verdict = "require_approval"
+rationale = "Modifies the system-wide package directory while bypassing cache and dependency checks, potentially breaking other projects."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "npm install --save-dev"
+translation = "Install a package and record it as a development-only dependency in package.json."
+verdict = "require_approval"
+rationale = "Downloads and executes code from the npm registry, adding it to devDependencies for use during development only."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "npm publish --dry-run"
+translation = "Simulate publishing a package to the npm registry, showing what files would be included without actually uploading."
+verdict = "allow"
+rationale = "No package is uploaded; only displays the contents and metadata that would be published."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
+
+[[combo]]
+path = "npm unpublish --force"
+translation = "Remove a package from the npm registry even outside the standard 72-hour safety window, breaking downstream projects that depend on it."
+verdict = "require_approval"
+rationale = "Bypasses npm's safety restrictions to remove a published package, potentially breaking all projects that depend on that version."
+tags.scope = "remote"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = true

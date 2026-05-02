@@ -5,66 +5,121 @@ path = "go"
 translation = "Run the Go programming language toolchain."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go build"
 translation = "Compile Go packages and their dependencies into an executable."
 verdict = "allow"
 rationale = "Compiles source code locally; does not execute the resulting binary."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go run"
 translation = "Compile and immediately execute a Go program."
 verdict = "allow"
 rationale = "Compiles and runs arbitrary Go code, which can modify files or make network requests."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go test"
 translation = "Run the tests for Go packages."
 verdict = "allow"
 rationale = "Compiles and executes test code, which may have side effects depending on the tests."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go install"
 translation = "Compile and install a Go package or executable into the Go bin directory."
 verdict = "require_approval"
 rationale = "Downloads, compiles, and places a binary on the system path."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go get"
 translation = "Download and install Go modules and their dependencies."
 verdict = "require_approval"
 rationale = "Downloads third-party code from the internet and updates dependency files."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go mod"
 translation = "Manage Go module dependency files."
 verdict = "allow"
 rationale = "The bare subcommand prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go mod tidy"
 translation = "Add missing and remove unused module dependencies."
 verdict = "allow"
 rationale = "Updates go.mod and go.sum files; changes are local and reversible."
+tags.scope = "remote"
+tags.effect = ["write", "delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go fmt"
 translation = "Reformat Go source files to match the standard style."
 verdict = "allow"
 rationale = "Modifies source files in place, but changes are cosmetic and easily reversible with version control."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go vet"
 translation = "Check Go source code for common mistakes."
 verdict = "allow"
 rationale = "Read-only static analysis; does not modify any files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "go clean"
 translation = "Remove compiled object files and cached build artifacts."
 verdict = "allow"
 rationale = "Deletes build output files; they can be regenerated but deletion takes effect immediately."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "go build"
@@ -142,3 +197,82 @@ flag = "-u"
 translation_modifier = "updating dependencies to their latest versions"
 verdict = "allow"
 rationale = "Fetches newer versions of dependencies, which may introduce breaking changes."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "go build -o"
+translation = "Compile Go packages and their dependencies, writing the resulting executable to a specific output file."
+verdict = "allow"
+rationale = "Compiles locally and places the binary at a user-specified path; does not execute anything."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go build -race"
+translation = "Compile Go packages with the data race detector enabled, adding runtime instrumentation to detect concurrent access bugs."
+verdict = "allow"
+rationale = "Builds locally with additional instrumentation; the binary is larger and slower but detects race conditions at runtime."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go clean -cache"
+translation = "Delete the entire Go build cache, forcing all packages to be recompiled on the next build."
+verdict = "allow"
+rationale = "Removes all cached compilation artifacts; they will be rebuilt automatically but the next build will be slower."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go get -u"
+translation = "Download the latest versions of Go modules and their dependencies, updating go.mod and go.sum to match."
+verdict = "require_approval"
+rationale = "Fetches newer versions of all dependencies from the internet, which may introduce breaking changes or unexpected behavior."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go test -cover"
+translation = "Run the tests for Go packages while measuring and reporting code coverage percentages."
+verdict = "allow"
+rationale = "Adds coverage instrumentation to the test run; does not change test behavior or modify source files."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go test -race"
+translation = "Run the tests for Go packages with the data race detector enabled, reporting any concurrent access violations."
+verdict = "allow"
+rationale = "Adds runtime instrumentation to detect race conditions during test execution; does not change test logic."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "go test -race -v"
+translation = "Run the tests for Go packages with verbose output and the data race detector enabled, printing each test name and result."
+verdict = "allow"
+rationale = "Combines verbose test output with race detection instrumentation; useful for debugging concurrency issues in test suites."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

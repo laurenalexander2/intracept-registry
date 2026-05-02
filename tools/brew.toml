@@ -7,6 +7,11 @@ path = "brew"
 translation = "Run the Homebrew package manager for macOS."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Installing ───────────────────────────────────────────────────────────────
 
@@ -15,6 +20,11 @@ path = "brew install"
 translation = "Install a formula or cask from the Homebrew repository."
 verdict = "require_approval"
 rationale = "Downloads and installs software that may include post-install scripts with system access."
+tags.scope = "remote"
+tags.effect = ["create", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew install"
@@ -29,6 +39,7 @@ flag = "--force"
 translation_modifier = "overwriting an existing installation"
 verdict = "allow"
 rationale = "Replaces already-installed software, which may disrupt dependent tools or configurations."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "brew install"
@@ -51,6 +62,11 @@ path = "brew uninstall"
 translation = "Remove an installed formula or cask."
 verdict = "allow"
 rationale = "Removes software and may run uninstall scripts that delete associated files."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew uninstall"
@@ -58,6 +74,7 @@ flag = "--force"
 translation_modifier = "removing all versions of the formula and ignoring dependencies"
 verdict = "require_approval"
 rationale = "Removes all installed versions and skips dependency checks, which may break other installed software."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "brew uninstall"
@@ -65,6 +82,7 @@ flag = "--zap"
 translation_modifier = "also removing all associated files, preferences, and caches"
 verdict = "require_approval"
 rationale = "Performs aggressive cleanup that deletes application data and configuration beyond the formula itself."
+tag_modifiers.reversibility = "impossible"
 
 # ── Upgrading ────────────────────────────────────────────────────────────────
 
@@ -73,6 +91,11 @@ path = "brew upgrade"
 translation = "Upgrade installed formulas and casks to their latest versions."
 verdict = "allow"
 rationale = "Replaces installed software with newer versions that may introduce breaking changes."
+tags.scope = "remote"
+tags.effect = ["write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew upgrade"
@@ -87,6 +110,7 @@ flag = "--force"
 translation_modifier = "reinstalling even if already at the latest version"
 verdict = "allow"
 rationale = "Re-runs installation scripts unnecessarily; may disrupt currently working software."
+tag_modifiers.safety_override = true
 
 # ── Updating ─────────────────────────────────────────────────────────────────
 
@@ -95,6 +119,11 @@ path = "brew update"
 translation = "Fetch the latest Homebrew formula definitions from the repository."
 verdict = "allow"
 rationale = "Updates the local formula index; does not install or modify any software."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Searching and inspecting ─────────────────────────────────────────────────
 
@@ -103,24 +132,44 @@ path = "brew list"
 translation = "List all installed formulas and casks."
 verdict = "allow"
 rationale = "Read-only listing of installed packages."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "brew search"
 translation = "Search for available formulas and casks."
 verdict = "allow"
 rationale = "Read-only search of the Homebrew repository."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "brew info"
 translation = "Display information about a formula or cask."
 verdict = "allow"
 rationale = "Read-only display of package metadata."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "brew deps"
 translation = "Show the dependencies of a formula."
 verdict = "allow"
 rationale = "Read-only display of dependency information."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew deps"
@@ -141,12 +190,22 @@ path = "brew leaves"
 translation = "List installed formulas that are not dependencies of other formulas."
 verdict = "allow"
 rationale = "Read-only listing of top-level installed packages."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "brew outdated"
 translation = "List installed formulas and casks that have newer versions available."
 verdict = "allow"
 rationale = "Read-only listing of outdated packages."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Diagnostics ──────────────────────────────────────────────────────────────
 
@@ -155,12 +214,22 @@ path = "brew doctor"
 translation = "Check the Homebrew installation for potential problems."
 verdict = "allow"
 rationale = "Read-only inspection that reports issues without changing anything."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "brew config"
 translation = "Show Homebrew and system configuration details."
 verdict = "allow"
 rationale = "Read-only display of configuration."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Cleanup ──────────────────────────────────────────────────────────────────
 
@@ -169,6 +238,11 @@ path = "brew cleanup"
 translation = "Remove old versions of installed formulas and clear the download cache."
 verdict = "allow"
 rationale = "Deletes cached downloads and old formula versions from disk."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew cleanup"
@@ -189,6 +263,11 @@ path = "brew autoremove"
 translation = "Remove formulas that were installed as dependencies but are no longer needed."
 verdict = "allow"
 rationale = "Uninstalls packages that may still be used by non-Homebrew software."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 # ── Services ─────────────────────────────────────────────────────────────────
 
@@ -197,30 +276,55 @@ path = "brew services"
 translation = "Manage background services installed by Homebrew formulas."
 verdict = "allow"
 rationale = "The bare subcommand lists running services."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false
 
 [[command]]
 path = "brew services start"
 translation = "Start a background service installed by a Homebrew formula."
 verdict = "allow"
 rationale = "Starts a background process that runs continuously and survives reboots."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false
 
 [[command]]
 path = "brew services stop"
 translation = "Stop a running Homebrew background service."
 verdict = "allow"
 rationale = "Stops a background process, which may interrupt dependent applications."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false
 
 [[command]]
 path = "brew services restart"
 translation = "Restart a Homebrew background service."
 verdict = "allow"
 rationale = "Briefly interrupts the service during the restart cycle."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false
 
 [[command]]
 path = "brew services list"
 translation = "List all managed Homebrew background services and their status."
 verdict = "allow"
 rationale = "Read-only listing of service status."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false
 
 # ── Taps (third-party repositories) ─────────────────────────────────────────
 
@@ -229,12 +333,22 @@ path = "brew tap"
 translation = "Add a third-party formula repository to Homebrew."
 verdict = "allow"
 rationale = "Registers a new source of formulas; does not install any software."
+tags.scope = "remote"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "brew untap"
 translation = "Remove a third-party formula repository from Homebrew."
 verdict = "allow"
 rationale = "Removes the repository; installed formulas from it remain on disk."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Pinning ──────────────────────────────────────────────────────────────────
 
@@ -243,12 +357,22 @@ path = "brew pin"
 translation = "Prevent a formula from being upgraded."
 verdict = "allow"
 rationale = "Locks the formula at its current version; a safety measure."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "brew unpin"
 translation = "Allow a previously pinned formula to be upgraded."
 verdict = "allow"
 rationale = "Removes the upgrade lock; the formula can now be upgraded normally."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Linking ──────────────────────────────────────────────────────────────────
 
@@ -257,12 +381,22 @@ path = "brew link"
 translation = "Create symbolic links for an installed formula in the Homebrew prefix."
 verdict = "allow"
 rationale = "Creates symbolic links so the formula's executables are available in the terminal."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "brew unlink"
 translation = "Remove symbolic links for a formula from the Homebrew prefix."
 verdict = "allow"
 rationale = "Removes symbolic links; the formula remains installed but its executables are not in the path."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew link"
@@ -270,6 +404,7 @@ flag = "--overwrite"
 translation_modifier = "overwriting existing files in the Homebrew prefix"
 verdict = "allow"
 rationale = "Replaces existing files with symbolic links, which may break other installations."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "brew link"
@@ -277,14 +412,20 @@ flag = "--force"
 translation_modifier = "linking even if the formula is keg-only"
 verdict = "allow"
 rationale = "Overrides the keg-only restriction, which may conflict with system-provided software."
+tag_modifiers.safety_override = true
 
-# ── Cask-specific ────────────────────────────────────────────────────────────
+# ── Cask-specific ───────────────────────────────────────────────────────���────
 
 [[command]]
 path = "brew reinstall"
 translation = "Uninstall and then reinstall a formula or cask."
 verdict = "allow"
 rationale = "Removes and re-installs software; briefly unavailable during the process."
+tags.scope = "remote"
+tags.effect = ["delete", "create", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "brew reinstall"
@@ -292,3 +433,49 @@ flag = "--cask"
 translation_modifier = "reinstalling a macOS application instead of a command-line formula"
 verdict = "allow"
 rationale = "Reinstalls a graphical application; may require elevated permissions."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "brew install --cask"
+translation = "Download and install a macOS desktop application from the Homebrew cask repository."
+verdict = "require_approval"
+rationale = "Installs a graphical application that may register system-wide integrations, launch agents, or require elevated permissions."
+tags.scope = "remote"
+tags.effect = ["create", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "brew upgrade --greedy"
+translation = "Upgrade all installed formulas and casks to their latest versions, including casks that normally auto-update themselves."
+verdict = "allow"
+rationale = "Expands the upgrade to include auto-updating casks, which may introduce unexpected version changes in applications that manage their own updates."
+tags.scope = "remote"
+tags.effect = ["write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "brew uninstall --force"
+translation = "Remove all installed versions of a formula and ignore dependency checks, which may break other installed software."
+verdict = "require_approval"
+rationale = "Skips dependency verification and removes every version at once, potentially leaving other formulas with missing dependencies."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "brew cleanup --prune"
+translation = "Remove old formula versions and delete all cached downloads older than the specified number of days from disk."
+verdict = "require_approval"
+rationale = "Aggressively prunes the download cache based on age, which may force large re-downloads on the next install or upgrade."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
