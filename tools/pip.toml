@@ -1,0 +1,103 @@
+# tools/pip.toml — Alias for pip3
+
+[[command]]
+path = "pip"
+translation = "Install and manage Python packages."
+verdict = "require_approval"
+rationale = "Alias for pip3; downloads and installs code from the internet that executes during installation."
+tags.scope = "remote"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[flag]]
+applies_to = "pip"
+flag = "install"
+translation_modifier = "downloading and installing specified packages"
+verdict = "require_approval"
+rationale = "Downloads packages from PyPI and installs them, executing arbitrary setup code during installation."
+
+[[flag]]
+applies_to = "pip"
+flag = "uninstall"
+translation_modifier = "removing specified packages"
+verdict = "require_approval"
+rationale = "Deletes installed packages, which may break dependent applications."
+tag_modifiers.effect = ["delete"]
+
+[[flag]]
+applies_to = "pip"
+flag = "-r"
+translation_modifier = "installing all packages listed in a requirements file"
+verdict = "allow"
+rationale = "Reads a file to determine which packages to install; increases the scope of installation."
+
+[[flag]]
+applies_to = "pip"
+flag = "--upgrade"
+translation_modifier = "upgrading packages to the latest available version"
+verdict = "allow"
+rationale = "Replaces installed packages with newer versions, which may introduce breaking changes."
+
+[[flag]]
+applies_to = "pip"
+flag = "--user"
+translation_modifier = "installing to the user site-packages directory instead of the system location"
+verdict = "allow"
+rationale = "Limits the installation scope to the current user; does not require elevated privileges."
+
+[[flag]]
+applies_to = "pip"
+flag = "--no-deps"
+translation_modifier = "skipping installation of package dependencies"
+verdict = "allow"
+rationale = "Reduces the scope of installation; may leave the package non-functional."
+
+[[flag]]
+applies_to = "pip"
+flag = "--dry-run"
+translation_modifier = "simulating the installation without actually installing anything"
+verdict = "allow"
+rationale = "No packages are installed; only shows what would happen."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
+tag_modifiers.scope = "local"
+
+[[flag]]
+applies_to = "pip"
+flag = "--force-reinstall"
+translation_modifier = "reinstalling packages even if they are already up to date"
+verdict = "allow"
+rationale = "Overwrites existing installations, which may temporarily break dependent code."
+
+[[flag]]
+applies_to = "pip"
+flag = "--index-url"
+translation_modifier = "using a specified package index instead of the default PyPI"
+verdict = "allow"
+rationale = "Changes the package source, which could point to an untrusted registry."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "pip install -r"
+translation = "Download and install all Python packages listed in a requirements file from the package index."
+verdict = "require_approval"
+rationale = "Installs potentially many packages at once based on a file, executing arbitrary setup code for each during installation."
+tags.scope = "remote"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "pip install --upgrade"
+translation = "Download and install the latest version of specified Python packages, replacing any currently installed versions."
+verdict = "require_approval"
+rationale = "Upgrades packages to the latest version, which may introduce breaking API changes or incompatible dependencies."
+tags.scope = "remote"
+tags.effect = ["read", "write", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false

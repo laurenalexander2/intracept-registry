@@ -1,0 +1,111 @@
+# tools/eslint.toml
+
+[[command]]
+path = "eslint"
+translation = "Analyze JavaScript and TypeScript code for style and correctness issues."
+verdict = "allow"
+rationale = "Read-only static analysis that reports problems but does not modify files by default."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[flag]]
+applies_to = "eslint"
+flag = "--fix"
+translation_modifier = "automatically fixing problems that have safe corrections"
+verdict = "allow"
+rationale = "Modifies source files in place to apply auto-fixable lint rules."
+tag_modifiers.effect = ["read", "write"]
+
+[[flag]]
+applies_to = "eslint"
+flag = "--ext"
+translation_modifier = "limiting analysis to files with specified extensions"
+verdict = "allow"
+rationale = "Narrows which files are checked; does not change the analysis behavior."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--format"
+translation_modifier = "using a specified output formatter for the results"
+verdict = "allow"
+rationale = "Changes output formatting; does not affect which rules are checked."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--no-eslintrc"
+translation_modifier = "ignoring all configuration files"
+verdict = "allow"
+rationale = "Disables configuration loading; analysis runs with default rules only."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--quiet"
+translation_modifier = "reporting only errors and suppressing warnings"
+verdict = "allow"
+rationale = "Reduces output verbosity; does not change which files are analyzed."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--max-warnings"
+translation_modifier = "failing if the number of warnings exceeds a specified limit"
+verdict = "allow"
+rationale = "Adds a threshold for CI enforcement; does not modify files."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--cache"
+translation_modifier = "caching results to speed up subsequent runs"
+verdict = "allow"
+rationale = "Writes a cache file to disk for performance; does not change analysis results."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--debug"
+translation_modifier = "showing detailed debugging information"
+verdict = "allow"
+rationale = "Increases output verbosity for troubleshooting; does not change analysis behavior."
+
+[[flag]]
+applies_to = "eslint"
+flag = "--ignore-path"
+translation_modifier = "using a specified file to determine which paths to ignore"
+verdict = "allow"
+rationale = "Changes which files are skipped; does not modify any source files."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "eslint --fix"
+translation = "Analyze JavaScript and TypeScript code and automatically fix all problems that have safe corrections."
+verdict = "allow"
+rationale = "Modifies source files in place but only applies well-defined auto-fix rules that are considered safe by the ESLint community."
+tags.scope = "local"
+tags.effect = ["read", "write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "eslint --ext --fix"
+translation = "Analyze files with specified extensions and automatically fix all problems that have safe corrections."
+verdict = "allow"
+rationale = "Combines extension filtering with auto-fix, limiting which files are modified to those matching the specified extensions."
+tags.scope = "local"
+tags.effect = ["read", "write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "eslint --format"
+translation = "Analyze JavaScript and TypeScript code and output the results using a specified formatter such as JSON or stylish."
+verdict = "allow"
+rationale = "Read-only analysis with customized output formatting, commonly used for CI integrations."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
