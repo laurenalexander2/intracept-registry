@@ -29,6 +29,137 @@ This document is the **source of truth** for the TOML schema used in all `tools/
 | `translation_modifier` | string | yes      | A gerund or prepositional phrase that grammatically attaches to the base command's `translation`. See [Composition rule](#composition-rule) below. Set to `""` if the flag causes no meaningful change to the translation. |
 | `verdict`              | string | yes      | One of: `allow`, `require_approval`. This is the **flag's own verdict**, independent of the base command. |
 | `rationale`            | string | yes      | One sentence justifying this flag's verdict. |
+| `tag_modifiers.*`      | varies | no       | Only the tag dimensions this flag changes relative to the base command. See [Tag modifiers on flags](#tag-modifiers-on-flags). |
+
+### `[[combo]]` — a pre-composed command + flags combination
+
+A combo entry captures a specific command-plus-flags invocation whose combined behavior is worth describing as a unit. Combos provide **premium translations** that are more accurate than mechanical composition from individual flag modifiers.
+
+| Field         | Type     | Required | Description |
+|---------------|----------|----------|-------------|
+| `path`        | string   | yes      | Command + flags, with flags sorted alphabetically. Example: `"git push --force"`, `"rm -rf"`. |
+| `translation` | string   | yes      | One sentence, plain English, describing what this specific combination does. Standalone sentence ending with a period. Max 300 characters. |
+| `verdict`     | string   | yes      | One of: `allow`, `require_approval`. |
+| `rationale`   | string   | yes      | One sentence explaining the consequence of the combination, not the individual flags. |
+| `tags.*`      | varies   | yes      | Full tags computed from base command tags + flag tag_modifiers, hand-verified. See [Tags](#tags). |
+
+#### Combo rules
+
+- `path` contains the command followed by flags, with **flags sorted alphabetically**. Example: `"docker system prune --all --volumes"`, not `"docker system prune --volumes --all"`.
+- `translation` is a standalone sentence (same style as `[[command]]`), but with a **max of 300 characters** (vs 200 for commands) to accommodate the richer behavior.
+- `verdict` follows the same grading guidelines as commands and flags.
+- `rationale` describes the **consequence of the combination**, not the individual pieces. "Rewrites the remote branch's commit history, which can permanently discard other contributors' work." not "Uses --force which is dangerous."
+- Every combo `path` must **start with a valid `[[command]]` path** from the same file.
+- Every flag in the combo `path` must **match a `[[flag]]` entry** in the same file.
+- Combos carry **full `tags.*`** (not `tag_modifiers`), computed from the base command's tags with all flag modifiers applied and hand-verified.
+
+---
+
+## Tags
+
+Tags provide **categorical metadata** on each entry, enabling deterministic policy decisions (e.g., "block if `scope == remote` and `delete` in `effect`") without parsing free-text translations.
+
+### Tags on `[[command]]` entries
+
+Every `[[command]]` entry carries these dotted-key tags:
+
+| Tag                    | Type     | Values | Description |
+|------------------------|----------|--------|-------------|
+| `tags.scope`           | string   | `"local"`, `"remote"` | Whether the command's effects stay on the local machine or reach a remote system. |
+| `tags.effect`          | string[] | `"read"`, `"write"`, `"create"`, `"delete"`, `"execute"` | What the command does. A command can have multiple effects. |
+| `tags.reversibility`   | string   | `"trivial"`, `"difficult"`, `"impossible"` | How hard it is to undo the command's effects. |
+| `tags.target`          | string[] | `"filesystem"`, `"repository"`, `"container"`, `"cluster"`, `"cloud"`, `"package_registry"`, `"database"`, `"credentials"`, `"network"`, `"process"`, `"config"` | What the command acts on. A command can have multiple targets. |
+| `tags.safety_override` | boolean  | `true`, `false` | Whether the command bypasses a safety mechanism (e.g., confirmation prompts, hooks, guardrails). |
+
+Example on a `[[command]]`:
+
+```toml
+[[command]]
+path = "git push"
+translation = "Upload local commits to a remote repository."
+verdict = "require_approval"
+rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["repository"]
+tags.safety_override = false
+```
+
+### Tag modifiers on `[[flag]]` entries
+
+Flags do NOT carry full tags. Instead, they carry **`tag_modifiers.*`** — only the dimensions that the flag **changes** relative to the base command.
+
+| Modifier                         | Type     | Description |
+|----------------------------------|----------|-------------|
+| `tag_modifiers.scope`            | string   | Overrides the base command's scope. |
+| `tag_modifiers.effect`           | string[] | Replaces the base command's effect list entirely. |
+| `tag_modifiers.reversibility`    | string   | Overrides the base command's reversibility. |
+| `tag_modifiers.target`           | string[] | Replaces the base command's target list entirely. |
+| `tag_modifiers.safety_override`  | boolean  | Overrides the base command's safety_override. |
+
+Only include dimensions the flag actually changes. Most flags modify one or two dimensions.
+
+Example on a `[[flag]]`:
+
+```toml
+[[flag]]
+applies_to = "git push"
+flag = "--force"
+translation_modifier = "overwriting remote history"
+verdict = "require_approval"
+rationale = "Overwrites remote branch history; recoverable via reflog if someone acts quickly, but other contributors' work may be lost."
+tag_modifiers.reversibility = "impossible"
+tag_modifiers.safety_override = true
+```
+
+### Tags on `[[combo]]` entries
+
+Combos carry **full `tags.*`** (same schema as `[[command]]`), computed from the base command's tags with all flag `tag_modifiers` applied and then hand-verified.
+
+Example on a `[[combo]]`:
+
+```toml
+[[combo]]
+path = "git push --force"
+translation = "Force-upload local commits to a remote repository, overwriting its history even if other contributors have pushed since."
+verdict = "require_approval"
+rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "impossible"
+tags.target = ["repository"]
+tags.safety_override = true
+```
+
+### Tag merge semantics
+
+When computing a combo's tags from the base command's tags plus one or more flag `tag_modifiers`:
+
+| Dimension type | Merge rule | Example |
+|----------------|-----------|---------|
+| **String** (`scope`, `reversibility`) | Flag **replaces** the base value. | Base `"difficult"` + flag `"impossible"` → `"impossible"` |
+| **Array** (`effect`, `target`) | Flag **replaces** the base array entirely. | Base `["write"]` + flag `["write", "delete"]` → `["write", "delete"]` |
+| **Boolean** (`safety_override`) | **OR** — once `true`, stays `true`. | Base `false` + flag `true` → `true` |
+| **Multiple flags** | Apply all flag modifiers. For string fields, take the **most dangerous** value per dimension. For arrays, union all values. For booleans, OR. | `"difficult"` + flag₁ `"impossible"` + flag₂ `"difficult"` → `"impossible"` |
+
+Danger ordering for string fields:
+- `scope`: `local` < `remote`
+- `reversibility`: `trivial` < `difficult` < `impossible`
+
+---
+
+## SDK lookup order
+
+When an SDK needs to look up the translation and tags for a command invocation (e.g., `git push --force --no-verify`), it follows this order:
+
+1. **Exact combo match.** Look for a `[[combo]]` whose `path` matches the command + sorted flags exactly. If found, use its `translation`, `verdict`, and `tags`.
+
+2. **Subset combo match.** Find the longest `[[combo]]` whose flags are a subset of the invocation's flags. Apply the remaining flags' `tag_modifiers` on top. Compose the remaining flags' `translation_modifier` phrases onto the combo's `translation`.
+
+3. **Mechanical composition.** No combo matched. Start from the `[[command]]` entry. For each flag, apply its `tag_modifiers` (using merge semantics above) and compose its `translation_modifier` onto the base `translation`. Compute the final verdict as the max of the command's verdict and all flags' verdicts.
+
+SDKs should **log fallback hits** (steps 2 and 3) so that frequently-seen combinations can be promoted to pre-composed `[[combo]]` entries via the backfill loop.
 
 ---
 
@@ -129,12 +260,22 @@ path = "git"
 translation = "Run the Git version control system."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["repository"]
+tags.safety_override = false
 
 [[command]]
 path = "git push"
 translation = "Upload local commits to a remote repository."
 verdict = "require_approval"
 rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["repository"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "git push"
@@ -142,6 +283,8 @@ flag = "--force"
 translation_modifier = "overwriting remote history"
 verdict = "require_approval"
 rationale = "Overwrites remote branch history; recoverable via reflog if someone acts quickly, but other contributors' work may be lost."
+tag_modifiers.reversibility = "impossible"
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "git push"
@@ -149,6 +292,7 @@ flag = "--force-with-lease"
 translation_modifier = "overwriting remote history only if no one else has pushed"
 verdict = "require_approval"
 rationale = "Safer than --force but still rewrites history; fails if the remote has diverged."
+tag_modifiers.reversibility = "impossible"
 
 [[flag]]
 applies_to = "git push"
@@ -156,12 +300,30 @@ flag = "--dry-run"
 translation_modifier = "simulating the push without actually sending data"
 verdict = "allow"
 rationale = "No data is transmitted; only shows what would happen."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
+
+[[combo]]
+path = "git push --force"
+translation = "Force-upload local commits to a remote repository, overwriting its history even if other contributors have pushed since."
+verdict = "require_approval"
+rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "impossible"
+tags.target = ["repository"]
+tags.safety_override = true
 
 [[command]]
 path = "git reset"
 translation = "Move the current branch pointer to a different commit."
 verdict = "require_approval"
 rationale = "Changes which commit HEAD points to; can unstage changes or rewrite local history."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["repository"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "git reset"
@@ -169,6 +331,8 @@ flag = "--hard"
 translation_modifier = "discarding all uncommitted changes in the working directory"
 verdict = "require_approval"
 rationale = "Permanently deletes uncommitted work with no built-in recovery mechanism."
+tag_modifiers.reversibility = "impossible"
+tag_modifiers.effect = ["write", "delete"]
 ```
 
 ---
@@ -215,11 +379,32 @@ rationale = "Permanently deletes uncommitted work with no built-in recovery mech
 
 ## Validation rules
 
-1. Every `[[flag]].applies_to` must match exactly one `[[command]].path` in the same file.
-2. No duplicate `path` values within a file.
-3. No duplicate `(applies_to, flag)` pairs within a file.
-4. `verdict` must be one of: `allow`, `require_approval`.
-5. `translation` must end with a period.
-6. `translation_modifier` must NOT end with a period (it gets appended to the translation).
-7. `translation_modifier` must be a gerund/prepositional/participial phrase, not a standalone sentence.
-8. `path` must not contain flags (no dashes unless part of the command name itself, e.g., `docker-compose`).
+### All entries
+
+1. `verdict` must be one of: `allow`, `require_approval`.
+2. `translation` must end with a period.
+3. No duplicate `path` values within a file (across `[[command]]` and `[[combo]]` entries).
+
+### `[[command]]` entries
+
+4. `path` must not contain flags (no dashes unless part of the command name itself, e.g., `docker-compose`).
+5. All `tags.*` fields are required: `scope`, `effect`, `reversibility`, `target`, `safety_override`.
+6. Tag values must use only the allowed values listed in [Tags](#tags).
+
+### `[[flag]]` entries
+
+7. Every `[[flag]].applies_to` must match exactly one `[[command]].path` in the same file.
+8. No duplicate `(applies_to, flag)` pairs within a file.
+9. `translation_modifier` must NOT end with a period (it gets appended to the translation).
+10. `translation_modifier` must be a gerund/prepositional/participial phrase, not a standalone sentence.
+11. `tag_modifiers.*` may only use the same keys and value types as `tags.*`.
+12. `tag_modifiers.*` should only include dimensions the flag actually changes.
+
+### `[[combo]]` entries
+
+13. Every combo `path` must start with a valid `[[command]].path` from the same file.
+14. Every flag in the combo `path` must match a `[[flag]]` entry for that command in the same file.
+15. Flags in the combo `path` must be sorted alphabetically.
+16. `translation` max length is 300 characters.
+17. All `tags.*` fields are required (same as `[[command]]`).
+18. Combo `tags.*` must be consistent with the base command's tags + flag `tag_modifiers` (using [tag merge semantics](#tag-merge-semantics)).
