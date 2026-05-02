@@ -7,6 +7,11 @@ path = "pip3"
 translation = "Run the Python package installer."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Installing ───────────────────────────────────────────────────────────────
 
@@ -15,6 +20,11 @@ path = "pip3 install"
 translation = "Download and install Python packages and their dependencies."
 verdict = "require_approval"
 rationale = "Downloads and runs code from PyPI that may execute setup scripts with system access."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "pip3 install"
@@ -36,6 +46,7 @@ flag = "--force-reinstall"
 translation_modifier = "reinstalling packages even if they are already up to date"
 verdict = "allow"
 rationale = "Forces re-download and reinstallation, which re-runs setup scripts."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "pip3 install"
@@ -71,6 +82,8 @@ flag = "-e"
 translation_modifier = "installing a local project in editable mode so changes take effect immediately"
 verdict = "allow"
 rationale = "Links a local directory into site-packages; changes to source files are reflected without reinstalling."
+tag_modifiers.scope = "local"
+tag_modifiers.target = ["filesystem"]
 
 [[flag]]
 applies_to = "pip3 install"
@@ -78,6 +91,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the installation without actually installing anything"
 verdict = "allow"
 rationale = "No packages are installed; only shows what would be done."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "pip3 install"
@@ -92,6 +107,7 @@ flag = "--break-system-packages"
 translation_modifier = "allowing modifications to a system-managed Python installation"
 verdict = "require_approval"
 rationale = "Overrides the externally-managed environment guard, which may corrupt the system Python installation."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "pip3 install"
@@ -107,6 +123,11 @@ path = "pip3 uninstall"
 translation = "Remove installed Python packages."
 verdict = "allow"
 rationale = "Removes packages that other packages or scripts may depend on."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "pip3 uninstall"
@@ -114,6 +135,7 @@ flag = "-y"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Bypasses the confirmation prompt, increasing the chance of accidental removal."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "pip3 uninstall"
@@ -128,6 +150,7 @@ flag = "--break-system-packages"
 translation_modifier = "allowing removal from a system-managed Python installation"
 verdict = "require_approval"
 rationale = "Overrides the externally-managed environment guard, which may corrupt the system Python installation."
+tag_modifiers.safety_override = true
 
 # ── Inspecting ───────────────────────────────────────────────────────────────
 
@@ -136,6 +159,11 @@ path = "pip3 list"
 translation = "List installed Python packages."
 verdict = "allow"
 rationale = "Read-only listing of installed packages."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "pip3 list"
@@ -156,24 +184,44 @@ path = "pip3 show"
 translation = "Display detailed information about an installed Python package."
 verdict = "allow"
 rationale = "Read-only display of package metadata."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 freeze"
 translation = "Output installed packages and versions in requirements file format."
 verdict = "allow"
 rationale = "Read-only output of package versions suitable for piping to a file."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 check"
 translation = "Verify that installed packages have compatible dependencies."
 verdict = "allow"
 rationale = "Read-only dependency compatibility check."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 inspect"
 translation = "Show detailed information about the current Python environment."
 verdict = "allow"
 rationale = "Read-only inspection of the Python environment and installed packages."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Downloading ──────────────────────────────────────────────────────────────
 
@@ -182,6 +230,11 @@ path = "pip3 download"
 translation = "Download Python packages to a directory without installing them."
 verdict = "allow"
 rationale = "Downloads package files to disk without installation or script execution."
+tags.scope = "remote"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 # ── Searching ────────────────────────────────────────────────────────────────
 
@@ -190,12 +243,22 @@ path = "pip3 search"
 translation = "Search the Python Package Index for packages."
 verdict = "allow"
 rationale = "Read-only search of the package repository."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 index"
 translation = "Inspect information available from package indexes."
 verdict = "allow"
 rationale = "Read-only inspection of package index metadata."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Cache management ─────────────────────────────────────────────────────────
 
@@ -204,30 +267,55 @@ path = "pip3 cache"
 translation = "Inspect and manage the pip download cache."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 cache purge"
 translation = "Remove all items from the pip download cache."
 verdict = "allow"
 rationale = "Deletes cached packages; they will be re-downloaded on next install."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 cache list"
 translation = "List packages stored in the pip download cache."
 verdict = "allow"
 rationale = "Read-only listing of cached package files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 cache info"
 translation = "Show information about the pip download cache."
 verdict = "allow"
 rationale = "Read-only display of cache location and size."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 cache remove"
 translation = "Remove specific packages from the pip download cache."
 verdict = "allow"
 rationale = "Deletes individual cached packages; they will be re-downloaded if needed."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
@@ -236,24 +324,44 @@ path = "pip3 config"
 translation = "View or modify pip configuration settings."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 config list"
 translation = "Display the current pip configuration values."
 verdict = "allow"
 rationale = "Read-only display of configuration."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 config set"
 translation = "Set a pip configuration value."
 verdict = "allow"
 rationale = "Changes pip behavior for future commands, such as default index URL or trusted hosts."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 config unset"
 translation = "Remove a pip configuration value."
 verdict = "allow"
 rationale = "Restores a single configuration key to its default; easily re-set."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
 
 # ── Building ─────────────────────────────────────────────────────────────────
 
@@ -262,9 +370,87 @@ path = "pip3 wheel"
 translation = "Build wheel archives from package requirements."
 verdict = "allow"
 rationale = "Creates wheel files on disk; does not install anything."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "pip3 hash"
 translation = "Compute the hash of a package archive file."
 verdict = "allow"
 rationale = "Read-only computation of file hashes."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "pip3 install --force-reinstall"
+translation = "Download and reinstall Python packages even if they are already installed at the correct version, re-running all setup scripts."
+verdict = "require_approval"
+rationale = "Forces re-download and reinstallation of all packages, re-executing setup scripts that may have system-level side effects."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "pip3 install --upgrade"
+translation = "Download and install the latest version of a Python package, replacing any already-installed version."
+verdict = "require_approval"
+rationale = "Replaces existing packages with newer versions that may introduce breaking changes or run new setup scripts."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "pip3 install --user"
+translation = "Download and install Python packages into the current user's site-packages directory instead of the system-wide location."
+verdict = "require_approval"
+rationale = "Downloads and runs code from PyPI but limits the installation to the user directory, avoiding system-wide changes."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "pip3 install -e"
+translation = "Install a local Python project in editable mode, linking its source directory into site-packages so code changes take effect immediately."
+verdict = "require_approval"
+rationale = "Runs setup scripts and creates a link to local source code; changes to the source are reflected without reinstalling."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "pip3 install -r"
+translation = "Download and install all Python packages listed in a requirements file and their dependencies."
+verdict = "require_approval"
+rationale = "Installs potentially many packages at once from a file, widening the scope of code downloaded and executed from PyPI."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "pip3 uninstall -y"
+translation = "Remove installed Python packages immediately without prompting for confirmation."
+verdict = "allow"
+rationale = "Bypasses the interactive confirmation prompt, removing packages without a chance to review the list."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = true
