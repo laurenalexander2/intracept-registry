@@ -5,6 +5,11 @@ path = "mv"
 translation = "Move or rename files and directories."
 verdict = "allow"
 rationale = "Relocates files, removing them from the original location; silently overwrites the destination by default."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "mv"
@@ -12,6 +17,7 @@ flag = "-f"
 translation_modifier = "overwriting existing files without prompting"
 verdict = "allow"
 rationale = "Suppresses confirmation prompts, allowing silent overwrite of destination files."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "mv"
@@ -40,3 +46,27 @@ flag = "-h"
 translation_modifier = "without following symbolic links at the destination"
 verdict = "allow"
 rationale = "Renames the symbolic link itself instead of moving the file into the linked directory."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "mv -f"
+translation = "Move or rename files, overwriting any existing file at the destination without prompting for confirmation."
+verdict = "allow"
+rationale = "Suppresses all confirmation prompts, silently replacing destination files."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "mv -i"
+translation = "Move or rename files, prompting for confirmation before overwriting any existing file at the destination."
+verdict = "allow"
+rationale = "Interactive confirmation reduces the risk of accidentally overwriting important files."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

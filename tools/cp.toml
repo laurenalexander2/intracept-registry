@@ -7,6 +7,11 @@ path = "cp"
 translation = "Copy files and directories to a new location."
 verdict = "allow"
 rationale = "Copies a single named file; overwrites an existing destination file by default, but the original source is unchanged."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 
@@ -30,6 +35,7 @@ flag = "-f"
 translation_modifier = "removing and recreating destination files that cannot be overwritten"
 verdict = "allow"
 rationale = "Forcefully replaces destination files without prompting, even if permissions would normally prevent it."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "cp"
@@ -114,3 +120,49 @@ flag = "-v"
 translation_modifier = "showing each file as it is copied"
 verdict = "allow"
 rationale = "Adds verbose output without changing what is copied."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "cp -r"
+translation = "Copy an entire directory and all its contents to a new location."
+verdict = "allow"
+rationale = "Duplicates a directory tree, potentially overwriting files at the destination but leaving the source unchanged."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "cp -a"
+translation = "Copy an entire directory tree to a new location, preserving all file attributes, permissions, and symbolic links."
+verdict = "allow"
+rationale = "Creates a faithful mirror of a directory tree with full metadata preservation; source is unchanged."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "cp -f"
+translation = "Copy files to a new location, forcefully removing and recreating destination files that cannot be overwritten."
+verdict = "allow"
+rationale = "Bypasses permission restrictions at the destination by deleting and recreating files, but the source is unchanged."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "cp -p -r"
+translation = "Copy an entire directory and all its contents to a new location, preserving file timestamps, permissions, and ownership."
+verdict = "allow"
+rationale = "Duplicates a directory tree with metadata preservation; source is unchanged."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

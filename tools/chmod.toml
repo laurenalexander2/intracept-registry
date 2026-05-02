@@ -7,8 +7,13 @@ path = "chmod"
 translation = "Change file or directory permissions."
 verdict = "allow"
 rationale = "Modifies access controls, which can expose files to unauthorized users or lock out legitimate access."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
-# ── Scope modifiers ──────────────────────────────────────────────────────────
+# ── Scope modifiers ────────────────────────────────────────────────────────��─
 
 [[flag]]
 applies_to = "chmod"
@@ -17,7 +22,7 @@ translation_modifier = "recursively through all subdirectories"
 verdict = "require_approval"
 rationale = "Applies permission changes to an entire directory tree, greatly increasing the blast radius."
 
-# ── Symlink behavior ─────────────────────────────────────────────────────────
+# ── Symlink behavior ──────────────────────────────────────────���──────────────
 
 [[flag]]
 applies_to = "chmod"
@@ -99,6 +104,8 @@ flag = "-C"
 translation_modifier = "returning whether the file's access control list is correct without making changes"
 verdict = "allow"
 rationale = "Read-only check of ACL correctness; does not modify anything."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "chmod"
@@ -106,3 +113,38 @@ flag = "-i"
 translation_modifier = "removing inherited access control list entries"
 verdict = "allow"
 rationale = "Strips inherited ACL entries, which may change effective permissions on the file."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "chmod -R"
+translation = "Change permissions on an entire directory tree and all files within it."
+verdict = "require_approval"
+rationale = "Applies permission changes recursively, which can expose or lock out access to large numbers of files at once."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "chmod -L -R"
+translation = "Change permissions recursively through all subdirectories, following symbolic links to reach files outside the directory tree."
+verdict = "require_approval"
+rationale = "Permission changes can propagate beyond the intended directory tree by following symbolic links."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "chmod -R -v"
+translation = "Change permissions on an entire directory tree, showing each file as its permissions are changed."
+verdict = "require_approval"
+rationale = "Applies recursive permission changes with verbose output for visibility into what is being modified."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

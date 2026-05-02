@@ -5,6 +5,11 @@ path = "sed"
 translation = "Find and replace text, or apply other editing rules, across lines of input."
 verdict = "allow"
 rationale = "By default, outputs transformed text to the terminal without modifying the original file."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "sed"
@@ -12,6 +17,8 @@ flag = "-i"
 translation_modifier = "editing each file directly on disk instead of printing to the terminal"
 verdict = "require_approval"
 rationale = "Overwrites the original file in place; without a backup extension, the original content is permanently lost."
+tag_modifiers.effect = ["write"]
+tag_modifiers.reversibility = "difficult"
 
 [[flag]]
 applies_to = "sed"
@@ -19,6 +26,8 @@ flag = "-I"
 translation_modifier = "editing files directly on disk while treating all files as one continuous stream"
 verdict = "require_approval"
 rationale = "Overwrites files in place with shared line numbering and address ranges across files, which can produce unexpected changes in multi-file edits."
+tag_modifiers.effect = ["write"]
+tag_modifiers.reversibility = "difficult"
 
 [[flag]]
 applies_to = "sed"
@@ -75,3 +84,49 @@ flag = "-u"
 translation_modifier = "using unbuffered output"
 verdict = "allow"
 rationale = "Disables output buffering for real-time processing; does not affect whether files are modified."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "sed -i"
+translation = "Find and replace text or apply editing rules, modifying each file directly on disk instead of printing to the terminal."
+verdict = "require_approval"
+rationale = "Overwrites original files in place with no automatic backup, permanently altering their contents."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "sed -e -i"
+translation = "Apply a specified editing command to files, modifying them directly on disk."
+verdict = "require_approval"
+rationale = "Combines an explicit editing expression with in-place modification, permanently altering file contents."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "sed -n"
+translation = "Process input through editing rules but only print lines that are explicitly selected, suppressing all other output."
+verdict = "allow"
+rationale = "Filters output without modifying any files; commonly used with the p command to extract specific lines."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "sed -E"
+translation = "Find and replace text using extended regular expression syntax, printing results to the terminal."
+verdict = "allow"
+rationale = "Changes only the regex dialect used for pattern matching; output goes to the terminal without modifying files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

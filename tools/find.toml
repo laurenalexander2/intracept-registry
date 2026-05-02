@@ -7,6 +7,11 @@ path = "find"
 translation = "Search for files and directories matching specified criteria."
 verdict = "allow"
 rationale = "Read-only search that lists matching files without modifying them."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Name and path filters ────────────────────────────────────────────────────
 
@@ -215,6 +220,7 @@ flag = "-exec"
 translation_modifier = "running a specified command on each matching file"
 verdict = "allow"
 rationale = "Executes an arbitrary command for each result; the risk depends entirely on the command being run."
+tag_modifiers.effect = ["execute"]
 
 [[flag]]
 applies_to = "find"
@@ -222,6 +228,7 @@ flag = "-execdir"
 translation_modifier = "running a specified command from each matching file's directory"
 verdict = "allow"
 rationale = "Executes a command from the file's directory; slightly safer than -exec but risk still depends on the command."
+tag_modifiers.effect = ["execute"]
 
 [[flag]]
 applies_to = "find"
@@ -229,6 +236,7 @@ flag = "-ok"
 translation_modifier = "prompting for confirmation before running a command on each matching file"
 verdict = "allow"
 rationale = "Like -exec but asks before each execution, preventing accidental operations."
+tag_modifiers.effect = ["execute"]
 
 [[flag]]
 applies_to = "find"
@@ -236,3 +244,84 @@ flag = "-delete"
 translation_modifier = "deleting every matching file"
 verdict = "require_approval"
 rationale = "Permanently removes all files matching the search criteria without confirmation or recoverability."
+tag_modifiers.effect = ["delete"]
+tag_modifiers.reversibility = "impossible"
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "find -name -type"
+translation = "Search for files or directories matching a name pattern and restricted to a specific file type such as regular file or directory."
+verdict = "allow"
+rationale = "Combines two read-only filters to narrow search results precisely."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -delete -name"
+translation = "Search for files matching a name pattern and permanently delete every match from disk."
+verdict = "require_approval"
+rationale = "Combines a filename filter with immediate deletion, permanently removing all matching files with no recovery path."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -exec -name"
+translation = "Search for files matching a name pattern and run a specified command on each match."
+verdict = "allow"
+rationale = "The risk depends entirely on the command passed to -exec; the find portion is a read-only filter."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -delete -empty"
+translation = "Find all empty files and directories and permanently delete them."
+verdict = "require_approval"
+rationale = "Silently removes every empty file and directory under the search path with no confirmation or recovery."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -delete -mtime"
+translation = "Find files by their last modification time and permanently delete every match."
+verdict = "require_approval"
+rationale = "Combines a time-based filter with immediate deletion, which can silently remove large numbers of files based on age."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -regex -type"
+translation = "Search for files or directories whose full path matches a regular expression, restricted to a specific file type."
+verdict = "allow"
+rationale = "Combines two read-only filters using regex for flexible path matching."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "find -delete -name -type"
+translation = "Search for entries matching a name pattern and file type, then permanently delete every match."
+verdict = "require_approval"
+rationale = "Targets files precisely by name and type before deleting, but still permanently removes all matches with no recovery."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["filesystem"]
+tags.safety_override = false

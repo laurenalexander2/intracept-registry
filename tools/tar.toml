@@ -5,6 +5,11 @@ path = "tar"
 translation = "Create or extract archive files."
 verdict = "allow"
 rationale = "The bare command prints help; behavior depends on flags."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "tar"
@@ -12,6 +17,7 @@ flag = "-c"
 translation_modifier = "creating a new archive"
 verdict = "allow"
 rationale = "Creates an archive file; does not modify the source files."
+tag_modifiers.effect = ["create"]
 
 [[flag]]
 applies_to = "tar"
@@ -19,6 +25,8 @@ flag = "-x"
 translation_modifier = "extracting files from an archive"
 verdict = "allow"
 rationale = "Extracts files to disk, potentially overwriting existing files at the destination."
+tag_modifiers.effect = ["write", "create"]
+tag_modifiers.reversibility = "difficult"
 
 [[flag]]
 applies_to = "tar"
@@ -61,6 +69,7 @@ flag = "--overwrite"
 translation_modifier = "overwriting existing files without prompting during extraction"
 verdict = "allow"
 rationale = "Silently replaces existing files during extraction."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "tar"
@@ -110,6 +119,7 @@ flag = "-r"
 translation_modifier = "appending files to the end of an existing archive"
 verdict = "allow"
 rationale = "Adds entries to an archive; does not overwrite or delete existing entries."
+tag_modifiers.effect = ["write"]
 
 [[flag]]
 applies_to = "tar"
@@ -131,3 +141,49 @@ flag = "--one-file-system"
 translation_modifier = "staying within a single file system and not crossing mount points"
 verdict = "allow"
 rationale = "Limits the scope of the archive; a safety-enhancing option."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "tar -f -x -z"
+translation = "Extract all files from a gzip-compressed archive to the current directory."
+verdict = "allow"
+rationale = "Decompresses and extracts files to disk, potentially overwriting existing files at the destination."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "tar -c -f -z"
+translation = "Create a new gzip-compressed archive containing the specified files and directories."
+verdict = "allow"
+rationale = "Bundles files into a compressed archive without modifying the source files."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "tar -f -x"
+translation = "Extract all files from an archive to the current directory."
+verdict = "allow"
+rationale = "Writes extracted files to disk, potentially overwriting existing files at the destination."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "tar -f -t"
+translation = "List the contents of an archive file without extracting anything."
+verdict = "allow"
+rationale = "Displays archive contents as a read-only operation; no files are created or modified on disk."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

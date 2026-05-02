@@ -5,6 +5,11 @@ path = "ls"
 translation = "List the contents of a directory."
 verdict = "allow"
 rationale = "Read-only operation that displays file and directory names without modifying anything."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "ls"
@@ -110,3 +115,38 @@ flag = "-G"
 translation_modifier = "with colorized output"
 verdict = "allow"
 rationale = "Enables color coding by file type; still read-only."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "ls -a -l"
+translation = "List all files in a directory including hidden ones, showing detailed information like permissions, size, and modification date."
+verdict = "allow"
+rationale = "Combines detailed listing with hidden file visibility; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "ls -h -l"
+translation = "List files with detailed information, showing file sizes in human-readable units like KB, MB, and GB."
+verdict = "allow"
+rationale = "Combines detailed listing with human-readable sizes for easier scanning; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "ls -R"
+translation = "List the contents of a directory and all of its subdirectories recursively."
+verdict = "allow"
+rationale = "Expands the listing to an entire directory tree; may produce large output but remains entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

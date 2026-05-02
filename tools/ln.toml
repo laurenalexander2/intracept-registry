@@ -5,6 +5,11 @@ path = "ln"
 translation = "Create a link that points to an existing file, so the same file can be accessed from multiple locations."
 verdict = "allow"
 rationale = "Creates a new directory entry pointing to an existing file; does not modify the original."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "ln"
@@ -19,6 +24,7 @@ flag = "-f"
 translation_modifier = "overwriting any existing file at the destination without asking"
 verdict = "allow"
 rationale = "Silently replaces an existing file or link at the destination path."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "ln"
@@ -47,6 +53,9 @@ flag = "-F"
 translation_modifier = "removing an existing directory at the destination to make room for the link"
 verdict = "require_approval"
 rationale = "Deletes a directory to replace it with a link, which can cause data loss if the directory contains files."
+tag_modifiers.effect = ["write", "create", "delete"]
+tag_modifiers.reversibility = "difficult"
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "ln"
@@ -54,3 +63,27 @@ flag = "-w"
 translation_modifier = "warning if the target of the shortcut does not currently exist"
 verdict = "allow"
 rationale = "Alerts about broken shortcuts; an informational safety check."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "ln -s"
+translation = "Create a symbolic link (shortcut) that refers to an existing file or directory by path."
+verdict = "allow"
+rationale = "Creates a lightweight pointer to a target; does not modify the target file or directory."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "ln -f -s"
+translation = "Create a symbolic link, overwriting any existing file at the destination without prompting."
+verdict = "allow"
+rationale = "Silently replaces an existing file or link at the destination path to create the new symbolic link."
+tags.scope = "local"
+tags.effect = ["write", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = true

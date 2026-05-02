@@ -7,6 +7,11 @@ path = "bash"
 translation = "Run the Bash shell interpreter."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands with full access to the user's environment and files."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem", "process"]
+tags.safety_override = false
 
 # ── Execution modes ──────────────────────────────────────────────────────────
 
@@ -67,6 +72,8 @@ flag = "-n"
 translation_modifier = "only checking syntax without executing"
 verdict = "allow"
 rationale = "Validates syntax without running any commands; no side effects."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "bash"
@@ -82,7 +89,7 @@ translation_modifier = "printing each line of the script as it is read"
 verdict = "allow"
 rationale = "Adds verbose output; does not change what commands are executed."
 
-# ── Error handling ───────────────────────────────────────────────────────────
+# ── Error handling ────────────────────────────────────────────────────��──────
 
 [[flag]]
 applies_to = "bash"
@@ -132,3 +139,38 @@ flag = "--posix"
 translation_modifier = "in POSIX-compliant mode, following the POSIX standard more strictly"
 verdict = "allow"
 rationale = "Restricts behavior to POSIX standards; disables some Bash-specific extensions."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "bash -c"
+translation = "Execute a command string passed as an argument in a new Bash shell process."
+verdict = "allow"
+rationale = "Runs an inline command in a subshell; the risk depends entirely on the command being executed."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem", "process"]
+tags.safety_override = false
+
+[[combo]]
+path = "bash -e"
+translation = "Run a Bash shell that exits immediately if any command returns a non-zero status."
+verdict = "allow"
+rationale = "Adds strict error handling that stops execution on failure, reducing the chance of cascading errors."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem", "process"]
+tags.safety_override = false
+
+[[combo]]
+path = "bash -x"
+translation = "Run a Bash shell that prints each command to standard error before executing it."
+verdict = "allow"
+rationale = "Adds debug tracing for visibility into what commands are running; does not change what is executed."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem", "process"]
+tags.safety_override = false

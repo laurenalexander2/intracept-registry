@@ -5,6 +5,11 @@ path = "grep"
 translation = "Search file contents for lines matching a pattern."
 verdict = "allow"
 rationale = "Read-only search that displays matching lines without modifying any files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Search mode flags ────────────────────────────────────────────────────────
 
@@ -213,3 +218,60 @@ flag = "-Z"
 translation_modifier = "separating output filenames with null characters instead of newlines"
 verdict = "allow"
 rationale = "Changes output delimiter for safe piping to xargs; still read-only."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "grep -n -r"
+translation = "Recursively search all files in subdirectories for lines matching a pattern, showing the file name and line number for each match."
+verdict = "allow"
+rationale = "Combines recursive traversal with line numbers for efficient codebase-wide searching; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "grep --include -n -r"
+translation = "Recursively search only files whose names match a specified pattern, showing file names and line numbers for each match."
+verdict = "allow"
+rationale = "Narrows recursive search to specific file types, reducing noise while remaining entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "grep -c"
+translation = "Count the number of lines matching a pattern in each file instead of displaying the matching lines."
+verdict = "allow"
+rationale = "Produces a numeric summary rather than full output; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "grep -l -r"
+translation = "Recursively search all files in subdirectories and list only the names of files that contain a match."
+verdict = "allow"
+rationale = "Identifies which files contain a pattern across a directory tree without showing individual lines; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "grep -v"
+translation = "Search file contents and show only the lines that do not match the given pattern."
+verdict = "allow"
+rationale = "Inverts the match to display non-matching lines; entirely read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

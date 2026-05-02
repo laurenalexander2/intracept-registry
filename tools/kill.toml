@@ -7,6 +7,11 @@ path = "kill"
 translation = "Send a signal to one or more running processes, typically to stop them."
 verdict = "allow"
 rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "impossible"
+tags.target = ["process"]
+tags.safety_override = false
 
 # ── Signal flags ──────────────────────────────────────────────────────────────
 
@@ -86,6 +91,7 @@ flag = "-STOP"
 translation_modifier = "pausing the process so it can be resumed later"
 verdict = "allow"
 rationale = "Suspends the process without terminating it; it can be resumed with a continue signal."
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "kill"
@@ -93,6 +99,7 @@ flag = "-CONT"
 translation_modifier = "resuming a previously paused process"
 verdict = "allow"
 rationale = "Restarts a suspended process; it simply continues where it left off."
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "kill"
@@ -100,6 +107,8 @@ flag = "-0"
 translation_modifier = "checking whether the process exists without actually sending a signal"
 verdict = "allow"
 rationale = "No signal is delivered; only tests if the process is running and the user has permission to signal it."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "kill"
@@ -107,3 +116,40 @@ flag = "-l"
 translation_modifier = "listing all available signal names instead of sending a signal"
 verdict = "allow"
 rationale = "Read-only operation that prints signal names and exits."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "kill -9"
+translation = "Immediately and forcefully terminate a process with no opportunity for it to save data, release resources, or clean up."
+verdict = "require_approval"
+rationale = "Sends an uncatchable signal that instantly kills the process, potentially causing data corruption or resource leaks."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "impossible"
+tags.target = ["process"]
+tags.safety_override = false
+
+[[combo]]
+path = "kill -HUP"
+translation = "Ask a process to reload its configuration files or shut down gracefully."
+verdict = "allow"
+rationale = "Commonly used to trigger configuration reloads in daemons; most programs handle this signal gracefully."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "impossible"
+tags.target = ["process"]
+tags.safety_override = false
+
+[[combo]]
+path = "kill -TERM"
+translation = "Request a process to shut down gracefully, giving it a chance to save data and release resources."
+verdict = "allow"
+rationale = "Sends the default termination signal, which most programs handle by performing an orderly shutdown."
+tags.scope = "local"
+tags.effect = ["execute"]
+tags.reversibility = "impossible"
+tags.target = ["process"]
+tags.safety_override = false
