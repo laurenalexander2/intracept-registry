@@ -7,6 +7,11 @@ path = "cargo"
 translation = "Run the Rust package manager and build system."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Building and checking ────────────────────────────────────────────────────
 
@@ -15,6 +20,11 @@ path = "cargo build"
 translation = "Compile the current Rust package and its dependencies."
 verdict = "allow"
 rationale = "Compiles code locally; does not execute it or modify source files."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo build"
@@ -42,12 +52,22 @@ path = "cargo check"
 translation = "Analyze the current Rust package for errors without producing binaries."
 verdict = "allow"
 rationale = "Read-only compilation check; faster than a full build."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo clippy"
 translation = "Run the Clippy linter to catch common mistakes in Rust code."
 verdict = "allow"
 rationale = "Static analysis that reports warnings; does not modify source files."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo clippy"
@@ -55,12 +75,18 @@ flag = "--fix"
 translation_modifier = "automatically applying suggested fixes to the source code"
 verdict = "allow"
 rationale = "Modifies source files in place to apply lint fixes; changes may be incorrect."
+tag_modifiers.effect = ["read", "write"]
 
 [[command]]
 path = "cargo fix"
 translation = "Automatically apply compiler-suggested fixes to the Rust source code."
 verdict = "allow"
 rationale = "Modifies source files in place based on compiler suggestions; changes may need review."
+tags.scope = "local"
+tags.effect = ["read", "write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo fix"
@@ -68,6 +94,7 @@ flag = "--allow-dirty"
 translation_modifier = "even if the working directory has uncommitted changes"
 verdict = "require_approval"
 rationale = "Bypasses the clean working directory check, risking loss of uncommitted edits if fixes overlap."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "cargo fix"
@@ -75,6 +102,7 @@ flag = "--allow-staged"
 translation_modifier = "even if there are staged changes in the repository"
 verdict = "allow"
 rationale = "Bypasses the staged-changes check; auto-fixes may conflict with staged modifications."
+tag_modifiers.safety_override = true
 
 # ── Running and testing ──────────────────────────────────────────────────────
 
@@ -83,6 +111,11 @@ path = "cargo run"
 translation = "Compile and execute the current Rust package's binary."
 verdict = "allow"
 rationale = "Builds and runs the program, which may perform any action depending on the code."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo run"
@@ -96,6 +129,11 @@ path = "cargo test"
 translation = "Run the tests for the current Rust package."
 verdict = "allow"
 rationale = "Compiles and runs test code; test binaries are local and isolated."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo test"
@@ -103,6 +141,7 @@ flag = "--no-run"
 translation_modifier = "compiling the tests without actually running them"
 verdict = "allow"
 rationale = "Only compiles; no test code is executed."
+tag_modifiers.effect = ["read", "create"]
 
 [[flag]]
 applies_to = "cargo test"
@@ -130,6 +169,11 @@ path = "cargo bench"
 translation = "Run the benchmarks for the current Rust package."
 verdict = "allow"
 rationale = "Compiles and executes benchmark code locally."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Documentation ────────────────────────────────────────────────────────────
 
@@ -138,6 +182,11 @@ path = "cargo doc"
 translation = "Build documentation for the current Rust package and its dependencies."
 verdict = "allow"
 rationale = "Generates HTML documentation files locally."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo doc"
@@ -160,12 +209,22 @@ path = "cargo new"
 translation = "Create a new Rust package in a new directory."
 verdict = "allow"
 rationale = "Creates a new directory with template files; does not modify existing files."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo init"
 translation = "Create a new Rust package in the current directory."
 verdict = "allow"
 rationale = "Adds template files to the current directory; does not overwrite existing files."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Dependencies ─────────────────────────────────────────────────────────────
 
@@ -174,6 +233,11 @@ path = "cargo add"
 translation = "Add a dependency to the Cargo.toml manifest."
 verdict = "allow"
 rationale = "Modifies Cargo.toml; the dependency is not downloaded until the next build."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo add"
@@ -194,12 +258,22 @@ path = "cargo remove"
 translation = "Remove a dependency from the Cargo.toml manifest."
 verdict = "allow"
 rationale = "Modifies Cargo.toml; does not delete any source code."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo update"
 translation = "Update the versions of dependencies in Cargo.lock."
 verdict = "allow"
 rationale = "Changes locked dependency versions, which may introduce breaking changes."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo update"
@@ -207,24 +281,40 @@ flag = "--dry-run"
 translation_modifier = "simulating the update without actually changing the lock file"
 verdict = "allow"
 rationale = "No files are modified; only shows what would change."
+tag_modifiers.effect = ["read"]
 
 [[command]]
 path = "cargo fetch"
 translation = "Download the dependencies of the current package from the network."
 verdict = "allow"
 rationale = "Downloads dependencies into the local cache; does not modify source files."
+tags.scope = "remote"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo vendor"
 translation = "Copy all dependencies into a local directory within the project."
 verdict = "allow"
 rationale = "Creates a vendor directory with dependency source code; does not modify existing files."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo tree"
 translation = "Display a tree of all dependencies for the current package."
 verdict = "allow"
 rationale = "Read-only display of the dependency graph."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Build artifacts ──────────────────────────────────────────────────────────
 
@@ -233,12 +323,22 @@ path = "cargo clean"
 translation = "Remove the target directory containing build artifacts."
 verdict = "allow"
 rationale = "Deletes only the build cache; source code is untouched and artifacts are rebuilt on next build."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo package"
 translation = "Assemble the current package into a distributable archive."
 verdict = "allow"
 rationale = "Creates a .crate file locally without uploading anything."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Installing binaries ──────────────────────────────────────────────────────
 
@@ -247,6 +347,11 @@ path = "cargo install"
 translation = "Install a Rust binary from a crate on the registry or a local path."
 verdict = "require_approval"
 rationale = "Downloads, compiles, and installs a binary that may execute arbitrary code during build."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo install"
@@ -254,12 +359,18 @@ flag = "--force"
 translation_modifier = "overwriting an existing installation of the same binary"
 verdict = "allow"
 rationale = "Replaces a previously installed binary without confirmation."
+tag_modifiers.safety_override = true
 
 [[command]]
 path = "cargo uninstall"
 translation = "Remove a previously installed Rust binary."
 verdict = "allow"
 rationale = "Deletes an installed binary; can be reinstalled."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 # ── Publishing ───────────────────────────────────────────────────────────────
 
@@ -268,6 +379,11 @@ path = "cargo publish"
 translation = "Upload the current package to a Rust registry."
 verdict = "require_approval"
 rationale = "Publishes the package to crates.io or another registry; published versions cannot be fully removed."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo publish"
@@ -275,6 +391,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the upload without actually publishing"
 verdict = "allow"
 rationale = "No package is uploaded; only performs validation checks."
+tag_modifiers.effect = ["read"]
+tag_modifiers.reversibility = "trivial"
 
 [[flag]]
 applies_to = "cargo publish"
@@ -282,6 +400,7 @@ flag = "--no-verify"
 translation_modifier = "skipping the build verification step"
 verdict = "allow"
 rationale = "Bypasses the pre-publish build check, risking publication of a broken package."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "cargo publish"
@@ -289,12 +408,18 @@ flag = "--allow-dirty"
 translation_modifier = "allowing publication from a working directory with uncommitted changes"
 verdict = "allow"
 rationale = "Bypasses the clean working directory check, risking publication of unintended changes."
+tag_modifiers.safety_override = true
 
 [[command]]
 path = "cargo yank"
 translation = "Mark a published crate version as yanked so new projects cannot depend on it."
 verdict = "require_approval"
 rationale = "Prevents new downloads of the specified version; existing users are not affected but the version becomes unavailable."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo yank"
@@ -308,18 +433,33 @@ path = "cargo login"
 translation = "Save a registry authentication token to the local credential store."
 verdict = "allow"
 rationale = "Stores credentials locally; does not publish or modify any packages."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo logout"
 translation = "Remove a saved registry authentication token from the local credential store."
 verdict = "allow"
 rationale = "Removes stored credentials; can be re-authenticated with cargo login."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "trivial"
+tags.target = ["credentials"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo owner"
 translation = "Manage the owners of a crate on the registry."
 verdict = "require_approval"
 rationale = "Adding or removing owners changes who can publish new versions of the crate."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 # ── Code quality ─────────────────────────────────────────────────────────────
 
@@ -328,6 +468,11 @@ path = "cargo fmt"
 translation = "Format the Rust source code in the current package."
 verdict = "allow"
 rationale = "Modifies source files cosmetically; does not change program behavior."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "cargo fmt"
@@ -335,6 +480,7 @@ flag = "--check"
 translation_modifier = "only checking whether code is formatted without making changes"
 verdict = "allow"
 rationale = "Reports formatting issues without modifying any files."
+tag_modifiers.effect = ["read"]
 
 # ── Inspection ───────────────────────────────────────────────────────────────
 
@@ -343,27 +489,131 @@ path = "cargo search"
 translation = "Search for crates on the Rust registry."
 verdict = "allow"
 rationale = "Read-only search of the registry."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo metadata"
 translation = "Output dependency and package information in machine-readable format."
 verdict = "allow"
 rationale = "Read-only output of project metadata."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo rustc"
 translation = "Compile the current package and pass extra options to the Rust compiler."
 verdict = "allow"
 rationale = "Compiles code locally with additional compiler flags; does not execute the result."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo rustdoc"
 translation = "Build documentation for the current package with extra options passed to the documentation generator."
 verdict = "allow"
 rationale = "Generates documentation locally with additional flags; does not execute code."
+tags.scope = "local"
+tags.effect = ["create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
 
 [[command]]
 path = "cargo generate-lockfile"
 translation = "Create or regenerate the Cargo.lock file for the current package."
 verdict = "allow"
 rationale = "Creates or updates the lock file; dependency versions may change but source code is untouched."
+tags.scope = "remote"
+tags.effect = ["create", "write"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "cargo build --release"
+translation = "Compile the current Rust package with full optimizations enabled, producing a production-ready binary."
+verdict = "allow"
+rationale = "Produces an optimized binary locally; takes longer than a debug build but does not change what is modified."
+tags.scope = "local"
+tags.effect = ["read", "create"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "cargo install --force"
+translation = "Download, compile, and install a Rust binary from the registry, overwriting any existing installation of the same package."
+verdict = "require_approval"
+rationale = "Forces replacement of an already-installed binary without confirmation, which may disrupt tools that depend on the current version."
+tags.scope = "remote"
+tags.effect = ["write", "create"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = true
+
+[[combo]]
+path = "cargo publish --allow-dirty"
+translation = "Upload the current package to a Rust registry even though the working directory contains uncommitted changes."
+verdict = "require_approval"
+rationale = "Publishes code that may include unintended local modifications because the clean-working-directory check is bypassed."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry"]
+tags.safety_override = true
+
+[[combo]]
+path = "cargo publish --dry-run"
+translation = "Simulate uploading the current package to a Rust registry, running validation checks without actually publishing."
+verdict = "allow"
+rationale = "No package is uploaded; only performs build verification and metadata checks."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["package_registry"]
+tags.safety_override = false
+
+[[combo]]
+path = "cargo run --release"
+translation = "Compile the current Rust package with full optimizations and immediately execute the resulting binary."
+verdict = "allow"
+rationale = "Runs the program in release mode; the optimization level changes but the program's behavior and capabilities remain the same."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "cargo test --no-fail-fast"
+translation = "Run all tests for the current Rust package, continuing to execute remaining tests even after a failure is encountered."
+verdict = "allow"
+rationale = "Runs the complete test suite regardless of failures, which is useful for getting a full picture of test health."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "cargo test --workspace"
+translation = "Run the tests for every package in the Rust workspace."
+verdict = "allow"
+rationale = "Extends testing to all workspace members; still a local compilation and execution operation."
+tags.scope = "local"
+tags.effect = ["read", "execute"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

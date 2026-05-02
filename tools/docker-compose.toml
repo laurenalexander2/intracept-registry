@@ -71,7 +71,6 @@ translation_modifier = "simulating the operation without actually creating or st
 verdict = "allow"
 rationale = "No containers are created or started; only shows what would happen."
 tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
 
 [[command]]
 path = "docker-compose down"
@@ -129,7 +128,7 @@ tags.safety_override = false
 [[command]]
 path = "docker-compose stop"
 translation = "Stop running containers without removing them."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Interrupts running services; containers can be restarted."
 tags.scope = "local"
 tags.effect = ["execute"]
@@ -229,7 +228,7 @@ tag_modifiers.reversibility = "trivial"
 [[command]]
 path = "docker-compose kill"
 translation = "Force stop service containers by sending a signal."
-verdict = "allow"
+verdict = "require_approval"
 rationale = "Immediately terminates containers without allowing graceful shutdown."
 tags.scope = "local"
 tags.effect = ["execute"]
@@ -289,7 +288,6 @@ translation_modifier = "simulating the operation without actually running anythi
 verdict = "allow"
 rationale = "No container is created; only shows what would happen."
 tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
 
 [[command]]
 path = "docker-compose exec"
