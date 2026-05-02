@@ -5,6 +5,11 @@ path = "scp"
 translation = "Copy files between the local machine and a remote server over SSH."
 verdict = "require_approval"
 rationale = "Transfers files over the network, potentially overwriting files at the destination."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "scp"
@@ -96,3 +101,27 @@ flag = "-6"
 translation_modifier = "using only IPv6 addresses"
 verdict = "allow"
 rationale = "Restricts the network protocol; does not change transfer capabilities."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "scp -i"
+translation = "Copy files between the local machine and a remote server over SSH, authenticating with a specified private key file."
+verdict = "require_approval"
+rationale = "Transfers files using key-based authentication, which may access privileged remote accounts."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "scp -r"
+translation = "Recursively copy entire directory trees between the local machine and a remote server over SSH."
+verdict = "require_approval"
+rationale = "Transfers full directory structures, increasing the volume of files that may be overwritten at the destination."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false

@@ -5,6 +5,11 @@ path = "ssh"
 translation = "Open a secure shell connection to a remote server."
 verdict = "require_approval"
 rationale = "Establishes a remote session where commands can be executed on another machine."
+tags.scope = "remote"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "ssh"
@@ -26,6 +31,7 @@ flag = "-L"
 translation_modifier = "forwarding a local port to a remote address through the tunnel"
 verdict = "allow"
 rationale = "Opens a local listening port that tunnels traffic to a remote destination."
+tag_modifiers.effect = ["execute", "read"]
 
 [[flag]]
 applies_to = "ssh"
@@ -47,6 +53,7 @@ flag = "-N"
 translation_modifier = "without executing a remote command"
 verdict = "allow"
 rationale = "Establishes the connection for port forwarding only; no remote shell is opened."
+tag_modifiers.effect = ["read"]
 
 [[flag]]
 applies_to = "ssh"
@@ -68,3 +75,39 @@ flag = "-A"
 translation_modifier = "forwarding the local SSH agent to the remote server"
 verdict = "require_approval"
 rationale = "Exposes local SSH keys to the remote server, which could be used by a compromised host to authenticate as you."
+tag_modifiers.safety_override = true
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "ssh -i"
+translation = "Open a secure shell connection to a remote server, authenticating with a specified private key file."
+verdict = "require_approval"
+rationale = "Establishes a remote session using key-based authentication, which may access privileged accounts."
+tags.scope = "remote"
+tags.effect = ["execute"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "ssh -L"
+translation = "Create an SSH tunnel that forwards a local port to a remote address, allowing local applications to reach remote services securely."
+verdict = "require_approval"
+rationale = "Opens a local listening port that routes traffic through the encrypted SSH connection to a remote destination."
+tags.scope = "remote"
+tags.effect = ["execute", "read"]
+tags.reversibility = "difficult"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "ssh -L -N"
+translation = "Create an SSH port-forwarding tunnel without opening a remote shell, keeping the connection alive solely for traffic forwarding."
+verdict = "require_approval"
+rationale = "Opens a local-to-remote tunnel without executing commands, but still exposes a remote network path through the local port."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false

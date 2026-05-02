@@ -5,6 +5,11 @@ path = "curl"
 translation = "Transfer data to or from a server using a URL."
 verdict = "require_approval"
 rationale = "Performs network requests that send or receive data from remote servers."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["network"]
+tags.safety_override = false
 
 [[flag]]
 applies_to = "curl"
@@ -12,6 +17,8 @@ flag = "-o"
 translation_modifier = "saving the response to a specified local file"
 verdict = "allow"
 rationale = "Writes remote content to the local filesystem, which could overwrite existing files."
+tag_modifiers.effect = ["read", "write"]
+tag_modifiers.target = ["network", "filesystem"]
 
 [[flag]]
 applies_to = "curl"
@@ -19,6 +26,8 @@ flag = "-O"
 translation_modifier = "saving the response to a file named by the remote server"
 verdict = "allow"
 rationale = "Writes to a filename controlled by the remote server, which could overwrite unexpected local files."
+tag_modifiers.effect = ["read", "write"]
+tag_modifiers.target = ["network", "filesystem"]
 
 [[flag]]
 applies_to = "curl"
@@ -33,6 +42,7 @@ flag = "-d"
 translation_modifier = "sending data in an HTTP request body"
 verdict = "require_approval"
 rationale = "Transmits data to a remote server, which may include sensitive information."
+tag_modifiers.effect = ["write"]
 
 [[flag]]
 applies_to = "curl"
@@ -47,6 +57,7 @@ flag = "-k"
 translation_modifier = "skipping TLS certificate verification"
 verdict = "require_approval"
 rationale = "Disables server identity verification, exposing the connection to interception or man-in-the-middle attacks."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "curl"
@@ -54,6 +65,7 @@ flag = "--insecure"
 translation_modifier = "skipping TLS certificate verification"
 verdict = "require_approval"
 rationale = "Long form of -k; disables server identity verification, exposing the connection to interception or man-in-the-middle attacks."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "curl"
@@ -68,6 +80,7 @@ flag = "--location-trusted"
 translation_modifier = "following HTTP redirects automatically while sending credentials to every redirected host"
 verdict = "require_approval"
 rationale = "Sends the username and password to all hosts in the redirect chain, which may leak credentials to unintended servers."
+tag_modifiers.safety_override = true
 
 [[flag]]
 applies_to = "curl"
@@ -82,6 +95,7 @@ flag = "-T"
 translation_modifier = "uploading a local file to the server"
 verdict = "require_approval"
 rationale = "Sends local file contents to a remote destination, which may expose sensitive data."
+tag_modifiers.effect = ["write"]
 
 [[flag]]
 applies_to = "curl"
@@ -117,6 +131,7 @@ flag = "-F"
 translation_modifier = "sending data as a multipart form upload"
 verdict = "require_approval"
 rationale = "Transmits form data including file contents to a remote server."
+tag_modifiers.effect = ["write"]
 
 [[flag]]
 applies_to = "curl"
@@ -131,6 +146,7 @@ flag = "-c"
 translation_modifier = "saving received cookies to a file"
 verdict = "allow"
 rationale = "Writes cookie data to a local file; low risk as cookies are small metadata."
+tag_modifiers.target = ["network", "filesystem"]
 
 [[flag]]
 applies_to = "curl"
@@ -138,6 +154,7 @@ flag = "--data-binary"
 translation_modifier = "sending data exactly as specified without any processing"
 verdict = "require_approval"
 rationale = "Transmits raw binary data to a remote server, which may include sensitive content."
+tag_modifiers.effect = ["write"]
 
 [[flag]]
 applies_to = "curl"
@@ -194,3 +211,60 @@ flag = "--compressed"
 translation_modifier = "requesting a compressed response and automatically decompressing it"
 verdict = "allow"
 rationale = "Negotiates transfer compression for efficiency; does not change what data is sent or received."
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "curl -I"
+translation = "Fetch only the HTTP response headers from a remote server without downloading the body."
+verdict = "require_approval"
+rationale = "Performs a HEAD request to a remote server, which still establishes a network connection but transfers minimal data."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["network"]
+tags.safety_override = false
+
+[[combo]]
+path = "curl -k -L"
+translation = "Transfer data from a server, following redirects and skipping TLS certificate verification."
+verdict = "require_approval"
+rationale = "Combines redirect-following with disabled certificate checks, allowing connections to untrusted servers across the redirect chain."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["network"]
+tags.safety_override = true
+
+[[combo]]
+path = "curl -L -o"
+translation = "Download a file from a server, following any redirects, and save it to a specified local path."
+verdict = "require_approval"
+rationale = "Follows redirects and writes the final response to disk, which could overwrite local files with content from an unexpected host."
+tags.scope = "remote"
+tags.effect = ["read", "write"]
+tags.reversibility = "trivial"
+tags.target = ["network", "filesystem"]
+tags.safety_override = false
+
+[[combo]]
+path = "curl -H -X -d"
+translation = "Send an HTTP request with a custom method, headers, and a data payload to a remote server."
+verdict = "require_approval"
+rationale = "Composes a full API request that transmits arbitrary data to a remote endpoint, commonly used for POST/PUT operations."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["network"]
+tags.safety_override = false
+
+[[combo]]
+path = "curl -s"
+translation = "Transfer data to or from a server silently, without showing progress or error output."
+verdict = "require_approval"
+rationale = "Performs a network request with suppressed output, commonly used in scripts where errors may go unnoticed."
+tags.scope = "remote"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["network"]
+tags.safety_override = false
