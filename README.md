@@ -1,6 +1,6 @@
 # intracept-registry
 
-Plain-English translations of 2,400 CLI commands and 3,738 flag combinations, each tagged with structured metadata for deterministic safety policies.
+Plain-English translations of 2,425 CLI commands, 3,813 flags, and 211 multi-flag combinations, each tagged with structured metadata for deterministic safety policies.
 
 This is a **data repo** — no code to run, just structured TOML files that any SDK, agent framework, or policy engine can consume.
 
