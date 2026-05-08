@@ -6775,6 +6775,23 @@
         "safety_override": false
       }
     },
+    "gcloud compute config-ssh": {
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation": "Update the local SSH client config so Compute Engine instances can be reached by name with plain `ssh`.",
+      "rationale": "Edits the local user's SSH config; does not modify any cloud resource and does not open a session.",
+      "tags": {
+        "scope": "local",
+        "effect": [
+          "write"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "config"
+        ],
+        "safety_override": false
+      }
+    },
     "gcloud compute disks": {
       "tool": "gcloud",
       "verdict": "allow",
@@ -7060,6 +7077,60 @@
         "scope": "remote",
         "effect": [
           "write"
+        ],
+        "reversibility": "trivial",
+        "target": [
+          "cloud"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute reset-windows-password": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Reset the password for a Windows user on a Compute Engine instance and return the new credentials.",
+      "rationale": "Generates new credentials for a remote Windows host; anyone holding the output can log in until the password is changed again.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "write"
+        ],
+        "reversibility": "difficult",
+        "target": [
+          "cloud",
+          "credentials"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute scp": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Securely copy files between the local machine and a Compute Engine instance over SSH, using gcloud-managed authentication.",
+      "rationale": "Transfers files to or from a remote instance over SSH; can write arbitrary content to remote disks or pull data from them.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "write",
+          "read"
+        ],
+        "reversibility": "difficult",
+        "target": [
+          "cloud",
+          "filesystem"
+        ],
+        "safety_override": false
+      }
+    },
+    "gcloud compute ssh": {
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation": "Open an SSH session to a Compute Engine instance using gcloud-managed authentication.",
+      "rationale": "Opens a remote shell for arbitrary command execution on the instance; gcloud handles key provisioning and IAP tunneling but the underlying capability is the same as plain ssh.",
+      "tags": {
+        "scope": "remote",
+        "effect": [
+          "execute"
         ],
         "reversibility": "trivial",
         "target": [
@@ -28932,6 +29003,41 @@
       "tag_modifiers": {
         "reversibility": "difficult"
       }
+    },
+    "gcloud compute scp --compress": {
+      "applies_to": "gcloud compute scp",
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation_modifier": "with on-the-wire compression",
+      "rationale": "Compression is a transport optimization; it does not change what is transferred."
+    },
+    "gcloud compute scp --recurse": {
+      "applies_to": "gcloud compute scp",
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation_modifier": "copying directories and their contents recursively",
+      "rationale": "Recursive copy can transfer many files at once, increasing the volume of data written to or read from the remote instance."
+    },
+    "gcloud compute scp --zone": {
+      "applies_to": "gcloud compute scp",
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation_modifier": "targeting an instance in a specific zone",
+      "rationale": "Zone selection is routing only; it does not change what the operation does."
+    },
+    "gcloud compute ssh --command": {
+      "applies_to": "gcloud compute ssh",
+      "tool": "gcloud",
+      "verdict": "require_approval",
+      "translation_modifier": "running a specific command on the remote instance and returning",
+      "rationale": "Executes the supplied command non-interactively on the remote host; the command itself determines impact."
+    },
+    "gcloud compute ssh --zone": {
+      "applies_to": "gcloud compute ssh",
+      "tool": "gcloud",
+      "verdict": "allow",
+      "translation_modifier": "targeting an instance in a specific zone",
+      "rationale": "Zone selection is routing only; it does not change what the operation does."
     },
     "gcloud run deploy --allow-unauthenticated": {
       "applies_to": "gcloud run deploy",

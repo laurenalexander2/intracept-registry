@@ -322,6 +322,90 @@ tags.reversibility = "trivial"
 tags.target = ["cloud"]
 tags.safety_override = false
 
+# ── Compute SSH/SCP short forms (gcloud-managed SSH wrappers) ───────────────
+# Short forms `gcloud compute ssh` and `gcloud compute scp` exist alongside
+# `gcloud compute instances ssh`. Google's docs and tab completion both produce
+# the short forms, so they show up commonly in real commands.
+
+[[command]]
+path = "gcloud compute ssh"
+translation = "Open an SSH session to a Compute Engine instance using gcloud-managed authentication."
+verdict = "require_approval"
+rationale = "Opens a remote shell for arbitrary command execution on the instance; gcloud handles key provisioning and IAP tunneling but the underlying capability is the same as plain ssh."
+tags.scope = "remote"
+tags.effect = ["execute"]
+tags.reversibility = "trivial"
+tags.target = ["cloud"]
+tags.safety_override = false
+
+[[command]]
+path = "gcloud compute scp"
+translation = "Securely copy files between the local machine and a Compute Engine instance over SSH, using gcloud-managed authentication."
+verdict = "require_approval"
+rationale = "Transfers files to or from a remote instance over SSH; can write arbitrary content to remote disks or pull data from them."
+tags.scope = "remote"
+tags.effect = ["write", "read"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "filesystem"]
+tags.safety_override = false
+
+[[flag]]
+applies_to = "gcloud compute scp"
+flag = "--recurse"
+translation_modifier = "copying directories and their contents recursively"
+verdict = "require_approval"
+rationale = "Recursive copy can transfer many files at once, increasing the volume of data written to or read from the remote instance."
+
+[[flag]]
+applies_to = "gcloud compute scp"
+flag = "--compress"
+translation_modifier = "with on-the-wire compression"
+verdict = "allow"
+rationale = "Compression is a transport optimization; it does not change what is transferred."
+
+[[flag]]
+applies_to = "gcloud compute scp"
+flag = "--zone"
+translation_modifier = "targeting an instance in a specific zone"
+verdict = "allow"
+rationale = "Zone selection is routing only; it does not change what the operation does."
+
+[[flag]]
+applies_to = "gcloud compute ssh"
+flag = "--command"
+translation_modifier = "running a specific command on the remote instance and returning"
+verdict = "require_approval"
+rationale = "Executes the supplied command non-interactively on the remote host; the command itself determines impact."
+
+[[flag]]
+applies_to = "gcloud compute ssh"
+flag = "--zone"
+translation_modifier = "targeting an instance in a specific zone"
+verdict = "allow"
+rationale = "Zone selection is routing only; it does not change what the operation does."
+
+[[command]]
+path = "gcloud compute config-ssh"
+translation = "Update the local SSH client config so Compute Engine instances can be reached by name with plain `ssh`."
+verdict = "allow"
+rationale = "Edits the local user's SSH config; does not modify any cloud resource and does not open a session."
+tags.scope = "local"
+tags.effect = ["write"]
+tags.reversibility = "trivial"
+tags.target = ["config"]
+tags.safety_override = false
+
+[[command]]
+path = "gcloud compute reset-windows-password"
+translation = "Reset the password for a Windows user on a Compute Engine instance and return the new credentials."
+verdict = "require_approval"
+rationale = "Generates new credentials for a remote Windows host; anyone holding the output can log in until the password is changed again."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["cloud", "credentials"]
+tags.safety_override = false
+
 # ── Compute disks ────────────────────────────────────────────────────────────
 
 [[command]]
