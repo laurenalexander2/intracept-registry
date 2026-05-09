@@ -1,0 +1,6 @@
+# Minimal valid TOML — single command, only required fields.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 1.
+
+[[commands]]
+binary = "true"
+verdict = "allow"

@@ -1,0 +1,7 @@
+# TD-H3 motivating fixture: typo'd verdict value.
+# build-index.py and lint.py both must reject this.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md invalid case 1.
+
+[[commands]]
+binary = "ls"
+verdict = "alllow"

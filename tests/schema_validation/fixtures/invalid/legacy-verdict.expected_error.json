@@ -1,0 +1,7 @@
+{
+  "kind": "invalid_verdict",
+  "msg_contains": "require_approval",
+  "field_path": "commands[0].verdict",
+  "valid_values": ["allow", "ask", "warn"],
+  "hint": "legacy 2-tier vocabulary; migrate per TD-H6 to 'ask' or 'warn'"
+}

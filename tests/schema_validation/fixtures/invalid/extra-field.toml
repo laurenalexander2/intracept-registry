@@ -1,0 +1,7 @@
+# additionalProperties: false fires.
+# Schema fixture for Phase 1; invalid case 6.
+
+[[commands]]
+binary = "ls"
+verdict = "allow"
+random_field = "should be rejected"

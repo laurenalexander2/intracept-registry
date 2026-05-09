@@ -1,0 +1,5 @@
+{
+  "kind": "additional_properties_not_allowed",
+  "field_path": "commands[0].random_field",
+  "msg_contains": "random_field"
+}

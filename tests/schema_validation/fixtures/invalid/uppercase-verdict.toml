@@ -1,0 +1,6 @@
+# Verdict vocabulary is lowercase per locked schema.
+# Schema fixture for Phase 1; invalid case 2.
+
+[[commands]]
+binary = "ls"
+verdict = "Allow"

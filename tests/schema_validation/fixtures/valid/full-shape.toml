@@ -1,0 +1,26 @@
+# Full-shape valid TOML — every optional field populated.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 2.
+
+[[commands]]
+id = "git-status"
+binary = "git"
+subcommand = "status"
+verdict = "allow"
+audience = "intermediate"
+priority = 0
+aliases = ["git st"]
+platforms = ["macos", "linux"]
+candidate_only = false
+description = "Show working tree status."
+
+[commands.tags]
+scope = "vcs"
+target = ["repository"]
+mutates = false
+network = false
+
+[commands.flags."--short"]
+description = "Compact output."
+
+[commands.flags."--branch"]
+description = "Show branch info."

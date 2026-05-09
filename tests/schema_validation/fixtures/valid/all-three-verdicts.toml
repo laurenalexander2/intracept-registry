@@ -1,0 +1,15 @@
+# All three locked verdicts in one file.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 12.
+
+[[commands]]
+binary = "ls"
+verdict = "allow"
+
+[[commands]]
+binary = "rm"
+verdict = "warn"
+
+[[commands]]
+binary = "rm"
+flags = "-rf"
+verdict = "ask"
