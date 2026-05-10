@@ -1,0 +1,21 @@
+# Legacy v0/v1 verdict 'require_approval' — Phase 1 accepts as alias for 'ask'
+# per Session B's deserializer config (rule-schema-v2.json Verdict description:
+# "Also accepts the legacy alias 'require_approval' on input").
+#
+# This file is in valid/ because the deserializer accepts it. Whether the lint
+# emits a "deprecated, please migrate" warning is a separate Phase 1 design call
+# (see PROPOSAL_NOTES.md in this directory). Until that's settled, lint MUST
+# accept this file.
+#
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md.
+
+[[command]]
+path = "rm -rf"
+translation = "Recursively delete files and directories."
+verdict = "require_approval"
+rationale = "Bulk irreversible deletion; recovery without backup is impractical."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "impossible"
+tags.target = ["filesystem"]
+tags.safety_override = true

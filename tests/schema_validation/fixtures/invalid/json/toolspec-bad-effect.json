@@ -1,0 +1,5 @@
+{
+  "name": "ls",
+  "base_verdict": "allow",
+  "effects": ["levitates"]
+}

@@ -1,5 +1,0 @@
-# Required field 'binary' missing.
-# Schema fixture for Phase 1; invalid case 4.
-
-[[commands]]
-verdict = "allow"

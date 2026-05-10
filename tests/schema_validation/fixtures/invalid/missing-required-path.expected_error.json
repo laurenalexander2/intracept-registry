@@ -1,0 +1,5 @@
+{
+  "kind": "missing_required_field",
+  "field_path": "command[0].path",
+  "msg_contains": "path"
+}

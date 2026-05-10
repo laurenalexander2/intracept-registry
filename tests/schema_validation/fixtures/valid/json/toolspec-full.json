@@ -1,0 +1,35 @@
+{
+  "name": "git",
+  "subcommand_chain": ["push"],
+  "base_verdict": "ask",
+  "translation": "Upload local commits to a remote repository.",
+  "effects": ["network", "writes"],
+  "tags": {
+    "scope": ["remote"],
+    "action": ["publish"],
+    "target": ["repository"]
+  },
+  "flags": [
+    {
+      "name": "--force",
+      "aliases": ["-f"],
+      "description": "Overwrite remote history.",
+      "value_type": "bool",
+      "verdict": "warn",
+      "effects": ["writes"],
+      "tag_modifiers": {
+        "action": ["overwrite"]
+      }
+    }
+  ],
+  "combos": [
+    {
+      "flags": ["--force"],
+      "translation": "Overwrite the remote branch's history with the local branch.",
+      "verdict": "warn",
+      "tag_modifiers": {
+        "action": ["overwrite"]
+      }
+    }
+  ]
+}

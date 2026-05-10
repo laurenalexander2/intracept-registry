@@ -1,0 +1,25 @@
+# Two [[command]] entries with same `path` — uniqueness violation per SCHEMA.md.
+# (`path` plays the role of an id within a single tools/*.toml file.)
+# Schema fixture for Phase 1; invalid case 10.
+
+[[command]]
+path = "git status"
+translation = "Show working tree status."
+verdict = "allow"
+rationale = "Read-only."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["repository"]
+tags.safety_override = false
+
+[[command]]
+path = "git status"
+translation = "Duplicate entry for the same path."
+verdict = "allow"
+rationale = "Should be rejected — duplicate path."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["repository"]
+tags.safety_override = false

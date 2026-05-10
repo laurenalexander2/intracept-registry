@@ -1,6 +1,13 @@
-# Minimal valid TOML — single command, only required fields.
+# Minimal valid TOML — single [[command]] entry per SCHEMA.md.
 # Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 1.
 
-[[commands]]
-binary = "true"
+[[command]]
+path = "true"
+translation = "Exit successfully without doing anything."
 verdict = "allow"
+rationale = "No-op shell builtin."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["process"]
+tags.safety_override = false

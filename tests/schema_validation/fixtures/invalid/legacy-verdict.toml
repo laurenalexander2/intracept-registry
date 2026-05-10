@@ -1,8 +1,0 @@
-# TD-H6: legacy 2-tier vocabulary alias being removed.
-# Schema fixture for Phase 1; invalid case 3.
-# (After Phase 1 sign-off this becomes invalid; before, it was the
-#  default. Tests assert this is rejected post-lock.)
-
-[[commands]]
-binary = "rm"
-verdict = "require_approval"

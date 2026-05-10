@@ -19,19 +19,35 @@ without loss, and the linter must reject any TOML file that violates the
 schema **fail-loud on missing or extra fields** — the briefing's specific
 ask.
 
-## Prerequisites
+## Prerequisites — RESOLVED
 
-This spec's tests cannot run until **Stream B has posted the frozen JSON-schema
-snapshot** at the path above. Until then:
+Session B posted the frozen JSON-schema snapshot at
+`/Users/laurenalexander/intracept/fixtures/schema/{rule-schema-v2,toolspec,
+effects}.json` (note: filenames differ from this spec's earlier draft —
+`policy.schema.json` is subsumed by Rule, since a layered policy is just a
+list of Rules). The runner has been wired through to the snapshot.
 
-- The `valid/` and `invalid/` fixtures exist as authored shapes (this
-  document's responsibility).
-- The test runner exists as a stub that fails with "schema snapshot not
-  found at <path> — Session B has not posted yet."
-- Once B posts, the test runner reads the snapshot and runs.
+## Two enforcement surfaces
 
-Session B's notification on the bus (context category `interface`) is the
-trigger; session C will wire the snapshot-loading step then.
+The registry-side schema work splits into two:
+
+1. **JSON-shape validation** against B's frozen snapshot (`fixtures/{valid,
+   invalid}/json/`). These exercise the *compiled* `ToolSpec` and `Rule`
+   record shape that the matcher consumes. The locked Phase 1 vocabulary
+   (`allow / ask / warn`) lives here — `require_approval` is rejected at
+   the JSON-Schema level (the alias is an input-only convenience in B's
+   Rust deserializer; it doesn't widen the schema enum).
+2. **TOML authoring-shape validation** against `tools/lint.py`
+   (`fixtures/{valid, invalid}/*.toml`). These exercise the *source*
+   `tools/*.toml` shape declared in `SCHEMA.md`. Today's lint enforces the
+   v0/v1 vocabulary (`allow / require_approval`); the new vocabulary lands
+   when TD-H3 ships in Phase 4a.
+
+The `fixtures/future-lint/` directory holds the test cases that gate on the
+TD-H3 lint update (new vocab, additionalProperties: false, duplicate-path
+detection). Runner skips these by default and prints
+`N future-lint fixtures pending TD-H3` so they don't surface as failures
+during Phase 1.
 
 ## Conformance fixtures
 

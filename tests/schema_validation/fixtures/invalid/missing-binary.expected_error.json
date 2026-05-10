@@ -1,5 +1,0 @@
-{
-  "kind": "missing_required_field",
-  "field_path": "commands[0].binary",
-  "msg_contains": "binary"
-}

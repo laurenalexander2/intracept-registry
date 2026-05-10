@@ -1,0 +1,9 @@
+{
+  "id": "not-a-uuid",
+  "version": 2,
+  "origin": "registry-default",
+  "verdict": "allow",
+  "match": {
+    "tool": {"name": "ls"}
+  }
+}

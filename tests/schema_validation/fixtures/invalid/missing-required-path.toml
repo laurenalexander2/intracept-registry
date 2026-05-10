@@ -1,0 +1,12 @@
+# Required field 'path' missing per SCHEMA.md.
+# Schema fixture for Phase 1; invalid case 4.
+
+[[command]]
+translation = "Missing path field."
+verdict = "allow"
+rationale = "Will be rejected by lint."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
