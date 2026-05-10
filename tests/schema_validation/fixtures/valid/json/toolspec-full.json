@@ -2,13 +2,9 @@
   "name": "git",
   "subcommand_chain": ["push"],
   "base_verdict": "ask",
+  "risk_class": "net_egress_unauthed",
   "translation": "Upload local commits to a remote repository.",
   "effects": ["network", "writes"],
-  "tags": {
-    "scope": ["remote"],
-    "action": ["publish"],
-    "target": ["repository"]
-  },
   "flags": [
     {
       "name": "--force",
@@ -16,10 +12,8 @@
       "description": "Overwrite remote history.",
       "value_type": "bool",
       "verdict": "warn",
-      "effects": ["writes"],
-      "tag_modifiers": {
-        "action": ["overwrite"]
-      }
+      "risk_class": "destructive",
+      "effects": ["writes"]
     }
   ],
   "combos": [
@@ -27,9 +21,7 @@
       "flags": ["--force"],
       "translation": "Overwrite the remote branch's history with the local branch.",
       "verdict": "warn",
-      "tag_modifiers": {
-        "action": ["overwrite"]
-      }
+      "risk_class": "destructive"
     }
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "kind": "missing_required_field",
+  "schema": "toolspec.json",
+  "field_path": "/risk_class",
+  "msg_contains": "risk_class"
+}
