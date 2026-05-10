@@ -3,5 +3,5 @@
   "schema": "toolspec.json",
   "field_path": "/risk_class",
   "msg_contains": "very-spicy",
-  "valid_values": ["safe", "net_egress_unauthed", "novel", "destructive", "priv_esc", "secret_read"]
+  "valid_values": ["safe", "net_egress", "novel", "destructive", "priv_esc", "secret_read"]
 }

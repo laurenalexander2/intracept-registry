@@ -1,8 +1,7 @@
 {
   "name": "git",
   "subcommand_chain": ["push"],
-  "base_verdict": "ask",
-  "risk_class": "net_egress_unauthed",
+  "risk_class": "net_egress",
   "translation": "Upload local commits to a remote repository.",
   "effects": ["network", "writes"],
   "flags": [
@@ -11,8 +10,7 @@
       "aliases": ["-f"],
       "description": "Overwrite remote history.",
       "value_type": "bool",
-      "verdict": "warn",
-      "risk_class": "destructive",
+      "risk_class_override": "destructive",
       "effects": ["writes"]
     }
   ],
@@ -20,7 +18,6 @@
     {
       "flags": ["--force"],
       "translation": "Overwrite the remote branch's history with the local branch.",
-      "verdict": "warn",
       "risk_class": "destructive"
     }
   ]

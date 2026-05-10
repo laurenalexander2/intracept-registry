@@ -9,11 +9,20 @@ Two surfaces:
       toolspec, effects}.json.
   (b) TOML fixtures (`fixtures/{valid,invalid}/*.toml`) validated against
       tools/lint.py — the registry's own linter, which carries the
-      authoring-time schema declared in SCHEMA.md.
+      authoring-time schema declared in SCHEMA.md / SCHEMA-v2.md.
 
 Both must pass. Disagreement between the lint and the snapshot validator
 on a case where they cover the same field (e.g. verdict vocabulary) is a
 diff signal that gets surfaced — it's not the runner's job to silence it.
+
+Known transitional state (autopilot Phase 1):
+- Fixtures use the locked posture — `risk_class = "net_egress"` (not
+  `net_egress_unauthed`); ToolSpec has no `base_verdict`,
+  FlagSpec/Combo have no `verdict` override (verdict derives from
+  risk_class outside of Rule per orchestrator's autopilot ruling).
+- Snapshot + lint catch up on the next B regen + lint update; until
+  then, related fixtures fail with descriptive messages that name the
+  missing-required or invalid-enum-value field.
 """
 
 from __future__ import annotations

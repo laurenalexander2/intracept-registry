@@ -7,7 +7,7 @@ path = "git push"
 translation = "Upload local commits to a remote repository."
 verdict = "ask"
 rationale = "Publishes local changes to a shared remote where incorrect pushes can irreversibly overwrite shared history and disrupt collaborators across the entire team."
-risk_class = "net_egress_unauthed"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git push"
