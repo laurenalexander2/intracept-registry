@@ -1,13 +1,9 @@
-# Minimal valid TOML — single [[command]] entry per SCHEMA.md.
-# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 1.
+# Minimal v2 valid TOML — single [[command]] entry per SCHEMA-v2.md.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md.
 
 [[command]]
 path = "true"
 translation = "Exit successfully without doing anything."
 verdict = "allow"
-rationale = "No-op shell builtin."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+rationale = "No-op shell builtin that always succeeds."
+risk_class = "safe"

@@ -1,0 +1,26 @@
+# Full-shape v2 valid TOML — [[command]] + [[flag]] + [[combo]] per
+# SCHEMA-v2.md §4. Demonstrates risk_class on each entry, risk_class_override
+# on a flag, and a combo whose risk_class >= base + override.
+
+[[command]]
+path = "git push"
+translation = "Upload local commits to a remote repository."
+verdict = "ask"
+rationale = "Publishes local changes to a shared remote where incorrect pushes can irreversibly overwrite shared history and disrupt collaborators across the entire team."
+risk_class = "net_egress_unauthed"
+
+[[flag]]
+applies_to = "git push"
+flag = "--force"
+translation_modifier = "overwriting any conflicting remote history"
+verdict = "warn"
+rationale = "Rewrites the remote branch's commit history irreversibly, which can permanently discard other contributors' commits."
+arity = "Boolean"
+risk_class_override = "destructive"
+
+[[combo]]
+path = "git push --force"
+translation = "Overwrite the remote branch's history with the local branch, discarding any commits that diverged."
+verdict = "warn"
+rationale = "Rewrites the remote branch's commit history irreversibly, permanently discarding any work that diverged on the remote."
+risk_class = "destructive"

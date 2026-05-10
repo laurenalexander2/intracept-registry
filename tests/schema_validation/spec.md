@@ -36,18 +36,23 @@ The registry-side schema work splits into two:
    record shape that the matcher consumes. The locked Phase 1 vocabulary
    (`allow / ask / warn`) lives here — `require_approval` is rejected at
    the JSON-Schema level (the alias is an input-only convenience in B's
-   Rust deserializer; it doesn't widen the schema enum).
-2. **TOML authoring-shape validation** against `tools/lint.py`
-   (`fixtures/{valid, invalid}/*.toml`). These exercise the *source*
-   `tools/*.toml` shape declared in `SCHEMA.md`. Today's lint enforces the
-   v0/v1 vocabulary (`allow / require_approval`); the new vocabulary lands
-   when TD-H3 ships in Phase 4a.
+   Rust deserializer; it doesn't widen the schema enum). Required field
+   `risk_class` per SCHEMA-v2.md §3 must be one of
+   `{safe, net_egress_unauthed, novel, destructive, priv_esc, secret_read}`.
+2. **TOML authoring-shape validation** against `tools/lint.py`, which
+   runs in **transitional mode** through Phase 4a per SCHEMA-v2.md §7.
+   In transitional mode lint accepts both v0 patterns (multi-axis tags,
+   `require_approval` verdict) and v2 patterns (`risk_class`, new vocab)
+   — v0 patterns get WARN, v2 patterns pass clean. After Phase 4a's
+   migration the `STRICT_V2 = True` flag flips and v0 patterns become
+   ERROR.
 
-The `fixtures/future-lint/` directory holds the test cases that gate on the
-TD-H3 lint update (new vocab, additionalProperties: false, duplicate-path
-detection). Runner skips these by default and prints
-`N future-lint fixtures pending TD-H3` so they don't surface as failures
-during Phase 1.
+The `fixtures/future-lint/` directory holds the test cases that gate on
+the **post-Phase-4a STRICT_V2 lint** — specifically `additionalProperties:
+false` (extra-field rejection) and duplicate-path detection. Transitional
+lint accepts these without complaint; STRICT_V2 must reject them. Runner
+skips them by default and prints `N future-lint fixtures pending TD-H3`
+so they don't surface as failures during Phase 1.
 
 ## Conformance fixtures
 
