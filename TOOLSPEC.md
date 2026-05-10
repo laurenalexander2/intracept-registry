@@ -31,7 +31,7 @@ ToolSpec {
   taint_sources:        [TaintSource]                 // which positionals/flags can introduce taint into argv (see EFFECTS.md §3)
   composition_hints:    CompositionHints              // per-tool composition rules (see §6)
 
-  risk_class:           <enum>                        // single-enum risk classification — spelling + values pending B's snapshot regen
+  risk_class:           RiskClass                     // single-enum risk classification; values: safe | net_egress | novel | destructive | priv_esc | secret_read (locked, snake_case, per B's snapshot)
 }
 ```
 
@@ -82,7 +82,7 @@ PositionalSpec {
 
 ### `Effect`
 
-The nine-element vocabulary defined in EFFECTS.md §1 (`reads`, `writes`, `deletes`, `network`, `exec`, `env-mutation`, `process-substitution`, `redirection`, `heredoc`). Aligned with B's frozen JSON-schema snapshot at `intracept/fixtures/schema/effects.json`.
+The six-effect vocabulary defined in EFFECTS.md §1: `reads`, `writes`, `deletes`, `network`, `exec`, `env`, plus the `unknown` sentinel (annotator-internal; never authored). Wire format is snake_case. Aligned with B's frozen JSON-schema snapshot at `intracept/fixtures/schema/effects.json`. AST features (process-substitution, redirection, heredoc) are NOT effect enum members — they are AST detection inputs and are documented in EFFECTS.md §3.
 
 ### `TaintSource`
 
@@ -173,7 +173,7 @@ The registry's `tools/<name>.toml` files extend additively to carry ToolSpec dat
 - `[[command]].arity` (default `Boolean` if omitted, but `Boolean` only valid on flags — for `[[command]]` this is reserved future use).
 - `[[command]].positionals` — array of inline tables with `name`, `index`, `required`, `value_type`, `description`, `effect_modifiers?`, `taint_introducing?`.
 - `[[command]].effects_default` — array of effect strings drawn from EFFECTS.md §1.
-- `[[command]].risk_class` — single enum; spelling + values pending B's snapshot regeneration.
+- `[[command]].risk_class` — single enum; values `safe | net_egress | novel | destructive | priv_esc | secret_read` (snake_case, locked per B's snapshot at `intracept/fixtures/schema/toolspec.json`).
 - `[[flag]].arity` — required.
 - `[[flag]].value_type` — required when arity ≠ `Boolean`.
 - `[[flag]].long`, `[[flag]].short` — split out of the existing `flag` field; the existing `flag = "--force"` stays as the canonical name and the resolver normalizes.
@@ -184,7 +184,7 @@ The registry's `tools/<name>.toml` files extend additively to carry ToolSpec dat
 
 The existing tag axes (`tags.scope`, `tags.effect`, `tags.reversibility`, `tags.target`, `tags.safety_override`) are **dropped**. Per orchestrator's directive (2026-05-09), multi-axis tags collapse into a single `risk_class` enum on each `[[command]]` and `[[combo]]`. The 1,149 currently-untagged TOML files require only a single `risk_class` value, not the 5-axis backfill that the original schema would have demanded; the Phase 4a auto-derive pipeline supplies this single value during the curation pass.
 
-> **Open: tag spelling.** Field name (`risk_class` vs alternative) and enum values + ordering are coordinated with session B's regenerated JSON-schema snapshot. SCHEMA-v2.md and `tools/lint.py` block on B's settled spelling. This document uses `risk_class` as a placeholder.
+> **Locked.** Field name `risk_class` and enum `{safe, net_egress, novel, destructive, priv_esc, secret_read}` are settled per orchestrator's autopilot ruling (2026-05-09) and B's frozen JSON-schema snapshot. SCHEMA-v2.md §3 is the authoritative reference; `tools/lint.py` enforces.
 
 ---
 
@@ -196,8 +196,8 @@ Lint enforces, in addition to current rules (period at end of translation, no fl
 2. Every `[[flag]]` with arity ≠ `Boolean` must declare `value_type`.
 3. Every `value_type=Enum(...)` must include a non-empty value set.
 4. Every `[[command]].positionals[].index` must be a non-negative integer or the literal string `"variadic"`; `"variadic"` may appear at most once and must be the highest-index positional.
-5. Every effect string in `effects_default`, `effect_modifiers` must be drawn from EFFECTS.md §1's vocabulary.
-6. Every `[[command]].risk_class` value must be drawn from the locked enum (spelling pending B).
+5. Every effect string in `effects_default`, `effect_modifiers` must be drawn from EFFECTS.md §1's six-effect vocabulary (`reads`, `writes`, `deletes`, `network`, `exec`, `env`). The `unknown` sentinel is annotator-only and must not appear in author-supplied modifiers.
+6. Every `[[command]].risk_class` value must be drawn from the locked enum: `{safe, net_egress, novel, destructive, priv_esc, secret_read}`.
 7. Every `[[combo]].risk_class` is computed from the base command's `risk_class` plus flag modifiers and hand-verified — same pattern as the current combo-tag derivation rule (TD-M15, lint-recompute-and-error-on-mismatch).
 8. `taint_introducing=true` on a flag or positional requires that flag/positional be referenced in the parent ToolSpec's `taint_sources` list.
 
@@ -231,6 +231,6 @@ Re-running migration on a v2 file is a no-op (logs `already migrated` and exits 
 
 ## 8. Open questions
 
-1. **Q5 — Risk_class spelling.** Field name and enum values + ordering. Coordinated with session B; SCHEMA-v2.md and lint block on this.
-2. **Q6 — `default_present` semantics.** Some tools have flags that are *implicitly applied* unless a `--no-FOO` form suppresses them (`git`'s `--quiet` defaulting; some shells' `set -e` defaulting). Should ToolSpec carry both the implicit flag and an explicit `--no-FOO` suppressor as a paired entry? Lean: yes — model both, mark the default-present one with `default_present=true`. Surface to HITL once Q5 is resolved.
-3. **Q7 — Variadic positional semantics.** A variadic positional (`rm path...`) accumulates as a list; the annotator must apply each instance's `effect_modifiers` independently (so `rm a b c` is three writes/deletes, not one). Lean: yes — variadic = "apply effects per element"; `taint_introducing=true` on a variadic means "any element introduces taint" rather than "all elements together do." Surface to HITL.
+1. **Q5 — Severity-field shape on `Rule` (when verdict=warn).** Spelling and value set follow B's snapshot at `intracept/fixtures/schema/rule-schema-v2.json`. (The risk_class spelling question that earlier sat under Q5 is resolved — see §1 and §4 above.) Not a Phase 1 blocker.
+2. **Q6 — `default_present` semantics.** Some tools have flags that are *implicitly applied* unless a `--no-FOO` form suppresses them (`git`'s `--quiet` defaulting; some shells' `set -e` defaulting). Should ToolSpec carry both the implicit flag and an explicit `--no-FOO` suppressor as a paired entry? Lean: yes — model both, mark the default-present one with `default_present=true`. Not a Phase 1 blocker.
+3. **Q7 — Variadic positional semantics.** A variadic positional (`rm path...`) accumulates as a list; the annotator must apply each instance's `effect_modifiers` independently (so `rm a b c` is three writes/deletes, not one). Lean: yes — variadic = "apply effects per element"; `taint_introducing=true` on a variadic means "any element introduces taint" rather than "all elements together do." Not a Phase 1 blocker.

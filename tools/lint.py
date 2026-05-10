@@ -25,11 +25,11 @@ V0_VERDICT_ALIAS = "require_approval"  # → ask, transitional WARN
 
 # --- Risk class (v2) ---
 # Single curator-set enum on every [[command]] and [[combo]]. Replaces the v0
-# multi-axis tags. Default verdicts: safe→allow; net_egress_unauthed,novel→ask;
+# multi-axis tags. Default verdicts: safe→allow; net_egress,novel→ask;
 # destructive,priv_esc,secret_read→warn.
 VALID_RISK_CLASSES = {
     "safe",
-    "net_egress_unauthed",
+    "net_egress",
     "novel",
     "destructive",
     "priv_esc",
@@ -39,7 +39,7 @@ VALID_RISK_CLASSES = {
 # Most-dangerous-wins ordering for combo derivation check (lint rule 5).
 RISK_CLASS_RANK = {
     "safe": 0,
-    "net_egress_unauthed": 1,
+    "net_egress": 1,
     "novel": 1,
     "destructive": 2,
     "priv_esc": 2,

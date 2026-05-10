@@ -57,7 +57,7 @@ Each `[[command]]` and `[[combo]]` carries a single `risk_class` field. Six valu
 | `risk_class`             | Default verdict (registry layer) | When to use |
 |---------------------------|----------------------------------|-------------|
 | `safe`                   | `allow`                          | Read-only or trivially-reversible local operations. `ls`, `cat`, `git status`, `cd`, `echo`. |
-| `net_egress_unauthed`    | `ask`                            | Outbound network operations whose default posture is "talking to a host the user has not allowlisted." `curl <url>`, `wget`, `nc <host> <port>`, `ssh <user>@<host>` (when the host is not in `~/.ssh/known_hosts` or the org allowlist). Authenticated egress to a known target (`git push` to a configured remote) is *also* tagged `net_egress_unauthed` at curation time; the rule schema's host-allowlist matcher refines authed/unauthed at runtime. |
+| `net_egress`             | `ask`                            | Outbound network operations. Default posture is "talking to a host the user has not allowlisted." `curl <url>`, `wget`, `nc <host> <port>`, `ssh <user>@<host>` (when the host is not in `~/.ssh/known_hosts` or the org allowlist). Authenticated egress to a known target (`git push` to a configured remote) is *also* tagged `net_egress` at curation time; the rule schema's host-allowlist matcher refines authed/unauthed at runtime. (No `_unauthed` suffix on the enum value — authed/unauthed is a runtime-matcher concern, not a curator vocabulary axis.) |
 | `novel`                  | `ask`                            | Sentinel for uncurated entries. Auto-derive pipeline (Phase 4a) replaces with a real `risk_class` once the tool is curated. The first-encounter background-async path treats novel-classed invocations as the canonical "first invocation = ask, spec fills for #2" case. |
 | `destructive`            | `warn`                           | Operations that destroy persistent state. `rm`, `git push --force`, `kubectl delete --all`, `aws s3 rm --recursive`, `terraform destroy`, `docker system prune --volumes`. |
 | `priv_esc`               | `warn`                           | Privilege escalation or capability elevation. `sudo`, `doas`, `setuid`, `chmod +s`, container-escape constructs. |
@@ -72,10 +72,10 @@ Each `[[command]]` and `[[combo]]` carries a single `risk_class` field. Six valu
 A `[[combo]]`'s `risk_class` is the most-dangerous of (a) the base `[[command]]`'s `risk_class`, and (b) any `[[flag]]`-supplied `risk_class_override`. Lint recomputes and errors on mismatch — same pattern as v0's combo-tag-derivation rule (TD-M15), narrowed to a single field. Danger ordering:
 
 ```
-safe < net_egress_unauthed = novel < destructive = priv_esc = secret_read
+safe < net_egress = novel < destructive = priv_esc = secret_read
 ```
 
-`net_egress_unauthed` and `novel` are both `ask`-baseline; ties between them resolve to whichever the curator wrote (no implicit promotion). The three `warn`-baseline classes are equally severe and ties resolve the same way.
+`net_egress` and `novel` are both `ask`-baseline; ties between them resolve to whichever the curator wrote (no implicit promotion). The three `warn`-baseline classes are equally severe and ties resolve the same way.
 
 ### `[[flag]]` modifiers
 
@@ -110,7 +110,7 @@ See TOOLSPEC.md §4 for the full carrier. Summary of the new required and option
 | `translation`        | yes (v0)      | Unchanged. |
 | `verdict`            | yes (v0)      | Now `allow|ask|warn`; `require_approval` accepted as alias. |
 | `rationale`          | yes (v0)      | Unchanged. |
-| `risk_class`         | **yes (v2)**  | One of `safe | net_egress_unauthed | novel | destructive | priv_esc | secret_read`. |
+| `risk_class`         | **yes (v2)**  | One of `safe | net_egress | novel | destructive | priv_esc | secret_read`. |
 | `version_constraint` | no (default `"*"`) | Per TOOLSPEC.md §4. |
 | `description`        | no            | Per TOOLSPEC.md; surfaced to translator. |
 | `positionals`        | no            | Array of inline tables; per TOOLSPEC.md §4. |
@@ -131,7 +131,7 @@ See TOOLSPEC.md §4 for the full carrier. Summary of the new required and option
 | `short`, `long`        | no            | Per TOOLSPEC.md; resolver derives if absent. |
 | `bundled_short_ok`     | no (default `true` if `short` is single char) | Per TOOLSPEC.md. |
 | `default_present`      | no (default `false`) | Per TOOLSPEC.md. |
-| `effect_modifiers`     | no            | Per TOOLSPEC.md §3; effect names drawn from EFFECTS.md §1's nine-element vocabulary. |
+| `effect_modifiers`     | no            | Per TOOLSPEC.md §3; effect names drawn from EFFECTS.md §1's six-effect vocabulary (`reads`, `writes`, `deletes`, `network`, `exec`, `env`). The `unknown` sentinel never appears in author-supplied modifiers — it's an annotator-only routing marker for binaries lacking a ToolSpec. |
 | `taint_introducing`    | no (default `false`) | Per TOOLSPEC.md §1. |
 | `risk_class_override`  | no            | Elevates the base `risk_class` when this flag is present. |
 | `tag_modifiers.*`      | **REMOVED**   | All five v0 tag-modifier axes drop. Migration replaces with `risk_class_override` where appropriate. |
@@ -224,7 +224,7 @@ For each `tools/<name>.toml`:
    | `tags.effect contains "delete" AND tags.reversibility="impossible"` | `destructive` |
    | `tags.effect contains "delete" AND tags.reversibility="difficult"` | `destructive` |
    | `tags.target contains "credentials"` | `secret_read` |
-   | `tags.target contains "network" AND tags.scope="remote"` | `net_egress_unauthed` |
+   | `tags.target contains "network" AND tags.scope="remote"` | `net_egress` |
    | `tags.safety_override = true` (and not destructive/secret_read) | `priv_esc` |
    | `tags.effect = ["read"] AND tags.scope="local"` | `safe` |
    | (no unambiguous match) | `novel` |
@@ -259,7 +259,7 @@ Lint accepts v0 inputs without breaking CI; v0 patterns are WARN-level so the mi
 
 1. `verdict` must be one of `{allow, ask, warn, require_approval}`. `require_approval` is the v0 alias for `ask`; transitional WARN ("v0 verdict; will be migrated to `ask`"). Other values → ERROR.
 2. `risk_class` is optional on `[[command]]` and `[[combo]]` in transitional mode. Missing → WARN ("v0 entry without risk_class; will be set to `novel` by v0→v2 migration unless tags map unambiguously"). Present with invalid value → ERROR.
-3. `risk_class` value (when present) must be one of `{safe, net_egress_unauthed, novel, destructive, priv_esc, secret_read}`. Unknown → ERROR.
+3. `risk_class` value (when present) must be one of `{safe, net_egress, novel, destructive, priv_esc, secret_read}`. Unknown → ERROR.
 4. `[[flag]].risk_class_override` (when present) must use the same enum. Unknown → ERROR.
 5. `[[combo]].risk_class` (when present, alongside its base `[[command]].risk_class`) must be ≥ the most-dangerous of the base + any flag overrides. Mismatch → ERROR.
 6. Multi-axis tag fields (`tags.scope`, `tags.effect`, `tags.reversibility`, `tags.target`, `tags.safety_override`) — present → WARN ("v0 axis; will be removed by v0→v2 migration"). Same applies to `tag_modifiers.*` on flags.
