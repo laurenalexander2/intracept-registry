@@ -1,0 +1,8 @@
+{
+  "kind": "conditional_constraint_violation",
+  "field_path": "verdict",
+  "msg_contains": "warn",
+  "constraint": "severity-on-warn-only",
+  "valid_values_when_severity_present": ["warn"],
+  "hint": "The `severity` field is only valid when `verdict` is `warn`. Drop severity, or change verdict to `warn`. Constraint enforced at the JSON-Schema level via the top-level allOf in rule-schema-v2.json (Phase 1 → 2 adversarial review S8)."
+}

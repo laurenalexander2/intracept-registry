@@ -77,6 +77,14 @@ safe < net_egress = novel < destructive = priv_esc = secret_read
 
 `net_egress` and `novel` are both `ask`-baseline; ties between them resolve to whichever the curator wrote (no implicit promotion). The three `warn`-baseline classes are equally severe and ties resolve the same way.
 
+### Multi-flag override resolution
+
+When multiple flags on the same invocation carry `risk_class_override` of equal danger tier, the resolved class is **the tier value itself**, not the flag identity. Ordering of flags on the command line and ordering of flag declarations in the TOML file are both irrelevant — the resolver computes `max-danger(base.risk_class, ∪ active_flags.risk_class_override)` deterministically. Example: an invocation with both `--force` (override = `destructive`) and `--no-preserve-root` (override = `destructive`) resolves to `risk_class = destructive`, regardless of which flag appeared first.
+
+### Combo + extra-flag composition
+
+A `[[combo]]`'s stored `risk_class` is a **lower bound**, not a ceiling. When a combo matches an invocation and the invocation also carries flags with `risk_class_override` that are *not* part of the combo's flag set, the resolved class is `max-danger(combo.risk_class, ∪ extra_flag_overrides.risk_class_override)`. Lint validates the combo's stored class against base + combo-flag overrides only; the runtime resolver layers any additional overriding flags on top. (Worked example: §5 Example 5.)
+
 ### `[[flag]]` modifiers
 
 A `[[flag]]` may carry `risk_class_override` to elevate the base command's risk_class when this flag is present. Example:
@@ -202,6 +210,25 @@ For each invocation (a `ParsedInvocation` with effects + risk_class + ToolSpec c
 - Registry-default R7: `tool=docker AND subcommand_chain=[stop] → ask`.
 - Registry-default R8: `tool=docker AND subcommand_chain=[stop] → allow`.
 - Identical matchers, different verdicts, same layer. Policy-load fails with `same-layer conflict at registry-default: R7 and R8 disagree on (tool=docker, subcommand_chain=[stop])`. The engine refuses to start until the conflict is resolved.
+
+**Example 5: combo + extra overriding flag (composition rule).**
+- Registry-default R9 (combo): `tool=git AND flags={push, --force} → risk_class=destructive`. The combo's `risk_class` is stored as `destructive` because base `git push` is `safe` and `--force` overrides to `destructive`.
+- Registry-default R10 (flag): `--no-verify` carries `risk_class_override = destructive` (signed-commit bypass).
+- Invocation `git push --force --no-verify origin main`: the combo R9 matches (covering the `--force` override), and the flag R10 also matches (`--no-verify`). The resolver computes `max-danger(R9.risk_class, R10.risk_class_override) = max(destructive, destructive) = destructive`. Verdict: `warn` (per the destructive → warn baseline). Lint validated R9's stored value against base + combo-flag overrides; the extra `--no-verify` is layered at runtime by the resolver, not by lint.
+
+### 5.1 Permissive overrides — load-time warning
+
+When a user-override or org-default rule produces a *less-restrictive* verdict than a registry-default rule it shadows at equal specificity, the policy loader emits a structured `permissive_override` warning (not an error) listing the shadowed rule, the overriding rule, and both verdicts. The override still wins per layer-priority — this is by design (the user is in charge of their own machine) — but the warning surfaces the safety-rail downgrade so it isn't silent.
+
+```
+permissive_override at user-override: rule "user-allow-force-push" downgrades
+  registry-default "registry-warn-force-push" from `warn` to `allow`
+  (matched: tool=git, subcommand_chain=[push], flags.contains=--force)
+```
+
+The warning is structured so Phase 4b's prompt UX can surface a one-time confirmation at first invocation of any command that hits a permissive-override path: "you've configured this command to skip the safety prompt; confirm once." After confirmation, future invocations run at the configured verdict silently. Lint emits the warning at policy-load time; the engine carries the list of permissive overrides through to the prompt UX layer for the first-invocation surfacing.
+
+This rule applies whenever `verdict_priority(override) < verdict_priority(shadowed_registry_rule)` per the most-restrictive ordering `warn > ask > allow`. Equal-priority overrides do not warn (the user explicitly matched the registry posture). More-restrictive overrides do not warn (tightening is always safe).
 
 ---
 

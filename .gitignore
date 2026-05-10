@@ -14,6 +14,9 @@ partial_all.jsonl
 missed_all.jsonl
 progress-task-*.json
 
+# Quality-engine generated reports (engine/run.sh writes timestamped output here)
+engine/reports/
+
 # Local-only worktree / dispatch state.
 dispatch-notes/
 .claude-swarm/
