@@ -1,0 +1,61 @@
+name: TD-H1 diff-matchers
+
+on:
+  pull_request:
+    paths:
+      - 'sdk/rust/**'
+      - 'tests/diff-matchers/**'
+      - 'registry.json'
+      - '.github/workflows/diff-matchers.yml'
+  push:
+    branches: [main]
+
+jobs:
+  sdk-snapshot:
+    # Pure SDK guardrail. Doesn't need the intracept sibling — fast, runs first.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: SDK matcher snapshot test
+        working-directory: sdk/rust
+        run: cargo test --test diff_matchers
+
+  cross-impl:
+    # Full three-way diff (SDK + intracept patterns + intracept translator).
+    # Needs the intracept sibling clone so the standalone harness can resolve
+    # its path-deps. CI checks out the same branch name when present, falling
+    # back to main, so cross-repo coordinated changes can be tested together.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout intracept-registry
+        uses: actions/checkout@v4
+        with:
+          path: intracept-registry
+
+      - name: Checkout intracept (sibling, branch-matched if present)
+        uses: actions/checkout@v4
+        with:
+          repository: laurenalexander2/intracept-cli
+          path: intracept
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 1
+        continue-on-error: true
+
+      - name: Fall back to intracept main if branch missing
+        if: hashFiles('intracept/Cargo.toml') == ''
+        uses: actions/checkout@v4
+        with:
+          repository: laurenalexander2/intracept-cli
+          path: intracept
+          ref: main
+          fetch-depth: 1
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Run cross-impl diff harness
+        working-directory: intracept-registry
+        run: |
+          cargo run --manifest-path tests/diff-matchers/harness/Cargo.toml --quiet -- \
+            --corpus tests/diff-matchers/corpus.jsonl \
+            --snapshot tests/diff-matchers/cross-snapshot.jsonl

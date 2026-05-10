@@ -1,0 +1,115 @@
+{"id":"sanity-001","sdk":{"match_path":"git status","splits":["git status"],"tokens":["git","status"]}}
+{"id":"sanity-002","sdk":{"match_path":"git push","splits":["git push"],"tokens":["git","push"]}}
+{"id":"sanity-003","sdk":{"match_path":"git push","splits":["git push --force"],"tokens":["git","push","--force"]}}
+{"id":"sanity-004","sdk":{"match_path":"git push","splits":["git push origin main"],"tokens":["git","push","origin","main"]}}
+{"id":"sanity-005","sdk":{"match_path":"rm","splits":["rm -rf /tmp/build"],"tokens":["rm","-rf","/tmp/build"]}}
+{"id":"sanity-006","sdk":{"match_path":"ls","splits":["ls -la"],"tokens":["ls","-la"]}}
+{"id":"sanity-007","sdk":{"match_path":"echo","splits":["echo \"hello world\""],"tokens":["echo","\"hello world\""]}}
+{"id":"sanity-008","sdk":{"match_path":"echo","splits":["echo 'hello world'"],"tokens":["echo","'hello world'"]}}
+{"id":"sanity-009","sdk":{"match_path":"git log","splits":["git log","head -20"],"tokens":["git","log","|","head","-20"]}}
+{"id":"sanity-010","sdk":{"match_path":"rm","splits":["git status","rm -rf /tmp"],"tokens":["git","status","&&","rm","-rf","/tmp"]}}
+{"id":"sanity-011","sdk":{"match_path":"test","splits":["test -f x","echo missing"],"tokens":["test","-f","x","||","echo","missing"]}}
+{"id":"sanity-012","sdk":{"match_path":"git status","splits":["git status","git log"],"tokens":["git","status;","git","log"]}}
+{"id":"sanity-013","sdk":{"match_path":"curl","splits":["curl -s https://example.com"],"tokens":["curl","-s","https://example.com","2>/dev/null"]}}
+{"id":"sanity-014","sdk":{"match_path":"cat","splits":["cat foo"],"tokens":["cat","foo",">","out.txt"]}}
+{"id":"sanity-015","sdk":{"match_path":"cat","splits":["cat foo"],"tokens":["cat","foo",">>","out.txt"]}}
+{"id":"sanity-016","sdk":{"match_path":null,"splits":[],"tokens":[]}}
+{"id":"sanity-017","sdk":{"match_path":null,"splits":[],"tokens":[]}}
+{"id":"sanity-018","sdk":{"match_path":"git push","splits":["git push --force --dry-run"],"tokens":["git","push","--force","--dry-run"]}}
+{"id":"sanity-019","sdk":{"match_path":"grep","splits":["grep -iE 'pattern' file.txt"],"tokens":["grep","-iE","'pattern'","file.txt"]}}
+{"id":"sanity-020","sdk":{"match_path":"find","splits":["find . -name '*.rs' -type f"],"tokens":["find",".","-name","'*.rs'","-type","f"]}}
+{"id":"sanity-021","sdk":{"match_path":"kubectl get","splits":["kubectl get pods -n default"],"tokens":["kubectl","get","pods","-n","default"]}}
+{"id":"sanity-022","sdk":{"match_path":"docker ps","splits":["docker ps -a"],"tokens":["docker","ps","-a"]}}
+{"id":"sanity-023","sdk":{"match_path":"git log","splits":["git log --oneline -5"],"tokens":["git","log","--oneline","-5"]}}
+{"id":"sanity-024","sdk":{"match_path":"curl","splits":["curl -s URL","python3 -c 'code'","grep -iE 'pat'","head -80"],"tokens":["curl","-s","URL","|","python3","-c","'code'","|","grep","-iE","'pat'","|","head","-80"]}}
+{"id":"sanity-025","sdk":{"match_path":"git push","splits":["git push --zone=us-central1"],"tokens":["git","push","--zone=us-central1"]}}
+{"id":"envvar-001","sdk":{"match_path":null,"splits":["FOO=bar git push"],"tokens":["FOO=bar","git","push"]}}
+{"id":"envvar-002","sdk":{"match_path":null,"splits":["FOO=bar BAZ=qux git push --force"],"tokens":["FOO=bar","BAZ=qux","git","push","--force"]}}
+{"id":"envvar-003","sdk":{"match_path":null,"splits":["SOURCE_IP=10.0.0.1 gcloud compute ssh host"],"tokens":["SOURCE_IP=10.0.0.1","gcloud","compute","ssh","host"]}}
+{"id":"envvar-004","sdk":{"match_path":null,"splits":["PATH=/usr/local/bin:/usr/bin git push"],"tokens":["PATH=/usr/local/bin:/usr/bin","git","push"]}}
+{"id":"envvar-005","sdk":{"match_path":null,"splits":["_PRIVATE=1 git status"],"tokens":["_PRIVATE=1","git","status"]}}
+{"id":"envvar-006","sdk":{"match_path":null,"splits":["PYTHONPATH=. python3 -m pytest"],"tokens":["PYTHONPATH=.","python3","-m","pytest"]}}
+{"id":"envvar-007","sdk":{"match_path":null,"splits":["DEBUG=true cargo test --workspace"],"tokens":["DEBUG=true","cargo","test","--workspace"]}}
+{"id":"envvar-008","sdk":{"match_path":null,"splits":["AWS_PROFILE=prod aws s3 ls"],"tokens":["AWS_PROFILE=prod","aws","s3","ls"]}}
+{"id":"envvar-009","sdk":{"match_path":null,"splits":["RUST_LOG=debug RUST_BACKTRACE=1 cargo run"],"tokens":["RUST_LOG=debug","RUST_BACKTRACE=1","cargo","run"]}}
+{"id":"envvar-010","sdk":{"match_path":null,"splits":["NODE_ENV=production npm run build"],"tokens":["NODE_ENV=production","npm","run","build"]}}
+{"id":"envvar-011","sdk":{"match_path":null,"splits":["FOO= git push"],"tokens":["FOO=","git","push"]}}
+{"id":"envvar-012","sdk":{"match_path":null,"splits":["FOO=bar=baz git push"],"tokens":["FOO=bar=baz","git","push"]}}
+{"id":"envvar-013","sdk":{"match_path":null,"splits":["FOO='hello world' git push"],"tokens":["FOO='hello","world'","git","push"]}}
+{"id":"envvar-014","sdk":{"match_path":null,"splits":["FOO=$(date) git push"],"tokens":["FOO=$(date)","git","push"]}}
+{"id":"envvar-015","sdk":{"match_path":null,"splits":["FOO=bar"],"tokens":["FOO=bar"]}}
+{"id":"envvar-016","sdk":{"match_path":null,"splits":["1FOO=bar git push"],"tokens":["1FOO=bar","git","push"]}}
+{"id":"envvar-017","sdk":{"match_path":null,"splits":["FOO-BAR=x git push"],"tokens":["FOO-BAR=x","git","push"]}}
+{"id":"envvar-018","sdk":{"match_path":"git push","splits":["git push FOO=bar"],"tokens":["git","push","FOO=bar"]}}
+{"id":"envvar-019","sdk":{"match_path":"git push","splits":["--zone=us-central1 git push"],"tokens":["--zone=us-central1","git","push"]}}
+{"id":"envvar-020","sdk":{"match_path":null,"splits":["FOO=bar BAZ=qux"],"tokens":["FOO=bar","BAZ=qux"]}}
+{"id":"envvar-021","sdk":{"match_path":null,"splits":["TZ=UTC date"],"tokens":["TZ=UTC","date"]}}
+{"id":"envvar-022","sdk":{"match_path":null,"splits":["LANG=en_US.UTF-8 ls -la"],"tokens":["LANG=en_US.UTF-8","ls","-la"]}}
+{"id":"shellkw-001","sdk":{"match_path":null,"splits":["do git push"],"tokens":["do","git","push"]}}
+{"id":"shellkw-002","sdk":{"match_path":null,"splits":["done git status"],"tokens":["done","git","status"]}}
+{"id":"shellkw-003","sdk":{"match_path":null,"splits":["then git pull"],"tokens":["then","git","pull"]}}
+{"id":"shellkw-004","sdk":{"match_path":null,"splits":["else git diff"],"tokens":["else","git","diff"]}}
+{"id":"shellkw-005","sdk":{"match_path":null,"splits":["elif git status"],"tokens":["elif","git","status"]}}
+{"id":"shellkw-006","sdk":{"match_path":null,"splits":["fi git push"],"tokens":["fi","git","push"]}}
+{"id":"shellkw-007","sdk":{"match_path":null,"splits":["for git push"],"tokens":["for","git","push"]}}
+{"id":"shellkw-008","sdk":{"match_path":null,"splits":["while git status"],"tokens":["while","git","status"]}}
+{"id":"shellkw-009","sdk":{"match_path":null,"splits":["until git pull"],"tokens":["until","git","pull"]}}
+{"id":"shellkw-010","sdk":{"match_path":null,"splits":["if git status"],"tokens":["if","git","status"]}}
+{"id":"shellkw-011","sdk":{"match_path":null,"splits":["case git status"],"tokens":["case","git","status"]}}
+{"id":"shellkw-012","sdk":{"match_path":null,"splits":["esac git push"],"tokens":["esac","git","push"]}}
+{"id":"shellkw-013","sdk":{"match_path":null,"splits":["in git status"],"tokens":["in","git","status"]}}
+{"id":"shellkw-014","sdk":{"match_path":null,"splits":["function git push"],"tokens":["function","git","push"]}}
+{"id":"shellkw-015","sdk":{"match_path":null,"splits":["do FOO=bar git push --force"],"tokens":["do","FOO=bar","git","push","--force"]}}
+{"id":"shellkw-016","sdk":{"match_path":null,"splits":["do for while git push"],"tokens":["do","for","while","git","push"]}}
+{"id":"shellkw-017","sdk":{"match_path":"git","splits":["git do push"],"tokens":["git","do","push"]}}
+{"id":"shellkw-018","sdk":{"match_path":null,"splits":["done"],"tokens":["done"]}}
+{"id":"shellkw-019","sdk":{"match_path":null,"splits":["do"],"tokens":["do"]}}
+{"id":"shellkw-020","sdk":{"match_path":"git push","splits":["done","git push"],"tokens":["done;","git","push"]}}
+{"id":"cmdflag-001","sdk":{"match_path":"gcloud compute ssh","splits":["gcloud compute ssh host --command='rm -rf ~'"],"tokens":["gcloud","compute","ssh","host","--command='rm","-rf","~'"]}}
+{"id":"cmdflag-002","sdk":{"match_path":"gcloud compute ssh","splits":["gcloud compute ssh host --command=\"git push --force\""],"tokens":["gcloud","compute","ssh","host","--command=\"git","push","--force\""]}}
+{"id":"cmdflag-003","sdk":{"match_path":"kubectl exec","splits":["kubectl exec pod --command 'git push --force'"],"tokens":["kubectl","exec","pod","--command","'git push --force'"]}}
+{"id":"cmdflag-004","sdk":{"match_path":"ssh","splits":["ssh user@host --command='ls -la'"],"tokens":["ssh","user@host","--command='ls","-la'"]}}
+{"id":"cmdflag-005","sdk":{"match_path":"gcloud compute ssh","splits":["gcloud compute ssh host --command='$(rm -rf /)'"],"tokens":["gcloud","compute","ssh","host","--command='$(rm","-rf","/)'"]}}
+{"id":"cmdflag-006","sdk":{"match_path":"kubectl exec","splits":["kubectl exec pod --cmd='git push'"],"tokens":["kubectl","exec","pod","--cmd='git","push'"]}}
+{"id":"cmdflag-007","sdk":{"match_path":null,"splits":["tool --exec='rm -rf /'"],"tokens":["tool","--exec='rm","-rf","/'"]}}
+{"id":"cmdflag-008","sdk":{"match_path":"bash","splits":["bash -c \"rm -rf /tmp/x\""],"tokens":["bash","-c","\"rm -rf /tmp/x\""]}}
+{"id":"cmdflag-009","sdk":{"match_path":"sh","splits":["sh -c 'git push --force'"],"tokens":["sh","-c","'git push --force'"]}}
+{"id":"cmdflag-010","sdk":{"match_path":"zsh","splits":["zsh -c 'rm -rf ~'"],"tokens":["zsh","-c","'rm -rf ~'"]}}
+{"id":"cmdflag-011","sdk":{"match_path":"bash","splits":["bash --login -c 'git push --force'"],"tokens":["bash","--login","-c","'git push --force'"]}}
+{"id":"cmdflag-012","sdk":{"match_path":"python3","splits":["python3 -c 'print(1)'"],"tokens":["python3","-c","'print(1)'"]}}
+{"id":"cmdflag-013","sdk":{"match_path":"node","splits":["node -e 'console.log(1)'"],"tokens":["node","-e","'console.log(1)'"]}}
+{"id":"cmdflag-014","sdk":{"match_path":"echo","splits":["echo $(rm -rf /tmp/x)"],"tokens":["echo","$(rm","-rf","/tmp/x)"]}}
+{"id":"cmdflag-015","sdk":{"match_path":"echo","splits":["echo `git push --force`"],"tokens":["echo","`git","push","--force`"]}}
+{"id":"cmdflag-016","sdk":{"match_path":null,"splits":["$(echo $(rm -rf /tmp/x))"],"tokens":["$(echo","$(rm","-rf","/tmp/x))"]}}
+{"id":"cmdflag-017","sdk":{"match_path":"echo","splits":["echo '$(rm -rf /tmp/x)'"],"tokens":["echo","'$(rm -rf /tmp/x)'"]}}
+{"id":"cmdflag-018","sdk":{"match_path":null,"splits":["--command="],"tokens":["--command="]}}
+{"id":"cmdflag-019","sdk":{"match_path":null,"splits":["--command"],"tokens":["--command"]}}
+{"id":"cmdflag-020","sdk":{"match_path":null,"splits":["tool --command"],"tokens":["tool","--command"]}}
+{"id":"cmdflag-021","sdk":{"match_path":"bash","splits":["bash -c"],"tokens":["bash","-c"]}}
+{"id":"cmdflag-022","sdk":{"match_path":"bash","splits":["bash -c \"git push --force | bash -c \\\"rm -rf /\\\"\""],"tokens":["bash","-c","\"git push --force | bash -c \\\"","rm","-rf","/\\\"\""]}}
+{"id":"cmdflag-023","sdk":{"match_path":"gcloud","splits":["gcloud foo --command='ls' --zone=us-central1"],"tokens":["gcloud","foo","--command='ls'","--zone=us-central1"]}}
+{"id":"cmdflag-024","sdk":{"match_path":"gcloud","splits":["gcloud foo --zone=us --command='rm -rf /'"],"tokens":["gcloud","foo","--zone=us","--command='rm","-rf","/'"]}}
+{"id":"cmdflag-025","sdk":{"match_path":"perl","splits":["perl -e 'print 1'"],"tokens":["perl","-e","'print 1'"]}}
+{"id":"cmdflag-026","sdk":{"match_path":"ruby","splits":["ruby -e 'puts 1'"],"tokens":["ruby","-e","'puts 1'"]}}
+{"id":"cmdflag-027","sdk":{"match_path":null,"splits":["tool --notcommand='not a wrapper'"],"tokens":["tool","--notcommand='not","a","wrapper'"]}}
+{"id":"cmdflag-028","sdk":{"match_path":null,"splits":["bashfoo -c 'not a real wrapper'"],"tokens":["bashfoo","-c","'not a real wrapper'"]}}
+{"id":"heredoc-001","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<EOF\nhello\nEOF"]}}
+{"id":"heredoc-002","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<","EOF\nhello\nEOF"]}}
+{"id":"heredoc-003","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<-EOF\n\thello\nEOF"]}}
+{"id":"heredoc-004","sdk":{"match_path":"bash","splits":["bash  -rf /\nEOF"],"tokens":["bash","<<'EOF'\nrm","-rf","/\nEOF"]}}
+{"id":"heredoc-005","sdk":{"match_path":"bash","splits":["bash  -rf /\nEOF"],"tokens":["bash","<<\"EOF\"\nrm","-rf","/\nEOF"]}}
+{"id":"heredoc-006","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<<word"]}}
+{"id":"heredoc-007","sdk":{"match_path":"cat","splits":["cat  with spaces\""],"tokens":["cat","<<<\"word","with","spaces\""]}}
+{"id":"heredoc-008","sdk":{"match_path":"psql","splits":["psql  TABLE users","SQL"],"tokens":["psql","<<SQL\nDROP","TABLE","users;\nSQL"]}}
+{"id":"heredoc-009","sdk":{"match_path":"ssh","splits":["ssh host  -rf /\nEOF"],"tokens":["ssh","host","<<EOF\nrm","-rf","/\nEOF"]}}
+{"id":"heredoc-010","sdk":{"match_path":"cat","splits":["cat","grep foo\ncontent\nEOF"],"tokens":["cat","<<","EOF","|","grep","foo\ncontent\nEOF"]}}
+{"id":"heredoc-011","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<-EOF",">file\n\thello\nEOF"]}}
+{"id":"heredoc-012","sdk":{"match_path":"bash","splits":["bash","rm /tmp/x\necho hi\nEOF"],"tokens":["bash","<<EOF","&&","rm","/tmp/x\necho","hi\nEOF"]}}
+{"id":"heredoc-013","sdk":{"match_path":null,"splits":["cat\nhello\nEOF"],"tokens":["<<EOF","cat\nhello\nEOF"]}}
+{"id":"heredoc-014","sdk":{"match_path":"cat","splits":["cat  $USER\nEOF"],"tokens":["cat","<<EOF\nhello","$USER\nEOF"]}}
+{"id":"heredoc-015","sdk":{"match_path":"cat","splits":["cat  $USER\nEOF"],"tokens":["cat","<<'EOF'\nhello","$USER\nEOF"]}}
+{"id":"heredoc-016","sdk":{"match_path":"tee","splits":["tee file"],"tokens":["tee","file","<<EOF\nline1\nline2\nEOF"]}}
+{"id":"heredoc-017","sdk":{"match_path":"kubectl apply","splits":["kubectl apply -f -  Pod\nEOF"],"tokens":["kubectl","apply","-f","-","<<EOF\nkind:","Pod\nEOF"]}}
+{"id":"heredoc-018","sdk":{"match_path":null,"splits":["FOO=bar cat"],"tokens":["FOO=bar","cat","<<EOF\nhi\nEOF"]}}
+{"id":"heredoc-019","sdk":{"match_path":"cat","splits":["cat  -rf /)\nEOF"],"tokens":["cat","<<EOF\n$(rm","-rf","/)\nEOF"]}}
+{"id":"heredoc-020","sdk":{"match_path":"cat","splits":["cat"],"tokens":["cat","<<\\EOF\nliteral\nEOF"]}}

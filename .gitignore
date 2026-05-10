@@ -1,4 +1,5 @@
 sdk/rust/target/
+tests/diff-matchers/harness/target/
 __pycache__/
 *.pyc
 .DS_Store

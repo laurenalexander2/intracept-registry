@@ -1,0 +1,115 @@
+{"id": "sanity-001", "command": "git status", "bucket": "sanity", "note": "bare command, all impls must agree"}
+{"id": "sanity-002", "command": "git push", "bucket": "sanity", "note": "two-token registry path"}
+{"id": "sanity-003", "command": "git push --force", "bucket": "sanity", "note": "command + flag"}
+{"id": "sanity-004", "command": "git push origin main", "bucket": "sanity", "note": "command + positional args"}
+{"id": "sanity-005", "command": "rm -rf /tmp/build", "bucket": "sanity", "note": "bundled short flags"}
+{"id": "sanity-006", "command": "ls -la", "bucket": "sanity", "note": "single bundled short"}
+{"id": "sanity-007", "command": "echo \"hello world\"", "bucket": "sanity", "note": "double-quoted arg"}
+{"id": "sanity-008", "command": "echo 'hello world'", "bucket": "sanity", "note": "single-quoted arg"}
+{"id": "sanity-009", "command": "git log | head -20", "bucket": "sanity", "note": "pipe split"}
+{"id": "sanity-010", "command": "git status && rm -rf /tmp", "bucket": "sanity", "note": "&& chain"}
+{"id": "sanity-011", "command": "test -f x || echo missing", "bucket": "sanity", "note": "|| chain"}
+{"id": "sanity-012", "command": "git status; git log", "bucket": "sanity", "note": "; chain"}
+{"id": "sanity-013", "command": "curl -s https://example.com 2>/dev/null", "bucket": "sanity", "note": "stderr redirect"}
+{"id": "sanity-014", "command": "cat foo > out.txt", "bucket": "sanity", "note": "stdout redirect"}
+{"id": "sanity-015", "command": "cat foo >> out.txt", "bucket": "sanity", "note": "append redirect"}
+{"id": "sanity-016", "command": "", "bucket": "sanity", "note": "empty input"}
+{"id": "sanity-017", "command": "   ", "bucket": "sanity", "note": "whitespace only"}
+{"id": "sanity-018", "command": "git push --force --dry-run", "bucket": "sanity", "note": "two long flags"}
+{"id": "sanity-019", "command": "grep -iE 'pattern' file.txt", "bucket": "sanity", "note": "single-quoted regex"}
+{"id": "sanity-020", "command": "find . -name '*.rs' -type f", "bucket": "sanity", "note": "find with single-quoted glob"}
+{"id": "sanity-021", "command": "kubectl get pods -n default", "bucket": "sanity", "note": "kubectl 3-token path"}
+{"id": "sanity-022", "command": "docker ps -a", "bucket": "sanity", "note": "docker namespace command"}
+{"id": "sanity-023", "command": "git log --oneline -5", "bucket": "sanity", "note": "long flag + bundled short"}
+{"id": "sanity-024", "command": "curl -s URL | python3 -c 'code' | grep -iE 'pat' | head -80", "bucket": "sanity", "note": "4-stage pipeline"}
+{"id": "sanity-025", "command": "git push --zone=us-central1", "bucket": "sanity", "note": "long flag with = value"}
+{"id": "envvar-001", "command": "FOO=bar git push", "bucket": "env-var-prefix", "note": "TD-H1: single env-var prefix"}
+{"id": "envvar-002", "command": "FOO=bar BAZ=qux git push --force", "bucket": "env-var-prefix", "note": "TD-H1: multiple env-var prefixes"}
+{"id": "envvar-003", "command": "SOURCE_IP=10.0.0.1 gcloud compute ssh host", "bucket": "env-var-prefix", "note": "TD-H1: env-var with IP value (audit example)"}
+{"id": "envvar-004", "command": "PATH=/usr/local/bin:/usr/bin git push", "bucket": "env-var-prefix", "note": "TD-H1: PATH override (no =-in-value collision)"}
+{"id": "envvar-005", "command": "_PRIVATE=1 git status", "bucket": "env-var-prefix", "note": "TD-H1: env-var leading underscore"}
+{"id": "envvar-006", "command": "PYTHONPATH=. python3 -m pytest", "bucket": "env-var-prefix", "note": "TD-H1: dot value"}
+{"id": "envvar-007", "command": "DEBUG=true cargo test --workspace", "bucket": "env-var-prefix", "note": "TD-H1: bool-shaped env value"}
+{"id": "envvar-008", "command": "AWS_PROFILE=prod aws s3 ls", "bucket": "env-var-prefix", "note": "TD-H1: aws CLI prefix"}
+{"id": "envvar-009", "command": "RUST_LOG=debug RUST_BACKTRACE=1 cargo run", "bucket": "env-var-prefix", "note": "TD-H1: 2 env-vars + cargo"}
+{"id": "envvar-010", "command": "NODE_ENV=production npm run build", "bucket": "env-var-prefix", "note": "TD-H1: npm prefix"}
+{"id": "envvar-011", "command": "FOO= git push", "bucket": "env-var-prefix", "note": "TD-H1: empty env value"}
+{"id": "envvar-012", "command": "FOO=bar=baz git push", "bucket": "env-var-prefix", "note": "TD-H1: env value contains ="}
+{"id": "envvar-013", "command": "FOO='hello world' git push", "bucket": "env-var-prefix", "note": "TD-H1: quoted env value"}
+{"id": "envvar-014", "command": "FOO=$(date) git push", "bucket": "env-var-prefix", "note": "TD-H1: env value is command substitution"}
+{"id": "envvar-015", "command": "FOO=bar", "bucket": "env-var-prefix", "note": "TD-H1: pure env-var assignment, no following command"}
+{"id": "envvar-016", "command": "1FOO=bar git push", "bucket": "env-var-prefix", "note": "TD-H1: invalid env-var name (digit start) — should NOT be skipped"}
+{"id": "envvar-017", "command": "FOO-BAR=x git push", "bucket": "env-var-prefix", "note": "TD-H1: invalid env-var name (dash) — should NOT be skipped"}
+{"id": "envvar-018", "command": "git push FOO=bar", "bucket": "env-var-prefix", "note": "TD-H1: looks like env-var but trails command — should NOT be skipped"}
+{"id": "envvar-019", "command": "--zone=us-central1 git push", "bucket": "env-var-prefix", "note": "TD-H1: leading flag, NOT an env-var assignment"}
+{"id": "envvar-020", "command": "FOO=bar BAZ=qux", "bucket": "env-var-prefix", "note": "TD-H1: only env-vars, no command"}
+{"id": "envvar-021", "command": "TZ=UTC date", "bucket": "env-var-prefix", "note": "TD-H1: short value"}
+{"id": "envvar-022", "command": "LANG=en_US.UTF-8 ls -la", "bucket": "env-var-prefix", "note": "TD-H1: dotted env value"}
+{"id": "shellkw-001", "command": "do git push", "bucket": "shell-keyword", "note": "TD-H1: leading 'do' from `for x in ...; do git push; done`"}
+{"id": "shellkw-002", "command": "done git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'done'"}
+{"id": "shellkw-003", "command": "then git pull", "bucket": "shell-keyword", "note": "TD-H1: leading 'then'"}
+{"id": "shellkw-004", "command": "else git diff", "bucket": "shell-keyword", "note": "TD-H1: leading 'else'"}
+{"id": "shellkw-005", "command": "elif git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'elif'"}
+{"id": "shellkw-006", "command": "fi git push", "bucket": "shell-keyword", "note": "TD-H1: leading 'fi'"}
+{"id": "shellkw-007", "command": "for git push", "bucket": "shell-keyword", "note": "TD-H1: leading 'for'"}
+{"id": "shellkw-008", "command": "while git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'while'"}
+{"id": "shellkw-009", "command": "until git pull", "bucket": "shell-keyword", "note": "TD-H1: leading 'until'"}
+{"id": "shellkw-010", "command": "if git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'if'"}
+{"id": "shellkw-011", "command": "case git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'case'"}
+{"id": "shellkw-012", "command": "esac git push", "bucket": "shell-keyword", "note": "TD-H1: leading 'esac'"}
+{"id": "shellkw-013", "command": "in git status", "bucket": "shell-keyword", "note": "TD-H1: leading 'in'"}
+{"id": "shellkw-014", "command": "function git push", "bucket": "shell-keyword", "note": "TD-H1: leading 'function'"}
+{"id": "shellkw-015", "command": "do FOO=bar git push --force", "bucket": "shell-keyword", "note": "TD-H1: keyword + env-var + cmd + flag (combined)"}
+{"id": "shellkw-016", "command": "do for while git push", "bucket": "shell-keyword", "note": "TD-H1: multiple consecutive keywords"}
+{"id": "shellkw-017", "command": "git do push", "bucket": "shell-keyword", "note": "TD-H1: 'do' mid-command — should NOT be skipped (not leading)"}
+{"id": "shellkw-018", "command": "done", "bucket": "shell-keyword", "note": "TD-H1: only a keyword, no command"}
+{"id": "shellkw-019", "command": "do", "bucket": "shell-keyword", "note": "TD-H1: only 'do', no command"}
+{"id": "shellkw-020", "command": "done; git push", "bucket": "shell-keyword", "note": "TD-H1: keyword in chain (post-split second segment is empty)"}
+{"id": "cmdflag-001", "command": "gcloud compute ssh host --command='rm -rf ~'", "bucket": "command-flag", "note": "TD-H1: gcloud --command='...' (audit example)"}
+{"id": "cmdflag-002", "command": "gcloud compute ssh host --command=\"git push --force\"", "bucket": "command-flag", "note": "TD-H1: gcloud --command=\"...\" double-quoted"}
+{"id": "cmdflag-003", "command": "kubectl exec pod --command 'git push --force'", "bucket": "command-flag", "note": "TD-H1: --command 'space-separated'"}
+{"id": "cmdflag-004", "command": "ssh user@host --command='ls -la'", "bucket": "command-flag", "note": "TD-H1: ssh --command (no special wrapper)"}
+{"id": "cmdflag-005", "command": "gcloud compute ssh host --command='$(rm -rf /)'", "bucket": "command-flag", "note": "TD-H1: --command containing $(...)"}
+{"id": "cmdflag-006", "command": "kubectl exec pod --cmd='git push'", "bucket": "command-flag", "note": "TD-H1: --cmd= alias"}
+{"id": "cmdflag-007", "command": "tool --exec='rm -rf /'", "bucket": "command-flag", "note": "TD-H1: --exec= alias"}
+{"id": "cmdflag-008", "command": "bash -c \"rm -rf /tmp/x\"", "bucket": "command-flag", "note": "TD-H1: bash -c double-quoted"}
+{"id": "cmdflag-009", "command": "sh -c 'git push --force'", "bucket": "command-flag", "note": "TD-H1: sh -c single-quoted"}
+{"id": "cmdflag-010", "command": "zsh -c 'rm -rf ~'", "bucket": "command-flag", "note": "TD-H1: zsh -c"}
+{"id": "cmdflag-011", "command": "bash --login -c 'git push --force'", "bucket": "command-flag", "note": "TD-H1: bash with intermediate option before -c"}
+{"id": "cmdflag-012", "command": "python3 -c 'print(1)'", "bucket": "command-flag", "note": "TD-H1: python3 -c"}
+{"id": "cmdflag-013", "command": "node -e 'console.log(1)'", "bucket": "command-flag", "note": "TD-H1: node -e"}
+{"id": "cmdflag-014", "command": "echo $(rm -rf /tmp/x)", "bucket": "command-flag", "note": "TD-H1: $(...) substitution (related surface)"}
+{"id": "cmdflag-015", "command": "echo `git push --force`", "bucket": "command-flag", "note": "TD-H1: backtick substitution"}
+{"id": "cmdflag-016", "command": "$(echo $(rm -rf /tmp/x))", "bucket": "command-flag", "note": "TD-H1: nested substitution"}
+{"id": "cmdflag-017", "command": "echo '$(rm -rf /tmp/x)'", "bucket": "command-flag", "note": "TD-H1: substitution INSIDE single quotes — must be ignored"}
+{"id": "cmdflag-018", "command": "--command=", "bucket": "command-flag", "note": "TD-H1: bare --command= no value"}
+{"id": "cmdflag-019", "command": "--command", "bucket": "command-flag", "note": "TD-H1: --command no value"}
+{"id": "cmdflag-020", "command": "tool --command", "bucket": "command-flag", "note": "TD-H1: --command at end-of-input"}
+{"id": "cmdflag-021", "command": "bash -c", "bucket": "command-flag", "note": "TD-H1: bash -c truncated"}
+{"id": "cmdflag-022", "command": "bash -c \"git push --force | bash -c \\\"rm -rf /\\\"\"", "bucket": "command-flag", "note": "TD-H1: nested bash -c with escaping"}
+{"id": "cmdflag-023", "command": "gcloud foo --command='ls' --zone=us-central1", "bucket": "command-flag", "note": "TD-H1: --command followed by another long flag"}
+{"id": "cmdflag-024", "command": "gcloud foo --zone=us --command='rm -rf /'", "bucket": "command-flag", "note": "TD-H1: --zone before --command"}
+{"id": "cmdflag-025", "command": "perl -e 'print 1'", "bucket": "command-flag", "note": "TD-H1: perl -e"}
+{"id": "cmdflag-026", "command": "ruby -e 'puts 1'", "bucket": "command-flag", "note": "TD-H1: ruby -e"}
+{"id": "cmdflag-027", "command": "tool --notcommand='not a wrapper'", "bucket": "command-flag", "note": "TD-H1: --notcommand should NOT be confused with --command"}
+{"id": "cmdflag-028", "command": "bashfoo -c 'not a real wrapper'", "bucket": "command-flag", "note": "TD-H1: word starting with bash — must not match"}
+{"id": "heredoc-001", "command": "cat <<EOF\nhello\nEOF", "bucket": "heredoc", "note": "TD-H1: basic heredoc"}
+{"id": "heredoc-002", "command": "cat << EOF\nhello\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc with space after <<"}
+{"id": "heredoc-003", "command": "cat <<-EOF\n\thello\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc <<- (tab-stripped)"}
+{"id": "heredoc-004", "command": "bash <<'EOF'\nrm -rf /\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc 'EOF' (no expansion)"}
+{"id": "heredoc-005", "command": "bash <<\"EOF\"\nrm -rf /\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc \"EOF\" (no expansion)"}
+{"id": "heredoc-006", "command": "cat <<<word", "bucket": "heredoc", "note": "TD-H1: here-string <<<"}
+{"id": "heredoc-007", "command": "cat <<<\"word with spaces\"", "bucket": "heredoc", "note": "TD-H1: quoted here-string"}
+{"id": "heredoc-008", "command": "psql <<SQL\nDROP TABLE users;\nSQL", "bucket": "heredoc", "note": "TD-H1: heredoc with custom delimiter (DDL inside)"}
+{"id": "heredoc-009", "command": "ssh host <<EOF\nrm -rf /\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc to ssh remote"}
+{"id": "heredoc-010", "command": "cat << EOF | grep foo\ncontent\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc + pipe — double-stress"}
+{"id": "heredoc-011", "command": "cat <<-EOF >file\n\thello\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc + stdout redirect"}
+{"id": "heredoc-012", "command": "bash <<EOF && rm /tmp/x\necho hi\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc + && chain"}
+{"id": "heredoc-013", "command": "<<EOF cat\nhello\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc-leading (rare but valid POSIX)"}
+{"id": "heredoc-014", "command": "cat <<EOF\nhello $USER\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc body has variable expansion"}
+{"id": "heredoc-015", "command": "cat <<'EOF'\nhello $USER\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc 'EOF' suppresses expansion in body"}
+{"id": "heredoc-016", "command": "tee file <<EOF\nline1\nline2\nEOF", "bucket": "heredoc", "note": "TD-H1: tee + heredoc"}
+{"id": "heredoc-017", "command": "kubectl apply -f - <<EOF\nkind: Pod\nEOF", "bucket": "heredoc", "note": "TD-H1: kubectl apply -f - <<EOF (real-world)"}
+{"id": "heredoc-018", "command": "FOO=bar cat <<EOF\nhi\nEOF", "bucket": "heredoc", "note": "TD-H1: env-var prefix + heredoc (double-stress)"}
+{"id": "heredoc-019", "command": "cat <<EOF\n$(rm -rf /)\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc body contains substitution"}
+{"id": "heredoc-020", "command": "cat <<\\EOF\nliteral\nEOF", "bucket": "heredoc", "note": "TD-H1: heredoc \\EOF (backslash-suppressed expansion)"}
