@@ -10,26 +10,48 @@ import sys
 import tomllib
 from pathlib import Path
 
-VALID_VERDICTS = {"allow", "require_approval"}
+# --- Mode toggle ---
+# False through Phase 4a (transitional); True after the v0→v2 migration runs.
+# In transitional mode, v0 patterns are WARN; locked mode promotes them to ERROR.
+STRICT_V2 = False
+
+# --- Verdict (v2) ---
+# v2 collapses {Allow, Warn, RequireApproval, Deny} → {allow, ask, warn}.
+# The engine accepts "require_approval" as a deserialization alias for "ask"
+# for v0/v1 policy.yaml compat (per session B's lock); lint flags it because
+# new TOML authoring must use the v2 wire form.
+VALID_VERDICTS = {"allow", "ask", "warn"}
+V0_VERDICT_ALIAS = "require_approval"  # → ask, transitional WARN
+
+# --- Risk class (v2) ---
+# Single curator-set enum on every [[command]] and [[combo]]. Replaces the v0
+# multi-axis tags. Default verdicts: safe→allow; net_egress_unauthed,novel→ask;
+# destructive,priv_esc,secret_read→warn.
+VALID_RISK_CLASSES = {
+    "safe",
+    "net_egress_unauthed",
+    "novel",
+    "destructive",
+    "priv_esc",
+    "secret_read",
+}
+
+# Most-dangerous-wins ordering for combo derivation check (lint rule 5).
+RISK_CLASS_RANK = {
+    "safe": 0,
+    "net_egress_unauthed": 1,
+    "novel": 1,
+    "destructive": 2,
+    "priv_esc": 2,
+    "secret_read": 2,
+}
+
+# --- Forbidden v0 tag axes (multi-axis tags drop in v2) ---
+V0_TAG_DIMENSIONS = {"scope", "effect", "reversibility", "target", "safety_override"}
 
 COMMAND_REQUIRED = ("path", "translation", "verdict", "rationale")
 FLAG_REQUIRED = ("applies_to", "flag", "translation_modifier", "verdict", "rationale")
 COMBO_REQUIRED = ("path", "translation", "verdict", "rationale")
-
-# --- Tag enums ---
-VALID_SCOPES = {"local", "remote"}
-VALID_EFFECTS = {"read", "write", "create", "delete", "execute"}
-VALID_REVERSIBILITY = {"trivial", "difficult", "impossible"}
-VALID_TARGETS = {"filesystem", "repository", "container", "cluster", "cloud",
-                 "package_registry", "database", "credentials", "network",
-                 "process", "config"}
-TAG_DIMENSIONS = {"scope", "effect", "reversibility", "target", "safety_override"}
-TAG_ENUM_MAP = {
-    "scope": VALID_SCOPES,
-    "effect": VALID_EFFECTS,
-    "reversibility": VALID_REVERSIBILITY,
-    "target": VALID_TARGETS,
-}
 
 IRREVERSIBILITY_KEYWORDS = re.compile(
     r"permanently|irreversible|no recovery|destroys|cannot be undone", re.IGNORECASE
@@ -79,7 +101,9 @@ def lint_file(filepath: Path) -> list[Issue]:
     combos = data.get("combo", [])
 
     command_paths: set[str] = set()
+    command_by_path: dict[str, dict] = {}  # for combo derivation check (rule 5)
     flag_tokens: dict[str, set[str]] = {}  # command_path -> set of flag strings
+    flag_by_key: dict[tuple[str, str], dict] = {}  # (applies_to, flag) -> entry
 
     # --- A. Schema compliance for commands ---
     for i, cmd in enumerate(commands):
@@ -89,11 +113,14 @@ def lint_file(filepath: Path) -> list[Issue]:
             if val is None or (isinstance(val, str) and val == ""):
                 issues.append(Issue("ERROR", "command", eid, f"missing or empty required field '{field}'"))
         verdict = cmd.get("verdict", "")
-        if verdict and verdict not in VALID_VERDICTS:
-            issues.append(Issue("ERROR", "command", eid, f"invalid verdict '{verdict}' (must be one of {sorted(VALID_VERDICTS)})"))
+        _check_verdict_v2(issues, "command", eid, verdict)
         path_val = cmd.get("path", "")
         if path_val:
             command_paths.add(path_val)
+            command_by_path[path_val] = cmd
+
+        # --- Risk class (v2) ---
+        _check_risk_class(issues, "command", eid, cmd, required=True)
 
         # --- D. Translation rules (commands) ---
         translation = cmd.get("translation", "")
@@ -105,15 +132,15 @@ def lint_file(filepath: Path) -> list[Issue]:
         if isinstance(rationale, str) and isinstance(verdict, str):
             if verdict == "allow" and IRREVERSIBILITY_KEYWORDS.search(rationale):
                 issues.append(Issue("WARN", "command", eid, "allow-verdict command has irreversibility keywords in rationale"))
-            if verdict == "require_approval" and not BLAST_RADIUS_KEYWORDS.search(rationale):
-                issues.append(Issue("WARN", "command", eid, "require_approval-verdict command lacks irreversibility/blast-radius keywords in rationale"))
+            if verdict in {"ask", "warn", V0_VERDICT_ALIAS} and not BLAST_RADIUS_KEYWORDS.search(rationale):
+                issues.append(Issue("WARN", "command", eid, f"{verdict}-verdict command lacks irreversibility/blast-radius keywords in rationale"))
 
         # --- F. Rationale quality (commands) ---
         if isinstance(rationale, str) and rationale:
             _check_rationale(issues, "command", eid, rationale, translation)
 
-        # --- Tag validation (commands) ---
-        _check_tags(issues, "command", eid, cmd, prefix="tags")
+        # --- v0 multi-axis tag deprecation ---
+        _check_v0_tag_deprecation(issues, "command", eid, cmd, prefix="tags")
 
     # --- A. Schema compliance for flags ---
     for i, flg in enumerate(flags):
@@ -125,8 +152,12 @@ def lint_file(filepath: Path) -> list[Issue]:
             elif isinstance(val, str) and val == "" and field != "translation_modifier":
                 issues.append(Issue("ERROR", "flag", eid, f"empty required field '{field}'"))
         verdict = flg.get("verdict", "")
-        if verdict and verdict not in VALID_VERDICTS:
-            issues.append(Issue("ERROR", "flag", eid, f"invalid verdict '{verdict}' (must be one of {sorted(VALID_VERDICTS)})"))
+        _check_verdict_v2(issues, "flag", eid, verdict)
+
+        # --- Risk class override (v2) — optional on flags ---
+        override = flg.get("risk_class_override", "")
+        if override and override not in VALID_RISK_CLASSES:
+            issues.append(Issue("ERROR", "flag", eid, f"invalid risk_class_override '{override}' (must be one of {sorted(VALID_RISK_CLASSES)})"))
 
         # --- B. Reference integrity ---
         applies_to = flg.get("applies_to", "")
@@ -144,14 +175,15 @@ def lint_file(filepath: Path) -> list[Issue]:
         if isinstance(rationale, str) and rationale:
             _check_rationale(issues, "flag", eid, rationale, translation)
 
-        # --- Tag modifier validation (flags) ---
-        _check_tags(issues, "flag", eid, flg, prefix="tag_modifiers")
+        # --- v0 tag_modifiers deprecation ---
+        _check_v0_tag_deprecation(issues, "flag", eid, flg, prefix="tag_modifiers")
 
-        # Collect flag tokens for combo validation
+        # Collect flag tokens + entries for combo validation
         applies_to = flg.get("applies_to", "")
         flag_val = flg.get("flag", "")
         if applies_to and flag_val:
             flag_tokens.setdefault(applies_to, set()).add(flag_val)
+            flag_by_key[(applies_to, flag_val)] = flg
 
     # --- Combo linting ---
     combo_paths: set[str] = set()
@@ -166,8 +198,10 @@ def lint_file(filepath: Path) -> list[Issue]:
 
         # Verdict validation
         verdict = combo.get("verdict", "")
-        if verdict and verdict not in VALID_VERDICTS:
-            issues.append(Issue("ERROR", "combo", eid, f"invalid verdict '{verdict}' (must be one of {sorted(VALID_VERDICTS)})"))
+        _check_verdict_v2(issues, "combo", eid, verdict)
+
+        # Risk class (v2)
+        _check_risk_class(issues, "combo", eid, combo, required=True)
 
         # Translation rules for combos
         translation = combo.get("translation", "")
@@ -190,6 +224,8 @@ def lint_file(filepath: Path) -> list[Issue]:
                 issues.append(Issue("WARN", "combo", eid, f"rationale too long ({rat_len} chars, max 400)"))
 
         # Path must start with a valid command path
+        base_cmd = ""
+        combo_flag_tokens: list[str] = []
         combo_path = combo.get("path", "")
         if combo_path:
             # Duplicate combo paths
@@ -198,7 +234,6 @@ def lint_file(filepath: Path) -> list[Issue]:
             combo_paths.add(combo_path)
 
             # Find the base command: longest command path that is a prefix
-            base_cmd = ""
             for cp in command_paths:
                 if combo_path == cp or combo_path.startswith(cp + " "):
                     if len(cp) > len(base_cmd):
@@ -212,13 +247,22 @@ def lint_file(filepath: Path) -> list[Issue]:
                     tokens = remainder.split()
                     known_flags = flag_tokens.get(base_cmd, set())
                     for token in tokens:
-                        if token.startswith("-") and token not in known_flags:
-                            issues.append(Issue("ERROR", "combo", eid, f"flag '{token}' not found in [[flag]] entries for '{base_cmd}'"))
+                        if token.startswith("-"):
+                            combo_flag_tokens.append(token)
+                            if token not in known_flags:
+                                issues.append(Issue("ERROR", "combo", eid, f"flag '{token}' not found in [[flag]] entries for '{base_cmd}'"))
 
-        # Tag validation (combos)
-        _check_tags(issues, "combo", eid, combo, prefix="tags")
+        # --- Combo risk_class derivation check (rule 5) ---
+        if base_cmd and combo.get("risk_class") in VALID_RISK_CLASSES:
+            _check_combo_risk_class_derivation(
+                issues, eid, combo, base_cmd,
+                command_by_path, flag_by_key, combo_flag_tokens,
+            )
 
-        # Coherence checks (WARN)
+        # --- v0 multi-axis tag deprecation ---
+        _check_v0_tag_deprecation(issues, "combo", eid, combo, prefix="tags")
+
+        # Coherence checks (WARN) — v0 only; no-ops on v2-shape entries
         _check_coherence(issues, "combo", eid, combo)
 
     # Coherence checks on commands too
@@ -272,38 +316,97 @@ def _check_rationale(issues: list[Issue], kind: str, eid: str, rationale: str, t
         issues.append(Issue("WARN", kind, eid, "rationale exactly equals translation"))
 
 
-def _check_tags(issues: list[Issue], kind: str, eid: str, entry: dict, prefix: str) -> None:
-    """Validate tags.* or tag_modifiers.* fields against known enums."""
-    found_dims: set[str] = set()
-    for key, val in entry.items():
+def _v0_severity() -> str:
+    """Severity for v0-deprecation patterns; WARN until Phase 4a, ERROR after."""
+    return "ERROR" if STRICT_V2 else "WARN"
+
+
+def _check_verdict_v2(issues: list[Issue], kind: str, eid: str, verdict: str) -> None:
+    """v2 verdict validation: accept allow/ask/warn; v0 alias 'require_approval' WARN; unknown ERROR."""
+    if not verdict:
+        return
+    if verdict in VALID_VERDICTS:
+        return
+    if verdict == V0_VERDICT_ALIAS:
+        issues.append(Issue(_v0_severity(), kind, eid,
+            f"v0 verdict '{V0_VERDICT_ALIAS}'; v2 wire form is 'ask' (alias accepted by engine for v0/v1 policy.yaml compat)"))
+        return
+    issues.append(Issue("ERROR", kind, eid,
+        f"invalid verdict '{verdict}' (must be one of {sorted(VALID_VERDICTS)})"))
+
+
+def _check_risk_class(issues: list[Issue], kind: str, eid: str, entry: dict, required: bool) -> None:
+    """v2 risk_class validation: presence (transitional WARN; locked ERROR) + value enum."""
+    rc = entry.get("risk_class", "")
+    if not rc:
+        if required:
+            issues.append(Issue(_v0_severity(), kind, eid,
+                "missing risk_class (v2); v0→v2 migration sets to 'novel' if tags don't unambiguously map"))
+        return
+    if rc not in VALID_RISK_CLASSES:
+        issues.append(Issue("ERROR", kind, eid,
+            f"invalid risk_class '{rc}' (must be one of {sorted(VALID_RISK_CLASSES)})"))
+
+
+def _check_combo_risk_class_derivation(
+    issues: list[Issue],
+    eid: str,
+    combo: dict,
+    base_cmd_path: str,
+    command_by_path: dict[str, dict],
+    flag_by_key: dict[tuple[str, str], dict],
+    combo_flag_tokens: list[str],
+) -> None:
+    """Combo risk_class must be ≥ most-dangerous(base, *flag overrides). Lint rule 5."""
+    declared = combo.get("risk_class")
+    base_cmd = command_by_path.get(base_cmd_path, {})
+    base_rc = base_cmd.get("risk_class")
+    if base_rc not in VALID_RISK_CLASSES:
+        # Base lacks a valid risk_class — transitional pass; nothing to derive against.
+        return
+
+    expected_rank = RISK_CLASS_RANK[base_rc]
+    expected_source = f"base '{base_rc}'"
+    for token in combo_flag_tokens:
+        flag_entry = flag_by_key.get((base_cmd_path, token), {})
+        override = flag_entry.get("risk_class_override")
+        if override in VALID_RISK_CLASSES:
+            r = RISK_CLASS_RANK[override]
+            if r > expected_rank:
+                expected_rank = r
+                expected_source = f"flag '{token}' override '{override}'"
+
+    declared_rank = RISK_CLASS_RANK[declared]
+    if declared_rank < expected_rank:
+        issues.append(Issue("ERROR", "combo", eid,
+            f"risk_class '{declared}' (rank {declared_rank}) is less dangerous than derived from {expected_source} (rank {expected_rank}); combo risk_class must be ≥ most-dangerous of base + flag overrides"))
+
+
+def _check_v0_tag_deprecation(issues: list[Issue], kind: str, eid: str, entry: dict, prefix: str) -> None:
+    """Detect v0 multi-axis tags / tag_modifiers; transitional WARN, locked ERROR.
+
+    v2 drops the 5-axis tag block; the v0→v2 migration tool removes these fields.
+    Lint emits one issue per entry (not per-axis) summarizing which v0 axes were found.
+
+    tomllib parses `tags.scope = "x"` as nested {"tags": {"scope": "x"}}, not as a
+    flat key "tags.scope" — the original v0 _check_tags missed this and silently
+    no-op'd on every real TOML. We walk both shapes here for forensic completeness.
+    """
+    found: list[str] = []
+    nested = entry.get(prefix)
+    if isinstance(nested, dict):
+        for dim in nested:
+            if dim in V0_TAG_DIMENSIONS:
+                found.append(dim)
+    for key in entry:
         if not key.startswith(prefix + "."):
             continue
         dim = key[len(prefix) + 1:]
-        found_dims.add(dim)
-
-        if dim not in TAG_DIMENSIONS:
-            issues.append(Issue("ERROR", kind, eid, f"unknown tag dimension '{dim}' in {prefix}"))
-            continue
-
-        if dim == "safety_override":
-            if not isinstance(val, bool):
-                issues.append(Issue("ERROR", kind, eid, f"{prefix}.safety_override must be a boolean"))
-        elif dim in TAG_ENUM_MAP:
-            valid = TAG_ENUM_MAP[dim]
-            # effect and target can be lists; scope and reversibility are strings
-            if dim in ("effect", "target"):
-                vals = val if isinstance(val, list) else [val]
-                for v in vals:
-                    if v not in valid:
-                        issues.append(Issue("ERROR", kind, eid, f"invalid value '{v}' for {prefix}.{dim} (must be one of {sorted(valid)})"))
-            else:
-                if val not in valid:
-                    issues.append(Issue("ERROR", kind, eid, f"invalid value '{val}' for {prefix}.{dim} (must be one of {sorted(valid)})"))
-
-    # Tag completeness (WARN): some but not all 5 dimensions → WARN
-    if found_dims and found_dims != TAG_DIMENSIONS:
-        missing = TAG_DIMENSIONS - found_dims
-        issues.append(Issue("WARN", kind, eid, f"incomplete tags: missing {sorted(missing)}"))
+        if dim in V0_TAG_DIMENSIONS:
+            found.append(dim)
+    if found:
+        issues.append(Issue(_v0_severity(), kind, eid,
+            f"v0 {prefix}.{{{','.join(sorted(set(found)))}}} present; v0→v2 migration drops multi-axis tags (collapsed to single risk_class)"))
 
 
 def _check_coherence(issues: list[Issue], kind: str, eid: str, entry: dict) -> None:
