@@ -38,7 +38,7 @@ The registry-side schema work splits into two:
    the JSON-Schema level (the alias is an input-only convenience in B's
    Rust deserializer; it doesn't widen the schema enum). Required field
    `risk_class` per SCHEMA-v2.md §3 must be one of
-   `{safe, net_egress_unauthed, novel, destructive, priv_esc, secret_read}`.
+   `{safe, net_egress, novel, destructive, priv_esc, secret_read}`.
 2. **TOML authoring-shape validation** against `tools/lint.py`, which
    runs in **transitional mode** through Phase 4a per SCHEMA-v2.md §7.
    In transitional mode lint accepts both v0 patterns (multi-axis tags,

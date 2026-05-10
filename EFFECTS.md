@@ -121,7 +121,7 @@ The orchestrator's 2026-05-09 directive collapses the registry's multi-axis tags
 Consequence: the v0 `tags.effect` axis on `[[command]]`/`[[combo]]` entries is **dropped** in v2. Migration:
 
 - The ~46 already-tagged TOMLs lose `tags.effect` (and `tags.scope`, `tags.reversibility`, `tags.target`, `tags.safety_override`); their existing tag values are folded into a single `risk_class` value during the v0→v2 migration pass (e.g., `tags.effect=["delete"] + tags.reversibility="impossible"` → `risk_class=destructive`).
-- The ~1198 untagged TOMLs default to `risk_class=unknown` until Phase 4a auto-derive backfills.
+- The ~1198 untagged TOMLs default to `risk_class=novel` (the curation sentinel — see §1 "Unknown is its own thing" and SCHEMA-v2.md §3 sentinel-separation; `RiskClass` does not have an `unknown` member, only `Effect` does) until Phase 4a auto-derive backfills.
 
 See SCHEMA-v2.md §migration for the full v0→v2 derivation rules.
 
