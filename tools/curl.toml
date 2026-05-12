@@ -13,7 +13,8 @@ flag = "-o"
 translation_modifier = "saving the response to a specified local file"
 verdict = "allow"
 rationale = "Writes remote content to the local filesystem, which could overwrite existing files."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "curl"
@@ -29,7 +30,8 @@ flag = "-X"
 translation_modifier = "using a specified HTTP method"
 verdict = "allow"
 rationale = "Changes the HTTP verb but does not inherently increase risk beyond the base command."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -37,7 +39,8 @@ flag = "-d"
 translation_modifier = "sending data in an HTTP request body"
 verdict = "ask"
 rationale = "Transmits data to a remote server, which may include sensitive information."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -45,7 +48,8 @@ flag = "-H"
 translation_modifier = "including a custom HTTP header"
 verdict = "allow"
 rationale = "Adds a header to the request; may carry authentication tokens but does not change the operation's scope."
-arity = "Boolean"
+arity = "Repeated"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -88,7 +92,8 @@ flag = "-u"
 translation_modifier = "authenticating with a username and password"
 verdict = "allow"
 rationale = "Sends credentials to the server; may expose them if the connection is not encrypted."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -96,7 +101,8 @@ flag = "-T"
 translation_modifier = "uploading a local file to the server"
 verdict = "ask"
 rationale = "Sends local file contents to a remote destination, which may expose sensitive data."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "curl"
@@ -136,7 +142,8 @@ flag = "-F"
 translation_modifier = "sending data as a multipart form upload"
 verdict = "ask"
 rationale = "Transmits form data including file contents to a remote server."
-arity = "Boolean"
+arity = "Repeated"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -144,7 +151,8 @@ flag = "-b"
 translation_modifier = "sending cookies with the request"
 verdict = "allow"
 rationale = "Includes cookie data in the request; does not change the operation's scope."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -152,7 +160,8 @@ flag = "-c"
 translation_modifier = "saving received cookies to a file"
 verdict = "allow"
 rationale = "Writes cookie data to a local file; low risk as cookies are small metadata."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "curl"
@@ -160,7 +169,8 @@ flag = "--data-binary"
 translation_modifier = "sending data exactly as specified without any processing"
 verdict = "ask"
 rationale = "Transmits raw binary data to a remote server, which may include sensitive content."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -168,7 +178,8 @@ flag = "-x"
 translation_modifier = "routing the request through a specified proxy server"
 verdict = "allow"
 rationale = "Redirects traffic through a proxy; does not change what data is sent."
-arity = "Boolean"
+arity = "Single"
+value_type = "Url"
 
 [[flag]]
 applies_to = "curl"
@@ -176,7 +187,8 @@ flag = "--retry"
 translation_modifier = "retrying the request a specified number of times on failure"
 verdict = "allow"
 rationale = "Repeats the request on transient failures; does not change the operation's scope."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "curl"
@@ -184,7 +196,8 @@ flag = "-w"
 translation_modifier = "displaying specified transfer metrics after completion"
 verdict = "allow"
 rationale = "Only adds informational output; does not change the operation."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "curl"
@@ -192,7 +205,8 @@ flag = "--connect-timeout"
 translation_modifier = "limiting the time allowed to establish a connection"
 verdict = "allow"
 rationale = "Sets a timeout; does not change what data is sent or received."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "curl"
@@ -200,7 +214,8 @@ flag = "-m"
 translation_modifier = "limiting the total time allowed for the entire operation"
 verdict = "allow"
 rationale = "Sets a maximum duration; does not change the operation's scope."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "curl"

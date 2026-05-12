@@ -16,21 +16,21 @@ path = "git init"
 translation = "Create a new empty Git repository in the current directory."
 verdict = "allow"
 rationale = "Creates a .git directory; safe to run in an existing repo without data loss."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "git clone"
 translation = "Download a remote repository and create a local copy."
 verdict = "allow"
 rationale = "Creates a new directory; does not modify any existing files."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[command]]
 path = "git add"
 translation = "Stage file changes for the next commit."
 verdict = "allow"
 rationale = "Only updates the staging area; no committed data is changed."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git add"
@@ -55,7 +55,6 @@ translation_modifier = "including files that are normally ignored by .gitignore"
 verdict = "allow"
 rationale = "Bypasses .gitignore rules, which may cause secrets or build artifacts to be tracked."
 arity = "Boolean"
-risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "git add"
@@ -88,7 +87,7 @@ path = "git commit"
 translation = "Save the staged changes as a new commit in the repository history."
 verdict = "allow"
 rationale = "Creates a local commit that can be amended or reset; does not affect the remote."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git commit"
@@ -122,7 +121,7 @@ path = "git push"
 translation = "Upload local commits to a remote repository."
 verdict = "ask"
 rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git push"
@@ -131,7 +130,7 @@ translation_modifier = "overwriting remote history"
 verdict = "ask"
 rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git push"
@@ -140,6 +139,7 @@ translation_modifier = "overwriting remote history only if no one else has pushe
 verdict = "ask"
 rationale = "Safer than --force but still rewrites history; fails if the remote has diverged."
 arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git push"
@@ -204,7 +204,7 @@ path = "git pull"
 translation = "Download changes from a remote repository and merge them into the current branch."
 verdict = "allow"
 rationale = "Modifies the working tree and branch history; can introduce merge conflicts."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git pull"
@@ -221,14 +221,14 @@ translation_modifier = "overwriting local tracking refs even when they are not a
 verdict = "ask"
 rationale = "Forces reference updates that may discard local-only changes or cause unexpected history changes."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git fetch"
 translation = "Download new commits and branch information from a remote repository without modifying local branches."
 verdict = "allow"
 rationale = "Only updates remote-tracking references; the working tree and local branches are unchanged."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git fetch"
@@ -253,7 +253,7 @@ translation_modifier = "overwriting local refs even if the update is not a fast-
 verdict = "allow"
 rationale = "Allows non-fast-forward ref updates which could cause confusion about remote history."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git remote"
@@ -267,7 +267,7 @@ path = "git remote add"
 translation = "Register a new remote repository under a given name."
 verdict = "allow"
 rationale = "Adds a configuration entry; does not transfer any data."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "git remote remove"
@@ -275,7 +275,7 @@ translation = "Unregister a remote repository and delete its tracking branches."
 verdict = "allow"
 rationale = "Removes the remote configuration and all associated remote-tracking refs."
 # ── Branching and switching ───────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[command]]
@@ -300,7 +300,7 @@ translation_modifier = "forcefully deleting a branch even if it has unmerged com
 verdict = "ask"
 rationale = "Deletes a branch regardless of merge status; unmerged commits may become unreachable."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git branch"
@@ -309,7 +309,7 @@ translation_modifier = "resetting the branch pointer even if the branch already 
 verdict = "allow"
 rationale = "Moves an existing branch to a new commit, discarding its previous position."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git branch"
@@ -324,7 +324,7 @@ path = "git checkout"
 translation = "Switch branches or restore files in the working tree."
 verdict = "allow"
 rationale = "Modifies the working tree; uncommitted changes on conflicting paths may be overwritten."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git checkout"
@@ -333,7 +333,7 @@ translation_modifier = "discarding any uncommitted local changes that conflict"
 verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git checkout"
@@ -350,7 +350,7 @@ path = "git merge"
 translation = "Combine another branch's changes into the current branch."
 verdict = "allow"
 rationale = "Modifies the current branch and working tree; can produce merge conflicts."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git merge"
@@ -390,7 +390,7 @@ path = "git rebase"
 translation = "Reapply commits from the current branch onto a different base commit."
 verdict = "allow"
 rationale = "Rewrites commit history; can cause data loss if used on shared branches."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git rebase"
@@ -462,7 +462,7 @@ path = "git revert"
 translation = "Create a new commit that undoes the changes from a previous commit."
 verdict = "allow"
 rationale = "Modifies the branch by adding a new commit; safe because it does not rewrite history."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git revert"
@@ -485,7 +485,7 @@ path = "git cherry-pick"
 translation = "Apply the changes from a specific commit onto the current branch."
 verdict = "allow"
 rationale = "Creates a new commit on the current branch; may produce conflicts."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git cherry-pick"
@@ -510,14 +510,14 @@ path = "git stash"
 translation = "Temporarily save uncommitted changes and revert the working tree to a clean state."
 verdict = "allow"
 rationale = "Changes are stored in the stash and can be reapplied later."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "git stash pop"
 translation = "Reapply the most recently stashed changes and remove them from the stash."
 verdict = "allow"
 rationale = "Modifies the working tree; the stash entry is deleted if applied cleanly, making it harder to retry."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "git stash drop"
@@ -545,7 +545,7 @@ path = "git stash apply"
 translation = "Reapply the most recently stashed changes without removing them from the stash."
 verdict = "allow"
 rationale = "Modifies the working tree but keeps the stash entry intact for later use."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git stash"
@@ -592,7 +592,7 @@ translation = "Use binary search to find the commit that introduced a bug."
 verdict = "allow"
 rationale = "Navigates history by checking out commits; the original branch is restored with bisect reset."
 # ── Removing and moving files ────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[command]]
@@ -609,7 +609,7 @@ translation_modifier = "even if the file has uncommitted changes"
 verdict = "ask"
 rationale = "Deletes files with unstaged or staged modifications that may not be recoverable."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git rm"
@@ -632,7 +632,7 @@ path = "git mv"
 translation = "Move or rename a tracked file, directory, or symbolic link."
 verdict = "allow"
 rationale = "Renames files in the working tree and staging area; fully reversible."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git mv"
@@ -642,7 +642,7 @@ verdict = "allow"
 rationale = "Silently overwrites an existing file at the destination path."
 # ── Cleaning ─────────────────────────────────────────────────────────────────
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 
 [[command]]
@@ -675,7 +675,7 @@ translation_modifier = "including files normally excluded by .gitignore"
 verdict = "ask"
 rationale = "Deletes ignored files such as build outputs, IDE configs, and environment files that may be irreplaceable."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git clean"
@@ -726,7 +726,7 @@ verdict = "allow"
 rationale = "Silently moves a tag to a different commit, which can cause confusion for collaborators."
 # ── Submodules ───────────────────────────────────────────────────────────────
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 
 [[command]]
@@ -741,14 +741,14 @@ path = "git submodule add"
 translation = "Register a new submodule and clone it into the working tree."
 verdict = "allow"
 rationale = "Adds a new dependency; does not modify existing code."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[command]]
 path = "git submodule update"
 translation = "Update submodules to the commit recorded in the parent repository."
 verdict = "allow"
 rationale = "Checks out specific commits in submodules, modifying their working trees."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[command]]
 path = "git submodule deinit"
@@ -764,7 +764,7 @@ translation_modifier = "even if the submodule has local modifications"
 verdict = "ask"
 rationale = "Discards local changes in the submodule working tree without confirmation."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git submodule deinit"
@@ -789,7 +789,7 @@ path = "git worktree add"
 translation = "Create a new working tree linked to this repository at a different path."
 verdict = "allow"
 rationale = "Creates a new directory; does not affect the existing working tree."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "git worktree list"
@@ -812,7 +812,7 @@ translation_modifier = "even if the working tree has uncommitted changes"
 verdict = "ask"
 rationale = "Deletes the working tree without checking for uncommitted work."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git worktree prune"
@@ -820,7 +820,7 @@ translation = "Remove stale working tree administrative data."
 verdict = "allow"
 rationale = "Cleans up metadata for worktrees that have already been deleted from disk."
 # ── Patching ─────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[command]]
@@ -828,7 +828,7 @@ path = "git am"
 translation = "Apply a series of patches from email-formatted files to the current branch."
 verdict = "allow"
 rationale = "Creates new commits on the current branch; may produce conflicts."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git am"
@@ -853,7 +853,7 @@ translation = "Generate patch files from commits for email-based review or shari
 verdict = "allow"
 rationale = "Creates files on disk; does not modify the repository."
 # ── Maintenance ──────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[command]]
@@ -870,7 +870,7 @@ translation_modifier = "immediately expiring unreachable objects regardless of t
 verdict = "ask"
 rationale = "Removes all unreachable objects without waiting for the default grace period, eliminating recovery options."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git gc"
@@ -887,7 +887,7 @@ path = "git switch"
 translation = "Switch to a different branch."
 verdict = "allow"
 rationale = "Moves to an existing branch; safer than checkout because it refuses to overwrite uncommitted changes by default."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git switch"
@@ -904,7 +904,7 @@ translation_modifier = "discarding all uncommitted local changes"
 verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git switch"
@@ -913,14 +913,14 @@ translation_modifier = "discarding all uncommitted local changes"
 verdict = "ask"
 rationale = "Alias for --discard-changes; permanently throws away uncommitted work."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git restore"
 translation = "Restore files in the working tree to a previous state."
 verdict = "allow"
 rationale = "Overwrites working tree files with versions from another source; uncommitted changes to those files are lost."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git restore"
@@ -960,7 +960,7 @@ path = "git config --global"
 translation = "View or modify Git configuration settings for all repositories on this machine."
 verdict = "allow"
 rationale = "Changes apply to every repository the user interacts with, not just the current one."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git config"
@@ -985,7 +985,7 @@ path = "git update-ref"
 translation = "Directly move a branch pointer or other reference to a different commit."
 verdict = "ask"
 rationale = "Low-level command that moves branch pointers without the safety checks of normal branch operations."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git update-ref"
@@ -1145,21 +1145,21 @@ path = "git push --force"
 translation = "Force-upload local commits to a remote repository, overwriting its history even if other contributors have pushed since."
 verdict = "ask"
 rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
-risk_class = "priv_esc"
+risk_class = "destructive"
 
 [[combo]]
 path = "git push --force-with-lease"
 translation = "Upload local commits to a remote repository, overwriting its history only if no one else has pushed since your last fetch."
 verdict = "ask"
 rationale = "Safer than --force but still rewrites remote history; fails if the remote has diverged since your last fetch."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[combo]]
 path = "git push --dry-run"
 translation = "Simulate uploading local commits to a remote repository without actually sending any data."
 verdict = "allow"
 rationale = "No data is transmitted; only shows what would happen."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[combo]]
 path = "git push --force --no-verify"
@@ -1201,14 +1201,14 @@ path = "git checkout --force"
 translation = "Switch branches or restore files, discarding all uncommitted local changes without warning."
 verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
-risk_class = "priv_esc"
+risk_class = "destructive"
 
 [[combo]]
 path = "git add --all"
 translation = "Stage every change in the entire working tree — new files, modifications, and deletions."
 verdict = "allow"
 rationale = "May unintentionally stage files the user did not mean to include, such as secrets or build artifacts, but only affects the staging area."
-risk_class = "novel"
+risk_class = "safe"
 
 [[combo]]
 path = "git rm --force"

@@ -5,7 +5,7 @@ path = "sftp"
 translation = "Open an interactive secure file transfer session with a remote server."
 verdict = "ask"
 rationale = "Provides interactive file transfer capabilities that can upload, download, and delete remote files."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "sftp"
@@ -13,7 +13,8 @@ flag = "-i"
 translation_modifier = "using a specified private key file for authentication"
 verdict = "allow"
 rationale = "Selects an identity file; does not change the session's capabilities."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "sftp"
@@ -21,7 +22,8 @@ flag = "-P"
 translation_modifier = "connecting to a specified port"
 verdict = "allow"
 rationale = "Changes the target port; does not add destructive capability."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "sftp"
@@ -29,7 +31,8 @@ flag = "-b"
 translation_modifier = "executing commands from a batch file instead of interactively"
 verdict = "allow"
 rationale = "Runs a series of file transfer commands without user interaction."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "sftp"
@@ -53,7 +56,8 @@ flag = "-l"
 translation_modifier = "limiting the transfer bandwidth to a specified rate"
 verdict = "allow"
 rationale = "Throttles the transfer speed; a scope-reducing option."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "sftp"

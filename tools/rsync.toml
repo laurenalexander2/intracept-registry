@@ -5,7 +5,7 @@ path = "rsync"
 translation = "Synchronize files and directories between two locations."
 verdict = "ask"
 rationale = "Copies and synchronizes files, potentially overwriting files at the destination."
-risk_class = "novel"
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "rsync"
@@ -30,6 +30,7 @@ translation_modifier = "removing files at the destination that do not exist at t
 verdict = "ask"
 rationale = "Deletes files on the destination that are not in the source, which can cause data loss."
 arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rsync"
@@ -38,6 +39,7 @@ translation_modifier = "deleting destination files before transferring"
 verdict = "ask"
 rationale = "Removes destination files before the sync starts, risking data loss if the transfer is interrupted."
 arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rsync"
@@ -61,7 +63,8 @@ flag = "-e"
 translation_modifier = "using a specified remote shell program"
 verdict = "allow"
 rationale = "Changes the transport method; does not affect the sync behavior."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "rsync"
@@ -69,7 +72,8 @@ flag = "--exclude"
 translation_modifier = "skipping files matching a specified pattern"
 verdict = "allow"
 rationale = "Reduces the scope of the sync; a filtering option."
-arity = "Boolean"
+arity = "Repeated"
+value_type = "String"
 
 [[flag]]
 applies_to = "rsync"
