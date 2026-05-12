@@ -1,0 +1,22 @@
+# Valid: multiple [[command]] entries for the same tool, different paths.
+
+[[command]]
+path = "poly"
+translation = "Inspect repository state."
+verdict = "allow"
+rationale = "Read-only display of current state."
+risk_class = "safe"
+
+[[command]]
+path = "poly push"
+translation = "Push local changes to a remote."
+verdict = "ask"
+rationale = "Sends data over the network to a remote service."
+risk_class = "net_egress"
+
+[[command]]
+path = "poly clone"
+translation = "Clone a remote repository to a local directory."
+verdict = "ask"
+rationale = "Fetches an entire repository tree from a remote service."
+risk_class = "net_egress"

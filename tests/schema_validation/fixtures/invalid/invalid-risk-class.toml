@@ -1,0 +1,8 @@
+# Invalid: risk_class outside the locked six-value enum.
+
+[[command]]
+path = "spicy-tool"
+translation = "Example with bogus risk_class."
+verdict = "ask"
+rationale = "Should be rejected — risk_class must be one of the six locked values."
+risk_class = "spicy"

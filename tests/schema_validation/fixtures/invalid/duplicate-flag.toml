@@ -1,0 +1,24 @@
+# Invalid: same flag declared twice under the same applies_to in one file.
+
+[[command]]
+path = "dup-flag"
+translation = "Tool with a duplicate flag entry."
+verdict = "allow"
+rationale = "Same flag string declared twice should be rejected."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "dup-flag"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "First declaration."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "dup-flag"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Duplicate of the first; should trip the duplicate-flag check."
+arity = "Boolean"

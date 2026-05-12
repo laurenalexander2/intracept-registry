@@ -1,0 +1,7 @@
+# Invalid: missing required field "translation" on a command.
+
+[[command]]
+path = "missing-tr"
+verdict = "allow"
+rationale = "Should be rejected — translation is required."
+risk_class = "safe"

@@ -116,6 +116,8 @@ def lint_file(filepath: Path) -> list[Issue]:
         _check_verdict_v2(issues, "command", eid, verdict)
         path_val = cmd.get("path", "")
         if path_val:
+            if path_val in command_paths:
+                issues.append(Issue("ERROR", "command", eid, f"duplicate command path '{path_val}'"))
             command_paths.add(path_val)
             command_by_path[path_val] = cmd
 
@@ -182,6 +184,8 @@ def lint_file(filepath: Path) -> list[Issue]:
         applies_to = flg.get("applies_to", "")
         flag_val = flg.get("flag", "")
         if applies_to and flag_val:
+            if (applies_to, flag_val) in flag_by_key:
+                issues.append(Issue("ERROR", "flag", eid, f"duplicate flag entry '{applies_to} {flag_val}'"))
             flag_tokens.setdefault(applies_to, set()).add(flag_val)
             flag_by_key[(applies_to, flag_val)] = flg
 

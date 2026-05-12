@@ -1,0 +1,47 @@
+# Valid: combo path that contains multiple flag tokens.
+
+[[command]]
+path = "mc-tool"
+translation = "Tool with combinable flags."
+verdict = "allow"
+rationale = "Base is safe; flags compose into specific use combos."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "mc-tool"
+flag = "-r"
+translation_modifier = "recursively"
+verdict = "allow"
+rationale = "Recursive traversal flag; no risk elevation alone."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "mc-tool"
+flag = "-f"
+translation_modifier = "forcing through safety checks"
+verdict = "ask"
+rationale = "Suppresses confirmation prompts; safety-override behavior."
+arity = "Boolean"
+risk_class_override = "destructive"
+
+[[flag]]
+applies_to = "mc-tool"
+flag = "-v"
+translation_modifier = "verbosely"
+verdict = "allow"
+rationale = "Increases output verbosity; no risk effect."
+arity = "Boolean"
+
+[[combo]]
+path = "mc-tool -r -f"
+translation = "Recursively traverse and force through safety checks."
+verdict = "warn"
+rationale = "Combination of recursive traversal with forced execution; inherits destructive from -f override."
+risk_class = "destructive"
+
+[[combo]]
+path = "mc-tool -r -v"
+translation = "Recursively traverse with verbose output."
+verdict = "allow"
+rationale = "Both flags are no-op for risk class; combo stays at base safe."
+risk_class = "safe"

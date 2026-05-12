@@ -1,0 +1,15 @@
+# Invalid: flag entry missing the required "applies_to" field.
+
+[[command]]
+path = "mafl"
+translation = "Base command for the broken flag below."
+verdict = "allow"
+rationale = "Base is fine; the flag is missing applies_to."
+risk_class = "safe"
+
+[[flag]]
+flag = "--orphan"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Required field applies_to is absent."
+arity = "Boolean"

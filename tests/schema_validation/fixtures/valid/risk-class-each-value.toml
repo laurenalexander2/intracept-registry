@@ -1,0 +1,43 @@
+# Valid: exercises each of the six risk_class enum values.
+
+[[command]]
+path = "rc-safe"
+translation = "Safe read-only operation."
+verdict = "allow"
+rationale = "Read-only display with no side effects on the filesystem."
+risk_class = "safe"
+
+[[command]]
+path = "rc-net"
+translation = "Make a network request."
+verdict = "ask"
+rationale = "Outbound network egress to an external service."
+risk_class = "net_egress"
+
+[[command]]
+path = "rc-novel"
+translation = "Run a tool with unknown effects."
+verdict = "ask"
+rationale = "Uncurated tool whose effects are not yet characterized."
+risk_class = "novel"
+
+[[command]]
+path = "rc-destructive"
+translation = "Delete files permanently."
+verdict = "warn"
+rationale = "Permanently destroys data with no recovery mechanism."
+risk_class = "destructive"
+
+[[command]]
+path = "rc-priv"
+translation = "Elevate privileges or bypass a safety check."
+verdict = "warn"
+rationale = "Bypasses an authentication or authorization safety check, widening capability."
+risk_class = "priv_esc"
+
+[[command]]
+path = "rc-secret"
+translation = "Read credentials from local storage."
+verdict = "warn"
+rationale = "Reads a credential or secret material that should be protected from exposure."
+risk_class = "secret_read"

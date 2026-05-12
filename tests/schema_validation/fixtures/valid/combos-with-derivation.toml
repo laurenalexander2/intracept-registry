@@ -1,0 +1,39 @@
+# Valid: combos that correctly derive from max-danger(base, flag overrides).
+
+[[command]]
+path = "cd-tool"
+translation = "Example tool for combo derivation."
+verdict = "ask"
+rationale = "Base is net_egress; flag override elevates to priv_esc; combo must reflect."
+risk_class = "net_egress"
+
+[[flag]]
+applies_to = "cd-tool"
+flag = "--unsafe"
+translation_modifier = "bypassing safety check"
+verdict = "warn"
+rationale = "Bypasses TLS verification, elevating to a capability-elevation operation."
+arity = "Boolean"
+risk_class_override = "priv_esc"
+
+[[flag]]
+applies_to = "cd-tool"
+flag = "--verbose"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Increases output verbosity; no effect on operation risk."
+arity = "Boolean"
+
+[[combo]]
+path = "cd-tool --unsafe"
+translation = "Run with TLS verification disabled, permitting connections to untrusted servers."
+verdict = "warn"
+rationale = "TLS bypass on a network operation; combo inherits priv_esc from flag override."
+risk_class = "priv_esc"
+
+[[combo]]
+path = "cd-tool --verbose"
+translation = "Run with verbose output enabled to inspect protocol behavior."
+verdict = "ask"
+rationale = "Verbose mode does not change risk class; combo matches base net_egress level."
+risk_class = "net_egress"

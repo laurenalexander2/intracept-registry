@@ -1,0 +1,7 @@
+# Invalid: missing required field "verdict" on a command.
+
+[[command]]
+path = "missing-vd"
+translation = "Example with missing verdict."
+rationale = "Should be rejected — verdict is required."
+risk_class = "safe"

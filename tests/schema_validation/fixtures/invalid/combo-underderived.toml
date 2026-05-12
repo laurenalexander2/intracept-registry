@@ -1,0 +1,24 @@
+# Invalid: combo risk_class is less dangerous than derived from base + flag overrides.
+# Base is destructive (rank 2); combo declares net_egress (rank 1). Combo must dominate.
+
+[[command]]
+path = "underderive-tool"
+translation = "Destructive base operation."
+verdict = "warn"
+rationale = "Base permanently destroys data."
+risk_class = "destructive"
+
+[[flag]]
+applies_to = "underderive-tool"
+flag = "--quiet"
+translation_modifier = "suppressing output"
+verdict = "warn"
+rationale = "Silences progress output; does not affect risk class."
+arity = "Boolean"
+
+[[combo]]
+path = "underderive-tool --quiet"
+translation = "Quietly perform the destructive operation."
+verdict = "warn"
+rationale = "Combo should be at least destructive but is mis-declared as net_egress."
+risk_class = "net_egress"

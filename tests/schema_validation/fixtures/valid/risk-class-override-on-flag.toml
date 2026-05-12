@@ -1,0 +1,18 @@
+# Valid: flag carries a risk_class_override per SCHEMA-v2.md §3.
+
+[[command]]
+path = "ovr-tool"
+translation = "Tool with a flag override."
+verdict = "allow"
+rationale = "Base is safe; a specific flag elevates risk."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "ovr-tool"
+flag = "--exec"
+translation_modifier = "executing arbitrary code per matched item"
+verdict = "ask"
+rationale = "Executes an arbitrary command for each item; effect depends on user-supplied command."
+arity = "Single"
+value_type = "String"
+risk_class_override = "novel"

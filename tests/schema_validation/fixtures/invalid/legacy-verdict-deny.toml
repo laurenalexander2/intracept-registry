@@ -1,0 +1,8 @@
+# Invalid: verdict "deny" is removed in v2 (Verdict::Deny was deleted per TD-H12).
+
+[[command]]
+path = "deny-tool"
+translation = "Example using removed verdict."
+verdict = "deny"
+rationale = "Should be rejected by both lint and the JSON-schema snapshot."
+risk_class = "destructive"

@@ -1,0 +1,52 @@
+# Valid: a command with many flags exercising arity + value_type variants.
+
+[[command]]
+path = "multi-flag-tool"
+translation = "Tool with many flag shapes."
+verdict = "allow"
+rationale = "Read-only inspection across many input forms."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "multi-flag-tool"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Boolean verbosity toggle."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "multi-flag-tool"
+flag = "-n"
+translation_modifier = "limiting to a specified number of items"
+verdict = "allow"
+rationale = "Takes a numeric value bounding the result count."
+arity = "Single"
+value_type = "Number"
+
+[[flag]]
+applies_to = "multi-flag-tool"
+flag = "-f"
+translation_modifier = "reading patterns from a file"
+verdict = "allow"
+rationale = "Takes a path to a file containing input patterns."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "multi-flag-tool"
+flag = "--url"
+translation_modifier = "operating against a remote URL"
+verdict = "ask"
+rationale = "Takes a URL value pointing at a remote service."
+arity = "Single"
+value_type = "Url"
+
+[[flag]]
+applies_to = "multi-flag-tool"
+flag = "--name"
+translation_modifier = "with a specified name string"
+verdict = "allow"
+rationale = "Takes a string value used as an identifier."
+arity = "Single"
+value_type = "String"
