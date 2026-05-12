@@ -5,6 +5,7 @@ path = "monolinker"
 translation = "Remove unused types and methods from .NET assemblies to reduce their size."
 verdict = "allow"
 rationale = "Produces stripped copies of assemblies; incorrect configuration can remove needed code."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "monolinker"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "writing output to a specified directory"
 verdict = "allow"
 rationale = "Sets the output directory; defaults to 'output' to avoid overwriting originals."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "monolinker"
@@ -19,3 +21,4 @@ flag = "-c"
 translation_modifier = "with a specified action for core assemblies"
 verdict = "allow"
 rationale = "Controls whether core assemblies are skipped, copied, or linked; linking may remove needed code."
+arity = "Boolean"

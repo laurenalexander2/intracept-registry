@@ -5,6 +5,7 @@ path = "smbd"
 translation = "Run the SMB file sharing server background service."
 verdict = "allow"
 rationale = "Exposes file system directories over the network; normally managed by launchd rather than invoked directly."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "smbd"
@@ -12,3 +13,4 @@ flag = "--no-symlinks"
 translation_modifier = "restricting client access to symbolic links and always following them server-side"
 verdict = "allow"
 rationale = "Changes symbolic link handling behavior; a security-tightening option."
+arity = "Boolean"

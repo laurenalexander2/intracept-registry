@@ -5,60 +5,70 @@ path = "tmux"
 translation = "Run the tmux terminal multiplexer."
 verdict = "allow"
 rationale = "The bare command starts a new session; no data is modified or destroyed."
+risk_class = "novel"
 
 [[command]]
 path = "tmux new-session"
 translation = "Create a new terminal session."
 verdict = "allow"
 rationale = "Starts a new session without affecting existing sessions or data."
+risk_class = "novel"
 
 [[command]]
 path = "tmux attach-session"
 translation = "Reconnect to an existing terminal session."
 verdict = "allow"
 rationale = "Read-write access to an existing session, but no data is destroyed."
+risk_class = "novel"
 
 [[command]]
 path = "tmux kill-session"
 translation = "Terminate a terminal session and all its programs."
 verdict = "allow"
 rationale = "Ends a session and stops all programs running inside it; unsaved work in those programs may be lost."
+risk_class = "novel"
 
 [[command]]
 path = "tmux list-sessions"
 translation = "List all active terminal sessions."
 verdict = "allow"
 rationale = "Read-only operation that modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "tmux detach-client"
 translation = "Disconnect a client from its terminal session without stopping it."
 verdict = "allow"
 rationale = "The session continues running in the background; no data is lost."
+risk_class = "novel"
 
 [[command]]
 path = "tmux split-window"
 translation = "Split the current window into two panes."
 verdict = "allow"
 rationale = "Creates an additional pane in the current window; no data is modified."
+risk_class = "novel"
 
 [[command]]
 path = "tmux new-window"
 translation = "Create a new window in the current session."
 verdict = "allow"
 rationale = "Adds a window without affecting existing windows or data."
+risk_class = "novel"
 
 [[command]]
 path = "tmux kill-window"
 translation = "Close a window and stop all programs running in it."
 verdict = "allow"
 rationale = "Terminates all panes and programs in the window; unsaved work may be lost."
+risk_class = "novel"
 
 [[command]]
 path = "tmux send-keys"
 translation = "Send keyboard input to a terminal pane."
 verdict = "allow"
 rationale = "Injects keystrokes into a running program, which could trigger any action that program supports."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmux new-session"
@@ -66,6 +76,7 @@ flag = "-d"
 translation_modifier = "without attaching to it"
 verdict = "allow"
 rationale = "Creates the session in the background; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux new-session"
@@ -73,6 +84,7 @@ flag = "-s"
 translation_modifier = "with a specific session name"
 verdict = "allow"
 rationale = "Names the session for easier identification; no risk impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux new-session"
@@ -80,6 +92,7 @@ flag = "-n"
 translation_modifier = "naming the first window"
 verdict = "allow"
 rationale = "Sets the initial window name; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux attach-session"
@@ -87,6 +100,7 @@ flag = "-t"
 translation_modifier = "targeting a specific session"
 verdict = "allow"
 rationale = "Specifies which session to attach to; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux attach-session"
@@ -94,6 +108,7 @@ flag = "-d"
 translation_modifier = "detaching any other clients already connected"
 verdict = "allow"
 rationale = "Disconnects other clients from the session but does not stop any programs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux kill-session"
@@ -101,13 +116,15 @@ flag = "-t"
 translation_modifier = "targeting a specific session"
 verdict = "allow"
 rationale = "Specifies which session to terminate; narrows the scope of the command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux kill-session"
 flag = "-a"
 translation_modifier = "killing all sessions except the one specified"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates multiple sessions at once, potentially stopping many running programs and losing unsaved work."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux split-window"
@@ -115,6 +132,7 @@ flag = "-h"
 translation_modifier = "splitting horizontally instead of vertically"
 verdict = "allow"
 rationale = "Changes the orientation of the split; no data impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux split-window"
@@ -122,6 +140,7 @@ flag = "-v"
 translation_modifier = "splitting vertically"
 verdict = "allow"
 rationale = "Default split direction; no data impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux send-keys"
@@ -129,6 +148,7 @@ flag = "-t"
 translation_modifier = "targeting a specific pane"
 verdict = "allow"
 rationale = "Specifies which pane receives the keystrokes; narrows the scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux kill-window"
@@ -136,6 +156,7 @@ flag = "-t"
 translation_modifier = "targeting a specific window"
 verdict = "allow"
 rationale = "Specifies which window to close; narrows the scope of the command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmux detach-client"
@@ -143,3 +164,4 @@ flag = "-a"
 translation_modifier = "detaching all other clients from the session"
 verdict = "allow"
 rationale = "Disconnects other clients but does not stop programs or lose data."
+arity = "Boolean"

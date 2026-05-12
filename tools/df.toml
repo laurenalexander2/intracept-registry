@@ -5,6 +5,7 @@ path = "df"
 translation = "Show how much disk space is free on each mounted storage volume."
 verdict = "allow"
 rationale = "Read-only display of disk usage statistics that does not modify anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "df"
@@ -12,6 +13,7 @@ flag = "-h"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Displays sizes in human-readable units like megabytes and gigabytes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -19,6 +21,7 @@ flag = "-H"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Displays sizes in human-readable units using powers of 1000; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -26,6 +29,7 @@ flag = "-a"
 translation_modifier = "including all mounted volumes, even hidden system ones"
 verdict = "allow"
 rationale = "Shows additional mount points that are normally hidden; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -33,6 +37,7 @@ flag = "-i"
 translation_modifier = "including counts of used and free file slots"
 verdict = "allow"
 rationale = "Adds file-slot usage statistics to the output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -40,6 +45,7 @@ flag = "-l"
 translation_modifier = "showing only locally attached storage volumes"
 verdict = "allow"
 rationale = "Filters out network-mounted volumes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -47,6 +53,7 @@ flag = "-T"
 translation_modifier = "showing only volumes of a specified type"
 verdict = "allow"
 rationale = "Filters output to specific volume types; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -54,6 +61,7 @@ flag = "-k"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows sizes in kilobyte blocks; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -61,6 +69,7 @@ flag = "-c"
 translation_modifier = "showing a grand total across all volumes"
 verdict = "allow"
 rationale = "Adds a summary total row to the output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "df"
@@ -68,3 +77,4 @@ flag = "-Y"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Adds a column showing each volume's storage type; still read-only."
+arity = "Boolean"

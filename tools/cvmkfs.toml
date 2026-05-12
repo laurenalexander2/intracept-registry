@@ -3,5 +3,6 @@
 [[command]]
 path = "cvmkfs"
 translation = "Create a new Xsan filesystem."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Initializes a new filesystem on storage devices, destroying any existing data."
+risk_class = "novel"

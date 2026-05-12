@@ -5,6 +5,7 @@ path = "alias"
 translation = "Create or display shortcut names for shell commands."
 verdict = "allow"
 rationale = "Defines command shortcuts in the current shell session; changes are not saved permanently."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "alias"
@@ -12,3 +13,4 @@ flag = "-p"
 translation_modifier = "printing all currently defined shortcuts"
 verdict = "allow"
 rationale = "Read-only display of existing aliases; modifies nothing."
+arity = "Boolean"

@@ -5,99 +5,116 @@ path = "railway"
 translation = "Run the Railway cloud platform command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "railway up"
 translation = "Upload and deploy the current project to Railway."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deploys code to a live service that may receive production traffic."
+risk_class = "novel"
 
 [[command]]
 path = "railway deploy"
 translation = "Provision a template into a Railway project."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates infrastructure from a template on the Railway platform."
+risk_class = "novel"
 
 [[command]]
 path = "railway down"
 translation = "Remove the most recent deployment from Railway."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Takes down a running deployment, which may cause downtime for users."
+risk_class = "novel"
 
 [[command]]
 path = "railway delete"
 translation = "Delete a Railway project."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the project and all its services and data from Railway."
+risk_class = "novel"
 
 [[command]]
 path = "railway init"
 translation = "Create a new Railway project."
 verdict = "allow"
 rationale = "Creates a new empty project on Railway."
+risk_class = "novel"
 
 [[command]]
 path = "railway link"
 translation = "Associate the current directory with a Railway project."
 verdict = "allow"
 rationale = "Stores a local configuration link; does not modify the remote project."
+risk_class = "novel"
 
 [[command]]
 path = "railway unlink"
 translation = "Remove the association between the current directory and a Railway project."
 verdict = "allow"
 rationale = "Removes the local configuration link."
+risk_class = "novel"
 
 [[command]]
 path = "railway status"
 translation = "Show information about the current Railway project."
 verdict = "allow"
 rationale = "Read-only display of project status."
+risk_class = "novel"
 
 [[command]]
 path = "railway logs"
 translation = "View build or deploy logs from a Railway deployment."
 verdict = "allow"
 rationale = "Read-only display of deployment logs."
+risk_class = "novel"
 
 [[command]]
 path = "railway list"
 translation = "List all projects in your Railway account."
 verdict = "allow"
 rationale = "Read-only listing of projects."
+risk_class = "novel"
 
 [[command]]
 path = "railway login"
 translation = "Log in to your Railway account."
 verdict = "allow"
 rationale = "Stores credentials locally; does not modify projects."
+risk_class = "novel"
 
 [[command]]
 path = "railway logout"
 translation = "Log out of your Railway account."
 verdict = "allow"
 rationale = "Removes locally stored authentication credentials, requiring the user to log in again."
+risk_class = "novel"
 
 [[command]]
 path = "railway variable"
 translation = "Manage environment variables for a Railway service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies environment variables that affect running services."
+risk_class = "novel"
 
 [[command]]
 path = "railway run"
 translation = "Run a local command using environment variables from the active Railway environment."
 verdict = "allow"
 rationale = "Executes an arbitrary command with Railway environment variables injected."
+risk_class = "novel"
 
 [[command]]
 path = "railway redeploy"
 translation = "Redeploy the latest deployment of a Railway service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Triggers a new deployment that replaces the currently running version."
+risk_class = "novel"
 
 [[command]]
 path = "railway restart"
 translation = "Restart the latest deployment of a Railway service without rebuilding."
 verdict = "allow"
 rationale = "Restarts the service, causing brief downtime."
+risk_class = "novel"

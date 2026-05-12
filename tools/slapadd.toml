@@ -3,8 +3,9 @@
 [[command]]
 path = "slapadd"
 translation = "Add entries from an LDAP data interchange file directly into an LDAP database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Directly modifies the LDAP database bypassing the server; incorrect entries can corrupt directory data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "slapadd"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "reading entries from a specified LDAP data interchange file"
 verdict = "allow"
 rationale = "Specifies input source; no additional risk beyond the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapadd"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "targeting a specific database by number"
 verdict = "allow"
 rationale = "Selects which database to modify; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapadd"
@@ -26,10 +29,12 @@ flag = "-u"
 translation_modifier = "performing a dry run without modifying the database"
 verdict = "allow"
 rationale = "Validates input without writing; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapadd"
 flag = "-c"
 translation_modifier = "continuing past errors instead of stopping"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Ignores errors which may result in partially corrupted data being added."
+arity = "Boolean"

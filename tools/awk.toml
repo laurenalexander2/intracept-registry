@@ -5,6 +5,7 @@ path = "awk"
 translation = "Process text line by line, splitting each line into fields and applying rules to transform or summarize the data."
 verdict = "allow"
 rationale = "By default, outputs results to the terminal without modifying the input file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "awk"
@@ -12,6 +13,7 @@ flag = "-F"
 translation_modifier = "using a specified character to split each line into fields"
 verdict = "allow"
 rationale = "Changes how input is divided into columns; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "awk"
@@ -19,6 +21,7 @@ flag = "-f"
 translation_modifier = "reading the processing program from a file instead of the command line"
 verdict = "allow"
 rationale = "Loads the program from a file; does not add any destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "awk"
@@ -26,3 +29,4 @@ flag = "-v"
 translation_modifier = "setting a variable to a given value before processing begins"
 verdict = "allow"
 rationale = "Passes a value into the program; does not change how files are handled."
+arity = "Boolean"

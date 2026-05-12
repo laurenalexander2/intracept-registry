@@ -3,8 +3,9 @@
 [[command]]
 path = "createdb"
 translation = "Create a new PostgreSQL database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new database on the PostgreSQL server."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "createdb"
@@ -12,6 +13,7 @@ flag = "-O"
 translation_modifier = "owned by a specified user"
 verdict = "allow"
 rationale = "Sets the owner of the new database; a configuration choice during creation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -19,6 +21,7 @@ flag = "-T"
 translation_modifier = "cloned from a specified template database"
 verdict = "allow"
 rationale = "Uses a template as the starting point; does not modify the template itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -26,6 +29,7 @@ flag = "-E"
 translation_modifier = "using a specified character encoding"
 verdict = "allow"
 rationale = "Sets the character encoding for the new database; a configuration choice."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -33,6 +37,7 @@ flag = "-l"
 translation_modifier = "using a specified locale"
 verdict = "allow"
 rationale = "Sets the locale for the new database; a configuration choice."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -40,6 +45,7 @@ flag = "-D"
 translation_modifier = "stored in a specified tablespace"
 verdict = "allow"
 rationale = "Sets the default tablespace; a storage configuration choice."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -47,6 +53,7 @@ flag = "-e"
 translation_modifier = "displaying the SQL commands being sent to the server"
 verdict = "allow"
 rationale = "Shows the generated SQL; read-only diagnostic output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -54,6 +61,7 @@ flag = "-h"
 translation_modifier = "on a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -61,6 +69,7 @@ flag = "-p"
 translation_modifier = "on a specified port"
 verdict = "allow"
 rationale = "Specifies which port to connect on; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "createdb"
@@ -68,3 +77,4 @@ flag = "-U"
 translation_modifier = "connecting as a specified user"
 verdict = "allow"
 rationale = "Specifies the authentication identity; the user's permissions determine what is allowed."
+arity = "Boolean"

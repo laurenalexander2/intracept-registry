@@ -3,8 +3,9 @@
 [[command]]
 path = "reboot"
 translation = "Restart the operating system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Immediately restarts the system, terminating all running processes and unsaved work."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "reboot"
@@ -12,24 +13,28 @@ flag = "-l"
 translation_modifier = "without recording the reboot in the system log"
 verdict = "allow"
 rationale = "Only suppresses log recording; does not change the reboot behavior itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "reboot"
 flag = "-n"
 translation_modifier = "without flushing the file system cache"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skipping the cache flush can cause file system corruption and data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "reboot"
 flag = "-N"
 translation_modifier = "without flushing the file system cache during process cleanup but still syncing at the kernel level"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the initial cache flush, which may cause data loss if devices are unavailable, though a kernel-level sync still occurs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "reboot"
 flag = "-q"
 translation_modifier = "quickly without gracefully terminating processes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Performs an ungraceful restart, skipping process cleanup and risking data loss."
+arity = "Boolean"

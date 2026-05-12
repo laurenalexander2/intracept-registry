@@ -5,6 +5,7 @@ path = "monodocs2html"
 translation = "Export Mono XML documentation to HTML files."
 verdict = "allow"
 rationale = "Generates HTML files from documentation sources; does not modify the source documentation."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "monodocs2html"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "writing output to a specified directory"
 verdict = "allow"
 rationale = "Sets the output directory; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "monodocs2html"
@@ -19,3 +21,4 @@ flag = "--force-update"
 translation_modifier = "regenerating all files regardless of modification dates"
 verdict = "allow"
 rationale = "Overwrites existing output files unconditionally; source documentation is not affected."
+arity = "Boolean"

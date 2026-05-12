@@ -5,66 +5,77 @@ path = "pip3.14"
 translation = "Run the Python package installer."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 install"
 translation = "Download and install Python packages and their dependencies."
 verdict = "allow"
 rationale = "Downloads and installs packages from PyPI that may execute setup scripts with system access."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 uninstall"
 translation = "Remove installed Python packages."
 verdict = "allow"
 rationale = "Removes packages that other packages or scripts may depend on."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 list"
 translation = "List installed Python packages."
 verdict = "allow"
 rationale = "Read-only listing of installed packages."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 show"
 translation = "Display information about an installed Python package."
 verdict = "allow"
 rationale = "Read-only display of package metadata."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 freeze"
 translation = "Output installed packages in requirements file format."
 verdict = "allow"
 rationale = "Read-only output of package versions."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 check"
 translation = "Verify that installed packages have compatible dependencies."
 verdict = "allow"
 rationale = "Read-only dependency compatibility check."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 download"
 translation = "Download Python packages without installing them."
 verdict = "allow"
 rationale = "Downloads package files to disk without installation or script execution."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 search"
 translation = "Search the Python Package Index for packages."
 verdict = "allow"
 rationale = "Read-only search of the package repository."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 cache"
 translation = "Inspect and manage the pip download cache."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+risk_class = "novel"
 
 [[command]]
 path = "pip3.14 cache purge"
 translation = "Remove all items from the pip download cache."
 verdict = "allow"
 rationale = "Deletes cached packages; they will be re-downloaded on next install."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pip3.14 install"
@@ -72,6 +83,7 @@ flag = "--upgrade"
 translation_modifier = "upgrading already-installed packages to the latest version"
 verdict = "allow"
 rationale = "Replaces existing packages with newer versions that may introduce breaking changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip3.14 install"
@@ -79,6 +91,7 @@ flag = "--force-reinstall"
 translation_modifier = "reinstalling packages even if they are already up to date"
 verdict = "allow"
 rationale = "Forces re-download and reinstallation, which re-runs setup scripts."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip3.14 install"
@@ -86,6 +99,7 @@ flag = "--no-deps"
 translation_modifier = "without installing package dependencies"
 verdict = "allow"
 rationale = "Reduces the scope of installation; may leave packages non-functional."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip3.14 install"
@@ -93,6 +107,7 @@ flag = "--user"
 translation_modifier = "installing to the user site-packages directory instead of system-wide"
 verdict = "allow"
 rationale = "Limits the installation to the current user's directory."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip3.14 uninstall"
@@ -100,3 +115,4 @@ flag = "-y"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Bypasses the confirmation prompt on package removal, which may break dependent packages."
+arity = "Boolean"

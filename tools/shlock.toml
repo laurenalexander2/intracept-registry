@@ -5,6 +5,7 @@ path = "shlock"
 translation = "Create or verify a lock file for shell scripts."
 verdict = "allow"
 rationale = "Creates a small lock file containing a PID; trivially reversible by removing the file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "shlock"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "using a specified lock file path"
 verdict = "allow"
 rationale = "Names the lock file; required for operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shlock"
@@ -19,3 +21,4 @@ flag = "-p"
 translation_modifier = "storing a specified process ID in the lock file"
 verdict = "allow"
 rationale = "Writes a PID to the lock file; no destructive action."
+arity = "Boolean"

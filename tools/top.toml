@@ -5,6 +5,7 @@ path = "top"
 translation = "Display a live, continuously updating view of running processes and system resource usage."
 verdict = "allow"
 rationale = "Read-only monitoring tool that displays process information without modifying anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "top"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "printing a specified number of snapshots and then exiting instead of updating in place"
 verdict = "allow"
 rationale = "Runs in logging mode for a set number of samples; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -19,6 +21,7 @@ flag = "-o"
 translation_modifier = "sorting processes by a specified column such as processor usage or memory"
 verdict = "allow"
 rationale = "Changes the display sort order; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "waiting a specified number of seconds between each update"
 verdict = "allow"
 rationale = "Controls the refresh interval; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -33,6 +37,7 @@ flag = "-n"
 translation_modifier = "showing only a specified number of processes"
 verdict = "allow"
 rationale = "Limits how many processes appear in the listing; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -40,6 +45,7 @@ flag = "-u"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes user display format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -47,6 +53,7 @@ flag = "-U"
 translation_modifier = "showing only processes belonging to a specified user"
 verdict = "allow"
 rationale = "Filters the display to a single user's processes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -54,6 +61,7 @@ flag = "-pid"
 translation_modifier = "showing only a specified process"
 verdict = "allow"
 rationale = "Filters the display to a single process by its ID; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -61,6 +69,7 @@ flag = "-stats"
 translation_modifier = "showing only specified columns in the output"
 verdict = "allow"
 rationale = "Customizes which data columns are displayed; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -68,6 +77,7 @@ flag = "-S"
 translation_modifier = "including swap and purgeable memory statistics"
 verdict = "allow"
 rationale = "Adds global memory statistics to the display; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -75,6 +85,7 @@ flag = "-F"
 translation_modifier = "skipping shared library statistics for faster updates"
 verdict = "allow"
 rationale = "Reduces computation by omitting framework statistics; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -82,6 +93,7 @@ flag = "-O"
 translation_modifier = "using a secondary sort column to break ties"
 verdict = "allow"
 rationale = "Adds a second-level sort key; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -89,6 +101,7 @@ flag = "-a"
 translation_modifier = "counting events cumulatively since the tool was launched"
 verdict = "allow"
 rationale = "Changes the counting mode to accumulative; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -96,6 +109,7 @@ flag = "-d"
 translation_modifier = "counting events relative to the previous snapshot"
 verdict = "allow"
 rationale = "Changes the counting mode to show differences between updates; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "top"
@@ -103,3 +117,4 @@ flag = "-r"
 translation_modifier = "including memory region details for each process"
 verdict = "allow"
 rationale = "Adds detailed memory mapping information to the output; still read-only."
+arity = "Boolean"

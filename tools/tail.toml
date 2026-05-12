@@ -7,8 +7,9 @@ path = "tail"
 translation = "Display the last lines of a file."
 verdict = "allow"
 rationale = "Read-only display of file contents that modifies nothing."
-
 # ── Line and byte selection ──────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "tail"
@@ -16,6 +17,7 @@ flag = "-n"
 translation_modifier = "showing a specified number of lines"
 verdict = "allow"
 rationale = "Changes how many lines are displayed; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tail"
@@ -23,6 +25,7 @@ flag = "-c"
 translation_modifier = "showing a specified number of bytes instead of lines"
 verdict = "allow"
 rationale = "Changes the unit of output from lines to bytes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tail"
@@ -30,8 +33,9 @@ flag = "-b"
 translation_modifier = "showing a specified number of 512-byte blocks instead of lines"
 verdict = "allow"
 rationale = "Changes the unit of output to 512-byte blocks; still read-only."
-
 # ── Following ────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "tail"
@@ -39,6 +43,7 @@ flag = "-f"
 translation_modifier = "continuously following new output as the file grows"
 verdict = "allow"
 rationale = "Keeps the stream open to display new lines as they are appended; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tail"
@@ -46,8 +51,9 @@ flag = "-F"
 translation_modifier = "continuously following new output, reopening the file if it is rotated or renamed"
 verdict = "allow"
 rationale = "Like -f but handles log rotation by detecting inode changes; still read-only."
-
 # ── Display order ────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "tail"
@@ -55,3 +61,4 @@ flag = "-r"
 translation_modifier = "displaying lines in reverse order from the end of the file"
 verdict = "allow"
 rationale = "Reverses the output order; still read-only."
+arity = "Boolean"

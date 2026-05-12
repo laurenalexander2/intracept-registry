@@ -3,8 +3,9 @@
 [[command]]
 path = "rsync"
 translation = "Synchronize files and directories between two locations."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Copies and synchronizes files, potentially overwriting files at the destination."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "rsync"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "recursively through all subdirectories"
 verdict = "allow"
 rationale = "Synchronizes entire directory trees, increasing the scope of files affected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -19,20 +21,23 @@ flag = "-a"
 translation_modifier = "in archive mode, preserving permissions, timestamps, symbolic links, and recursing into directories"
 verdict = "allow"
 rationale = "Combines several options for full directory mirroring; commonly used but increases scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
 flag = "--delete"
 translation_modifier = "removing files at the destination that do not exist at the source"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes files on the destination that are not in the source, which can cause data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
 flag = "--delete-before"
 translation_modifier = "deleting destination files before transferring"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes destination files before the sync starts, risking data loss if the transfer is interrupted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -40,6 +45,7 @@ flag = "-n"
 translation_modifier = "simulating the sync without actually transferring or deleting anything"
 verdict = "allow"
 rationale = "Dry-run mode; only shows what would happen."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -47,6 +53,7 @@ flag = "--dry-run"
 translation_modifier = "simulating the sync without actually transferring or deleting anything"
 verdict = "allow"
 rationale = "Dry-run mode; only shows what would happen."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -54,6 +61,7 @@ flag = "-e"
 translation_modifier = "using a specified remote shell program"
 verdict = "allow"
 rationale = "Changes the transport method; does not affect the sync behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -61,6 +69,7 @@ flag = "--exclude"
 translation_modifier = "skipping files matching a specified pattern"
 verdict = "allow"
 rationale = "Reduces the scope of the sync; a filtering option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -68,6 +77,7 @@ flag = "-z"
 translation_modifier = "compressing data during transfer"
 verdict = "allow"
 rationale = "Reduces bandwidth usage; does not change what is transferred."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -75,6 +85,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Increases output verbosity; does not change the sync behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -82,6 +93,7 @@ flag = "--progress"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows transfer progress; does not change the sync behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rsync"
@@ -89,3 +101,4 @@ flag = "--force"
 translation_modifier = "forcing deletion of non-empty directories at the destination"
 verdict = "allow"
 rationale = "Allows deletion of directories that still contain files not in the transfer set."
+arity = "Boolean"

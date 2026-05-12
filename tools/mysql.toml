@@ -5,18 +5,15 @@ path = "mysql"
 translation = "Connect to a MySQL database."
 verdict = "allow"
 rationale = "Connects to a live database where any SQL statement can be executed, including destructive operations."
-tags.scope = "local"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mysql"
 flag = "-e"
 translation_modifier = "executing a single SQL statement and then exiting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs arbitrary SQL directly, including destructive statements like DROP or DELETE, without an interactive session."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -24,6 +21,7 @@ flag = "-u"
 translation_modifier = "connecting as a specified database user"
 verdict = "allow"
 rationale = "Specifies the authentication identity; does not change what operations are available."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -31,6 +29,7 @@ flag = "-p"
 translation_modifier = "prompting for a password before connecting"
 verdict = "allow"
 rationale = "Adds an explicit authentication step before connecting."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -38,7 +37,7 @@ flag = "-h"
 translation_modifier = "connecting to a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
-tag_modifiers.scope = "remote"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -46,6 +45,7 @@ flag = "-D"
 translation_modifier = "connecting to a specified database"
 verdict = "allow"
 rationale = "Selects which database to operate on; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -53,6 +53,7 @@ flag = "--batch"
 translation_modifier = "formatting output for non-interactive use without column borders"
 verdict = "allow"
 rationale = "Changes output formatting only; does not affect what queries are executed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -60,14 +61,16 @@ flag = "--safe-updates"
 translation_modifier = "blocking bulk update and delete statements that lack a filter condition"
 verdict = "allow"
 rationale = "Prevents accidental bulk modifications; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
 flag = "--force"
 translation_modifier = "continuing execution even after SQL errors"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Suppresses error-based stopping, which may allow partially destructive scripts to continue."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "mysql"
@@ -75,6 +78,7 @@ flag = "--skip-column-names"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output formatting only; omits column headers from query results."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -82,6 +86,7 @@ flag = "-P"
 translation_modifier = "connecting on a specified TCP port"
 verdict = "allow"
 rationale = "Specifies which port to connect on; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
@@ -89,35 +94,28 @@ flag = "--ssl-mode"
 translation_modifier = "using a specified SSL encryption mode for the connection"
 verdict = "allow"
 rationale = "Controls connection encryption; does not affect query capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mysql"
 flag = "--local-infile"
 translation_modifier = "allowing the database to import data directly from files on the client machine"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Enables reading arbitrary files from the client filesystem into the database, which may expose sensitive data."
-tag_modifiers.target = ["database", "filesystem"]
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "mysql -e"
 translation = "Execute a single SQL statement against a MySQL database and exit immediately."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs arbitrary SQL non-interactively, which may include destructive statements like DROP TABLE or DELETE without review."
-tags.scope = "local"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "mysql -p -u"
 translation = "Connect to a MySQL database as a specified user, prompting for a password before establishing the session."
 verdict = "allow"
 rationale = "Standard authenticated connection pattern that ensures credentials are provided before any operations can be performed."
-tags.scope = "local"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"

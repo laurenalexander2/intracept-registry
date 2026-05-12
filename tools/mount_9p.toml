@@ -5,6 +5,7 @@ path = "mount_9p"
 translation = "Mount a 9P network filesystem."
 verdict = "allow"
 rationale = "Attaches a network filesystem to the local directory tree, changing the directory tree for all processes."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mount_9p"
@@ -12,3 +13,4 @@ flag = "-r"
 translation_modifier = "as read-only"
 verdict = "allow"
 rationale = "Restricts the mount to read-only access."
+arity = "Boolean"

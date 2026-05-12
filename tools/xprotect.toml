@@ -3,5 +3,6 @@
 [[command]]
 path = "xprotect"
 translation = "Manage the macOS XProtect malware detection system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Controls system malware protection; disabling or modifying rules affects security posture."
+risk_class = "novel"

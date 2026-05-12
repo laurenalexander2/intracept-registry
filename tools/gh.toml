@@ -7,81 +7,53 @@ path = "gh"
 translation = "Run the GitHub command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Authentication ───────────────────────────────────────────────────────────
+risk_class = "safe"
+
 
 [[command]]
 path = "gh auth"
 translation = "Manage authentication state for the GitHub CLI."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh auth login"
 translation = "Log in to a GitHub account."
 verdict = "allow"
 rationale = "Stores credentials locally; does not modify any remote resources."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh auth logout"
 translation = "Log out of a GitHub account."
 verdict = "allow"
 rationale = "Removes stored credentials, which may disrupt automated workflows that depend on them."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh auth status"
 translation = "Display the current authentication state."
 verdict = "allow"
 rationale = "Read-only display of login status."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
-
 # ── Repositories ─────────────────────────────────────────────────────────────
+risk_class = "secret_read"
+
 
 [[command]]
 path = "gh repo"
 translation = "Manage GitHub repositories."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh repo create"
 translation = "Create a new repository on GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new remote resource visible to others depending on visibility settings."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh repo create"
@@ -89,6 +61,7 @@ flag = "--public"
 translation_modifier = "making it publicly visible to everyone"
 verdict = "allow"
 rationale = "Public repositories expose code to the entire internet."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh repo create"
@@ -96,6 +69,7 @@ flag = "--private"
 translation_modifier = "making it visible only to you and collaborators"
 verdict = "allow"
 rationale = "Restricts access to the repository owner and explicitly added collaborators."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh repo create"
@@ -103,84 +77,56 @@ flag = "--clone"
 translation_modifier = "cloning it to the local machine after creation"
 verdict = "allow"
 rationale = "Creates a local directory; does not affect remote state beyond the initial creation."
-tag_modifiers.target = ["repository", "filesystem"]
+arity = "Boolean"
 
 [[command]]
 path = "gh repo clone"
 translation = "Download a GitHub repository to the local machine."
 verdict = "allow"
 rationale = "Creates a new local directory; does not modify the remote repository."
-tags.scope = "remote"
-tags.effect = ["read", "create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo fork"
 translation = "Create a personal copy of someone else's repository on GitHub."
 verdict = "allow"
 rationale = "Creates a new remote repository under your account."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo view"
 translation = "Display details about a GitHub repository."
 verdict = "allow"
 rationale = "Read-only display of repository metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo list"
 translation = "List repositories owned by a user or organization."
 verdict = "allow"
 rationale = "Read-only listing of repositories."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo edit"
 translation = "Modify settings of a GitHub repository."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes repository configuration such as visibility, description, or features."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo rename"
 translation = "Rename a GitHub repository."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes the repository URL, which may break existing links and integrations."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo archive"
 translation = "Archive a GitHub repository, making it read-only."
 verdict = "allow"
 rationale = "Prevents further changes to the repository; reversible via unarchive."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh repo archive"
@@ -188,72 +134,54 @@ flag = "--yes"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Bypasses the confirmation prompt on archiving, which makes the repository read-only."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "gh repo unarchive"
 translation = "Unarchive a GitHub repository, restoring write access."
 verdict = "allow"
 rationale = "Reverses an archive operation; restores normal repository functionality."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh repo delete"
 translation = "Permanently delete a GitHub repository."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Irrecoverably removes the repository, all issues, pull requests, and settings from GitHub."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gh repo delete"
 flag = "--yes"
 translation_modifier = "without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the confirmation prompt on a destructive operation, increasing the chance of accidental deletion."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "gh repo sync"
 translation = "Sync a forked repository with its upstream."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Updates branch refs to match the upstream, which may overwrite divergent local changes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Pull requests ────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh pr"
 translation = "Manage GitHub pull requests."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh pr create"
 translation = "Create a new pull request on GitHub."
 verdict = "allow"
 rationale = "Publishes a pull request visible to repository collaborators."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh pr create"
@@ -261,6 +189,7 @@ flag = "--draft"
 translation_modifier = "marking it as a draft that is not ready for review"
 verdict = "allow"
 rationale = "Creates the PR in draft state, signaling it is not ready to merge."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr create"
@@ -268,6 +197,7 @@ flag = "--fill"
 translation_modifier = "using commit messages for the title and body"
 verdict = "allow"
 rationale = "Auto-fills PR metadata from commits; still creates the same PR."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr create"
@@ -275,84 +205,56 @@ flag = "--dry-run"
 translation_modifier = "simulating the creation without actually opening a pull request"
 verdict = "allow"
 rationale = "No pull request is created; only shows what would happen."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[command]]
 path = "gh pr list"
 translation = "List pull requests in a repository."
 verdict = "allow"
 rationale = "Read-only listing of pull requests."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr view"
 translation = "Display details about a pull request."
 verdict = "allow"
 rationale = "Read-only display of pull request metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr checkout"
 translation = "Check out a pull request's branch locally."
 verdict = "allow"
 rationale = "Creates or switches to a local branch; does not modify the remote."
-tags.scope = "remote"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr diff"
 translation = "Show the changes in a pull request."
 verdict = "allow"
 rationale = "Read-only display of the pull request diff."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr checks"
 translation = "Show the CI check status for a pull request."
 verdict = "allow"
 rationale = "Read-only display of check run results."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr status"
 translation = "Show the status of pull requests relevant to you."
 verdict = "allow"
 rationale = "Read-only summary of your pull requests."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr merge"
 translation = "Merge a pull request on GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Integrates changes into the base branch, modifying the shared repository history."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh pr merge"
@@ -360,6 +262,7 @@ flag = "--merge"
 translation_modifier = "using a merge commit that preserves all individual commits"
 verdict = "allow"
 rationale = "Selects the default merge strategy; does not increase destructive potential."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr merge"
@@ -367,6 +270,7 @@ flag = "--squash"
 translation_modifier = "squashing all commits into one before merging"
 verdict = "allow"
 rationale = "Changes the merge strategy but does not increase destructive potential."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr merge"
@@ -374,6 +278,7 @@ flag = "--rebase"
 translation_modifier = "rebasing the commits onto the base branch"
 verdict = "allow"
 rationale = "Changes the merge strategy; the PR is still merged into the base branch."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr merge"
@@ -381,15 +286,16 @@ flag = "--delete-branch"
 translation_modifier = "deleting the branch after merging"
 verdict = "allow"
 rationale = "Removes the local and remote branch, which is expected but irreversible without recreating it."
-tag_modifiers.effect = ["write", "delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr merge"
 flag = "--admin"
 translation_modifier = "bypassing branch protection requirements"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overrides required checks and reviews, merging code that has not passed safeguards."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "gh pr merge"
@@ -397,17 +303,14 @@ flag = "--auto"
 translation_modifier = "enabling auto-merge once requirements are met"
 verdict = "allow"
 rationale = "Schedules an automatic merge, which will proceed without further human confirmation."
+arity = "Boolean"
 
 [[command]]
 path = "gh pr close"
 translation = "Close a pull request without merging it."
 verdict = "allow"
 rationale = "Closes the PR, stopping the review process; can be reopened."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh pr close"
@@ -415,30 +318,22 @@ flag = "--delete-branch"
 translation_modifier = "deleting the local and remote branch after closing"
 verdict = "allow"
 rationale = "Removes the branch, which may discard unmerged work if not preserved elsewhere."
-tag_modifiers.effect = ["write", "delete"]
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "gh pr reopen"
 translation = "Reopen a previously closed pull request."
 verdict = "allow"
 rationale = "Restores a closed PR to open state; no destructive changes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr review"
 translation = "Add a review to a pull request."
 verdict = "allow"
 rationale = "Publishes a review visible to collaborators that may approve or block merging."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh pr review"
@@ -446,6 +341,7 @@ flag = "--approve"
 translation_modifier = "approving the pull request for merging"
 verdict = "allow"
 rationale = "Signals the PR is ready to merge, which may trigger auto-merge if configured."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr review"
@@ -453,6 +349,7 @@ flag = "--request-changes"
 translation_modifier = "requesting changes that block merging until addressed"
 verdict = "allow"
 rationale = "Blocks the PR from merging until the review is dismissed or resolved."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh pr review"
@@ -460,151 +357,100 @@ flag = "--comment"
 translation_modifier = "leaving a comment without approving or requesting changes"
 verdict = "allow"
 rationale = "Posts a neutral review comment; does not affect merge eligibility."
+arity = "Boolean"
 
 [[command]]
 path = "gh pr comment"
 translation = "Add a comment to a pull request."
 verdict = "allow"
 rationale = "Posts a publicly visible comment on the pull request."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr edit"
 translation = "Modify a pull request's title, body, or metadata."
 verdict = "allow"
 rationale = "Updates PR metadata; does not affect code or branch state."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh pr revert"
 translation = "Create a new pull request that reverts a previously merged pull request."
 verdict = "allow"
 rationale = "Creates a revert PR that, if merged, undoes changes in the base branch."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Issues ───────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh issue"
 translation = "Manage GitHub issues."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh issue create"
 translation = "Create a new issue on GitHub."
 verdict = "allow"
 rationale = "Publishes an issue visible to repository collaborators or the public."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue list"
 translation = "List issues in a repository."
 verdict = "allow"
 rationale = "Read-only operation that lists repository issues without modifying or closing any of them."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue view"
 translation = "Display details about an issue."
 verdict = "allow"
 rationale = "Read-only display of issue metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue status"
 translation = "Show the status of issues relevant to you."
 verdict = "allow"
 rationale = "Read-only summary of your issues."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue close"
 translation = "Close an issue."
 verdict = "allow"
 rationale = "Changes the issue state; can be reopened."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue reopen"
 translation = "Reopen a previously closed issue."
 verdict = "allow"
 rationale = "Restores a closed issue to open state."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue comment"
 translation = "Add a comment to an issue."
 verdict = "allow"
 rationale = "Posts a publicly visible comment on the issue."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue edit"
 translation = "Modify an issue's title, body, or metadata."
 verdict = "allow"
 rationale = "Updates issue metadata without deleting anything."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh issue delete"
 translation = "Permanently delete an issue from GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the issue and all its comments irreversibly."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gh issue delete"
@@ -612,42 +458,31 @@ flag = "--yes"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt on a destructive operation."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "gh issue transfer"
 translation = "Move an issue to a different repository."
 verdict = "allow"
 rationale = "Transfers the issue, changing its URL and repository context."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Releases ─────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh release"
 translation = "Manage GitHub releases."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh release create"
 translation = "Create a new release on GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Publishes a release with assets visible to repository users; may auto-create a tag."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh release create"
@@ -655,7 +490,7 @@ flag = "--draft"
 translation_modifier = "saving it as a draft without publishing"
 verdict = "allow"
 rationale = "The release is not visible to the public until explicitly published."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh release create"
@@ -663,6 +498,7 @@ flag = "--prerelease"
 translation_modifier = "marking it as a pre-release version"
 verdict = "allow"
 rationale = "Labels the release as pre-release; does not change its visibility or content."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh release create"
@@ -670,6 +506,7 @@ flag = "--generate-notes"
 translation_modifier = "auto-generating release notes from commits"
 verdict = "allow"
 rationale = "Fills in release notes automatically; does not affect the release content or assets."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gh release create"
@@ -677,50 +514,35 @@ flag = "--verify-tag"
 translation_modifier = "aborting if the tag does not already exist on the remote"
 verdict = "allow"
 rationale = "Adds a safety check that prevents accidental tag creation."
+arity = "Boolean"
 
 [[command]]
 path = "gh release list"
 translation = "List releases in a repository."
 verdict = "allow"
 rationale = "Read-only listing of releases."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh release view"
 translation = "Display details about a release."
 verdict = "allow"
 rationale = "Read-only display of release metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh release download"
 translation = "Download assets from a GitHub release."
 verdict = "allow"
 rationale = "Downloads files to the local machine; does not modify the remote release."
-tags.scope = "remote"
-tags.effect = ["read", "create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh release delete"
 translation = "Delete a release from GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the release and its metadata; assets may become inaccessible."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gh release delete"
@@ -728,523 +550,350 @@ flag = "--yes"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt on a destructive operation."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "gh release delete"
 flag = "--cleanup-tag"
 translation_modifier = "also deleting the associated Git tag"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the tag in addition to the release, which may break references and automation."
+arity = "Boolean"
 
 [[command]]
 path = "gh release edit"
 translation = "Modify a release's metadata or assets."
 verdict = "allow"
 rationale = "Changes a published release that users may be consuming."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Gists ────────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh gist"
 translation = "Manage GitHub gists."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh gist create"
 translation = "Create a new gist on GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Publishes content to GitHub that may be publicly visible."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh gist list"
 translation = "List your gists."
 verdict = "allow"
 rationale = "Read-only operation that lists the user's gists without modifying or deleting any of them."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh gist view"
 translation = "Display the contents of a gist."
 verdict = "allow"
 rationale = "Read-only display of gist content."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh gist edit"
 translation = "Modify the contents of a gist."
 verdict = "allow"
 rationale = "Changes published gist content that others may have linked to."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh gist delete"
 translation = "Permanently delete a gist from GitHub."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the gist and all its files irreversibly; others may have linked to it."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Workflow runs ────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gh run"
 translation = "Manage GitHub Actions workflow runs."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh run list"
 translation = "List recent workflow runs."
 verdict = "allow"
 rationale = "Read-only listing of workflow runs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run view"
 translation = "Display details about a workflow run."
 verdict = "allow"
 rationale = "Read-only display of run details and logs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run watch"
 translation = "Watch a workflow run until it completes."
 verdict = "allow"
 rationale = "Read-only monitoring of a running workflow."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run download"
 translation = "Download artifacts from a workflow run."
 verdict = "allow"
 rationale = "Downloads files to the local machine; does not modify the remote run."
-tags.scope = "remote"
-tags.effect = ["read", "create"]
-tags.reversibility = "trivial"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run cancel"
 translation = "Cancel a running workflow."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Stops a workflow run that may be performing deployments or other important tasks."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run rerun"
 translation = "Re-run a completed workflow run."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Triggers a new execution that may deploy code or consume resources."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh run delete"
 translation = "Delete a workflow run and its logs."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes run history and artifacts, which may be needed for auditing."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
-
 # ── Workflows ───────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gh workflow"
 translation = "Manage GitHub Actions workflows."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh workflow list"
 translation = "List workflows in a repository."
 verdict = "allow"
 rationale = "Read-only listing of workflow definitions."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh workflow view"
 translation = "Display details about a workflow."
 verdict = "allow"
 rationale = "Read-only display of workflow configuration and recent runs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh workflow run"
 translation = "Trigger a workflow run by dispatching a workflow event."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Starts a new workflow execution that may deploy code, consume resources, or modify infrastructure."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh workflow enable"
 translation = "Enable a workflow that was previously disabled."
 verdict = "allow"
 rationale = "Re-enables a workflow; it will only run when triggered by future events."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh workflow disable"
 translation = "Disable a workflow so it no longer runs automatically."
 verdict = "allow"
 rationale = "Prevents the workflow from running, which may break CI/CD pipelines that depend on it."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
-
 # ── Secrets ──────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh secret"
 translation = "Manage GitHub secrets for Actions, Codespaces, or Dependabot."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh secret set"
 translation = "Create or update a secret in a repository or organization."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Stores sensitive values that are used by workflows and services."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh secret list"
 translation = "List secrets in a repository or organization."
 verdict = "allow"
 rationale = "Read-only listing of secret names; values are not displayed."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh secret delete"
 translation = "Delete a secret from a repository or organization."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes a secret that may be required by running workflows, potentially breaking deployments."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["credentials"]
-tags.safety_override = false
-
 # ── Variables ───────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gh variable"
 translation = "Manage GitHub Actions variables for a repository or organization."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh variable set"
 translation = "Create or update a GitHub Actions variable."
 verdict = "allow"
 rationale = "Changes a variable value that running workflows may depend on."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh variable list"
 translation = "List GitHub Actions variables in a repository or organization."
 verdict = "allow"
 rationale = "Read-only listing of variable names and values."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh variable delete"
 translation = "Delete a GitHub Actions variable."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes a variable that may be required by running workflows, potentially breaking builds."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["config"]
-tags.safety_override = false
-
 # ── Cache ───────────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gh cache"
 translation = "Manage GitHub Actions caches for a repository."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh cache list"
 translation = "List GitHub Actions caches in a repository."
 verdict = "allow"
 rationale = "Read-only listing of cached data."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh cache delete"
 translation = "Delete one or more GitHub Actions caches."
 verdict = "allow"
 rationale = "Removes cached data that may need to be rebuilt, slowing future workflow runs."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gh cache delete"
 flag = "--all"
 translation_modifier = "deleting all caches in the repository"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes every cache at once, which may significantly slow all subsequent workflow runs."
-
 # ── Browse ──────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[command]]
 path = "gh browse"
 translation = "Open the current repository in a web browser."
 verdict = "allow"
 rationale = "Opens a URL in the browser; does not modify any resources."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Search ──────────────────────────────────────────────────────────────────
+risk_class = "safe"
+
 
 [[command]]
 path = "gh search"
 translation = "Search across GitHub for repositories, issues, pull requests, and more."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh search repos"
 translation = "Search for repositories on GitHub."
 verdict = "allow"
 rationale = "Read-only search that lists matching repositories."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh search issues"
 translation = "Search for issues across GitHub."
 verdict = "allow"
 rationale = "Read-only search that lists matching issues."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh search prs"
 translation = "Search for pull requests across GitHub."
 verdict = "allow"
 rationale = "Read-only search that lists matching pull requests."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh search commits"
 translation = "Search for commits across GitHub."
 verdict = "allow"
 rationale = "Read-only search that lists matching commits."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh search code"
 translation = "Search for code across GitHub repositories."
 verdict = "allow"
 rationale = "Read-only search that lists matching code snippets."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
-
 # ── Labels ──────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gh label"
 translation = "Manage labels on a GitHub repository."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gh label list"
 translation = "List labels in a repository."
 verdict = "allow"
 rationale = "Read-only listing of repository labels."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh label create"
 translation = "Create a new label in a repository."
 verdict = "allow"
 rationale = "Adds a label definition; does not modify any issues or pull requests."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh label edit"
 translation = "Modify an existing label's name, description, or color."
 verdict = "allow"
 rationale = "Changes label metadata; does not remove the label from any issues."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gh label delete"
 translation = "Delete a label from a repository."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the label from all issues and pull requests that use it."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gh label delete"
@@ -1252,66 +901,47 @@ flag = "--yes"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt on label deletion."
-tag_modifiers.safety_override = true
-
 # ── SSH keys ────────────────────────────────────────────────────────────────
+arity = "Boolean"
+risk_class_override = "priv_esc"
+
 
 [[command]]
 path = "gh ssh-key"
 translation = "Manage SSH keys registered with your GitHub account."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh ssh-key list"
 translation = "List SSH keys registered with your GitHub account."
 verdict = "allow"
 rationale = "Read-only listing of SSH keys."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh ssh-key add"
 translation = "Add an SSH key to your GitHub account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants a new key access to your account for Git operations over SSH."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gh ssh-key delete"
 translation = "Remove an SSH key from your GitHub account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Revokes access for that key, which may break automated systems that depend on it."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["credentials"]
-tags.safety_override = false
-
 # ── API ──────────────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gh api"
 translation = "Make an authenticated request to the GitHub API."
 verdict = "allow"
 rationale = "Can read or modify any GitHub resource the authenticated user has access to."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gh api"
@@ -1319,8 +949,8 @@ flag = "--method"
 translation_modifier = "using a specific HTTP method such as POST, PUT, PATCH, or DELETE"
 verdict = "allow"
 rationale = "Non-GET methods modify or delete remote resources."
-tag_modifiers.effect = ["read", "write", "delete"]
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "gh api"
@@ -1328,214 +958,139 @@ flag = "--paginate"
 translation_modifier = "fetching all pages of results automatically"
 verdict = "allow"
 rationale = "Follows pagination links to retrieve complete result sets; still read-only when used with GET."
-
 # ── Combos ──────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "gh pr create"
 translation = "Create a new pull request on GitHub, publishing it to repository collaborators for review."
 verdict = "allow"
 rationale = "Opens a new PR visible to collaborators; can be closed or deleted afterward."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh pr create --draft"
 translation = "Create a new pull request on GitHub in draft mode, signaling it is not ready for review or merging."
 verdict = "allow"
 rationale = "Draft PRs cannot be merged until marked ready, reducing the risk of premature integration."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh pr merge --delete-branch --squash"
 translation = "Squash all commits into one and merge the pull request, then delete the source branch from both local and remote."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently integrates code into the base branch and removes the source branch, which cannot be undone without force-pushing."
-tags.scope = "remote"
-tags.effect = ["write", "delete"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gh pr merge --rebase"
 translation = "Rebase the pull request's commits onto the base branch and merge them without a merge commit."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rewrites commit hashes during rebase, permanently altering the repository history on the base branch."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh pr merge --merge"
 translation = "Merge the pull request into the base branch using a merge commit that preserves all individual commits."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Integrates changes into the shared base branch, modifying the repository history visible to all collaborators."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh repo delete"
 translation = "Permanently delete a GitHub repository, destroying all code, issues, pull requests, releases, and settings."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Irrecoverable destruction of an entire repository and all its associated data."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gh release create --draft"
 translation = "Create a new release on GitHub saved as a draft, invisible to the public until explicitly published."
 verdict = "allow"
 rationale = "Draft releases are not visible to users and can be edited or deleted before publishing."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh release delete --cleanup-tag --yes"
 translation = "Permanently delete a release and its associated Git tag without asking for confirmation."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys both the release and the tag in one step with no confirmation prompt, breaking references and automation."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "gh api --method"
 translation = "Make an authenticated request to the GitHub API using a specific HTTP method, which may create, modify, or delete remote resources."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Non-GET methods can mutate any resource the authenticated user has access to; the exact impact depends on the endpoint."
-tags.scope = "remote"
-tags.effect = ["read", "write", "delete"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gh auth login"
 translation = "Log in to a GitHub account, storing authentication credentials on the local machine."
 verdict = "allow"
 rationale = "Writes credentials locally; does not modify any remote GitHub resources."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[combo]]
 path = "gh auth logout"
 translation = "Log out of a GitHub account, removing stored authentication credentials from the local machine."
 verdict = "allow"
 rationale = "Deletes local credentials, which may disrupt automated workflows but is trivially reversible by logging in again."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[combo]]
 path = "gh issue create"
 translation = "Create a new issue on GitHub, visible to repository collaborators or the public depending on repository visibility."
 verdict = "allow"
 rationale = "Publishes an issue that can be closed or deleted afterward; no destructive impact."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh issue close"
 translation = "Close an issue on GitHub, marking it as resolved without deleting it."
 verdict = "allow"
 rationale = "Changes the issue state to closed; can be reopened at any time."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh repo clone"
 translation = "Download a GitHub repository to the local machine, creating a new directory with a full copy of the code and history."
 verdict = "allow"
 rationale = "Read-only fetch from remote that creates a local directory; the remote repository is not modified."
-tags.scope = "remote"
-tags.effect = ["read", "create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh run watch"
 translation = "Stream the live output of a GitHub Actions workflow run until it completes."
 verdict = "allow"
 rationale = "Read-only monitoring that does not affect the workflow's execution or results."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh pr checkout"
 translation = "Fetch a pull request's branch from GitHub and check it out locally for testing or review."
 verdict = "allow"
 rationale = "Downloads the branch and switches the local working tree; the remote repository is not modified."
-tags.scope = "remote"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh pr review --approve"
 translation = "Approve a pull request, signaling it meets review requirements and may be eligible for merging."
 verdict = "allow"
 rationale = "Posts an approval review that may satisfy branch protection rules and trigger auto-merge if configured."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "gh secret set"
 translation = "Create or update a repository or organization secret used by GitHub Actions workflows."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Writes a sensitive value that workflows consume; an incorrect value could break deployments or leak credentials."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[combo]]
 path = "gh repo fork"
 translation = "Create a personal copy of someone else's repository on GitHub under your account."
 verdict = "allow"
 rationale = "Creates a new remote repository; the source repository is not modified."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "novel"

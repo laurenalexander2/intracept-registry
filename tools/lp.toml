@@ -5,6 +5,7 @@ path = "lp"
 translation = "Send a file to a printer for printing."
 verdict = "allow"
 rationale = "Submits a print job; the original file is not modified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "lp"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "sending the job to a specific printer"
 verdict = "allow"
 rationale = "Only changes which printer receives the job."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "printing a specific number of copies"
 verdict = "allow"
 rationale = "Only affects the number of copies printed; does not change the document content or printer settings."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -26,6 +29,7 @@ flag = "-E"
 translation_modifier = "using an encrypted connection to the print server"
 verdict = "allow"
 rationale = "Enables encryption for the connection; does not change what is printed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -33,6 +37,7 @@ flag = "-q"
 translation_modifier = "setting the job priority from 1 (lowest) to 100 (highest)"
 verdict = "allow"
 rationale = "Only changes the scheduling priority of the print job."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -40,6 +45,7 @@ flag = "-H hold"
 translation_modifier = "holding the job in the queue instead of printing it immediately"
 verdict = "allow"
 rationale = "Delays printing; the job can be resumed later."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -47,6 +53,7 @@ flag = "-P"
 translation_modifier = "printing only specific pages"
 verdict = "allow"
 rationale = "Limits output to selected pages; does not alter the original file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -54,6 +61,7 @@ flag = "-t"
 translation_modifier = "setting a custom job name"
 verdict = "allow"
 rationale = "Only changes the display name of the print job."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lp"
@@ -61,3 +69,4 @@ flag = "-m"
 translation_modifier = "sending an email notification when the job completes"
 verdict = "allow"
 rationale = "Only adds a notification; does not affect printing behavior."
+arity = "Boolean"

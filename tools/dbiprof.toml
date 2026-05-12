@@ -5,6 +5,7 @@ path = "dbiprof"
 translation = "Profile DBI database operations."
 verdict = "allow"
 rationale = "Read-only analysis of database operation performance."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dbiprof"
@@ -12,3 +13,4 @@ flag = "--delete"
 translation_modifier = "deleting the profiling data after displaying it"
 verdict = "allow"
 rationale = "Removes the profiling data file; data is lost if not saved elsewhere."
+arity = "Boolean"

@@ -7,13 +7,9 @@ path = "pytest"
 translation = "Run Python tests using the pytest framework."
 verdict = "allow"
 rationale = "Executes test code; primarily a read-only testing operation."
-tags.scope = "local"
-tags.effect = ["execute", "read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Flags ────────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "pytest"
@@ -21,6 +17,7 @@ flag = "-v"
 translation_modifier = "with verbose output showing individual test names"
 verdict = "allow"
 rationale = "Changes output formatting; does not affect test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -28,6 +25,7 @@ flag = "-x"
 translation_modifier = "stopping on the first failure"
 verdict = "allow"
 rationale = "Exits early on failure; reduces the scope of the test run."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -35,6 +33,7 @@ flag = "--tb"
 translation_modifier = "with a specified traceback display style"
 verdict = "allow"
 rationale = "Changes error output formatting; does not affect test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -42,6 +41,7 @@ flag = "-k"
 translation_modifier = "filtering tests by a keyword expression"
 verdict = "allow"
 rationale = "Limits which tests are run; reduces the scope of the test run."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -49,6 +49,7 @@ flag = "--cov"
 translation_modifier = "measuring code coverage for the specified package"
 verdict = "allow"
 rationale = "Adds coverage instrumentation; does not change test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -56,6 +57,7 @@ flag = "-n"
 translation_modifier = "running tests in parallel across multiple workers"
 verdict = "allow"
 rationale = "Increases concurrency; does not change what tests are executed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -63,6 +65,7 @@ flag = "--lf"
 translation_modifier = "rerunning only the tests that failed in the last session"
 verdict = "allow"
 rationale = "Limits which tests are run based on previous results."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -70,6 +73,7 @@ flag = "-s"
 translation_modifier = "disabling output capture so print statements appear immediately"
 verdict = "allow"
 rationale = "Changes output handling; does not affect test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -77,6 +81,7 @@ flag = "--pdb"
 translation_modifier = "dropping into the Python debugger on failure"
 verdict = "allow"
 rationale = "Pauses execution for interactive debugging; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -84,6 +89,7 @@ flag = "-q"
 translation_modifier = "with minimal output"
 verdict = "allow"
 rationale = "Reduces output verbosity; does not affect test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pytest"
@@ -91,38 +97,27 @@ flag = "--strict-markers"
 translation_modifier = "failing if any test uses an unregistered marker"
 verdict = "allow"
 rationale = "Adds stricter validation; a safety check that catches misconfigured tests."
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "pytest --cov -v"
 translation = "Run Python tests with verbose output and code coverage measurement for the specified package."
 verdict = "allow"
 rationale = "Combines verbose output with coverage instrumentation for detailed test reporting."
-tags.scope = "local"
-tags.effect = ["execute", "read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "pytest --pdb -x"
 translation = "Run Python tests, stopping on the first failure and dropping into the Python debugger to inspect the error."
 verdict = "allow"
 rationale = "Stops early and opens an interactive debugger session, useful for diagnosing test failures."
-tags.scope = "local"
-tags.effect = ["execute", "read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "pytest --lf -x"
 translation = "Rerun only the tests that failed in the last session, stopping on the first new failure."
 verdict = "allow"
 rationale = "Focuses on previously failing tests and exits early, enabling a fast red-green debugging loop."
-tags.scope = "local"
-tags.effect = ["execute", "read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

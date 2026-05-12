@@ -5,6 +5,7 @@ path = "showmount"
 translation = "Display NFS mount information for a remote host."
 verdict = "allow"
 rationale = "Read-only query of NFS mount status; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "showmount"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "listing all mount points with their host and directory"
 verdict = "allow"
 rationale = "Expands output format; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "showmount"
@@ -19,6 +21,7 @@ flag = "-d"
 translation_modifier = "listing only directory paths of mount points"
 verdict = "allow"
 rationale = "Filters output to directories; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "showmount"
@@ -26,3 +29,4 @@ flag = "-e"
 translation_modifier = "showing the host's exports list"
 verdict = "allow"
 rationale = "Displays exported directories; no state modification."
+arity = "Boolean"

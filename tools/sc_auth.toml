@@ -5,105 +5,123 @@ path = "sc_auth"
 translation = "Configure SmartCard authentication for user accounts."
 verdict = "allow"
 rationale = "Modifies authentication settings for local accounts; changes are reversible but affect login security."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth pair"
 translation = "Associate a user account with a SmartCard public key."
 verdict = "allow"
 rationale = "Modifies the user's keychain to allow SmartCard unlock; reversible with unpair."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth unpair"
 translation = "Remove the association between a user account and a SmartCard key."
 verdict = "allow"
 rationale = "Removes SmartCard authentication binding; user can still log in with password."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth pairing_ui"
 translation = "Control whether the SmartCard pairing dialog appears when an unpaired card is inserted."
 verdict = "allow"
 rationale = "Toggles a dialog prompt preference; no authentication state is changed."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth identities"
 translation = "List all identities on all connected SmartCards."
 verdict = "allow"
 rationale = "Read-only listing of SmartCard identities."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth list"
 translation = "List all public keys associated with a user account."
 verdict = "allow"
 rationale = "Read-only display of key associations."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth changepin"
 translation = "Change or unblock a SmartCard PIN."
 verdict = "allow"
 rationale = "Modifies the SmartCard PIN; incorrect attempts can lock the card."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth verifypin"
 translation = "Verify a SmartCard PIN without changing anything."
 verdict = "allow"
 rationale = "Read-only PIN verification that does not modify state."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth enable_for_login"
 translation = "Enable a SmartCard token extension for system login."
 verdict = "allow"
 rationale = "Changes system authentication configuration; reversible but affects login flow."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth filevault"
 translation = "Manage SmartCard support for FileVault disk encryption unlock."
 verdict = "allow"
 rationale = "Modifies FileVault unlock configuration; incorrect changes could complicate disk access recovery."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth create-ctk-identity"
 translation = "Create a new CryptoTokenKit identity with a key pair."
 verdict = "allow"
 rationale = "Generates a new cryptographic identity in the Secure Enclave; reversible by deletion."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth delete-ctk-identity"
 translation = "Delete a CryptoTokenKit identity by its public key hash."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a cryptographic identity; if the key was non-exportable, it cannot be recovered."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth delete-all-ctk-identities"
 translation = "Delete all CryptoTokenKit identities."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Irrecoverably destroys all CryptoTokenKit identities including non-exportable keys; broad blast radius with no undo."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth list-ctk-identities"
 translation = "List all CryptoTokenKit identities."
 verdict = "allow"
 rationale = "Read-only display of existing identities."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth import-ctk-identities"
 translation = "Import CryptoTokenKit identities from a file."
 verdict = "allow"
 rationale = "Adds identities to the system from a file; reversible by deletion."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth export-ctk-identity"
 translation = "Export a CryptoTokenKit identity to a file."
 verdict = "allow"
 rationale = "Reads an identity and writes it to a file; no destructive action."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth create-ctk-csr"
 translation = "Create a certificate signing request for a CryptoTokenKit identity."
 verdict = "allow"
 rationale = "Generates a CSR file; does not modify existing keys or identities."
+risk_class = "novel"
 
 [[command]]
 path = "sc_auth import-ctk-certificate"
 translation = "Import a certificate for an existing CryptoTokenKit identity."
 verdict = "allow"
 rationale = "Associates a certificate with an identity; reversible but affects authentication trust."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "snmpbulkwalk"
 translation = "Retrieve all values in a section of a network device's management data using efficient bulk SNMP requests."
 verdict = "allow"
 rationale = "Read-only bulk SNMP walk; does not modify the remote device."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -26,6 +29,7 @@ flag = "-Cc"
 translation_modifier = "skipping the check for out-of-order results"
 verdict = "allow"
 rationale = "Disables a client-side safety check; no data is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -33,6 +37,7 @@ flag = "-Ci"
 translation_modifier = "including the starting point in the results"
 verdict = "allow"
 rationale = "Only adds one additional read-only value to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -40,6 +45,7 @@ flag = "-Cn"
 translation_modifier = "specifying how many leading variables should not repeat"
 verdict = "allow"
 rationale = "Only tunes the bulk request structure; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -47,6 +53,7 @@ flag = "-Cp"
 translation_modifier = "printing the total number of values found at the end"
 verdict = "allow"
 rationale = "Only adds a summary count to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -54,6 +61,7 @@ flag = "-Cr"
 translation_modifier = "setting the maximum number of values to retrieve per request"
 verdict = "allow"
 rationale = "Only controls the batch size of each bulk request; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkwalk"
@@ -61,3 +69,4 @@ flag = "-Os"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes how object names are displayed in the output."
+arity = "Boolean"

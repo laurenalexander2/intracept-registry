@@ -5,6 +5,7 @@ path = "column"
 translation = "Format text input into neatly aligned columns."
 verdict = "allow"
 rationale = "Read-only text formatting tool that writes to the terminal."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "column"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "detecting columns automatically and creating a table"
 verdict = "allow"
 rationale = "Only changes how output is formatted; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "column"
@@ -19,6 +21,7 @@ flag = "-s"
 translation_modifier = "using a custom character to separate columns"
 verdict = "allow"
 rationale = "Only changes how input is parsed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "column"
@@ -26,6 +29,7 @@ flag = "-c"
 translation_modifier = "fitting output to a specific display width"
 verdict = "allow"
 rationale = "Only changes how output is formatted; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "column"
@@ -33,3 +37,4 @@ flag = "-x"
 translation_modifier = "filling columns before rows instead of the default order"
 verdict = "allow"
 rationale = "Only changes the order in which entries are arranged; read-only operation."
+arity = "Boolean"

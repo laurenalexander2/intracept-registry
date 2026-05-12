@@ -5,6 +5,7 @@ path = "vacuumdb"
 translation = "Reclaim storage and optimize a PostgreSQL database."
 verdict = "allow"
 rationale = "Reorganizes database storage and updates statistics; locks tables briefly but does not delete data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -12,6 +13,7 @@ flag = "--all"
 translation_modifier = "operating on all databases in the cluster"
 verdict = "allow"
 rationale = "Vacuums all databases; resource-intensive but not destructive."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -19,6 +21,7 @@ flag = "--full"
 translation_modifier = "performing a full vacuum that rewrites the entire table and reclaims maximum space"
 verdict = "allow"
 rationale = "Locks each table exclusively for the duration, blocking all reads and writes until complete."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -26,6 +29,7 @@ flag = "--freeze"
 translation_modifier = "aggressively freezing old row versions to prevent transaction ID wraparound"
 verdict = "allow"
 rationale = "Preventive maintenance operation that does not delete data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -33,6 +37,7 @@ flag = "--analyze"
 translation_modifier = "also updating query planner statistics"
 verdict = "allow"
 rationale = "Collects statistics used by the query planner; does not modify table data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -40,6 +45,7 @@ flag = "--analyze-only"
 translation_modifier = "only updating query planner statistics without reclaiming storage"
 verdict = "allow"
 rationale = "Collects statistics only; no vacuuming or data modification occurs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -47,6 +53,7 @@ flag = "-t"
 translation_modifier = "only for the specified table"
 verdict = "allow"
 rationale = "Limits the operation to a single table, reducing scope and impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -54,6 +61,7 @@ flag = "-j"
 translation_modifier = "using multiple parallel jobs for faster processing"
 verdict = "allow"
 rationale = "Increases processing speed with parallelism; does not change what is vacuumed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -61,6 +69,7 @@ flag = "-q"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Suppresses progress messages; cosmetic only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -68,6 +77,7 @@ flag = "-v"
 translation_modifier = "displaying detailed processing information"
 verdict = "allow"
 rationale = "Adds verbose diagnostic output; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "vacuumdb"
@@ -75,3 +85,4 @@ flag = "--skip-locked"
 translation_modifier = "skipping tables that cannot be locked immediately"
 verdict = "allow"
 rationale = "Avoids blocking on locked tables; a safety-enhancing option."
+arity = "Boolean"

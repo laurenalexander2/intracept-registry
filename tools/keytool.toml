@@ -5,66 +5,77 @@ path = "keytool"
 translation = "Manage cryptographic keys and certificates in a Java keystore."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -genkeypair"
 translation = "Generate a new key pair and store it in the keystore."
 verdict = "allow"
 rationale = "Creates a persistent key pair used for authentication and signing."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -list"
 translation = "List entries in the keystore."
 verdict = "allow"
 rationale = "Read-only display of keystore contents."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -importcert"
 translation = "Import a certificate into the keystore."
 verdict = "allow"
 rationale = "Adds a trusted certificate that affects which connections and code are trusted."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -exportcert"
 translation = "Export a certificate from the keystore to a file."
 verdict = "allow"
 rationale = "Reads from the keystore and writes to a file; the keystore is not modified."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -delete"
 translation = "Delete an entry from the keystore."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a key or certificate; recovery requires a backup."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -storepasswd"
 translation = "Change the password of the keystore."
 verdict = "allow"
 rationale = "Alters the keystore encryption password; forgetting the new password locks out access."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -keypasswd"
 translation = "Change the password protecting a specific key entry."
 verdict = "allow"
 rationale = "Alters the key's encryption password; forgetting the new password locks out the key."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -certreq"
 translation = "Generate a certificate signing request from the keystore."
 verdict = "allow"
 rationale = "Creates a request file; does not modify the keystore."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -importkeystore"
 translation = "Import all entries from one keystore into another."
 verdict = "allow"
 rationale = "Copies keys and certificates into the destination keystore; may overwrite existing entries."
+risk_class = "novel"
 
 [[command]]
 path = "keytool -printcert"
 translation = "Display the contents of a certificate file."
 verdict = "allow"
 rationale = "Read-only display of certificate information."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -72,6 +83,7 @@ flag = "-alias"
 translation_modifier = "using a specific name for the key entry"
 verdict = "allow"
 rationale = "Labels the key entry; does not change the key generation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -79,6 +91,7 @@ flag = "-keyalg"
 translation_modifier = "using a specific algorithm for key generation"
 verdict = "allow"
 rationale = "Selects the cryptographic algorithm; does not change risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -86,6 +99,7 @@ flag = "-keysize"
 translation_modifier = "setting the key size in bits"
 verdict = "allow"
 rationale = "Controls key strength; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -93,6 +107,7 @@ flag = "-validity"
 translation_modifier = "setting how many days the certificate is valid"
 verdict = "allow"
 rationale = "Controls certificate lifetime; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -100,6 +115,7 @@ flag = "-dname"
 translation_modifier = "setting the distinguished name for the certificate"
 verdict = "allow"
 rationale = "Provides identity information non-interactively; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -107,6 +123,7 @@ flag = "-keystore"
 translation_modifier = "using a specific keystore file"
 verdict = "allow"
 rationale = "Selects a non-default keystore; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -genkeypair"
@@ -114,6 +131,7 @@ flag = "-storepass"
 translation_modifier = "providing the keystore password on the command line"
 verdict = "allow"
 rationale = "Supplies the password non-interactively; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -list"
@@ -121,6 +139,7 @@ flag = "-v"
 translation_modifier = "showing detailed information for each entry"
 verdict = "allow"
 rationale = "Only adds more detail to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -list"
@@ -128,6 +147,7 @@ flag = "-keystore"
 translation_modifier = "listing entries from a specific keystore file"
 verdict = "allow"
 rationale = "Selects a non-default keystore to display; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -list"
@@ -135,6 +155,7 @@ flag = "-alias"
 translation_modifier = "displaying only a specific entry"
 verdict = "allow"
 rationale = "Filters the output to one entry; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importcert"
@@ -142,6 +163,7 @@ flag = "-trustcacerts"
 translation_modifier = "also trusting certificates from the default certificate authority store"
 verdict = "allow"
 rationale = "Includes standard trusted certificates in chain validation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importcert"
@@ -149,6 +171,7 @@ flag = "-noprompt"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the trust confirmation prompt; a certificate could be trusted inadvertently."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importcert"
@@ -156,13 +179,15 @@ flag = "-alias"
 translation_modifier = "storing the certificate under a specific name"
 verdict = "allow"
 rationale = "Labels the entry; does not change the import operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -delete"
 flag = "-alias"
 translation_modifier = "deleting a specific named entry"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Identifies which key or certificate to permanently remove."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importkeystore"
@@ -170,6 +195,7 @@ flag = "-srckeystore"
 translation_modifier = "importing from a specific source keystore"
 verdict = "allow"
 rationale = "Specifies the source; does not change the import operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importkeystore"
@@ -177,6 +203,7 @@ flag = "-destkeystore"
 translation_modifier = "importing into a specific destination keystore"
 verdict = "allow"
 rationale = "Existing entries in the destination may be overwritten."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "keytool -importkeystore"
@@ -184,3 +211,4 @@ flag = "-srcstoretype"
 translation_modifier = "specifying the format of the source keystore"
 verdict = "allow"
 rationale = "Selects the keystore format; does not change the import operation."
+arity = "Boolean"

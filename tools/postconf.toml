@@ -5,6 +5,7 @@ path = "postconf"
 translation = "Display or modify Postfix mail server configuration parameters."
 verdict = "allow"
 rationale = "Can change mail server configuration that affects mail delivery behavior."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "postconf"
@@ -12,13 +13,15 @@ flag = "-d"
 translation_modifier = "showing default parameter values instead of current settings"
 verdict = "allow"
 rationale = "Read-only display of default configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
 flag = "-e"
 translation_modifier = "writing new values into the configuration file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Directly modifies the mail server configuration file, which can break mail delivery if values are incorrect."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
@@ -26,6 +29,7 @@ flag = "-n"
 translation_modifier = "showing only parameters that differ from the defaults"
 verdict = "allow"
 rationale = "Read-only display of non-default configuration values."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
@@ -33,6 +37,7 @@ flag = "-m"
 translation_modifier = "listing all supported lookup table types"
 verdict = "allow"
 rationale = "Read-only display of available table types."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
@@ -40,6 +45,7 @@ flag = "-l"
 translation_modifier = "listing all supported mailbox locking methods"
 verdict = "allow"
 rationale = "Read-only display of locking method names."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
@@ -47,27 +53,31 @@ flag = "-h"
 translation_modifier = "showing parameter values without their names"
 verdict = "allow"
 rationale = "Only changes the output format."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
 flag = "-M"
 translation_modifier = "displaying or editing service entries in the master configuration file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Can modify the master process configuration, which controls how mail services run."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
 flag = "-#"
 translation_modifier = "commenting out a parameter in the configuration file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Effectively removes a configuration parameter, reverting it to its default value."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
 flag = "-X"
 translation_modifier = "removing a parameter from the configuration file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes a parameter entirely, reverting it to its default value."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "postconf"
@@ -75,3 +85,4 @@ flag = "-v"
 translation_modifier = "showing detailed processing information"
 verdict = "allow"
 rationale = "Only increases output verbosity for troubleshooting."
+arity = "Boolean"

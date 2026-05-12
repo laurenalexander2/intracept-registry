@@ -5,6 +5,7 @@ path = "snmptranslate"
 translation = "Convert SNMP object names between human-readable and numeric formats."
 verdict = "allow"
 rationale = "Local-only name translation; no network communication or state modification."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -12,6 +13,7 @@ flag = "-Td"
 translation_modifier = "printing full details about the specified object"
 verdict = "allow"
 rationale = "Only changes the amount of information displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -19,6 +21,7 @@ flag = "-Tp"
 translation_modifier = "printing a graphical tree rooted at the specified object"
 verdict = "allow"
 rationale = "Only changes the output format to a tree view."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -26,6 +29,7 @@ flag = "-Ta"
 translation_modifier = "dumping all loaded definitions in a simple format"
 verdict = "allow"
 rationale = "Only changes the output format; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -33,6 +37,7 @@ flag = "-Tl"
 translation_modifier = "dumping all objects with labels"
 verdict = "allow"
 rationale = "Only changes the output format; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -40,6 +45,7 @@ flag = "-To"
 translation_modifier = "dumping all objects in numeric form"
 verdict = "allow"
 rationale = "Only changes the output format; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -47,6 +53,7 @@ flag = "-Ts"
 translation_modifier = "dumping all objects in symbolic form"
 verdict = "allow"
 rationale = "Only changes the output format; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -54,6 +61,7 @@ flag = "-On"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes how object names are displayed in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -61,6 +69,7 @@ flag = "-IR"
 translation_modifier = "searching for the object name across all loaded definitions"
 verdict = "allow"
 rationale = "Only broadens the name lookup; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -68,6 +77,7 @@ flag = "-m"
 translation_modifier = "loading specific definition files"
 verdict = "allow"
 rationale = "Only controls which definition files are parsed locally."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmptranslate"
@@ -75,3 +85,4 @@ flag = "-M"
 translation_modifier = "searching for definition files in specific directories"
 verdict = "allow"
 rationale = "Only controls where definition files are found on the local system."
+arity = "Boolean"

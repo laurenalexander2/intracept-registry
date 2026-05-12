@@ -5,12 +5,14 @@ path = "tmutil"
 translation = "Control and interact with Time Machine backups."
 verdict = "allow"
 rationale = "The bare command prints help; specific verbs have varying risk levels."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil setdestination"
 translation = "Configure a volume or network share as a Time Machine backup destination."
 verdict = "allow"
 rationale = "Changes where backups are stored; replacing destinations may make old backups inaccessible."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil setdestination"
@@ -18,6 +20,7 @@ flag = "-a"
 translation_modifier = "adding the destination to the list instead of replacing"
 verdict = "allow"
 rationale = "Preserves existing destinations rather than replacing them."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil setdestination"
@@ -25,18 +28,21 @@ flag = "-p"
 translation_modifier = "prompting for the password interactively instead of on the command line"
 verdict = "allow"
 rationale = "Improves security by hiding the password from process listings."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil removedestination"
 translation = "Remove a backup destination from the Time Machine configuration."
 verdict = "allow"
 rationale = "Disconnects a backup destination; existing backups remain on the disk but are no longer managed."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil destinationinfo"
 translation = "Display information about configured backup destinations."
 verdict = "allow"
 rationale = "Read-only display of backup destination settings."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil destinationinfo"
@@ -44,12 +50,14 @@ flag = "-X"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output to XML property list format; read-only."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil addexclusion"
 translation = "Exclude a file, directory, or volume from future Time Machine backups."
 verdict = "allow"
 rationale = "Items excluded will not be backed up; data loss is possible if the item is later damaged."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil addexclusion"
@@ -57,6 +65,7 @@ flag = "-p"
 translation_modifier = "using a fixed-path exclusion that stays with the location, not the item"
 verdict = "allow"
 rationale = "Exclusion is path-based; moving the item away removes the exclusion, but new items at that path become excluded."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil addexclusion"
@@ -64,36 +73,42 @@ flag = "-v"
 translation_modifier = "excluding an entire volume by its filesystem identity"
 verdict = "allow"
 rationale = "Excludes the volume persistently across name and mount path changes."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil removeexclusion"
 translation = "Remove a previously configured Time Machine exclusion."
 verdict = "allow"
 rationale = "Re-enables backup for an item; no data loss."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil isexcluded"
 translation = "Check whether a file, directory, or volume is excluded from backups."
 verdict = "allow"
 rationale = "Read-only query that checks exclusion status."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil enable"
 translation = "Turn on automatic Time Machine backups."
 verdict = "allow"
 rationale = "Enables backup scheduling; only adds data to the backup destination."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil disable"
 translation = "Turn off automatic Time Machine backups."
 verdict = "allow"
 rationale = "Stops automatic backups, which may leave data unprotected."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil startbackup"
 translation = "Start a Time Machine backup immediately."
 verdict = "allow"
 rationale = "Initiates a backup which only adds data; does not modify or delete source files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil startbackup"
@@ -101,6 +116,7 @@ flag = "--auto"
 translation_modifier = "running the backup in automatic mode with system-managed priority"
 verdict = "allow"
 rationale = "Lets the system manage backup scheduling and resources."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil startbackup"
@@ -108,6 +124,7 @@ flag = "--block"
 translation_modifier = "waiting for the backup to complete before returning"
 verdict = "allow"
 rationale = "Blocks the terminal until backup finishes; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil startbackup"
@@ -115,6 +132,7 @@ flag = "--rotation"
 translation_modifier = "allowing automatic destination rotation during the backup"
 verdict = "allow"
 rationale = "Permits switching between configured backup destinations."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil startbackup"
@@ -122,24 +140,28 @@ flag = "--destination"
 translation_modifier = "targeting a specific backup destination by its identifier"
 verdict = "allow"
 rationale = "Selects which destination receives the backup; no additional risk."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil stopbackup"
 translation = "Stop a currently running Time Machine backup."
 verdict = "allow"
 rationale = "Interrupts the backup process; the partial backup remains valid."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil compare"
 translation = "Compare the current system to a backup, or compare two backups."
 verdict = "allow"
 rationale = "Read-only comparison that displays differences without modifying anything."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil restore"
 translation = "Restore files from a Time Machine backup to a specified location."
 verdict = "allow"
 rationale = "Writes backup data to the filesystem; may overwrite existing files at the destination."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil restore"
@@ -147,95 +169,111 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Increases output verbosity during restore; does not change behavior."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil delete"
 translation = "Delete one or more Time Machine backups."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes backup snapshots; the deleted backup data cannot be recovered."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tmutil delete"
 flag = "-t"
 translation_modifier = "specifying a backup timestamp to delete"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Selects which backup to permanently remove by its timestamp."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tmutil delete"
 flag = "-p"
 translation_modifier = "deleting a specific path within a backup"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the specified path from the backup."
+arity = "Boolean"
 
 [[command]]
 path = "tmutil latestbackup"
 translation = "Display the path to the most recent completed backup."
 verdict = "allow"
 rationale = "Read-only query that prints backup information."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil listbackups"
 translation = "List all available Time Machine backups."
 verdict = "allow"
 rationale = "Read-only operation that lists Time Machine backup snapshots without modifying or deleting any."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil listlocalsnapshots"
 translation = "List local APFS snapshots created by Time Machine."
 verdict = "allow"
 rationale = "Read-only listing of local snapshots."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil listlocalsnapshotdates"
 translation = "List the creation dates of all local Time Machine snapshots."
 verdict = "allow"
 rationale = "Read-only listing of snapshot dates."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil deletelocalsnapshots"
 translation = "Delete local Time Machine snapshots for a specified date or volume."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes local backup snapshots; recovery of deleted snapshot data is not possible."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil thinlocalsnapshots"
 translation = "Reclaim disk space by removing local snapshots until a target free space is reached."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes snapshots to free space; removed backup points cannot be recovered."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil localsnapshot"
 translation = "Create a new local Time Machine snapshot of all APFS backup volumes."
 verdict = "allow"
 rationale = "Creates a read-only snapshot; does not modify or delete any data."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil verifychecksums"
 translation = "Verify the integrity of files in a Time Machine backup by checking stored checksums."
 verdict = "allow"
 rationale = "Read-only integrity check that does not modify backup data."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil calculatedrift"
 translation = "Analyze the amount of change between successive backups in a machine directory."
 verdict = "allow"
 rationale = "Read-only analysis that computes differences without modifying anything."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil uniquesize"
 translation = "Calculate the unique size of a backup that is not shared with other backups."
 verdict = "allow"
 rationale = "Read-only analysis that does not modify backup data."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil inheritbackup"
 translation = "Claim ownership of a backup created by another computer."
 verdict = "allow"
 rationale = "Reassigns backup identity; the previous computer will no longer recognize the backup as its own."
+risk_class = "novel"
 
 [[command]]
 path = "tmutil associatedisk"
 translation = "Associate a volume store in a backup with a different local disk."
 verdict = "allow"
 rationale = "Reconfigures the backup history association; incorrect use may cause unnecessary full re-backups."
+risk_class = "novel"

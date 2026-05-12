@@ -5,6 +5,7 @@ path = "fold"
 translation = "Wrap lines of text to fit a specified width."
 verdict = "allow"
 rationale = "Reads input and writes wrapped text to the terminal; does not modify files in place."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "fold"
@@ -12,6 +13,7 @@ flag = "-w"
 translation_modifier = "using a specific line width instead of the default 80 columns"
 verdict = "allow"
 rationale = "Only changes the target width for line wrapping."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fold"
@@ -19,6 +21,7 @@ flag = "-s"
 translation_modifier = "breaking lines at the last blank character within the width"
 verdict = "allow"
 rationale = "Improves readability by breaking at word boundaries instead of mid-word."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fold"
@@ -26,3 +29,4 @@ flag = "-b"
 translation_modifier = "counting width in bytes rather than column positions"
 verdict = "allow"
 rationale = "Only changes how width is measured; no destructive action."
+arity = "Boolean"

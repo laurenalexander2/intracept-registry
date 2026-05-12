@@ -5,6 +5,7 @@ path = "script"
 translation = "Record a terminal session to a file."
 verdict = "allow"
 rationale = "Creates a transcript file of terminal output; does not modify existing files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "script"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "appending to an existing transcript file instead of overwriting it"
 verdict = "allow"
 rationale = "Preserves existing content by appending; less destructive than the default overwrite."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "script"
@@ -19,6 +21,7 @@ flag = "-r"
 translation_modifier = "recording input, output, and timestamps for later playback"
 verdict = "allow"
 rationale = "Adds timing metadata to the recording; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "script"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "playing back a previously recorded session"
 verdict = "allow"
 rationale = "Read-only playback of a recorded session."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "script"
@@ -33,6 +37,7 @@ flag = "-k"
 translation_modifier = "logging keystrokes sent to the program as well as output"
 verdict = "allow"
 rationale = "Records additional input data; may capture sensitive keystrokes to a file but does not modify system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "script"
@@ -40,6 +45,7 @@ flag = "-q"
 translation_modifier = "suppressing start and stop messages"
 verdict = "allow"
 rationale = "Cosmetic change to output; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "script"
@@ -47,3 +53,4 @@ flag = "-F"
 translation_modifier = "flushing output immediately after each write"
 verdict = "allow"
 rationale = "Changes buffering behavior; no state modification."
+arity = "Boolean"

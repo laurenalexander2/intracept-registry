@@ -5,15 +5,18 @@ path = "shazam"
 translation = "Run the ShazamKit command-line utility for audio recognition."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "shazam signature"
 translation = "Generate a Shazam audio signature file from audio input."
 verdict = "allow"
 rationale = "Creates a signature file; does not modify existing files."
+risk_class = "novel"
 
 [[command]]
 path = "shazam custom-catalog"
 translation = "Manage custom Shazam recognition catalogs."
 verdict = "allow"
 rationale = "Creates or manages catalog files for audio recognition."
+risk_class = "novel"

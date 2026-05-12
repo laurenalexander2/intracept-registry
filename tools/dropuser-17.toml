@@ -3,5 +3,6 @@
 [[command]]
 path = "dropuser-17"
 translation = "Delete a PostgreSQL 17 user role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the role; objects owned by it may become inaccessible."
+risk_class = "novel"

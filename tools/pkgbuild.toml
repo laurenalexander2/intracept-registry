@@ -5,6 +5,7 @@ path = "pkgbuild"
 translation = "Build a macOS Installer component package from files on disk."
 verdict = "allow"
 rationale = "Creates a package file; does not install anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -12,6 +13,7 @@ flag = "--root"
 translation_modifier = "packaging the entire contents of a specified directory"
 verdict = "allow"
 rationale = "Selects the source directory; does not modify the source files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -19,6 +21,7 @@ flag = "--component"
 translation_modifier = "packaging a specific application bundle"
 verdict = "allow"
 rationale = "Selects a bundle to include; does not modify the bundle."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -26,6 +29,7 @@ flag = "--scripts"
 translation_modifier = "including pre-install and post-install scripts in the package"
 verdict = "allow"
 rationale = "Embedded scripts run during installation and can make arbitrary system changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -33,6 +37,7 @@ flag = "--identifier"
 translation_modifier = "setting a unique identifier for the package"
 verdict = "allow"
 rationale = "Labels the package for upgrade detection; does not change contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -40,6 +45,7 @@ flag = "--version"
 translation_modifier = "setting the version number for the package"
 verdict = "allow"
 rationale = "Labels the package version; does not change contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -47,6 +53,7 @@ flag = "--install-location"
 translation_modifier = "setting the default install destination on the target system"
 verdict = "allow"
 rationale = "Controls where files are placed during installation; only affects the package metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -54,6 +61,7 @@ flag = "--nopayload"
 translation_modifier = "building a package that contains only scripts and no files"
 verdict = "allow"
 rationale = "Creates a scripts-only package; the scripts can make arbitrary system changes during installation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -61,6 +69,7 @@ flag = "--sign"
 translation_modifier = "digitally signing the package with a developer identity"
 verdict = "allow"
 rationale = "Adds a signature for trust verification; does not change the package contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -68,6 +77,7 @@ flag = "--keychain"
 translation_modifier = "searching for the signing identity in a specific keychain"
 verdict = "allow"
 rationale = "Selects a non-default keychain; does not change the signing operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -75,6 +85,7 @@ flag = "--timestamp"
 translation_modifier = "including a trusted timestamp with the signature"
 verdict = "allow"
 rationale = "Adds a timestamp for long-term signature validity; a security-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -82,6 +93,7 @@ flag = "--analyze"
 translation_modifier = "generating a component property list template instead of building a package"
 verdict = "allow"
 rationale = "Produces an informational file; does not create a package."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -89,6 +101,7 @@ flag = "--filter"
 translation_modifier = "excluding files matching a pattern from the package"
 verdict = "allow"
 rationale = "Reduces what is included; does not modify source files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -96,6 +109,7 @@ flag = "--ownership"
 translation_modifier = "controlling how file ownership is recorded in the package"
 verdict = "allow"
 rationale = "Sets ownership metadata; does not change actual file ownership on disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -103,6 +117,7 @@ flag = "--component-plist"
 translation_modifier = "using a property list to control how bundles are handled during installation"
 verdict = "allow"
 rationale = "Customizes per-bundle install behavior; only affects package metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -110,6 +125,7 @@ flag = "--quiet"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only suppresses status messages on standard output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -117,6 +133,7 @@ flag = "--large-payload"
 translation_modifier = "supporting files larger than 8 gigabytes in the package"
 verdict = "allow"
 rationale = "Enables large file support; limits compatibility to macOS 12.0 and later."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -124,6 +141,7 @@ flag = "--min-os-version"
 translation_modifier = "setting the minimum macOS version required to install the package"
 verdict = "allow"
 rationale = "Restricts which systems can install the package; only affects metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgbuild"
@@ -131,3 +149,4 @@ flag = "--compression"
 translation_modifier = "controlling the compression algorithm used for the package"
 verdict = "allow"
 rationale = "Affects package size and compatibility; does not change the contents."
+arity = "Boolean"

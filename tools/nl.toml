@@ -5,6 +5,7 @@ path = "nl"
 translation = "Add line numbers to the output of a file."
 verdict = "allow"
 rationale = "Read-only filter that adds line numbers; does not modify the input file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "nl"
@@ -12,6 +13,7 @@ flag = "-b"
 translation_modifier = "selecting which lines to number based on a type rule"
 verdict = "allow"
 rationale = "Controls which body lines get numbered; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "using a specified number format such as left-justified, right-justified, or zero-padded"
 verdict = "allow"
 rationale = "Only changes the formatting of line numbers."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "using a custom separator between line numbers and text"
 verdict = "allow"
 rationale = "Only changes the delimiter character; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -33,6 +37,7 @@ flag = "-w"
 translation_modifier = "using a specified width for line numbers"
 verdict = "allow"
 rationale = "Only changes the column width of line numbers."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -40,6 +45,7 @@ flag = "-v"
 translation_modifier = "starting numbering at a specified value"
 verdict = "allow"
 rationale = "Only changes the initial line number; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -47,6 +53,7 @@ flag = "-i"
 translation_modifier = "incrementing line numbers by a specified value"
 verdict = "allow"
 rationale = "Only changes the numbering increment; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nl"
@@ -54,3 +61,4 @@ flag = "-p"
 translation_modifier = "without restarting numbering at logical page boundaries"
 verdict = "allow"
 rationale = "Only affects numbering continuity across pages; no destructive action."
+arity = "Boolean"

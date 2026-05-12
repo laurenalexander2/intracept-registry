@@ -7,21 +7,18 @@ path = "gcloud"
 translation = "Run the Google Cloud command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Global flags ─────────────────────────────────────────────────────────────
+risk_class = "safe"
+
 
 [[flag]]
 applies_to = "gcloud"
 flag = "--quiet"
 translation_modifier = "without interactive prompts, using defaults for all choices"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Disables confirmation prompts, allowing destructive operations to proceed without user verification."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "gcloud"
@@ -29,6 +26,7 @@ flag = "--project"
 translation_modifier = "targeting a specific Google Cloud project"
 verdict = "allow"
 rationale = "Overrides the default project; does not change what operations are available."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud"
@@ -36,6 +34,7 @@ flag = "--impersonate-service-account"
 translation_modifier = "acting as a specified service account"
 verdict = "allow"
 rationale = "Runs commands with the permissions of another identity, which may have broader access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud"
@@ -43,254 +42,172 @@ flag = "--format"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output format (JSON, YAML, table, etc.); read-only display change."
-
 # ── Auth ─────────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[command]]
 path = "gcloud auth"
 translation = "Manage authentication for the Google Cloud CLI."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud auth login"
 translation = "Log in to a Google Cloud account."
 verdict = "allow"
 rationale = "Stores credentials locally; does not modify cloud resources."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud auth revoke"
 translation = "Revoke credentials for a Google Cloud account."
 verdict = "allow"
 rationale = "Removes stored credentials, which may break automated workflows that depend on them."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud auth application-default login"
 translation = "Set up application default credentials for local development."
 verdict = "allow"
 rationale = "Stores credentials locally for use by client libraries."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud auth list"
 translation = "List the accounts currently authenticated with the CLI."
 verdict = "allow"
 rationale = "Read-only listing of authenticated accounts."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
-
 # ── Config ───────────────────────────────────────────────────────────────────
+risk_class = "secret_read"
+
 
 [[command]]
 path = "gcloud config set"
 translation = "Set a Google Cloud CLI configuration property."
 verdict = "allow"
 rationale = "Changes local CLI behavior; does not modify cloud resources."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud config get"
 translation = "Display the value of a CLI configuration property."
 verdict = "allow"
 rationale = "Read-only display of a configuration value."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gcloud config list"
 translation = "List all properties in the active CLI configuration."
 verdict = "allow"
 rationale = "Read-only display of current configuration."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gcloud config unset"
 translation = "Remove a CLI configuration property."
 verdict = "allow"
 rationale = "Resets a property to its default; only affects local CLI behavior."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
-
 # ── Projects ─────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud projects"
 translation = "Manage Google Cloud projects."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud projects list"
 translation = "List all Google Cloud projects accessible by the active account."
 verdict = "allow"
 rationale = "Read-only listing of projects."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud projects describe"
 translation = "Show metadata for a Google Cloud project."
 verdict = "allow"
 rationale = "Read-only display of project details."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud projects create"
 translation = "Create a new Google Cloud project."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new project that may incur billing and consume organizational quota."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud projects delete"
 translation = "Mark a Google Cloud project for deletion."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Schedules the project and all its resources for permanent deletion after a grace period."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Compute ──────────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gcloud compute"
 translation = "Manage Compute Engine resources."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Compute Engine instances ─────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud compute instances list"
 translation = "List Compute Engine virtual machine instances."
 verdict = "allow"
 rationale = "Read-only listing of instances."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances describe"
 translation = "Show details about a Compute Engine instance."
 verdict = "allow"
 rationale = "Read-only display of instance metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances create"
 translation = "Create a new Compute Engine virtual machine instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provisions a billable VM that consumes project resources."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances start"
 translation = "Start a stopped Compute Engine instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Resumes a VM that will begin incurring compute charges."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances stop"
 translation = "Stop a running Compute Engine instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Shuts down the VM, interrupting any running workloads."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances delete"
 translation = "Delete one or more Compute Engine virtual machine instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes VMs and by default their boot disks; data on non-persistent disks is lost."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gcloud compute instances delete"
 flag = "--delete-disks"
 translation_modifier = "also deleting the specified type of attached disks"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys attached persistent disks, which may contain irreplaceable data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud compute instances delete"
@@ -298,63 +215,48 @@ flag = "--keep-disks"
 translation_modifier = "preserving the specified type of attached disks"
 verdict = "allow"
 rationale = "Prevents disk deletion, reducing the blast radius of the instance deletion."
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
 
 [[command]]
 path = "gcloud compute instances reset"
 translation = "Hard-reset a Compute Engine instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Performs an ungraceful restart that may cause data loss in unflushed buffers."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute instances ssh"
 translation = "Open an SSH session to a Compute Engine instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens a remote shell for arbitrary command execution on the instance."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Compute SSH/SCP short forms (gcloud-managed SSH wrappers) ───────────────
 # Short forms `gcloud compute ssh` and `gcloud compute scp` exist alongside
 # `gcloud compute instances ssh`. Google's docs and tab completion both produce
 # the short forms, so they show up commonly in real commands.
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud compute ssh"
 translation = "Open an SSH session to a Compute Engine instance using gcloud-managed authentication."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens a remote shell for arbitrary command execution on the instance; gcloud handles key provisioning and IAP tunneling but the underlying capability is the same as plain ssh."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute scp"
 translation = "Securely copy files between the local machine and a Compute Engine instance over SSH, using gcloud-managed authentication."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Transfers files to or from a remote instance over SSH; can write arbitrary content to remote disks or pull data from them."
-tags.scope = "remote"
-tags.effect = ["write", "read"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gcloud compute scp"
 flag = "--recurse"
 translation_modifier = "copying directories and their contents recursively"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Recursive copy can transfer many files at once, increasing the volume of data written to or read from the remote instance."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud compute scp"
@@ -362,6 +264,7 @@ flag = "--compress"
 translation_modifier = "with on-the-wire compression"
 verdict = "allow"
 rationale = "Compression is a transport optimization; it does not change what is transferred."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud compute scp"
@@ -369,13 +272,15 @@ flag = "--zone"
 translation_modifier = "targeting an instance in a specific zone"
 verdict = "allow"
 rationale = "Zone selection is routing only; it does not change what the operation does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud compute ssh"
 flag = "--command"
 translation_modifier = "running a specific command on the remote instance and returning"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Executes the supplied command non-interactively on the remote host; the command itself determines impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud compute ssh"
@@ -383,280 +288,185 @@ flag = "--zone"
 translation_modifier = "targeting an instance in a specific zone"
 verdict = "allow"
 rationale = "Zone selection is routing only; it does not change what the operation does."
+arity = "Boolean"
 
 [[command]]
 path = "gcloud compute config-ssh"
 translation = "Update the local SSH client config so Compute Engine instances can be reached by name with plain `ssh`."
 verdict = "allow"
 rationale = "Edits the local user's SSH config; does not modify any cloud resource and does not open a session."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute reset-windows-password"
 translation = "Reset the password for a Windows user on a Compute Engine instance and return the new credentials."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Generates new credentials for a remote Windows host; anyone holding the output can log in until the password is changed again."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
-
 # ── Compute disks ────────────────────────────────────────────────────────────
+risk_class = "secret_read"
+
 
 [[command]]
 path = "gcloud compute disks list"
 translation = "List Compute Engine persistent disks."
 verdict = "allow"
 rationale = "Read-only listing of disks."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute disks create"
 translation = "Create a new Compute Engine persistent disk."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a billable storage resource."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud compute disks delete"
 translation = "Delete one or more Compute Engine persistent disks."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys disk data with no undo; recovery requires snapshots or backups."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud compute disks snapshot"
 translation = "Create a snapshot of a Compute Engine persistent disk."
 verdict = "allow"
 rationale = "Creates a backup copy; does not modify the source disk."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Compute disks ────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud compute disks"
 translation = "Manage Compute Engine persistent disks."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Compute firewall ─────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud compute firewall-rules list"
 translation = "List Compute Engine firewall rules."
 verdict = "allow"
 rationale = "Read-only listing of firewall rules."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "gcloud compute firewall-rules create"
 translation = "Create a new Compute Engine firewall rule."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens network access paths that may expose services to unauthorized traffic."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "gcloud compute firewall-rules delete"
 translation = "Delete a Compute Engine firewall rule."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes a network access control, which may block legitimate traffic or expose previously filtered services."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud compute firewall-rules update"
 translation = "Modify an existing Compute Engine firewall rule."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes network access controls that affect traffic flow to running services."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
-
 # ── Cloud SQL ────────────────────────────────────────────────────────────────
+risk_class = "net_egress"
+
 
 [[command]]
 path = "gcloud sql"
 translation = "Manage Cloud SQL database instances."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql instances list"
 translation = "List Cloud SQL database instances."
 verdict = "allow"
 rationale = "Read-only listing of database instances."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql instances describe"
 translation = "Show details about a Cloud SQL instance."
 verdict = "allow"
 rationale = "Read-only display of instance metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql instances create"
 translation = "Create a new Cloud SQL database instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provisions a billable database instance."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql instances delete"
 translation = "Delete a Cloud SQL database instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the database instance and all its data unless a final backup is taken."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud sql instances restart"
 translation = "Restart a Cloud SQL instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Temporarily interrupts database availability during the restart."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql instances patch"
 translation = "Update settings on a Cloud SQL instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies database configuration, which may cause a restart or affect availability."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql databases list"
 translation = "List databases in a Cloud SQL instance."
 verdict = "allow"
 rationale = "Read-only listing of databases."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql databases create"
 translation = "Create a new database in a Cloud SQL instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Adds a database to the instance."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud sql databases delete"
 translation = "Delete a database from a Cloud SQL instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the database and all its data from the instance."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
-
 # ── Cloud Storage ────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gcloud storage"
 translation = "Manage Cloud Storage buckets and objects."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud storage ls"
 translation = "List Cloud Storage buckets or objects."
 verdict = "allow"
 rationale = "Read-only listing of storage resources."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud storage cp"
 translation = "Upload, download, or copy Cloud Storage objects."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Transfers data to or from Cloud Storage, potentially overwriting existing objects."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gcloud storage cp"
@@ -664,198 +474,141 @@ flag = "--recursive"
 translation_modifier = "including all files in subdirectories"
 verdict = "allow"
 rationale = "Copies entire directory trees, increasing the scope of the transfer."
+arity = "Boolean"
 
 [[command]]
 path = "gcloud storage rm"
 translation = "Delete Cloud Storage objects or buckets."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes objects from Cloud Storage."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "gcloud storage rm"
 flag = "--recursive"
 translation_modifier = "deleting all objects under the specified path and any empty buckets"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes all objects recursively, which can wipe an entire bucket's contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud storage rm"
 flag = "--all-versions"
 translation_modifier = "including all object versions, not just live versions"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes versioned objects as well, removing the ability to recover previous versions."
-tag_modifiers.reversibility = "impossible"
+arity = "Boolean"
 
 [[command]]
 path = "gcloud storage buckets create"
 translation = "Create a new Cloud Storage bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new storage resource that will incur costs."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud storage buckets delete"
 translation = "Delete one or more Cloud Storage buckets."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the bucket; must be empty first but the bucket name may not be reusable."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud storage buckets list"
 translation = "List Cloud Storage buckets."
 verdict = "allow"
 rationale = "Read-only listing of buckets."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud storage cat"
 translation = "Output the contents of a Cloud Storage object to the terminal."
 verdict = "allow"
 rationale = "Read-only display of object contents."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── GKE / Container ─────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud container"
 translation = "Manage Google Kubernetes Engine resources."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters list"
 translation = "List Google Kubernetes Engine clusters."
 verdict = "allow"
 rationale = "Read-only listing of clusters."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters describe"
 translation = "Show details about a GKE cluster."
 verdict = "allow"
 rationale = "Read-only display of cluster metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters create"
 translation = "Create a new GKE cluster."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provisions billable compute and networking infrastructure."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters delete"
 translation = "Delete a GKE cluster and its node instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the cluster, all running workloads, and associated resources; persistent data may be lost."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud container clusters resize"
 translation = "Change the number of nodes in a GKE cluster node pool."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Scaling down removes nodes and evicts running workloads, potentially disrupting services."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters update"
 translation = "Update settings on a GKE cluster."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies cluster configuration, which may trigger node restarts or affect availability."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "cluster"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud container clusters get-credentials"
 translation = "Fetch cluster credentials and configure kubectl to use them."
 verdict = "allow"
 rationale = "Updates the local kubeconfig file; does not modify the cluster."
-tags.scope = "remote"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "config"]
-tags.safety_override = false
-
 # ── Cloud Run ────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud run"
 translation = "Manage Cloud Run services and jobs."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud run deploy"
 translation = "Create or update a Cloud Run service with a new container image."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deploys code to a live service that may receive production traffic."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gcloud run deploy"
 flag = "--allow-unauthenticated"
 translation_modifier = "allowing anyone on the internet to invoke the service"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Makes the service publicly accessible without authentication."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "gcloud run deploy"
@@ -863,199 +616,132 @@ flag = "--no-traffic"
 translation_modifier = "without routing any traffic to the new revision"
 verdict = "allow"
 rationale = "Deploys a new revision that does not receive traffic until explicitly routed."
+arity = "Boolean"
 
 [[command]]
 path = "gcloud run services list"
 translation = "List Cloud Run services."
 verdict = "allow"
 rationale = "Read-only listing of services."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud run services describe"
 translation = "Show details about a Cloud Run service."
 verdict = "allow"
 rationale = "Read-only display of service metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud run services delete"
 translation = "Delete a Cloud Run service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the service and all its revisions; incoming traffic will return errors."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Cloud Functions ──────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gcloud functions"
 translation = "Manage Google Cloud Functions."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud functions list"
 translation = "List Google Cloud Functions."
 verdict = "allow"
 rationale = "Read-only listing of functions."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud functions deploy"
 translation = "Deploy a Google Cloud Function."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deploys code that will execute in response to events or HTTP requests."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud functions delete"
 translation = "Delete a Google Cloud Function."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the function; any triggers pointing to it will stop working."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud functions call"
 translation = "Invoke a Google Cloud Function directly."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Triggers function execution, which may have side effects depending on the function's logic."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud functions logs read"
 translation = "Display log entries for a Cloud Function."
 verdict = "allow"
 rationale = "Read-only display of function logs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── IAM ──────────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud iam"
 translation = "Manage IAM service accounts and policies."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud iam service-accounts list"
 translation = "List IAM service accounts in a project."
 verdict = "allow"
 rationale = "Read-only listing of service accounts."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud iam service-accounts create"
 translation = "Create a new IAM service account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new identity that can be granted permissions to cloud resources."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud iam service-accounts delete"
 translation = "Delete an IAM service account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the service account; applications using it will lose access to cloud resources."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "gcloud iam service-accounts keys create"
 translation = "Create a new key for an IAM service account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Generates a credential file that grants access to cloud resources; must be securely stored."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "gcloud iam service-accounts keys delete"
 translation = "Delete a key from an IAM service account."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Revokes a credential; applications using it will lose authentication."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
-
 # ── App Engine ───────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[command]]
 path = "gcloud app"
 translation = "Manage App Engine applications."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud app deploy"
 translation = "Deploy an application to Google App Engine."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Publishes code to a live service that may receive production traffic."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gcloud app deploy"
@@ -1063,6 +749,7 @@ flag = "--promote"
 translation_modifier = "routing all traffic to the new version immediately"
 verdict = "allow"
 rationale = "Sends live traffic to the new version, which may affect users if the deployment is faulty."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcloud app deploy"
@@ -1070,130 +757,87 @@ flag = "--no-promote"
 translation_modifier = "without routing traffic to the new version"
 verdict = "allow"
 rationale = "Deploys the version without directing traffic to it, allowing safe testing."
+arity = "Boolean"
 
 [[command]]
 path = "gcloud app browse"
 translation = "Open the deployed App Engine application in a browser."
 verdict = "allow"
 rationale = "Opens a URL; does not modify the application."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gcloud app logs read"
 translation = "Display log entries for an App Engine application."
 verdict = "allow"
 rationale = "Read-only display of application logs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
-
 # ── Init and components ──────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "gcloud init"
 translation = "Set up the Google Cloud CLI with a project, account, and default settings."
 verdict = "allow"
 rationale = "Configures local CLI settings; does not create or modify cloud resources."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud info"
 translation = "Display information about the current gcloud environment."
 verdict = "allow"
 rationale = "Read-only display of CLI installation details."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "gcloud components install"
 translation = "Install a new component of the Google Cloud CLI."
 verdict = "allow"
 rationale = "Downloads and installs a CLI component locally."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "gcloud components update"
 translation = "Update all installed Google Cloud CLI components to the latest version."
 verdict = "allow"
 rationale = "Updates local CLI binaries; does not affect cloud resources."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[combo]]
 path = "gcloud storage rm --recursive"
 translation = "Recursively delete all objects under a Cloud Storage path, potentially wiping the entire contents of a bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes all objects matching the path prefix with no undo; recovery depends on object versioning being enabled."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gcloud storage rm --all-versions --recursive"
 translation = "Recursively delete all objects and all historical versions under a Cloud Storage path, making recovery impossible even with versioning."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys both current objects and their version history, eliminating any versioning-based recovery path."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gcloud compute instances delete --delete-disks"
 translation = "Delete a Compute Engine instance along with its attached disks, permanently destroying all data stored on them."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines instance termination with disk deletion, making data recovery impossible."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gcloud compute instances delete --keep-disks"
 translation = "Delete a Compute Engine instance but preserve its attached disks for reuse or data recovery."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates the instance but retains disk data, reducing data loss risk."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "gcloud run deploy --allow-unauthenticated"
 translation = "Deploy a Cloud Run service and make it publicly accessible without any authentication requirement."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Exposes a live service to the public internet with no access controls, increasing the attack surface."
-tags.scope = "remote"
-tags.effect = ["write", "create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "network"]
-tags.safety_override = true
+risk_class = "net_egress"
 
 

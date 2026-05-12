@@ -5,6 +5,7 @@ path = "renice"
 translation = "Change the scheduling priority of a running process."
 verdict = "allow"
 rationale = "Adjusts how much CPU time a process receives; does not stop or modify the process itself."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "renice"
@@ -12,6 +13,7 @@ flag = "-n"
 translation_modifier = "adjusting by a relative amount instead of setting an absolute priority"
 verdict = "allow"
 rationale = "Changes how the priority value is interpreted; still only adjusts scheduling priority."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "renice"
@@ -19,6 +21,7 @@ flag = "-g"
 translation_modifier = "targeting an entire process group instead of a single process"
 verdict = "allow"
 rationale = "Affects all processes in a group, widening the scope of the priority change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "renice"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "targeting a specific process by its ID"
 verdict = "allow"
 rationale = "Narrows the target to a single process; this is also the default behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "renice"
@@ -33,3 +37,4 @@ flag = "-u"
 translation_modifier = "targeting all processes owned by a specific user"
 verdict = "allow"
 rationale = "Affects every process belonging to the named user, which could impact running services."
+arity = "Boolean"

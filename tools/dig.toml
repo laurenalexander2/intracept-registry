@@ -7,8 +7,9 @@ path = "dig"
 translation = "Perform DNS lookups and display detailed query results."
 verdict = "allow"
 rationale = "Read-only DNS query tool that does not modify any system configuration."
-
 # ── Query modifiers ──────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "dig"
@@ -16,6 +17,7 @@ flag = "-x"
 translation_modifier = "performing a reverse lookup to find the hostname for an IP address"
 verdict = "allow"
 rationale = "Read-only reverse DNS query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -23,6 +25,7 @@ flag = "-t"
 translation_modifier = "querying for a specified record type"
 verdict = "allow"
 rationale = "Changes the DNS record type requested; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -30,6 +33,7 @@ flag = "-p"
 translation_modifier = "sending the query to a non-standard port"
 verdict = "allow"
 rationale = "Changes the destination port; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -37,6 +41,7 @@ flag = "-b"
 translation_modifier = "sending the query from a specific local IP address"
 verdict = "allow"
 rationale = "Binds to a specific source address; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -44,6 +49,7 @@ flag = "-4"
 translation_modifier = "using only IPv4 for the query"
 verdict = "allow"
 rationale = "Restricts the network protocol; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -51,6 +57,7 @@ flag = "-6"
 translation_modifier = "using only IPv6 for the query"
 verdict = "allow"
 rationale = "Restricts the network protocol; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -58,8 +65,9 @@ flag = "-f"
 translation_modifier = "reading a list of lookup requests from a file"
 verdict = "allow"
 rationale = "Batch mode for multiple queries; still read-only."
-
 # ── Output control ───────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "dig"
@@ -67,6 +75,7 @@ flag = "+short"
 translation_modifier = "showing only the answer without extra details"
 verdict = "allow"
 rationale = "Simplifies output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -74,6 +83,7 @@ flag = "+noall"
 translation_modifier = "suppressing all output sections"
 verdict = "allow"
 rationale = "Disables output sections; typically combined with +answer to show only results."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -81,6 +91,7 @@ flag = "+answer"
 translation_modifier = "displaying the answer section of the response"
 verdict = "allow"
 rationale = "Controls which output section is shown; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -88,6 +99,7 @@ flag = "+stats"
 translation_modifier = "displaying query timing and server statistics"
 verdict = "allow"
 rationale = "Shows additional diagnostic information; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -95,6 +107,7 @@ flag = "+comments"
 translation_modifier = "including comment lines in the output"
 verdict = "allow"
 rationale = "Changes output verbosity; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -102,8 +115,9 @@ flag = "+multiline"
 translation_modifier = "printing records in a verbose multi-line format"
 verdict = "allow"
 rationale = "Changes output format for readability; still read-only."
-
 # ── Tracing and security ────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "dig"
@@ -111,6 +125,7 @@ flag = "+trace"
 translation_modifier = "tracing the full delegation path from root servers"
 verdict = "allow"
 rationale = "Shows the complete DNS resolution path; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -118,6 +133,7 @@ flag = "+dnssec"
 translation_modifier = "requesting DNS security validation records in the response"
 verdict = "allow"
 rationale = "Requests additional security-related DNS records; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -125,6 +141,7 @@ flag = "+nsid"
 translation_modifier = "requesting the name server identifier from the responding server"
 verdict = "allow"
 rationale = "Asks the server to include its identifier; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -132,8 +149,9 @@ flag = "+nssearch"
 translation_modifier = "finding all authoritative name servers and showing their SOA records"
 verdict = "allow"
 rationale = "Queries multiple servers for zone authority information; still read-only."
-
 # ── Transport ────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "dig"
@@ -141,6 +159,7 @@ flag = "+tcp"
 translation_modifier = "using TCP instead of UDP for the query"
 verdict = "allow"
 rationale = "Changes the transport protocol; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -148,6 +167,7 @@ flag = "+notcp"
 translation_modifier = "using UDP instead of TCP for the query"
 verdict = "allow"
 rationale = "Explicitly uses UDP transport; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -155,6 +175,7 @@ flag = "+timeout"
 translation_modifier = "setting a custom timeout for the query"
 verdict = "allow"
 rationale = "Changes how long to wait for a response; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -162,8 +183,9 @@ flag = "+retry"
 translation_modifier = "setting the number of retry attempts for failed queries"
 verdict = "allow"
 rationale = "Controls retry behavior; still a read-only query."
-
 # ── Recursion ────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "dig"
@@ -171,6 +193,7 @@ flag = "+norecurse"
 translation_modifier = "sending a non-recursive query to the server"
 verdict = "allow"
 rationale = "Requests that the server not perform recursion; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dig"
@@ -178,3 +201,4 @@ flag = "+recurse"
 translation_modifier = "requesting recursive resolution from the server"
 verdict = "allow"
 rationale = "The default behavior; asks the server to resolve the query fully."
+arity = "Boolean"

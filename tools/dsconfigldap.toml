@@ -3,5 +3,6 @@
 [[command]]
 path = "dsconfigldap"
 translation = "Configure LDAP directory service on macOS."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies directory service configuration that affects authentication."
+risk_class = "novel"

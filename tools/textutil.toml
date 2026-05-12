@@ -5,6 +5,7 @@ path = "textutil"
 translation = "Convert and manipulate text documents between various formats."
 verdict = "allow"
 rationale = "Can modify files in place when converting formats; the original format is lost without a backup."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "textutil"
@@ -12,6 +13,7 @@ flag = "-convert"
 translation_modifier = "converting the document to a specified format"
 verdict = "allow"
 rationale = "Overwrites the input file with the converted format by default."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -19,6 +21,7 @@ flag = "-output"
 translation_modifier = "writing the result to a specified output file"
 verdict = "allow"
 rationale = "Preserves the original by writing to a different file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -26,6 +29,7 @@ flag = "-cat"
 translation_modifier = "concatenating multiple input files"
 verdict = "allow"
 rationale = "Combines files into one output; originals are unchanged."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -33,6 +37,7 @@ flag = "-info"
 translation_modifier = "displaying information about the files without modifying them"
 verdict = "allow"
 rationale = "Read-only display of file information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -40,6 +45,7 @@ flag = "-stdin"
 translation_modifier = "reading input from standard input instead of files"
 verdict = "allow"
 rationale = "Changes the input source; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -47,6 +53,7 @@ flag = "-stdout"
 translation_modifier = "writing the output to standard output instead of a file"
 verdict = "allow"
 rationale = "Avoids writing to disk; preserves originals."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -54,6 +61,7 @@ flag = "-encoding"
 translation_modifier = "using a specified text encoding for the output"
 verdict = "allow"
 rationale = "Controls the output encoding; does not change the scope of the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -61,6 +69,7 @@ flag = "-inputencoding"
 translation_modifier = "interpreting all input files with a specified text encoding"
 verdict = "allow"
 rationale = "Controls how input is read; does not change the scope of the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -68,6 +77,7 @@ flag = "-format"
 translation_modifier = "interpreting all input files as a specified format"
 verdict = "allow"
 rationale = "Overrides automatic format detection; does not change the scope of the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -75,6 +85,7 @@ flag = "-font"
 translation_modifier = "using a specified font when converting plain text to rich text"
 verdict = "allow"
 rationale = "Controls font selection in the output; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -82,6 +93,7 @@ flag = "-fontsize"
 translation_modifier = "using a specified font size in points when converting plain text to rich text"
 verdict = "allow"
 rationale = "Controls font size in the output; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -89,6 +101,7 @@ flag = "-strip"
 translation_modifier = "removing all metadata from the output file"
 verdict = "allow"
 rationale = "Discards metadata like author and title; the document content is preserved."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -96,6 +109,7 @@ flag = "-noload"
 translation_modifier = "without loading subsidiary resources like images"
 verdict = "allow"
 rationale = "Skips loading external resources; reduces network and disk activity."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -103,6 +117,7 @@ flag = "-nostore"
 translation_modifier = "without writing subsidiary resources to disk"
 verdict = "allow"
 rationale = "Prevents writing of external resources; reduces output scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -110,6 +125,7 @@ flag = "-baseurl"
 translation_modifier = "using a specified base URL for resolving relative links"
 verdict = "allow"
 rationale = "Controls URL resolution; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "textutil"
@@ -117,3 +133,4 @@ flag = "-extension"
 translation_modifier = "using a specified file extension for the output"
 verdict = "allow"
 rationale = "Overrides the default output file extension; no additional risk."
+arity = "Boolean"

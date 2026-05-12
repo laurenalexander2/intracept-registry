@@ -5,6 +5,7 @@ path = "realpath"
 translation = "Show the full, absolute path of a file or directory with all shortcuts resolved."
 verdict = "allow"
 rationale = "Read-only operation that displays a resolved path without modifying anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "realpath"
@@ -12,3 +13,4 @@ flag = "-q"
 translation_modifier = "without printing warnings if the path cannot be resolved"
 verdict = "allow"
 rationale = "Suppresses warning messages; still read-only."
+arity = "Boolean"

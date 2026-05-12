@@ -5,20 +5,23 @@ path = "snmpconf"
 translation = "Interactively generate SNMP configuration files."
 verdict = "allow"
 rationale = "Creates or modifies SNMP configuration files that control how SNMP services behave."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpconf"
 flag = "-f"
 translation_modifier = "overwriting existing files without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Silently overwrites existing configuration files, which could disrupt running SNMP services."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
 flag = "-i"
 translation_modifier = "installing the generated files into the system-wide configuration directory"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Writes configuration files to system directories, which can affect all SNMP services on the machine."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "installing the generated files into the user's home directory"
 verdict = "allow"
 rationale = "Writes configuration files to the user's personal SNMP directory."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -33,6 +37,7 @@ flag = "-I"
 translation_modifier = "installing the generated files into a specific directory"
 verdict = "allow"
 rationale = "Writes configuration files to a chosen directory."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -40,6 +45,7 @@ flag = "-g"
 translation_modifier = "walking through a specific group of setup questions"
 verdict = "allow"
 rationale = "Only selects which category of questions to present."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -47,6 +53,7 @@ flag = "-G"
 translation_modifier = "listing all available setup groups"
 verdict = "allow"
 rationale = "Read-only listing; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -54,6 +61,7 @@ flag = "-a"
 translation_modifier = "reading existing configuration files and rewriting them with added comments"
 verdict = "allow"
 rationale = "Rewrites configuration files in place, adding documentation comments."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpconf"
@@ -61,3 +69,4 @@ flag = "-r"
 translation_modifier = "controlling whether existing configuration files are read in"
 verdict = "allow"
 rationale = "Only controls whether existing files are merged into the output."
+arity = "Boolean"

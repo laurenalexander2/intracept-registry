@@ -5,10 +5,12 @@ path = "umount"
 translation = "Unmount a file system from the directory tree."
 verdict = "allow"
 rationale = "Makes a mounted volume inaccessible; data on the volume is preserved but processes using it may fail."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "umount"
 flag = "-f"
 translation_modifier = "forcibly unmounting even if the volume is in use"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forces unmount which can cause data loss for processes with open files on the volume."
+arity = "Boolean"

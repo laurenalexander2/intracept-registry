@@ -5,6 +5,7 @@ path = "lzma"
 translation = "Compress or decompress files using the Lempel-Ziv-Markov algorithm."
 verdict = "allow"
 rationale = "By default replaces source files with compressed versions, removing the originals."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "lzma"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "decompressing instead of compressing"
 verdict = "allow"
 rationale = "Decompresses the input file, replacing it with the decompressed version."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lzma"
@@ -19,6 +21,7 @@ flag = "-k"
 translation_modifier = "keeping the source file after compression or decompression"
 verdict = "allow"
 rationale = "Preserves the input file instead of deleting it."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lzma"
@@ -26,6 +29,7 @@ flag = "-f"
 translation_modifier = "overwriting the output file without prompting"
 verdict = "allow"
 rationale = "Forces overwriting of existing files and allows compression in unusual situations."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lzma"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "writing output to the terminal instead of a file"
 verdict = "allow"
 rationale = "Leaves original files intact; only writes to the terminal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lzma"
@@ -40,6 +45,7 @@ flag = "-t"
 translation_modifier = "testing the compressed file integrity without decompressing"
 verdict = "allow"
 rationale = "Read-only integrity check that does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lzma"
@@ -47,3 +53,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"

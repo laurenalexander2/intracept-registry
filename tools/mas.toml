@@ -5,51 +5,60 @@ path = "mas"
 translation = "Run the Mac App Store command-line interface."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "mas install"
 translation = "Install previously purchased apps from the Mac App Store."
 verdict = "allow"
 rationale = "Downloads and installs applications, which consume disk space and may run background processes."
+risk_class = "novel"
 
 [[command]]
 path = "mas uninstall"
 translation = "Uninstall apps that were installed from the Mac App Store."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes an application and its associated data."
+risk_class = "novel"
 
 [[command]]
 path = "mas upgrade"
 translation = "Update all outdated apps from the Mac App Store."
 verdict = "allow"
 rationale = "Downloads and installs new versions of multiple apps, which may introduce breaking changes."
+risk_class = "novel"
 
 [[command]]
 path = "mas list"
 translation = "List all apps installed from the Mac App Store."
 verdict = "allow"
 rationale = "Read-only display of installed applications."
+risk_class = "novel"
 
 [[command]]
 path = "mas search"
 translation = "Search for apps in the Mac App Store."
 verdict = "allow"
 rationale = "Read-only operation that searches the Mac App Store without installing or modifying anything."
+risk_class = "novel"
 
 [[command]]
 path = "mas outdated"
 translation = "List apps with pending updates from the Mac App Store."
 verdict = "allow"
 rationale = "Read-only display of available updates."
+risk_class = "novel"
 
 [[command]]
 path = "mas signout"
 translation = "Sign out of the Mac App Store."
 verdict = "allow"
 rationale = "Ends the current App Store session, requiring re-authentication for future purchases."
+risk_class = "novel"
 
 [[command]]
 path = "mas reset"
 translation = "Reset App Store processes and clear cached downloads."
 verdict = "allow"
 rationale = "Terminates App Store processes and deletes cached data."
+risk_class = "novel"

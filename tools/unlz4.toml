@@ -5,6 +5,7 @@ path = "unlz4"
 translation = "Decompress LZ4-compressed files."
 verdict = "allow"
 rationale = "Decompresses files creating the original output; source files are preserved by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "unlz4"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "overwriting the output file without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -19,6 +21,7 @@ flag = "-k"
 translation_modifier = "keeping the source file after decompression"
 verdict = "allow"
 rationale = "Preserves the input file; this is already the default behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -26,6 +29,7 @@ flag = "--rm"
 translation_modifier = "removing the source file after successful decompression"
 verdict = "allow"
 rationale = "Deletes the compressed source file once decompression succeeds."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "writing decompressed output to the terminal instead of a file"
 verdict = "allow"
 rationale = "Leaves the source file intact; only writes to the terminal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -40,6 +45,7 @@ flag = "-t"
 translation_modifier = "testing compressed file integrity without producing output"
 verdict = "allow"
 rationale = "Read-only integrity check that does not create or modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -47,6 +53,7 @@ flag = "-m"
 translation_modifier = "processing multiple input files at once"
 verdict = "allow"
 rationale = "Processes several files in one invocation; each file is decompressed individually."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -54,6 +61,7 @@ flag = "-r"
 translation_modifier = "operating recursively on all files in directories"
 verdict = "allow"
 rationale = "Expands the scope to all matching files in directory trees."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -61,6 +69,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only adds progress information to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unlz4"
@@ -68,3 +77,4 @@ flag = "-q"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only suppresses warning messages."
+arity = "Boolean"

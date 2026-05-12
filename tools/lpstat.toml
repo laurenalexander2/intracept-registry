@@ -5,6 +5,7 @@ path = "lpstat"
 translation = "Display the status of printers and print jobs."
 verdict = "allow"
 rationale = "Read-only display of printer and job status."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "lpstat"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "showing all status information"
 verdict = "allow"
 rationale = "Only changes the amount of detail displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -19,6 +21,7 @@ flag = "-d"
 translation_modifier = "showing the current default printer"
 verdict = "allow"
 rationale = "Only displays the default printer name."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -26,6 +29,7 @@ flag = "-a"
 translation_modifier = "showing whether printers are accepting new jobs"
 verdict = "allow"
 rationale = "Read-only display of printer acceptance state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -33,6 +37,7 @@ flag = "-p"
 translation_modifier = "showing whether printers are enabled for printing"
 verdict = "allow"
 rationale = "Read-only display of printer enabled/disabled state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -40,6 +45,7 @@ flag = "-o"
 translation_modifier = "showing jobs queued on specific printers"
 verdict = "allow"
 rationale = "Read-only display of queued print jobs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -47,6 +53,7 @@ flag = "-r"
 translation_modifier = "showing whether the print server is running"
 verdict = "allow"
 rationale = "Read-only check of server status."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -54,6 +61,7 @@ flag = "-s"
 translation_modifier = "showing a summary of printers, classes, and devices"
 verdict = "allow"
 rationale = "Read-only summary of print system configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -61,6 +69,7 @@ flag = "-v"
 translation_modifier = "showing which devices are attached to each printer"
 verdict = "allow"
 rationale = "Read-only display of printer device connections."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -68,6 +77,7 @@ flag = "-u"
 translation_modifier = "showing jobs queued by specific users"
 verdict = "allow"
 rationale = "Read-only display of jobs filtered by user."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -75,6 +85,7 @@ flag = "-l"
 translation_modifier = "showing detailed information"
 verdict = "allow"
 rationale = "Only increases the verbosity of the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -82,6 +93,7 @@ flag = "-e"
 translation_modifier = "showing all available printers on the local network"
 verdict = "allow"
 rationale = "Read-only network printer discovery."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpstat"
@@ -89,3 +101,4 @@ flag = "-W"
 translation_modifier = "filtering by completed or not-completed jobs"
 verdict = "allow"
 rationale = "Only changes which jobs are displayed."
+arity = "Boolean"

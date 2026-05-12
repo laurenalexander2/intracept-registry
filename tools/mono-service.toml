@@ -5,6 +5,7 @@ path = "mono-service"
 translation = "Run a .NET service application as a background background service using the Mono runtime."
 verdict = "allow"
 rationale = "Starts a long-running background process that may modify system state or listen on network ports."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mono-service"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "in a specified working directory"
 verdict = "allow"
 rationale = "Sets the working directory for the service; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-service"
@@ -19,6 +21,7 @@ flag = "-l"
 translation_modifier = "using a specified lock file path"
 verdict = "allow"
 rationale = "Changes the lock file location; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-service"
@@ -26,3 +29,4 @@ flag = "--no-daemon"
 translation_modifier = "in the foreground without running as a background service"
 verdict = "allow"
 rationale = "Prevents backgrounding and keeps the terminal attached; useful for debugging."
+arity = "Boolean"

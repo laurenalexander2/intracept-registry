@@ -5,6 +5,7 @@ path = "nm"
 translation = "List the named functions and variables stored inside a compiled program or library."
 verdict = "allow"
 rationale = "Read-only inspection of compiled file contents; does not modify any files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "nm"
@@ -12,6 +13,7 @@ flag = "-g"
 translation_modifier = "showing only names that are visible to other programs"
 verdict = "allow"
 rationale = "Filters output to externally accessible names; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -19,6 +21,7 @@ flag = "-u"
 translation_modifier = "showing only names that are referenced but not defined in this file"
 verdict = "allow"
 rationale = "Filters output to missing dependencies; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -26,6 +29,7 @@ flag = "-U"
 translation_modifier = "hiding names that are referenced but not defined in this file"
 verdict = "allow"
 rationale = "Filters out undefined references; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -33,6 +37,7 @@ flag = "-n"
 translation_modifier = "sorted by memory address instead of alphabetically"
 verdict = "allow"
 rationale = "Changes output order; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -40,6 +45,7 @@ flag = "-r"
 translation_modifier = "sorted in reverse order"
 verdict = "allow"
 rationale = "Reverses the sort direction; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -47,6 +53,7 @@ flag = "-a"
 translation_modifier = "including all entries, even those used only for debugging"
 verdict = "allow"
 rationale = "Shows additional detail; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -54,6 +61,7 @@ flag = "-j"
 translation_modifier = "showing only the names without addresses or types"
 verdict = "allow"
 rationale = "Simplifies output format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -61,6 +69,7 @@ flag = "-m"
 translation_modifier = "showing detailed information about where each name is stored"
 verdict = "allow"
 rationale = "Provides more descriptive output about each entry; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -68,6 +77,7 @@ flag = "-p"
 translation_modifier = "without sorting, preserving the original order"
 verdict = "allow"
 rationale = "Disables sorting; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -75,6 +85,7 @@ flag = "-x"
 translation_modifier = "displaying all values in hexadecimal format"
 verdict = "allow"
 rationale = "Changes number display format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nm"
@@ -82,3 +93,4 @@ flag = "-A"
 translation_modifier = "prefixing each line with the file name"
 verdict = "allow"
 rationale = "Adds file identification to each output line; still read-only."
+arity = "Boolean"

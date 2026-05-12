@@ -5,13 +5,15 @@ path = "chown"
 translation = "Change the owner and group of files or directories."
 verdict = "allow"
 rationale = "Modifies file ownership, which affects who can read, write, or execute the files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "chown"
 flag = "-R"
 translation_modifier = "recursively through all subdirectories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Applies ownership changes to an entire directory tree, greatly increasing the blast radius."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -19,6 +21,7 @@ flag = "-f"
 translation_modifier = "suppressing error messages for files that cannot be changed"
 verdict = "allow"
 rationale = "Silences errors but does not change what ownership is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -26,6 +29,7 @@ flag = "-v"
 translation_modifier = "showing each file as its ownership is changed"
 verdict = "allow"
 rationale = "Adds verbose output without changing what ownership is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -33,6 +37,7 @@ flag = "-h"
 translation_modifier = "changing the ownership of the symbolic link itself instead of its target"
 verdict = "allow"
 rationale = "Targets the link rather than the linked file; a narrow scope change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -40,13 +45,15 @@ flag = "-H"
 translation_modifier = "following symbolic links on the command line but not in subdirectories"
 verdict = "allow"
 rationale = "Causes ownership changes to affect the targets of explicitly named symbolic links when used with -R."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
 flag = "-L"
 translation_modifier = "following all symbolic links during recursive traversal"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "When combined with -R, ownership changes can reach files outside the intended directory tree via symbolic links."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -54,6 +61,7 @@ flag = "-P"
 translation_modifier = "without following any symbolic links during recursive traversal"
 verdict = "allow"
 rationale = "The default behavior with -R; avoids reaching files outside the directory tree."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -61,6 +69,7 @@ flag = "-n"
 translation_modifier = "interpreting owner and group as numeric IDs instead of names"
 verdict = "allow"
 rationale = "Changes how the owner and group arguments are parsed but does not affect scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chown"
@@ -68,3 +77,4 @@ flag = "-x"
 translation_modifier = "without crossing filesystem mount points"
 verdict = "allow"
 rationale = "Limits the scope of recursive traversal to the current filesystem."
+arity = "Boolean"

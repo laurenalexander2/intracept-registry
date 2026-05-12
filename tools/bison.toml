@@ -5,6 +5,7 @@ path = "bison"
 translation = "Generate parser code from grammar definitions."
 verdict = "allow"
 rationale = "Creates source code files during compilation; does not execute them."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "bison"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "also producing a header file with token definitions"
 verdict = "allow"
 rationale = "Creates an additional output file; does not execute anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -19,6 +21,7 @@ flag = "-v"
 translation_modifier = "writing a detailed report of parser states to an output file"
 verdict = "allow"
 rationale = "Produces an extra report file for debugging; read-only diagnostic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -26,6 +29,7 @@ flag = "-t"
 translation_modifier = "enabling debug mode in the generated parser"
 verdict = "allow"
 rationale = "Adds debugging support to the generated code; does not affect runtime safety."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -33,6 +37,7 @@ flag = "-o"
 translation_modifier = "writing output to a specific file"
 verdict = "allow"
 rationale = "Only changes the output destination; overwrites are limited to the named file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -40,6 +45,7 @@ flag = "-y"
 translation_modifier = "using fixed output file names compatible with yacc"
 verdict = "allow"
 rationale = "Changes output file naming convention; may overwrite y.tab.c if it exists."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -47,6 +53,7 @@ flag = "-l"
 translation_modifier = "omitting line-tracking directives from the generated code"
 verdict = "allow"
 rationale = "Removes line references that help debuggers map errors back to the grammar file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -54,6 +61,7 @@ flag = "-p"
 translation_modifier = "renaming generated parser symbols to use a custom prefix"
 verdict = "allow"
 rationale = "Only affects symbol naming in the generated code; useful when combining multiple parsers."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bison"
@@ -61,3 +69,4 @@ flag = "-g"
 translation_modifier = "producing a graph of the parser automaton"
 verdict = "allow"
 rationale = "Creates an additional visualization file; read-only diagnostic."
+arity = "Boolean"

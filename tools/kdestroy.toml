@@ -5,6 +5,7 @@ path = "kdestroy"
 translation = "Remove Kerberos credential tickets from the cache."
 verdict = "allow"
 rationale = "Destroys authentication tickets, which may require re-authentication for services."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "kdestroy"
@@ -12,6 +13,7 @@ flag = "--all"
 translation_modifier = "removing all credential caches"
 verdict = "allow"
 rationale = "Destroys every cached credential, requiring re-authentication for all Kerberos services."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kdestroy"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "removing a specific credential cache instead of the default"
 verdict = "allow"
 rationale = "Targets a named cache for destruction; other caches are unaffected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kdestroy"
@@ -26,6 +29,7 @@ flag = "--credential"
 translation_modifier = "removing only a specific credential from the cache"
 verdict = "allow"
 rationale = "Removes a single ticket rather than the entire cache; minimal scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kdestroy"
@@ -33,3 +37,4 @@ flag = "-p"
 translation_modifier = "removing the cache associated with a specific principal"
 verdict = "allow"
 rationale = "Targets a specific principal's cache for destruction."
+arity = "Boolean"

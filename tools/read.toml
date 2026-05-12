@@ -5,6 +5,7 @@ path = "read"
 translation = "Read a line of input from standard input into shell variables."
 verdict = "allow"
 rationale = "Shell built-in that reads input; does not modify files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "read"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "treating backslashes as literal characters instead of escape characters"
 verdict = "allow"
 rationale = "Only changes how input is parsed; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -19,6 +21,7 @@ flag = "-s"
 translation_modifier = "hiding the typed input from the terminal"
 verdict = "allow"
 rationale = "Suppresses echoing for password entry; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "displaying a prompt before reading input"
 verdict = "allow"
 rationale = "Only displays a prompt string; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -33,6 +37,7 @@ flag = "-t"
 translation_modifier = "stopping after a specified number of seconds if no input is received"
 verdict = "allow"
 rationale = "Adds a timeout; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -40,6 +45,7 @@ flag = "-n"
 translation_modifier = "reading only a specified number of characters instead of a full line"
 verdict = "allow"
 rationale = "Limits the amount of input read; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -47,6 +53,7 @@ flag = "-d"
 translation_modifier = "using a custom character as the end-of-input marker instead of a newline"
 verdict = "allow"
 rationale = "Only changes the input delimiter; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -54,6 +61,7 @@ flag = "-a"
 translation_modifier = "storing the input words into an array variable"
 verdict = "allow"
 rationale = "Only changes how input is assigned to variables; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "read"
@@ -61,3 +69,4 @@ flag = "-u"
 translation_modifier = "reading from a specific numbered input channel instead of the default input"
 verdict = "allow"
 rationale = "Changes the input source; does not modify files."
+arity = "Boolean"

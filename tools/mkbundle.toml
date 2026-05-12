@@ -5,6 +5,7 @@ path = "mkbundle"
 translation = "Bundle Mono assemblies and dependencies into a standalone executable."
 verdict = "allow"
 rationale = "Generates a compiled output file locally; does not modify existing files or system state."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mkbundle"
@@ -12,6 +13,7 @@ flag = "--deps"
 translation_modifier = "automatically embedding all dependency assemblies"
 verdict = "allow"
 rationale = "Includes dependencies in the bundle; only affects the output file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mkbundle"
@@ -19,6 +21,7 @@ flag = "--static"
 translation_modifier = "statically linking Mono libraries into the output"
 verdict = "allow"
 rationale = "Changes linking mode; only affects the output binary."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mkbundle"
@@ -26,6 +29,7 @@ flag = "--cross"
 translation_modifier = "targeting a different platform for cross-compilation"
 verdict = "allow"
 rationale = "Generates a binary for a different target; only affects the output file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mkbundle"
@@ -33,3 +37,4 @@ flag = "-z"
 translation_modifier = "compressing the assemblies before embedding"
 verdict = "allow"
 rationale = "Applies compression to embedded data; only affects the output file."
+arity = "Boolean"

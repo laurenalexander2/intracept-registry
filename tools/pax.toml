@@ -5,6 +5,7 @@ path = "pax"
 translation = "Read, write, and list file archives, or copy directory hierarchies."
 verdict = "allow"
 rationale = "Can extract files that overwrite existing data, or create archives from the filesystem."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pax"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "extracting files from an archive"
 verdict = "allow"
 rationale = "Extracts files to disk, potentially overwriting existing files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -19,6 +21,7 @@ flag = "-w"
 translation_modifier = "writing files to an archive"
 verdict = "allow"
 rationale = "Creates an archive from files; source files are not modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -26,6 +29,7 @@ flag = "-k"
 translation_modifier = "without overwriting existing files"
 verdict = "allow"
 rationale = "Prevents overwriting, making extraction safer."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -33,6 +37,7 @@ flag = "-f"
 translation_modifier = "using a specified archive file instead of the terminal"
 verdict = "allow"
 rationale = "Directs input or output to a named file; no additional risk beyond the chosen mode."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -40,6 +45,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only adds verbose file listing to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -47,6 +53,7 @@ flag = "-d"
 translation_modifier = "matching only the directory itself, not its contents"
 verdict = "allow"
 rationale = "Narrows scope by excluding directory contents; reduces what is processed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -54,6 +61,7 @@ flag = "-j"
 translation_modifier = "compressing or decompressing the archive with bzip2"
 verdict = "allow"
 rationale = "Only adds a compression layer; no change to what files are affected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -61,6 +69,7 @@ flag = "-z"
 translation_modifier = "compressing or decompressing the archive with gzip"
 verdict = "allow"
 rationale = "Only adds a compression layer; no change to what files are affected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -68,6 +77,7 @@ flag = "-n"
 translation_modifier = "selecting only the first match for each pattern"
 verdict = "allow"
 rationale = "Narrows scope to the first matching file per pattern."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -75,6 +85,7 @@ flag = "-x"
 translation_modifier = "using a specified archive format"
 verdict = "allow"
 rationale = "Only changes the archive format; no change to what files are affected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -82,6 +93,7 @@ flag = "-s"
 translation_modifier = "applying a substitution pattern to file names"
 verdict = "allow"
 rationale = "Renames files during archiving or extraction; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -89,6 +101,7 @@ flag = "-0"
 translation_modifier = "using null characters instead of newlines to separate file names"
 verdict = "allow"
 rationale = "Only changes how filenames are delimited in input and output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -96,6 +109,7 @@ flag = "-u"
 translation_modifier = "only replacing files that are older than the archive copy"
 verdict = "allow"
 rationale = "Reduces overwrites by skipping files that are already up to date."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -103,6 +117,7 @@ flag = "-H"
 translation_modifier = "following symbolic links given on the command line"
 verdict = "allow"
 rationale = "Only follows links explicitly named as arguments; does not change scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pax"
@@ -110,3 +125,4 @@ flag = "-L"
 translation_modifier = "following all symbolic links encountered"
 verdict = "allow"
 rationale = "May include files outside the intended directory tree by following links."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "lpr"
 translation = "Send files to a printer for printing."
 verdict = "allow"
 rationale = "Submits a print job; the original file is not modified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "lpr"
@@ -12,6 +13,7 @@ flag = "-P"
 translation_modifier = "sending the job to a specific printer"
 verdict = "allow"
 rationale = "Only changes which printer receives the job."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpr"
@@ -19,6 +21,7 @@ flag = "-r"
 translation_modifier = "deleting the source file after submitting the print job"
 verdict = "allow"
 rationale = "Permanently removes the original file after it has been queued for printing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lpr"
@@ -26,3 +29,4 @@ flag = "-#"
 translation_modifier = "printing a specific number of copies"
 verdict = "allow"
 rationale = "Only affects the number of copies printed; does not change the document content or printer settings."
+arity = "Boolean"

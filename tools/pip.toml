@@ -5,33 +5,21 @@ path = "pip"
 translation = "Install and manage Python packages."
 verdict = "allow"
 rationale = "Alias for pip3; the bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "pip install"
 translation = "Download and install Python packages from a package index."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Downloads and installs code from the internet that executes arbitrary setup scripts during installation."
-tags.scope = "remote"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "pip uninstall"
 translation = "Remove installed Python packages."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes installed packages, which may break dependent applications."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "pip install"
@@ -39,6 +27,7 @@ flag = "-r"
 translation_modifier = "installing all packages listed in a requirements file"
 verdict = "allow"
 rationale = "Reads a file to determine which packages to install; increases the scope of installation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip install"
@@ -46,6 +35,7 @@ flag = "--upgrade"
 translation_modifier = "upgrading packages to the latest available version"
 verdict = "allow"
 rationale = "Replaces installed packages with newer versions, which may introduce breaking changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip install"
@@ -53,6 +43,7 @@ flag = "--user"
 translation_modifier = "installing to the user site-packages directory instead of the system location"
 verdict = "allow"
 rationale = "Limits the installation scope to the current user; does not require elevated privileges."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip install"
@@ -60,6 +51,7 @@ flag = "--no-deps"
 translation_modifier = "skipping installation of package dependencies"
 verdict = "allow"
 rationale = "Reduces the scope of installation; may leave the package non-functional."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pip install"
@@ -67,9 +59,8 @@ flag = "--dry-run"
 translation_modifier = "simulating the installation without actually installing anything"
 verdict = "allow"
 rationale = "No packages are installed; only shows what would happen."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
-tag_modifiers.scope = "local"
+arity = "Boolean"
+risk_class_override = "safe"
 
 [[flag]]
 applies_to = "pip install"
@@ -77,44 +68,39 @@ flag = "--force-reinstall"
 translation_modifier = "reinstalling packages even if they are already up to date"
 verdict = "allow"
 rationale = "Overwrites existing installations, which may temporarily break dependent code."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "pip install"
 flag = "--index-url"
 translation_modifier = "using a specified package index instead of the default PyPI"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overrides the default package source, introducing supply-chain risk from untrusted registries."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "pip uninstall"
 flag = "-y"
 translation_modifier = "skipping the confirmation prompt"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes packages without asking for confirmation, bypassing the interactive safety check."
-tag_modifiers.safety_override = true
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+risk_class_override = "priv_esc"
+
 
 [[combo]]
 path = "pip install -r"
 translation = "Download and install all Python packages listed in a requirements file from the package index."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Installs potentially many packages at once based on a file, executing arbitrary setup code for each during installation."
-tags.scope = "remote"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "pip install --upgrade"
 translation = "Download and install the latest version of specified Python packages, replacing any currently installed versions."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Upgrades packages to the latest version, which may introduce breaking API changes or incompatible dependencies."
-tags.scope = "remote"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"

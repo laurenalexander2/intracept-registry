@@ -5,6 +5,7 @@ path = "ifconfig"
 translation = "Display or configure network interface parameters."
 verdict = "allow"
 rationale = "Without arguments, only displays current network interface configuration."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "showing all network interfaces, including those that are down"
 verdict = "allow"
 rationale = "Only changes the scope of the display; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -19,13 +21,15 @@ flag = "up"
 translation_modifier = "enabling a network interface"
 verdict = "allow"
 rationale = "Activates a network interface, which changes the system's network connectivity."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
 flag = "down"
 translation_modifier = "disabling a network interface"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deactivates a network interface, which may disconnect the system from the network."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -33,6 +37,7 @@ flag = "-l"
 translation_modifier = "listing the names of all network interfaces"
 verdict = "allow"
 rationale = "Read-only listing of interface names; does not modify anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -40,6 +45,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Increases output verbosity; does not change behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -47,6 +53,7 @@ flag = "-m"
 translation_modifier = "showing the supported media types for an interface"
 verdict = "allow"
 rationale = "Read-only display of media capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -54,6 +61,7 @@ flag = "alias"
 translation_modifier = "adding an additional network address to the interface"
 verdict = "allow"
 rationale = "Modifies network configuration by assigning an extra address."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -61,6 +69,7 @@ flag = "-alias"
 translation_modifier = "removing a network address from the interface"
 verdict = "allow"
 rationale = "Removes an assigned address, which may disrupt network connectivity."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -68,6 +77,7 @@ flag = "mtu"
 translation_modifier = "setting the maximum packet size for the interface"
 verdict = "allow"
 rationale = "Changes the maximum transmission unit, which may cause network communication issues if set incorrectly."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ifconfig"
@@ -75,3 +85,4 @@ flag = "-arp"
 translation_modifier = "disabling address resolution on the interface"
 verdict = "allow"
 rationale = "Prevents the interface from resolving network addresses, which may break network connectivity."
+arity = "Boolean"

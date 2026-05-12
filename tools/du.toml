@@ -7,8 +7,9 @@ path = "du"
 translation = "Show the disk space used by files and directories."
 verdict = "allow"
 rationale = "Read-only display of disk usage statistics that does not modify anything."
-
 # ── Output format flags ───────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "du"
@@ -16,6 +17,7 @@ flag = "-h"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Displays sizes in human-readable units like megabytes and gigabytes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -23,6 +25,7 @@ flag = "-k"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows sizes in kilobyte blocks; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -30,6 +33,7 @@ flag = "-m"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows sizes in megabyte blocks; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -37,8 +41,9 @@ flag = "-g"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows sizes in gigabyte blocks; still read-only."
-
 # ── Scope and filtering flags ────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "du"
@@ -46,6 +51,7 @@ flag = "-s"
 translation_modifier = "showing only a total for each argument"
 verdict = "allow"
 rationale = "Summarizes output instead of listing every subdirectory; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -53,6 +59,7 @@ flag = "-d"
 translation_modifier = "limiting the depth of directory traversal"
 verdict = "allow"
 rationale = "Restricts how deep the report goes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -60,6 +67,7 @@ flag = "-a"
 translation_modifier = "showing an entry for every individual file, not just directories"
 verdict = "allow"
 rationale = "Increases output detail to include all files; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -67,6 +75,7 @@ flag = "-c"
 translation_modifier = "showing a grand total at the end"
 verdict = "allow"
 rationale = "Adds a summary total line to the output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -74,6 +83,7 @@ flag = "-t"
 translation_modifier = "showing only entries larger than a specified size threshold"
 verdict = "allow"
 rationale = "Filters output to entries above a given size; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -81,8 +91,9 @@ flag = "-I"
 translation_modifier = "skipping files and directories that match a specified pattern"
 verdict = "allow"
 rationale = "Excludes matching paths from the report; still read-only."
-
 # ── Symbolic link and filesystem flags ───────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "du"
@@ -90,6 +101,7 @@ flag = "-L"
 translation_modifier = "following symbolic links and counting the size of the files they point to"
 verdict = "allow"
 rationale = "Follows symbolic links to measure target file sizes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -97,6 +109,7 @@ flag = "-H"
 translation_modifier = "following symbolic links on the command line but not in subdirectories"
 verdict = "allow"
 rationale = "Only follows symbolic links explicitly named as arguments; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -104,6 +117,7 @@ flag = "-P"
 translation_modifier = "not following any symbolic links"
 verdict = "allow"
 rationale = "Default behavior; counts the link itself rather than its target; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -111,8 +125,9 @@ flag = "-x"
 translation_modifier = "staying within a single filesystem and not crossing mount points"
 verdict = "allow"
 rationale = "Prevents traversal into other mounted filesystems; still read-only."
-
 # ── Measurement flags ────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "du"
@@ -120,6 +135,7 @@ flag = "-A"
 translation_modifier = "showing the apparent file size instead of the actual disk space used"
 verdict = "allow"
 rationale = "Reports logical size rather than physical allocation; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "du"
@@ -127,3 +143,4 @@ flag = "-l"
 translation_modifier = "counting files with multiple hard links each time they appear"
 verdict = "allow"
 rationale = "Counts hard-linked files multiple times instead of once; may overstate total usage but is still read-only."
+arity = "Boolean"

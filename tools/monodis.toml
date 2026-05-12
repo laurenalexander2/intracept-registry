@@ -5,6 +5,7 @@ path = "monodis"
 translation = "Disassemble a .NET assembly into human-readable Common Intermediate Language text."
 verdict = "allow"
 rationale = "Read-only disassembly of assembly metadata and code; produces only text output."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "monodis"
@@ -12,3 +13,4 @@ flag = "--output"
 translation_modifier = "writing output to a specified file instead of standard output"
 verdict = "allow"
 rationale = "Changes output destination; still a read-only operation on the input assembly."
+arity = "Boolean"

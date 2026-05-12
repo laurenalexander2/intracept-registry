@@ -5,6 +5,7 @@ path = "cal"
 translation = "Display a calendar."
 verdict = "allow"
 rationale = "Read-only display of calendar information."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cal"
@@ -12,6 +13,7 @@ flag = "-y"
 translation_modifier = "showing the entire year"
 verdict = "allow"
 rationale = "Displays all twelve months; read-only output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -19,6 +21,7 @@ flag = "-3"
 translation_modifier = "showing the previous, current, and next month"
 verdict = "allow"
 rationale = "Displays a three-month view; read-only output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -26,6 +29,7 @@ flag = "-j"
 translation_modifier = "numbering days from the start of the year instead of the month"
 verdict = "allow"
 rationale = "Changes display format to show day-of-year numbers; read-only output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -33,6 +37,7 @@ flag = "-h"
 translation_modifier = "without highlighting today's date"
 verdict = "allow"
 rationale = "Cosmetic change that removes the highlight on the current day."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -40,6 +45,7 @@ flag = "-A"
 translation_modifier = "including the specified number of months after the current month"
 verdict = "allow"
 rationale = "Extends the calendar display forward; read-only output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -47,6 +53,7 @@ flag = "-B"
 translation_modifier = "including the specified number of months before the current month"
 verdict = "allow"
 rationale = "Extends the calendar display backward; read-only output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cal"
@@ -54,3 +61,4 @@ flag = "-m"
 translation_modifier = "showing a specific month"
 verdict = "allow"
 rationale = "Displays a single named month; read-only output."
+arity = "Boolean"

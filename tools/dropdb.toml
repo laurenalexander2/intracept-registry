@@ -3,8 +3,9 @@
 [[command]]
 path = "dropdb"
 translation = "Delete a PostgreSQL database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the database and all its data with no confirmation by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dropdb"
@@ -12,6 +13,7 @@ flag = "-i"
 translation_modifier = "prompting for confirmation before deleting"
 verdict = "allow"
 rationale = "Adds an interactive confirmation step; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -19,13 +21,15 @@ flag = "--if-exists"
 translation_modifier = "without raising an error if the database does not exist"
 verdict = "allow"
 rationale = "Prevents errors on nonexistent databases; does not change destructive behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
 flag = "--force"
 translation_modifier = "forcibly disconnecting all active users before dropping the database"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates all existing connections to the target database before dropping it, disrupting active users."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -33,6 +37,7 @@ flag = "-e"
 translation_modifier = "displaying the SQL commands being sent to the server"
 verdict = "allow"
 rationale = "Shows the generated SQL; read-only diagnostic output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -40,6 +45,7 @@ flag = "-h"
 translation_modifier = "on a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -47,6 +53,7 @@ flag = "-p"
 translation_modifier = "on a specified port"
 verdict = "allow"
 rationale = "Specifies which port to connect on; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -54,6 +61,7 @@ flag = "-U"
 translation_modifier = "connecting as a specified user"
 verdict = "allow"
 rationale = "Specifies the authentication identity; the user's permissions determine what is allowed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropdb"
@@ -61,3 +69,4 @@ flag = "-w"
 translation_modifier = "without prompting for a password"
 verdict = "allow"
 rationale = "Relies on passwordless authentication methods, which may indicate a less secure connection configuration."
+arity = "Boolean"

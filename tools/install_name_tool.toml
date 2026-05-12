@@ -5,6 +5,7 @@ path = "install_name_tool"
 translation = "Change the shared library paths stored inside a compiled program."
 verdict = "allow"
 rationale = "Modifies the binary in place, changing which libraries it loads at runtime."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "install_name_tool"
@@ -12,6 +13,7 @@ flag = "-change"
 translation_modifier = "replacing one library path with another"
 verdict = "allow"
 rationale = "Alters which library the binary loads; an incorrect path causes the program to fail to start."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "install_name_tool"
@@ -19,6 +21,7 @@ flag = "-id"
 translation_modifier = "changing the library's own install name"
 verdict = "allow"
 rationale = "Changes how other programs reference this library; incorrect values break dependents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "install_name_tool"
@@ -26,6 +29,7 @@ flag = "-rpath"
 translation_modifier = "replacing an existing runtime search path with a new one"
 verdict = "allow"
 rationale = "Changes where the program looks for libraries at runtime."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "install_name_tool"
@@ -33,6 +37,7 @@ flag = "-add_rpath"
 translation_modifier = "adding a new runtime search path for libraries"
 verdict = "allow"
 rationale = "Adds an additional search path; existing paths are unchanged."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "install_name_tool"
@@ -40,3 +45,4 @@ flag = "-delete_rpath"
 translation_modifier = "removing a runtime search path for libraries"
 verdict = "allow"
 rationale = "Removes a search path; the program may fail to find its libraries if the path was needed."
+arity = "Boolean"

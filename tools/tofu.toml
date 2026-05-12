@@ -7,46 +7,53 @@ path = "tofu"
 translation = "Run the OpenTofu infrastructure-as-code tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-
 # ── Primary workflow ─────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "tofu init"
 translation = "Initialize a working directory containing OpenTofu configuration files."
 verdict = "allow"
 rationale = "Downloads providers and modules; does not modify infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu validate"
 translation = "Check whether the OpenTofu configuration files are syntactically valid."
 verdict = "allow"
 rationale = "Read-only validation that modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "tofu plan"
 translation = "Preview the changes OpenTofu would make to match the configuration."
 verdict = "allow"
 rationale = "Read-only operation that shows proposed changes without applying them."
+risk_class = "novel"
 
 [[command]]
 path = "tofu apply"
 translation = "Create or update infrastructure to match the OpenTofu configuration."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies live cloud infrastructure; prompts for confirmation by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tofu apply"
 flag = "-auto-approve"
 translation_modifier = "without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the interactive approval prompt, allowing infrastructure changes to proceed unreviewed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tofu apply"
 flag = "-destroy"
 translation_modifier = "destroying all managed infrastructure instead of creating or updating"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Tears down all resources managed by OpenTofu."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tofu apply"
@@ -54,6 +61,7 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "allow"
 rationale = "Allows concurrent modifications to state, risking corruption if others run commands simultaneously."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tofu apply"
@@ -61,194 +69,226 @@ flag = "-parallelism"
 translation_modifier = "limiting the number of concurrent resource operations"
 verdict = "allow"
 rationale = "Controls concurrency; does not change what resources are modified."
+arity = "Boolean"
 
 [[command]]
 path = "tofu destroy"
 translation = "Destroy all infrastructure managed by OpenTofu."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Tears down all managed resources; data loss is likely without external backups."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tofu destroy"
 flag = "-auto-approve"
 translation_modifier = "without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the interactive approval prompt before destroying all infrastructure."
-
 # ── State management ────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[command]]
 path = "tofu state"
 translation = "Manage the OpenTofu state file."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state list"
 translation = "List all resources tracked in the OpenTofu state."
 verdict = "allow"
 rationale = "Read-only listing of state contents."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state show"
 translation = "Show the attributes of a single resource in the state."
 verdict = "allow"
 rationale = "Read-only display of resource details."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state mv"
 translation = "Move a resource to a different address in the state."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Renames or restructures resources in state; incorrect moves can cause resources to be recreated or orphaned."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state rm"
 translation = "Remove a resource from the OpenTofu state without destroying it."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Orphans infrastructure from state management; the resource continues to exist but OpenTofu no longer tracks it."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state pull"
 translation = "Download and display the current remote state."
 verdict = "allow"
 rationale = "Read-only retrieval of the state file."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state push"
 translation = "Upload a local state file to the remote backend."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites remote state, which can cause drift or loss of tracking for all managed resources."
+risk_class = "novel"
 
 [[command]]
 path = "tofu state replace-provider"
 translation = "Replace the provider for resources in the state."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes which provider manages resources; incorrect replacement can cause plan failures or resource recreation."
-
 # ── Other commands ───────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "tofu import"
 translation = "Add an existing infrastructure resource to the OpenTofu state."
 verdict = "allow"
 rationale = "Modifies state to track an existing resource; does not change the resource itself."
+risk_class = "novel"
 
 [[command]]
 path = "tofu refresh"
 translation = "Update the state file to match the actual state of remote resources."
 verdict = "allow"
 rationale = "Modifies state to reflect real infrastructure; may cause unexpected diff in the next plan."
+risk_class = "novel"
 
 [[command]]
 path = "tofu output"
 translation = "Display the output values from the OpenTofu state."
 verdict = "allow"
 rationale = "Read-only display of output values."
+risk_class = "novel"
 
 [[command]]
 path = "tofu show"
 translation = "Display the current state or a saved plan in a human-readable format."
 verdict = "allow"
 rationale = "Read-only display of state or plan contents."
+risk_class = "novel"
 
 [[command]]
 path = "tofu fmt"
 translation = "Reformat OpenTofu configuration files to the standard style."
 verdict = "allow"
 rationale = "Modifies local files cosmetically; does not affect infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu graph"
 translation = "Generate a dependency graph of the OpenTofu configuration."
 verdict = "allow"
 rationale = "Read-only output of the resource dependency structure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu taint"
 translation = "Mark a resource instance for forced recreation on the next apply."
 verdict = "allow"
 rationale = "Causes the resource to be destroyed and recreated, which may cause downtime or data loss."
+risk_class = "novel"
 
 [[command]]
 path = "tofu untaint"
 translation = "Remove the tainted status from a resource instance."
 verdict = "allow"
 rationale = "Prevents forced recreation; a corrective action that reduces risk."
+risk_class = "novel"
 
 [[command]]
 path = "tofu force-unlock"
 translation = "Release a stuck state lock."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forcibly removes a lock that may be held by another running operation, risking state corruption."
+risk_class = "novel"
 
 [[command]]
 path = "tofu workspace"
 translation = "Manage OpenTofu workspaces."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
+risk_class = "novel"
 
 [[command]]
 path = "tofu workspace list"
 translation = "List available OpenTofu workspaces."
 verdict = "allow"
 rationale = "Read-only listing of workspaces."
+risk_class = "novel"
 
 [[command]]
 path = "tofu workspace new"
 translation = "Create a new OpenTofu workspace."
 verdict = "allow"
 rationale = "Creates a new workspace with an empty state; does not modify infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu workspace select"
 translation = "Switch to a different OpenTofu workspace."
 verdict = "allow"
 rationale = "Changes which state file is active; subsequent commands will target different infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu workspace delete"
 translation = "Delete an OpenTofu workspace."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the workspace and its state; managed resources become untracked."
+risk_class = "novel"
 
 [[command]]
 path = "tofu get"
 translation = "Download and install modules referenced in the configuration."
 verdict = "allow"
 rationale = "Downloads module source code; does not modify infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu login"
 translation = "Obtain and save credentials for a remote OpenTofu service."
 verdict = "allow"
 rationale = "Stores credentials locally; does not modify infrastructure."
+risk_class = "novel"
 
 [[command]]
 path = "tofu logout"
 translation = "Remove locally stored credentials for a remote OpenTofu service."
 verdict = "allow"
 rationale = "Deletes stored credentials, which may break automated workflows."
+risk_class = "novel"
 
 [[command]]
 path = "tofu console"
 translation = "Open an interactive console for evaluating OpenTofu expressions."
 verdict = "allow"
 rationale = "Read-only evaluation of expressions against the current state."
+risk_class = "novel"
 
 [[command]]
 path = "tofu test"
 translation = "Run integration tests for OpenTofu modules."
 verdict = "allow"
 rationale = "May create and destroy temporary infrastructure as part of testing."
+risk_class = "novel"
 
 [[command]]
 path = "tofu providers"
 translation = "Show the providers required by the current configuration."
 verdict = "allow"
 rationale = "Read-only display of provider requirements."
+risk_class = "novel"
 
 [[command]]
 path = "tofu version"
 translation = "Show the current OpenTofu version."
 verdict = "allow"
 rationale = "Read-only display of version information."
+risk_class = "novel"

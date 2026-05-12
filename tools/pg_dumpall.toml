@@ -5,6 +5,7 @@ path = "pg_dumpall"
 translation = "Export all PostgreSQL databases and global objects into an SQL script."
 verdict = "allow"
 rationale = "Read-only export that does not modify any databases."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_dumpall"
@@ -12,3 +13,4 @@ flag = "--clean"
 translation_modifier = "including SQL commands to drop existing objects before recreating them"
 verdict = "allow"
 rationale = "Adds DROP statements to the dump output; applying the dump will delete existing database objects."
+arity = "Boolean"

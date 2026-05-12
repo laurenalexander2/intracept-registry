@@ -5,42 +5,49 @@ path = "route"
 translation = "View or modify the network routing table."
 verdict = "allow"
 rationale = "Changes to the routing table affect how network traffic is directed, potentially disrupting connectivity."
+risk_class = "novel"
 
 [[command]]
 path = "route add"
 translation = "Add a new route to the network routing table."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Incorrect routes can misdirect traffic or cause network connectivity loss."
+risk_class = "novel"
 
 [[command]]
 path = "route delete"
 translation = "Remove a route from the network routing table."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deleting a route can immediately break connectivity to the affected destination."
+risk_class = "novel"
 
 [[command]]
 path = "route change"
 translation = "Modify an existing route in the network routing table."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changing a route can redirect traffic to the wrong destination or break connectivity."
+risk_class = "novel"
 
 [[command]]
 path = "route get"
 translation = "Look up and display the route used to reach a destination."
 verdict = "allow"
 rationale = "Read-only lookup that modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "route flush"
 translation = "Remove all routes from the network routing table."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes every route, immediately breaking all network connectivity until routes are restored."
+risk_class = "novel"
 
 [[command]]
 path = "route monitor"
 translation = "Continuously display changes to the routing table in real time."
 verdict = "allow"
 rationale = "Read-only monitoring that modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "route"
@@ -48,6 +55,7 @@ flag = "-n"
 translation_modifier = "showing addresses as numbers instead of resolving names"
 verdict = "allow"
 rationale = "Only changes output formatting; does not modify any data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "route"
@@ -55,6 +63,7 @@ flag = "-v"
 translation_modifier = "showing additional details"
 verdict = "allow"
 rationale = "Increases output verbosity; does not modify any data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "route"
@@ -62,6 +71,7 @@ flag = "-d"
 translation_modifier = "simulating the operation without actually modifying the routing table"
 verdict = "allow"
 rationale = "Debug-only mode that prevents any actual changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "route"
@@ -69,6 +79,7 @@ flag = "-t"
 translation_modifier = "running in test mode without making real changes"
 verdict = "allow"
 rationale = "Test-only mode that discards output instead of applying it."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "route"
@@ -76,3 +87,4 @@ flag = "-q"
 translation_modifier = "suppressing all output"
 verdict = "allow"
 rationale = "Only affects output verbosity; does not change behavior."
+arity = "Boolean"

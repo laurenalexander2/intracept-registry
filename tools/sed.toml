@@ -5,29 +5,23 @@ path = "sed"
 translation = "Find and replace text, or apply other editing rules, across lines of input."
 verdict = "allow"
 rationale = "By default, outputs transformed text to the terminal without modifying the original file."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "sed"
 flag = "-i"
 translation_modifier = "editing each file directly on disk instead of printing to the terminal"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites the original file in place; without a backup extension, the original content is permanently lost."
-tag_modifiers.effect = ["write"]
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
 flag = "-I"
 translation_modifier = "editing files directly on disk while treating all files as one continuous stream"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites files in place with shared line numbering and address ranges across files, which can produce unexpected changes in multi-file edits."
-tag_modifiers.effect = ["write"]
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -35,6 +29,7 @@ flag = "-e"
 translation_modifier = "applying a specified editing command"
 verdict = "allow"
 rationale = "Specifies which transformation to run; output goes to the terminal by default."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -42,6 +37,7 @@ flag = "-f"
 translation_modifier = "reading editing commands from a file"
 verdict = "allow"
 rationale = "Loads editing instructions from a script file; does not change whether the input is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -49,6 +45,7 @@ flag = "-n"
 translation_modifier = "suppressing automatic output of each line"
 verdict = "allow"
 rationale = "Only prints lines that are explicitly selected; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -56,6 +53,7 @@ flag = "-E"
 translation_modifier = "using extended regular expression syntax"
 verdict = "allow"
 rationale = "Changes which pattern syntax is accepted; does not affect whether files are modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -63,6 +61,7 @@ flag = "-r"
 translation_modifier = "using extended regular expression syntax"
 verdict = "allow"
 rationale = "GNU-compatible alias for -E; does not affect whether files are modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -70,6 +69,7 @@ flag = "-a"
 translation_modifier = "delaying the creation of output files until a write command actually matches"
 verdict = "allow"
 rationale = "Prevents premature creation or truncation of output files used by the 'w' function; a safety improvement over the default behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -77,6 +77,7 @@ flag = "-l"
 translation_modifier = "using line-buffered output"
 verdict = "allow"
 rationale = "Changes buffering behavior; does not affect whether files are modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sed"
@@ -84,49 +85,34 @@ flag = "-u"
 translation_modifier = "using unbuffered output"
 verdict = "allow"
 rationale = "Disables output buffering for real-time processing; does not affect whether files are modified."
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "sed -i"
 translation = "Find and replace text or apply editing rules, modifying each file directly on disk instead of printing to the terminal."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites original files in place with no automatic backup, permanently altering their contents."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "sed -e -i"
 translation = "Apply a specified editing command to files, modifying them directly on disk."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines an explicit editing expression with in-place modification, permanently altering file contents."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "sed -n"
 translation = "Process input through editing rules but only print lines that are explicitly selected, suppressing all other output."
 verdict = "allow"
 rationale = "Filters output without modifying any files; commonly used with the p command to extract specific lines."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "sed -E"
 translation = "Find and replace text using extended regular expression syntax, printing results to the terminal."
 verdict = "allow"
 rationale = "Changes only the regex dialect used for pattern matching; output goes to the terminal without modifying files."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"

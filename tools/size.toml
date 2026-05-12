@@ -5,6 +5,7 @@ path = "size"
 translation = "Print the size of sections in an Apple platform object file."
 verdict = "allow"
 rationale = "Read-only display of segment and section sizes; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "size"
@@ -12,6 +13,7 @@ flag = "-m"
 translation_modifier = "showing segment and section sizes individually"
 verdict = "allow"
 rationale = "Changes output detail level; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "size"
@@ -19,6 +21,7 @@ flag = "-l"
 translation_modifier = "including addresses and offsets of sections"
 verdict = "allow"
 rationale = "Adds detail to output; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "size"
@@ -26,3 +29,4 @@ flag = "-x"
 translation_modifier = "displaying values in hexadecimal"
 verdict = "allow"
 rationale = "Cosmetic output format change; no state modification."
+arity = "Boolean"

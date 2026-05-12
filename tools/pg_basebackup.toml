@@ -5,6 +5,7 @@ path = "pg_basebackup"
 translation = "Take a base backup of a running PostgreSQL server."
 verdict = "allow"
 rationale = "Creates a backup copy of the database; does not modify the running server."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -12,6 +13,7 @@ flag = "-D"
 translation_modifier = "writing the backup to a specified directory"
 verdict = "allow"
 rationale = "Specifies the output directory; the directory must be empty or nonexistent."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -19,6 +21,7 @@ flag = "-F"
 translation_modifier = "using a specified output format"
 verdict = "allow"
 rationale = "Selects plain or tar format for the backup output; does not affect backup content."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -26,6 +29,7 @@ flag = "-z"
 translation_modifier = "compressing the backup output with gzip"
 verdict = "allow"
 rationale = "Reduces backup size; does not affect backup content or the running server."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -33,6 +37,7 @@ flag = "-R"
 translation_modifier = "configuring the backup for use as a streaming replica"
 verdict = "allow"
 rationale = "Writes replication configuration files into the backup directory; does not affect the source server."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -40,6 +45,7 @@ flag = "-X"
 translation_modifier = "using a specified method for collecting write-ahead log files"
 verdict = "allow"
 rationale = "Controls how transaction log files are included; does not affect the running server."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -47,6 +53,7 @@ flag = "-c"
 translation_modifier = "using a specified checkpoint mode"
 verdict = "allow"
 rationale = "Controls whether the checkpoint is immediate or spread out; fast mode briefly increases server load."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -54,6 +61,7 @@ flag = "-j"
 translation_modifier = "using multiple parallel jobs for faster backup"
 verdict = "allow"
 rationale = "Increases backup speed with parallelism; does not affect backup content."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -61,6 +69,7 @@ flag = "-P"
 translation_modifier = "displaying progress information during the backup"
 verdict = "allow"
 rationale = "Shows estimated progress; read-only diagnostic output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -68,6 +77,7 @@ flag = "-v"
 translation_modifier = "displaying detailed progress information"
 verdict = "allow"
 rationale = "Adds verbose diagnostic output; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -75,6 +85,7 @@ flag = "-h"
 translation_modifier = "from a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to back up from; does not change the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_basebackup"
@@ -82,3 +93,4 @@ flag = "--no-verify-checksums"
 translation_modifier = "skipping verification of checksums during the backup"
 verdict = "allow"
 rationale = "Bypasses checksum verification; the backup may contain corrupt pages."
+arity = "Boolean"

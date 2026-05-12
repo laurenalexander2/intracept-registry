@@ -3,5 +3,6 @@
 [[command]]
 path = "cvupdatefs"
 translation = "Update an Xsan filesystem configuration."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the running filesystem configuration."
+risk_class = "novel"

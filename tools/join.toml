@@ -5,6 +5,7 @@ path = "join"
 translation = "Join lines from two files on a common field."
 verdict = "allow"
 rationale = "Reads two files and writes the joined output to the terminal; does not modify input files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "join"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "using a specific character as the field delimiter"
 verdict = "allow"
 rationale = "Only changes how fields are separated in input and output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "join"
@@ -19,6 +21,7 @@ flag = "-1"
 translation_modifier = "joining on a specific field from the first file"
 verdict = "allow"
 rationale = "Only changes which field is used for matching."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "join"
@@ -26,3 +29,4 @@ flag = "-2"
 translation_modifier = "joining on a specific field from the second file"
 verdict = "allow"
 rationale = "Only changes which field is used for matching."
+arity = "Boolean"

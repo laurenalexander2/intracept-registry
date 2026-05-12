@@ -5,6 +5,7 @@ path = "stringdups"
 translation = "Identify duplicate strings and objects in the memory heap of a running process."
 verdict = "allow"
 rationale = "Read-only analysis of a process's memory; does not modify the target process."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "stringdups"
@@ -12,6 +13,7 @@ flag = "-minimumCount"
 translation_modifier = "only showing duplicates that appear at least a specified number of times"
 verdict = "allow"
 rationale = "Only filters which duplicates are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "stringdups"
@@ -19,6 +21,7 @@ flag = "-stringsOnly"
 translation_modifier = "showing only string-type duplicates such as C strings and NSString objects"
 verdict = "allow"
 rationale = "Only narrows which object types are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "stringdups"
@@ -26,6 +29,7 @@ flag = "-nostacks"
 translation_modifier = "hiding allocation backtraces from the output"
 verdict = "allow"
 rationale = "Only reduces the information displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "stringdups"
@@ -33,6 +37,7 @@ flag = "-callTrees"
 translation_modifier = "showing a call tree of allocation sites for each duplicate string"
 verdict = "allow"
 rationale = "Only changes how backtrace information is organized in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "stringdups"
@@ -40,3 +45,4 @@ flag = "-invertCallTrees"
 translation_modifier = "showing call trees with the most specific allocation site first"
 verdict = "allow"
 rationale = "Only changes the ordering of call tree output."
+arity = "Boolean"

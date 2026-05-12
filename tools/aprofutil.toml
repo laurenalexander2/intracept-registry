@@ -5,6 +5,7 @@ path = "aprofutil"
 translation = "Manage Apple provisioning profiles."
 verdict = "allow"
 rationale = "Installs or removes provisioning profiles used for code signing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aprofutil"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "including all available profiles"
 verdict = "allow"
 rationale = "Read-only display of all profiles."
+arity = "Boolean"

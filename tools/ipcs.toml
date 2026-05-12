@@ -5,6 +5,7 @@ path = "ipcs"
 translation = "Display information about System V interprocess communication resources."
 verdict = "allow"
 rationale = "Read-only display of IPC facility status."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ipcs"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "showing the maximum amount of detail for all inter-process communication types"
 verdict = "allow"
 rationale = "Only changes the level of detail displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ipcs"
@@ -19,6 +21,7 @@ flag = "-m"
 translation_modifier = "showing only shared memory segment information"
 verdict = "allow"
 rationale = "Only filters the output to shared memory."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ipcs"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "showing only message queue information"
 verdict = "allow"
 rationale = "Only filters the output to message queues."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ipcs"
@@ -33,3 +37,4 @@ flag = "-s"
 translation_modifier = "showing only synchronization lock information"
 verdict = "allow"
 rationale = "Only filters the output to synchronization locks."
+arity = "Boolean"

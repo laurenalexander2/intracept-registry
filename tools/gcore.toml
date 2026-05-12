@@ -5,6 +5,7 @@ path = "gcore"
 translation = "Create a core dump file from a running process."
 verdict = "allow"
 rationale = "Captures the full memory state of a process, which may include sensitive data like passwords or keys."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gcore"
@@ -12,6 +13,7 @@ flag = "-s"
 translation_modifier = "suspending the process while capturing the core dump"
 verdict = "allow"
 rationale = "Pauses the target process during capture, which may disrupt its operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcore"
@@ -19,6 +21,7 @@ flag = "-o"
 translation_modifier = "writing the core file to a specific path"
 verdict = "allow"
 rationale = "Only changes the output destination."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gcore"
@@ -26,3 +29,4 @@ flag = "-x"
 translation_modifier = "selecting which types of memory pages to include"
 verdict = "allow"
 rationale = "Controls the scope of the core dump content; the compact option produces smaller files."
+arity = "Boolean"

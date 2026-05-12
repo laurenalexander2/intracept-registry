@@ -5,6 +5,7 @@ path = "msggrep"
 translation = "Search for messages matching a pattern in a translation catalog file."
 verdict = "allow"
 rationale = "Read-only search that outputs matching messages."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msggrep"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

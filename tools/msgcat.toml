@@ -5,6 +5,7 @@ path = "msgcat"
 translation = "Concatenate and merge multiple translation catalog files."
 verdict = "allow"
 rationale = "Combines PO files and writes merged output; source files are not modified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msgcat"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

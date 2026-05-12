@@ -5,6 +5,7 @@ path = "units"
 translation = "Convert between different units of measurement."
 verdict = "allow"
 rationale = "Read-only unit conversion calculator that modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "units"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "printing only the conversion result with no extra text"
 verdict = "allow"
 rationale = "Only changes output formatting; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "units"
@@ -19,6 +21,7 @@ flag = "-v"
 translation_modifier = "showing the units used in the conversion"
 verdict = "allow"
 rationale = "Only adds detail to the output; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "units"
@@ -26,6 +29,7 @@ flag = "-o"
 translation_modifier = "using a custom number format for the result"
 verdict = "allow"
 rationale = "Only changes how numbers are displayed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "units"
@@ -33,6 +37,7 @@ flag = "-f"
 translation_modifier = "loading unit definitions from a custom file"
 verdict = "allow"
 rationale = "Only changes which unit definitions are available; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "units"
@@ -40,6 +45,7 @@ flag = "-q"
 translation_modifier = "suppressing the interactive prompt and unit-loading summary"
 verdict = "allow"
 rationale = "Only changes what is displayed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "units"
@@ -47,3 +53,4 @@ flag = "-e"
 translation_modifier = "displaying results in scientific notation"
 verdict = "allow"
 rationale = "Only changes how numbers are displayed; read-only operation."
+arity = "Boolean"

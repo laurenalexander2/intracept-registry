@@ -3,12 +3,14 @@
 [[command]]
 path = "dropdb-17"
 translation = "Delete a PostgreSQL 17 database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the database and all its data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dropdb-17"
 flag = "--force"
 translation_modifier = "without asking for confirmation before dropping the database"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Bypasses the confirmation prompt for a destructive database operation."
+arity = "Boolean"

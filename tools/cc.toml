@@ -5,6 +5,7 @@ path = "cc"
 translation = "Compile C or C++ source code into a program."
 verdict = "allow"
 rationale = "Compiles code locally and writes output files; does not execute the resulting program."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cc"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "writing the output to a specific file"
 verdict = "allow"
 rationale = "Names the output file; overwrites an existing file of the same name, but this is expected behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "compiling without linking into a final program"
 verdict = "allow"
 rationale = "Produces an intermediate object file instead of a finished program; narrower scope than the default."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -26,6 +29,7 @@ flag = "-g"
 translation_modifier = "including debugging information in the output"
 verdict = "allow"
 rationale = "Adds debug data to the compiled output; increases file size but has no destructive effect."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -33,6 +37,7 @@ flag = "-O2"
 translation_modifier = "applying moderate speed optimizations"
 verdict = "allow"
 rationale = "Enables most compiler optimizations; affects generated code quality but not source files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -40,6 +45,7 @@ flag = "-O3"
 translation_modifier = "applying aggressive speed optimizations"
 verdict = "allow"
 rationale = "Enables additional optimizations that may increase code size; does not modify source files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -47,6 +53,7 @@ flag = "-Wall"
 translation_modifier = "enabling most compiler warnings"
 verdict = "allow"
 rationale = "Turns on warning messages during compilation; does not change what is built."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -54,6 +61,7 @@ flag = "-Werror"
 translation_modifier = "treating all warnings as errors that stop compilation"
 verdict = "allow"
 rationale = "Causes compilation to fail on warnings; prevents output but does not destroy anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -61,6 +69,7 @@ flag = "-E"
 translation_modifier = "only running the preprocessor without compiling"
 verdict = "allow"
 rationale = "Stops after preprocessing and prints the expanded source; does not produce compiled output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -68,6 +77,7 @@ flag = "-S"
 translation_modifier = "producing assembly code instead of a compiled program"
 verdict = "allow"
 rationale = "Stops after generating assembly language output; does not link or execute."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -75,6 +85,7 @@ flag = "-I"
 translation_modifier = "adding a directory to search for included header files"
 verdict = "allow"
 rationale = "Expands the search path for header files; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -82,6 +93,7 @@ flag = "-D"
 translation_modifier = "defining a preprocessor variable before compilation"
 verdict = "allow"
 rationale = "Sets a compile-time constant; affects how source code is interpreted but modifies nothing on disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -89,6 +101,7 @@ flag = "-l"
 translation_modifier = "linking against a specified library"
 verdict = "allow"
 rationale = "Tells the linker to include a library; does not modify the library itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cc"
@@ -96,3 +109,4 @@ flag = "-v"
 translation_modifier = "showing the commands run during each compilation step"
 verdict = "allow"
 rationale = "Displays verbose compilation details; does not change behavior."
+arity = "Boolean"

@@ -5,51 +5,60 @@ path = "bundle"
 translation = "Run the Ruby Bundler dependency manager."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "bundle install"
 translation = "Install all Ruby gems specified in the Gemfile."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Downloads and installs gems that may include native extensions with system access."
+risk_class = "novel"
 
 [[command]]
 path = "bundle update"
 translation = "Update Ruby gems to their latest allowed versions."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the lockfile and installs new gem versions that may introduce breaking changes."
+risk_class = "novel"
 
 [[command]]
 path = "bundle exec"
 translation = "Run a command in the context of the bundle's gem environment."
 verdict = "allow"
 rationale = "Executes an arbitrary command with the bundled gem versions loaded."
+risk_class = "novel"
 
 [[command]]
 path = "bundle add"
 translation = "Add a gem to the Gemfile and install it."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the Gemfile and installs a new dependency."
+risk_class = "novel"
 
 [[command]]
 path = "bundle remove"
 translation = "Remove a gem from the Gemfile."
 verdict = "allow"
 rationale = "Modifies the Gemfile; does not delete the gem from the system."
+risk_class = "novel"
 
 [[command]]
 path = "bundle list"
 translation = "List all gems in the current bundle."
 verdict = "allow"
 rationale = "Read-only listing of bundled gems."
+risk_class = "novel"
 
 [[command]]
 path = "bundle check"
 translation = "Check if the bundle's dependencies are satisfied."
 verdict = "allow"
 rationale = "Read-only validation of dependency status."
+risk_class = "novel"
 
 [[command]]
 path = "bundle outdated"
 translation = "Show gems that have newer versions available."
 verdict = "allow"
 rationale = "Read-only comparison of installed versus available versions."
+risk_class = "novel"

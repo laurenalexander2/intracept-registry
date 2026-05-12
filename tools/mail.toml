@@ -3,8 +3,9 @@
 [[command]]
 path = "mail"
 translation = "Send and receive email messages from the command line."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Can send email to external recipients and modify local mailbox files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mail"
@@ -12,6 +13,7 @@ flag = "-s"
 translation_modifier = "setting the subject line of the message"
 verdict = "allow"
 rationale = "Only changes the subject header of the outgoing email."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "sending carbon copies to additional recipients"
 verdict = "allow"
 rationale = "Adds more recipients who will receive the message."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -26,6 +29,7 @@ flag = "-b"
 translation_modifier = "sending blind carbon copies to additional recipients"
 verdict = "allow"
 rationale = "Adds hidden recipients who will receive the message."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -33,6 +37,7 @@ flag = "-e"
 translation_modifier = "testing whether the mailbox has any mail without displaying it"
 verdict = "allow"
 rationale = "Read-only check that exits with a status code; nothing is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -40,6 +45,7 @@ flag = "-H"
 translation_modifier = "showing message headers only without opening the mailbox"
 verdict = "allow"
 rationale = "Read-only display of message headers."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -47,6 +53,7 @@ flag = "-E"
 translation_modifier = "refusing to send messages with an empty body"
 verdict = "allow"
 rationale = "Prevents sending blank emails; reduces the chance of accidental sends."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -54,6 +61,7 @@ flag = "-f"
 translation_modifier = "reading mail from a specific mailbox file"
 verdict = "allow"
 rationale = "Opens and can modify an alternate mailbox file when messages are deleted or moved."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -61,6 +69,7 @@ flag = "-i"
 translation_modifier = "ignoring terminal interrupt signals"
 verdict = "allow"
 rationale = "Only changes signal handling; does not affect message content."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -68,6 +77,7 @@ flag = "-v"
 translation_modifier = "showing delivery details on the terminal"
 verdict = "allow"
 rationale = "Only increases output verbosity."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -75,6 +85,7 @@ flag = "-n"
 translation_modifier = "skipping the system-wide startup configuration file"
 verdict = "allow"
 rationale = "Only changes which settings are loaded; does not affect mail data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mail"
@@ -82,3 +93,4 @@ flag = "-u"
 translation_modifier = "reading another user's mailbox"
 verdict = "allow"
 rationale = "Accesses another user's mail, which may expose private messages if permissions allow."
+arity = "Boolean"

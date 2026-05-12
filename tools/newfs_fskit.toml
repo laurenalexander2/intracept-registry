@@ -3,5 +3,6 @@
 [[command]]
 path = "newfs_fskit"
 translation = "Create a new filesystem using an FSKit filesystem module."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Formats a device, destroying all existing data on the partition."
+risk_class = "novel"

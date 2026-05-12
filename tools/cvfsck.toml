@@ -3,5 +3,6 @@
 [[command]]
 path = "cvfsck"
 translation = "Check and repair an Xsan filesystem."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies filesystem metadata to repair inconsistencies."
+risk_class = "novel"

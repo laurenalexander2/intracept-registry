@@ -3,5 +3,6 @@
 [[command]]
 path = "createuser"
 translation = "Create a new PostgreSQL user role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new database role that can be granted permissions to access data."
+risk_class = "novel"

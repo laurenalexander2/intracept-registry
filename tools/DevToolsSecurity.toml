@@ -3,5 +3,6 @@
 [[command]]
 path = "DevToolsSecurity"
 translation = "Enable or disable developer tool access on macOS."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes system security settings for developer tools."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "clang"
 translation = "Compile C, C++, and Objective-C source code."
 verdict = "allow"
 rationale = "Compiles code locally; does not execute the resulting binary."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "clang"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "writing the output to a specified file"
 verdict = "allow"
 rationale = "Specifies the output filename; may overwrite an existing file at that path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "clang"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "compiling to object files without linking"
 verdict = "allow"
 rationale = "Produces object files only; does not create an executable."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "clang"
@@ -26,6 +29,7 @@ flag = "-O2"
 translation_modifier = "with moderate optimizations enabled"
 verdict = "allow"
 rationale = "Increases optimization level; does not change the compilation model."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "clang"
@@ -33,3 +37,4 @@ flag = "-Wall"
 translation_modifier = "enabling all common compiler warnings"
 verdict = "allow"
 rationale = "Adds diagnostic messages; does not change generated code."
+arity = "Boolean"

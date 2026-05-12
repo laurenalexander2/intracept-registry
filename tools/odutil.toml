@@ -5,21 +5,25 @@ path = "odutil"
 translation = "Examine or change the state of the Open Directory service."
 verdict = "allow"
 rationale = "The bare command prints help text."
+risk_class = "novel"
 
 [[command]]
 path = "odutil show"
 translation = "Display internal state information from the Open Directory service."
 verdict = "allow"
 rationale = "Read-only display of cache, sessions, nodes, and statistics."
+risk_class = "novel"
 
 [[command]]
 path = "odutil reset cache"
 translation = "Clear the Open Directory caches including membership and kernel caches."
 verdict = "allow"
 rationale = "Resets authentication and directory caches, which may briefly affect directory lookups."
+risk_class = "novel"
 
 [[command]]
 path = "odutil set log"
 translation = "Change the logging level for the Open Directory service."
 verdict = "allow"
 rationale = "Adjusts verbosity of log output; does not affect directory data."
+risk_class = "novel"

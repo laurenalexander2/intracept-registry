@@ -7,13 +7,9 @@ path = "python3"
 translation = "Run the Python 3 interpreter."
 verdict = "allow"
 rationale = "Executes arbitrary Python code, which can modify files, make network requests, or run system commands."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
-
 # ── Execution mode flags ─────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "python3"
@@ -21,6 +17,7 @@ flag = "-c"
 translation_modifier = "executing a command string passed as an argument"
 verdict = "allow"
 rationale = "Runs inline code directly; the risk depends entirely on what the code does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -28,6 +25,7 @@ flag = "-m"
 translation_modifier = "running a library module as a script"
 verdict = "allow"
 rationale = "Executes a Python module, which may have side effects depending on the module."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -35,6 +33,7 @@ flag = "-i"
 translation_modifier = "entering interactive mode after running the script"
 verdict = "allow"
 rationale = "Opens an interactive prompt; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -42,11 +41,9 @@ flag = "--check"
 translation_modifier = "checking the script for syntax errors without executing it"
 verdict = "allow"
 rationale = "Read-only syntax validation; no code is executed."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
-tag_modifiers.target = ["filesystem"]
-
 # ── Environment and isolation flags ──────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "python3"
@@ -54,6 +51,7 @@ flag = "-E"
 translation_modifier = "ignoring all Python-related environment variables"
 verdict = "allow"
 rationale = "Increases isolation by ignoring environment configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -61,6 +59,7 @@ flag = "-I"
 translation_modifier = "in isolated mode, ignoring environment variables and user site packages"
 verdict = "allow"
 rationale = "Maximizes isolation from the user environment; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -68,6 +67,7 @@ flag = "-s"
 translation_modifier = "without adding the user site-packages directory to the search path"
 verdict = "allow"
 rationale = "Restricts where modules are loaded from; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -75,8 +75,9 @@ flag = "-S"
 translation_modifier = "without importing the site module on startup"
 verdict = "allow"
 rationale = "Skips site-specific customizations; increases isolation."
-
 # ── Output and behavior flags ────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "python3"
@@ -84,6 +85,7 @@ flag = "-u"
 translation_modifier = "with unbuffered standard output and error streams"
 verdict = "allow"
 rationale = "Changes output buffering behavior; does not affect program logic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -91,6 +93,7 @@ flag = "-B"
 translation_modifier = "without writing .pyc bytecode cache files"
 verdict = "allow"
 rationale = "Prevents creation of cache files; a cleanup-friendly option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -98,6 +101,7 @@ flag = "-O"
 translation_modifier = "removing assert statements and debug code"
 verdict = "allow"
 rationale = "Strips debug-only code from bytecode; a minor optimization with no safety impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -105,6 +109,7 @@ flag = "-OO"
 translation_modifier = "removing assert statements, debug code, and documentation strings"
 verdict = "allow"
 rationale = "More aggressive optimization that also removes docstrings; no safety impact."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -112,6 +117,7 @@ flag = "-W"
 translation_modifier = "controlling which warnings are shown"
 verdict = "allow"
 rationale = "Only changes warning display behavior; does not affect program logic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -119,6 +125,7 @@ flag = "-X"
 translation_modifier = "enabling an implementation-specific option"
 verdict = "allow"
 rationale = "Adjusts internal interpreter settings; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -126,6 +133,7 @@ flag = "-q"
 translation_modifier = "suppressing the version and copyright banner on startup"
 verdict = "allow"
 rationale = "Only changes startup output; does not affect program behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -133,6 +141,7 @@ flag = "-v"
 translation_modifier = "printing a message each time a module is loaded"
 verdict = "allow"
 rationale = "Only adds diagnostic output; does not change program behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "python3"
@@ -140,41 +149,27 @@ flag = "-V"
 translation_modifier = "printing the version and exiting"
 verdict = "allow"
 rationale = "Read-only version display; nothing is executed."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
-tag_modifiers.target = ["process"]
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "python3 -c"
 translation = "Execute a Python command string passed directly on the command line."
 verdict = "allow"
 rationale = "Runs arbitrary inline code that can perform any operation the interpreter supports."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "python3 -m"
 translation = "Run a Python library module as a standalone script."
 verdict = "allow"
 rationale = "Executes a module's __main__ entry point, which may install packages, start servers, or modify files."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "python3 -u"
 translation = "Run the Python 3 interpreter with unbuffered standard output and error streams for real-time logging."
 verdict = "allow"
 rationale = "Ensures output appears immediately rather than being batched, useful for long-running scripts."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"

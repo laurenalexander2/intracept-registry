@@ -5,6 +5,7 @@ path = "nfsstat"
 translation = "Display NFS client and server activity statistics."
 verdict = "allow"
 rationale = "Read-only display of NFS protocol statistics."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "nfsstat"
@@ -12,6 +13,7 @@ flag = "-z"
 translation_modifier = "zeroing the statistics counters"
 verdict = "allow"
 rationale = "Resets NFS statistics, losing historical performance data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nfsstat"
@@ -19,6 +21,7 @@ flag = "-m"
 translation_modifier = "showing NFS mount information"
 verdict = "allow"
 rationale = "Read-only display of mount details."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nfsstat"
@@ -26,3 +29,4 @@ flag = "-e"
 translation_modifier = "showing exported directory statistics"
 verdict = "allow"
 rationale = "Read-only display of export information."
+arity = "Boolean"

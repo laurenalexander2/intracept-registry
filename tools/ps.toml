@@ -7,8 +7,9 @@ path = "ps"
 translation = "List currently running processes."
 verdict = "allow"
 rationale = "Read-only snapshot of running processes that does not modify anything."
-
 # ── Process selection ────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "ps"
@@ -16,6 +17,7 @@ flag = "-e"
 translation_modifier = "showing all processes, including those belonging to other users"
 verdict = "allow"
 rationale = "Expands the listing to every process on the system; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -23,6 +25,7 @@ flag = "-A"
 translation_modifier = "showing all processes, including those belonging to other users"
 verdict = "allow"
 rationale = "Equivalent to -e; expands the listing to every process on the system."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -30,6 +33,7 @@ flag = "-a"
 translation_modifier = "including other users' processes that have a terminal"
 verdict = "allow"
 rationale = "Shows processes from all users that are attached to a terminal; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -37,6 +41,7 @@ flag = "-x"
 translation_modifier = "including processes that are not attached to a terminal"
 verdict = "allow"
 rationale = "Shows background and system processes that have no controlling terminal; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -44,6 +49,7 @@ flag = "aux"
 translation_modifier = "showing all processes for all users with detailed information"
 verdict = "allow"
 rationale = "Combines all-users, no-terminal, and user-oriented format into a comprehensive listing; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -51,6 +57,7 @@ flag = "-u"
 translation_modifier = "for a specified user"
 verdict = "allow"
 rationale = "Filters the listing to a specific user's processes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -58,6 +65,7 @@ flag = "-p"
 translation_modifier = "for a specified process ID"
 verdict = "allow"
 rationale = "Filters the listing to a single process; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -65,6 +73,7 @@ flag = "-G"
 translation_modifier = "for processes running with a specified group ID"
 verdict = "allow"
 rationale = "Filters the listing to a specific group; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -72,8 +81,9 @@ flag = "-t"
 translation_modifier = "for processes attached to a specified terminal"
 verdict = "allow"
 rationale = "Filters the listing by terminal device; still read-only."
-
 # ── Output format ────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "ps"
@@ -81,6 +91,7 @@ flag = "-f"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows a full-format listing with additional columns like parent process and start time; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -88,6 +99,7 @@ flag = "-o"
 translation_modifier = "showing only specified columns"
 verdict = "allow"
 rationale = "Customizes which columns appear in the output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -95,6 +107,7 @@ flag = "-w"
 translation_modifier = "using wider output to avoid cutting off long command names"
 verdict = "allow"
 rationale = "Increases output width so command names are not truncated; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -102,6 +115,7 @@ flag = "-E"
 translation_modifier = "including each process's environment variables"
 verdict = "allow"
 rationale = "Displays environment variables alongside process info; still read-only but may reveal sensitive values."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -109,8 +123,9 @@ flag = "-c"
 translation_modifier = "showing only the executable name instead of the full command line"
 verdict = "allow"
 rationale = "Shortens the command column to just the program name; still read-only."
-
 # ── Sorting ──────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "ps"
@@ -118,6 +133,7 @@ flag = "-r"
 translation_modifier = "sorted by current processor usage"
 verdict = "allow"
 rationale = "Changes the sort order to show the busiest processes first; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ps"
@@ -125,8 +141,9 @@ flag = "-m"
 translation_modifier = "sorted by memory usage"
 verdict = "allow"
 rationale = "Changes the sort order to show the most memory-intensive processes first; still read-only."
-
 # ── Thread display ───────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "ps"
@@ -134,3 +151,4 @@ flag = "-M"
 translation_modifier = "showing individual threads for each process"
 verdict = "allow"
 rationale = "Displays thread-level detail for multi-threaded processes; still read-only."
+arity = "Boolean"

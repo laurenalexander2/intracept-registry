@@ -3,12 +3,14 @@
 [[command]]
 path = "bputil"
 translation = "Manage boot policy on Apple Silicon Macs."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies boot security policy, which can change system security posture."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "bputil"
 flag = "--remove"
 translation_modifier = "removing a boot policy entry"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes boot security policy; may prevent the system from booting."
+arity = "Boolean"

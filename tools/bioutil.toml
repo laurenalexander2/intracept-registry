@@ -3,18 +3,21 @@
 [[command]]
 path = "bioutil"
 translation = "Manage Touch ID fingerprint data on macOS."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies biometric authentication data, which controls system access."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "bioutil"
 flag = "--delete"
 translation_modifier = "deleting biometric enrollment data"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes biometric data; re-enrollment required."
+arity = "Boolean"
 [[flag]]
 applies_to = "bioutil"
 flag = "--purge"
 translation_modifier = "purging all biometric data from the system"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys all biometric enrollment data; full re-enrollment required for all users."
+arity = "Boolean"

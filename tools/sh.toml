@@ -5,6 +5,7 @@ path = "sh"
 translation = "Run the standards-compliant-compliant command interpreter shell."
 verdict = "allow"
 rationale = "Launches an interactive shell or executes scripts; the shell itself is just an interpreter."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sh"
@@ -12,6 +13,7 @@ flag = "-c"
 translation_modifier = "executing a command string passed as an argument"
 verdict = "allow"
 rationale = "Runs a command inline; risk depends on the command, not the flag."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sh"
@@ -19,3 +21,4 @@ flag = "-x"
 translation_modifier = "printing each command before executing it"
 verdict = "allow"
 rationale = "Debug tracing output; no state modification."
+arity = "Boolean"

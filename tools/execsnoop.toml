@@ -5,6 +5,7 @@ path = "execsnoop"
 translation = "Monitor and display new process executions in real time using DTrace."
 verdict = "allow"
 rationale = "Read-only diagnostic tool that observes process creation without modifying anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "execsnoop"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "including human-readable timestamps"
 verdict = "allow"
 rationale = "Only adds timestamp information to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "execsnoop"
@@ -19,3 +21,4 @@ flag = "-c"
 translation_modifier = "monitoring only a specific command name"
 verdict = "allow"
 rationale = "Narrows the scope to a single command; still read-only."
+arity = "Boolean"

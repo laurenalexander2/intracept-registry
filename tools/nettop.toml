@@ -5,6 +5,7 @@ path = "nettop"
 translation = "Display a live-updating view of network connection and route activity."
 verdict = "allow"
 rationale = "Read-only monitoring of network connections; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "nettop"
@@ -12,6 +13,7 @@ flag = "-m"
 translation_modifier = "monitoring only a specific protocol type"
 verdict = "allow"
 rationale = "Filters the display to a specific protocol; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "nettop"
@@ -19,3 +21,4 @@ flag = "-p"
 translation_modifier = "monitoring only a specific process"
 verdict = "allow"
 rationale = "Filters the display to a specific process; still read-only."
+arity = "Boolean"

@@ -7,26 +7,18 @@ path = "make"
 translation = "Build targets by running commands defined in a Makefile."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands defined in the Makefile, which may modify files or run programs."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Targets ──────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "make clean"
 translation = "Remove build artifacts and generated files by running the clean target."
 verdict = "allow"
 rationale = "Executes the Makefile's clean target, which typically deletes compiled outputs and temporary files."
-tags.scope = "local"
-tags.effect = ["delete", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Flags ────────────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[flag]]
 applies_to = "make"
@@ -34,7 +26,7 @@ flag = "-n"
 translation_modifier = "simulating the build without actually running any commands"
 verdict = "allow"
 rationale = "Dry-run mode; only prints the commands that would be executed."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "make"
@@ -42,6 +34,7 @@ flag = "-B"
 translation_modifier = "unconditionally rebuilding all targets regardless of timestamps"
 verdict = "allow"
 rationale = "Forces a full rebuild, which re-runs all build commands including potentially destructive ones."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "make"
@@ -49,6 +42,7 @@ flag = "-j"
 translation_modifier = "running multiple build jobs in parallel"
 verdict = "allow"
 rationale = "Increases build concurrency; does not change what commands are executed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "make"
@@ -56,6 +50,7 @@ flag = "-k"
 translation_modifier = "continuing to build other targets even after errors"
 verdict = "allow"
 rationale = "Changes error handling behavior but does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "make"
@@ -63,7 +58,8 @@ flag = "-i"
 translation_modifier = "ignoring errors from all commands"
 verdict = "allow"
 rationale = "Continues past failures, which may result in an inconsistent build state."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "make"
@@ -71,6 +67,7 @@ flag = "-f"
 translation_modifier = "using a specified file as the Makefile"
 verdict = "allow"
 rationale = "Changes which Makefile is read; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "make"
@@ -78,16 +75,13 @@ flag = "-C"
 translation_modifier = "changing to a specified directory before building"
 verdict = "allow"
 rationale = "Changes the working directory; does not add destructive capability."
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "make -j"
 translation = "Build targets by running multiple Makefile commands simultaneously in parallel."
 verdict = "allow"
 rationale = "Increases build speed through parallelism without changing which commands are executed."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

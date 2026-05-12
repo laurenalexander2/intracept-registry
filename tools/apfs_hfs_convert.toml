@@ -3,5 +3,6 @@
 [[command]]
 path = "apfs_hfs_convert"
 translation = "Convert an HFS+ volume to APFS format."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Irreversibly converts the filesystem format of a volume."
+risk_class = "novel"

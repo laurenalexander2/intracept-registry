@@ -5,11 +5,7 @@ path = "redis-cli"
 translation = "Connect to a Redis data store."
 verdict = "allow"
 rationale = "Connects to a live data store where any command can be executed, including destructive operations like FLUSHALL."
-tags.scope = "local"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -17,7 +13,7 @@ flag = "-h"
 translation_modifier = "connecting to a specified server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
-tag_modifiers.scope = "remote"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -25,6 +21,7 @@ flag = "-p"
 translation_modifier = "connecting on a specified port"
 verdict = "allow"
 rationale = "Specifies which port to connect on; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -32,6 +29,7 @@ flag = "-a"
 translation_modifier = "authenticating with a specified password"
 verdict = "allow"
 rationale = "Provides authentication credentials; does not change what operations are available."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -39,6 +37,7 @@ flag = "-n"
 translation_modifier = "selecting a specified database number"
 verdict = "allow"
 rationale = "Chooses which logical database to operate on; does not change what commands can be run."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -46,14 +45,15 @@ flag = "--scan"
 translation_modifier = "listing keys matching a pattern without blocking the server"
 verdict = "allow"
 rationale = "Read-only operation that iterates through keys incrementally."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
 flag = "--pipe"
 translation_modifier = "sending raw protocol commands from standard input in bulk"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Streams arbitrary commands to the server, which may include destructive operations like deleting keys or erasing entire databases."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -61,8 +61,7 @@ flag = "--rdb"
 translation_modifier = "downloading a snapshot of the database to a local file"
 verdict = "allow"
 rationale = "Read-only export of the database contents to a file."
-tag_modifiers.effect = ["read"]
-tag_modifiers.target = ["database", "filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -70,7 +69,7 @@ flag = "--stat"
 translation_modifier = "displaying live server statistics"
 verdict = "allow"
 rationale = "Read-only monitoring of server metrics."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -78,7 +77,7 @@ flag = "--bigkeys"
 translation_modifier = "scanning for the largest keys in the database"
 verdict = "allow"
 rationale = "Read-only analysis that identifies large keys; does not modify data."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -86,7 +85,7 @@ flag = "--latency"
 translation_modifier = "measuring round-trip latency to the server"
 verdict = "allow"
 rationale = "Read-only network latency measurement."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -94,6 +93,7 @@ flag = "-u"
 translation_modifier = "connecting using a specified connection URL"
 verdict = "allow"
 rationale = "Provides the connection string; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "redis-cli"
@@ -101,27 +101,20 @@ flag = "--tls"
 translation_modifier = "connecting over an encrypted TLS connection"
 verdict = "allow"
 rationale = "Enables transport encryption; does not affect command capabilities."
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "redis-cli -h -p"
 translation = "Connect to a Redis data store on a specified remote host and port."
 verdict = "allow"
 rationale = "Establishes a connection to a remote Redis instance where any command can be executed."
-tags.scope = "remote"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "redis-cli --pipe"
 translation = "Stream raw Redis protocol commands from standard input to the server in bulk for high-throughput ingestion."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Sends arbitrary commands at wire speed without per-command review, which may include destructive operations like FLUSHDB."
-tags.scope = "local"
-tags.effect = ["read", "write", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["database"]
-tags.safety_override = false
+risk_class = "novel"

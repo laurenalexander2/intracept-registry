@@ -5,6 +5,7 @@ path = "pg_amcheck-17"
 translation = "Check PostgreSQL database objects for corruption."
 verdict = "allow"
 rationale = "Read-only integrity verification that does not modify any data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_amcheck-17"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "checking all relations in the database"
 verdict = "allow"
 rationale = "Read-only integrity check across all relations."
+arity = "Boolean"

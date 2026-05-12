@@ -3,8 +3,9 @@
 [[command]]
 path = "dropuser"
 translation = "Delete a PostgreSQL user role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the role; objects owned by it may become inaccessible."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dropuser"
@@ -12,6 +13,7 @@ flag = "-i"
 translation_modifier = "prompting for confirmation before deleting"
 verdict = "allow"
 rationale = "Adds an interactive confirmation step; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dropuser"
@@ -19,3 +21,4 @@ flag = "--if-exists"
 translation_modifier = "without raising an error if the role does not exist"
 verdict = "allow"
 rationale = "Prevents errors on nonexistent roles; does not change destructive behavior."
+arity = "Boolean"

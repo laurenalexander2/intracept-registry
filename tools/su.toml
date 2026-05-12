@@ -5,6 +5,7 @@ path = "su"
 translation = "Switch to another user account in the current terminal session."
 verdict = "allow"
 rationale = "Changes the active user identity, so all following commands run with that user's full permissions."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "su"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "starting a full login session with the target user's settings and home folder"
 verdict = "allow"
 rationale = "Provides a complete environment as the target user, including their home folder and startup configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "su"
@@ -19,6 +21,7 @@ flag = "-"
 translation_modifier = "starting a full login session with the target user's settings and home folder"
 verdict = "allow"
 rationale = "Same as -l; provides a complete environment as the target user, including their home folder and startup configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "su"
@@ -26,6 +29,7 @@ flag = "-m"
 translation_modifier = "keeping your current environment settings instead of loading the target user's"
 verdict = "allow"
 rationale = "Preserves the caller's environment, which can create security mismatches between the active user and the environment variables."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "su"
@@ -33,3 +37,4 @@ flag = "-f"
 translation_modifier = "skipping the shell startup configuration files"
 verdict = "allow"
 rationale = "Prevents the target shell from reading its configuration file, which only affects the shell's initial setup."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "SetFile"
 translation = "Set HFS+ file attributes on files and directories."
 verdict = "allow"
 rationale = "Modifies file metadata such as type, creator, dates, and visibility flags; changes are reversible but may affect how Finder displays files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "SetFile"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "setting specific file attribute flags"
 verdict = "allow"
 rationale = "Changes file attributes like visibility and lock status; incorrect settings may hide files or prevent editing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "SetFile"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "setting the file creator code"
 verdict = "allow"
 rationale = "Changes legacy creator metadata; minimal practical impact on modern macOS."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "SetFile"
@@ -26,6 +29,7 @@ flag = "-t"
 translation_modifier = "setting the file type code"
 verdict = "allow"
 rationale = "Changes legacy type metadata; minimal practical impact on modern macOS."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "SetFile"
@@ -33,6 +37,7 @@ flag = "-d"
 translation_modifier = "setting the creation date"
 verdict = "allow"
 rationale = "Modifies file creation timestamp; cosmetic metadata change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "SetFile"
@@ -40,3 +45,4 @@ flag = "-m"
 translation_modifier = "setting the modification date"
 verdict = "allow"
 rationale = "Modifies file modification timestamp; cosmetic metadata change."
+arity = "Boolean"

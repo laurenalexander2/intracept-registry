@@ -5,6 +5,7 @@ path = "snfsdefrag"
 translation = "Defragment files on an Xsan volume by consolidating extents."
 verdict = "allow"
 rationale = "Rewrites file data to reduce fragmentation; the files are preserved but disk layout changes."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snfsdefrag"
@@ -12,6 +13,7 @@ flag = "-e"
 translation_modifier = "listing the extents of a file without defragmenting"
 verdict = "allow"
 rationale = "Read-only display of file extent information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snfsdefrag"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "reporting the fragmentation count without defragmenting"
 verdict = "allow"
 rationale = "Read-only fragmentation count."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snfsdefrag"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "pruning unused preallocated space from files"
 verdict = "allow"
 rationale = "Releases unused allocated space; the file content is unchanged but allocation shrinks."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snfsdefrag"
@@ -33,6 +37,7 @@ flag = "-G"
 translation_modifier = "migrating files to a specified stripe group"
 verdict = "allow"
 rationale = "Moves file data between storage pools; useful for retiring hardware."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snfsdefrag"
@@ -40,3 +45,4 @@ flag = "-r"
 translation_modifier = "recursively processing directories"
 verdict = "allow"
 rationale = "Applies the operation to all files in a directory tree, widening scope."
+arity = "Boolean"

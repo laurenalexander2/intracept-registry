@@ -5,6 +5,7 @@ path = "man"
 translation = "Display the manual page for a command or topic."
 verdict = "allow"
 rationale = "Read-only display of documentation."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "man"
@@ -12,6 +13,7 @@ flag = "-k"
 translation_modifier = "searching manual page descriptions for a keyword"
 verdict = "allow"
 rationale = "Only changes the search mode; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "man"
@@ -19,6 +21,7 @@ flag = "-f"
 translation_modifier = "showing only the one-line description for each matching page"
 verdict = "allow"
 rationale = "Limits output to brief descriptions; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "man"
@@ -26,6 +29,7 @@ flag = "-a"
 translation_modifier = "showing all matching manual pages instead of just the first"
 verdict = "allow"
 rationale = "Only changes how many results are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "man"
@@ -33,6 +37,7 @@ flag = "-w"
 translation_modifier = "printing the file path of the manual page instead of displaying it"
 verdict = "allow"
 rationale = "Only outputs a file path; does not display or modify anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "man"
@@ -40,6 +45,7 @@ flag = "-S"
 translation_modifier = "restricting the search to specified manual sections"
 verdict = "allow"
 rationale = "Limits which sections are searched; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "man"
@@ -47,3 +53,4 @@ flag = "-M"
 translation_modifier = "searching for manual pages in a specified directory path"
 verdict = "allow"
 rationale = "Changes where manual pages are looked up; still read-only."
+arity = "Boolean"

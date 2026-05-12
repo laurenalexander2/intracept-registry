@@ -5,6 +5,7 @@ path = "msgcomm"
 translation = "Find messages common to two or more translation catalog files."
 verdict = "allow"
 rationale = "Read-only extraction that outputs common messages."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msgcomm"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

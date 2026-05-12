@@ -5,6 +5,7 @@ path = "pcre2grep"
 translation = "Search files for lines matching a Perl-compatible regular expression."
 verdict = "allow"
 rationale = "Read-only search that displays matching lines; does not modify files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pcre2grep"
@@ -12,3 +13,4 @@ flag = "--recursive"
 translation_modifier = "searching recursively through subdirectories"
 verdict = "allow"
 rationale = "Read-only search across directory trees."
+arity = "Boolean"

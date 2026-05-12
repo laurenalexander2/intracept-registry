@@ -7,8 +7,9 @@ path = "echo"
 translation = "Print text to the standard output."
 verdict = "allow"
 rationale = "Write-only output to the terminal that does not modify any files or system state."
-
 # ── Flags ────────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "echo"
@@ -16,6 +17,7 @@ flag = "-n"
 translation_modifier = "without adding a trailing newline"
 verdict = "allow"
 rationale = "Only changes output formatting; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "echo"
@@ -23,3 +25,4 @@ flag = "-e"
 translation_modifier = "interpreting backslash escape sequences in the text"
 verdict = "allow"
 rationale = "Enables escape characters like \\n and \\t; still a display-only operation."
+arity = "Boolean"

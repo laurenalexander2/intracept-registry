@@ -5,6 +5,7 @@ path = "uudecode"
 translation = "Decode a uuencoded file back to its original binary form."
 verdict = "allow"
 rationale = "Creates a decoded output file; does not modify the encoded input."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "uudecode"
@@ -12,6 +13,7 @@ flag = "-c"
 translation_modifier = "decoding multiple encoded sections from the input"
 verdict = "allow"
 rationale = "Processes multiple encoded sections; each creates a separate output file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -19,6 +21,7 @@ flag = "-i"
 translation_modifier = "without overwriting existing files"
 verdict = "allow"
 rationale = "Prevents overwriting, making the operation safer."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -26,6 +29,7 @@ flag = "-m"
 translation_modifier = "interpreting the input as base64 format instead of traditional uuencode"
 verdict = "allow"
 rationale = "Only changes the expected input encoding; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -33,6 +37,7 @@ flag = "-o"
 translation_modifier = "writing output to a specified file instead of the filename in the encoded data"
 verdict = "allow"
 rationale = "Writes to a chosen file that may overwrite existing data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -40,6 +45,7 @@ flag = "-p"
 translation_modifier = "writing decoded output to the terminal instead of a file"
 verdict = "allow"
 rationale = "Avoids creating or overwriting any file on disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -47,6 +53,7 @@ flag = "-r"
 translation_modifier = "accepting raw input that is missing the framing header and footer lines"
 verdict = "allow"
 rationale = "Only changes how input is parsed; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uudecode"
@@ -54,3 +61,4 @@ flag = "-s"
 translation_modifier = "preserving the full directory path in the output filename"
 verdict = "allow"
 rationale = "Allows writing to directory paths embedded in the encoded data, which could overwrite files outside the current directory."
+arity = "Boolean"

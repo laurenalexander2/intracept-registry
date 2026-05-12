@@ -3,5 +3,6 @@
 [[command]]
 path = "audit"
 translation = "Control the BSM audit subsystem."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Manages system auditing, which affects security logging."
+risk_class = "novel"

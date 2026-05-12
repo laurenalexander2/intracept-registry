@@ -5,6 +5,7 @@ path = "taskinfo"
 translation = "Display information about running tasks and their resource usage."
 verdict = "allow"
 rationale = "Read-only display of task information; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "taskinfo"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "displaying information about all tasks"
 verdict = "allow"
 rationale = "Read-only display of all running task information."
+arity = "Boolean"

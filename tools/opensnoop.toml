@@ -5,6 +5,7 @@ path = "opensnoop"
 translation = "Trace file open operations across the system in real time using DTrace."
 verdict = "allow"
 rationale = "Read-only tracing of file open events; requires root but does not modify anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "opensnoop"
@@ -12,6 +13,7 @@ flag = "-p"
 translation_modifier = "filtering to a specific process ID"
 verdict = "allow"
 rationale = "Narrows the trace scope; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "opensnoop"
@@ -19,3 +21,4 @@ flag = "-x"
 translation_modifier = "showing only failed opens"
 verdict = "allow"
 rationale = "Filters output to errors only; still read-only."
+arity = "Boolean"

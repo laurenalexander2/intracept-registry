@@ -5,6 +5,7 @@ path = "sha1sum"
 translation = "Compute or verify SHA-1 checksums in GNU-compatible format."
 verdict = "allow"
 rationale = "Read-only hash computation; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sha1sum"
@@ -12,6 +13,7 @@ flag = "-c"
 translation_modifier = "verifying checksums read from a file"
 verdict = "allow"
 rationale = "Read-only verification against stored checksums."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sha1sum"
@@ -19,3 +21,4 @@ flag = "-b"
 translation_modifier = "reading files in binary mode"
 verdict = "allow"
 rationale = "Changes file read mode; no state modification."
+arity = "Boolean"

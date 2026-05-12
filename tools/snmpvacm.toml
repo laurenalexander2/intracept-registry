@@ -3,8 +3,9 @@
 [[command]]
 path = "snmpvacm"
 translation = "Manage SNMP access control rules on a network device."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies access control rules on network devices; incorrect changes can expose sensitive data or lock out management access."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpvacm"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpvacm"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpvacm"
@@ -26,3 +29,4 @@ flag = "-Ce"
 translation_modifier = "marking a view subtree as excluded instead of included"
 verdict = "allow"
 rationale = "Changes whether an object tree is blocked or allowed in a view, which directly affects access control."
+arity = "Boolean"

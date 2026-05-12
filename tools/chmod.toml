@@ -7,22 +7,19 @@ path = "chmod"
 translation = "Change file or directory permissions."
 verdict = "allow"
 rationale = "Modifies access controls, which can expose files to unauthorized users or lock out legitimate access."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Scope modifiers ────────────────────────────────────────────────────────��─
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "chmod"
 flag = "-R"
 translation_modifier = "recursively through all subdirectories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Applies permission changes to an entire directory tree, greatly increasing the blast radius."
-
 # ── Symlink behavior ──────────────────────────────────────────���──────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "chmod"
@@ -30,6 +27,7 @@ flag = "-h"
 translation_modifier = "changing the permissions of the symbolic link itself instead of its target"
 verdict = "allow"
 rationale = "Targets the link rather than the linked file; a narrower scope change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -37,13 +35,15 @@ flag = "-H"
 translation_modifier = "following symbolic links on the command line but not in subdirectories"
 verdict = "allow"
 rationale = "Causes permission changes to affect the targets of explicitly named symbolic links when used with -R."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
 flag = "-L"
 translation_modifier = "following all symbolic links during recursive traversal"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "When combined with -R, permission changes can reach files outside the intended directory tree via symbolic links."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -51,8 +51,9 @@ flag = "-P"
 translation_modifier = "without following any symbolic links during recursive traversal"
 verdict = "allow"
 rationale = "The default behavior with -R; avoids reaching files outside the directory tree."
-
 # ── Output control ───────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "chmod"
@@ -60,6 +61,7 @@ flag = "-f"
 translation_modifier = "suppressing error messages for files that cannot be changed"
 verdict = "allow"
 rationale = "Silences errors but does not change what permissions are modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -67,8 +69,9 @@ flag = "-v"
 translation_modifier = "showing each file as its permissions are changed"
 verdict = "allow"
 rationale = "Adds verbose output without changing what permissions are modified."
-
 # ── ACL operations (macOS) ───────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[flag]]
 applies_to = "chmod"
@@ -76,6 +79,7 @@ flag = "+a"
 translation_modifier = "adding an access control list entry to the file"
 verdict = "allow"
 rationale = "Grants or restricts additional access beyond standard Unix permissions."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -83,6 +87,7 @@ flag = "-a"
 translation_modifier = "removing an access control list entry from the file"
 verdict = "allow"
 rationale = "Revokes a specific access control list entry, which may remove needed access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -90,6 +95,7 @@ flag = "-N"
 translation_modifier = "removing all access control list entries from the file"
 verdict = "allow"
 rationale = "Strips all ACL entries, reverting the file to standard Unix permissions only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -97,6 +103,7 @@ flag = "-E"
 translation_modifier = "reading access control list entries from standard input"
 verdict = "allow"
 rationale = "Replaces ACL entries with those read from input; the scope depends on the input provided."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -104,8 +111,7 @@ flag = "-C"
 translation_modifier = "returning whether the file's access control list is correct without making changes"
 verdict = "allow"
 rationale = "Read-only check of ACL correctness; does not modify anything."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chmod"
@@ -113,38 +119,27 @@ flag = "-i"
 translation_modifier = "removing inherited access control list entries"
 verdict = "allow"
 rationale = "Strips inherited ACL entries, which may change effective permissions on the file."
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "chmod -R"
 translation = "Change permissions on an entire directory tree and all files within it."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Applies permission changes recursively, which can expose or lock out access to large numbers of files at once."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "chmod -L -R"
 translation = "Change permissions recursively through all subdirectories, following symbolic links to reach files outside the directory tree."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permission changes can propagate beyond the intended directory tree by following symbolic links."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "chmod -R -v"
 translation = "Change permissions on an entire directory tree, showing each file as its permissions are changed."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Applies recursive permission changes with verbose output for visibility into what is being modified."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

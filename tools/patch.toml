@@ -5,6 +5,7 @@ path = "patch"
 translation = "Apply a diff file to modify source files."
 verdict = "allow"
 rationale = "Modifies files on disk according to a patch file; changes can be reversed."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "patch"
@@ -12,6 +13,7 @@ flag = "-R"
 translation_modifier = "reversing the patch to undo previously applied changes"
 verdict = "allow"
 rationale = "Undoes a patch application; safe if the patch was previously applied correctly."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -19,6 +21,7 @@ flag = "--dry-run"
 translation_modifier = "simulating the patch without actually modifying any files"
 verdict = "allow"
 rationale = "No files are modified; only shows what would happen."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "stripping a specified number of leading path components from file names"
 verdict = "allow"
 rationale = "Adjusts path handling; does not change what modifications are applied."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -33,6 +37,7 @@ flag = "-b"
 translation_modifier = "creating backup files before modifying originals"
 verdict = "allow"
 rationale = "Preserves original files as backups; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -40,6 +45,7 @@ flag = "-f"
 translation_modifier = "without asking for confirmation and assuming all defaults"
 verdict = "allow"
 rationale = "Suppresses interactive prompts, which removes a safety check before applying changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -47,6 +53,7 @@ flag = "-s"
 translation_modifier = "suppressing all output except error messages"
 verdict = "allow"
 rationale = "Only affects verbosity; does not change what modifications are applied."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -54,6 +61,7 @@ flag = "-i"
 translation_modifier = "reading the patch from a specified file"
 verdict = "allow"
 rationale = "Only changes where the patch input is read from."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -61,6 +69,7 @@ flag = "-o"
 translation_modifier = "writing the patched result to a specified file instead of modifying the original"
 verdict = "allow"
 rationale = "Preserves the original file by writing output elsewhere."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -68,6 +77,7 @@ flag = "-E"
 translation_modifier = "deleting output files that become empty after patching"
 verdict = "allow"
 rationale = "Automatically removes files, which could cause data loss if the patch is incorrect."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -75,6 +85,7 @@ flag = "-N"
 translation_modifier = "skipping patches that appear to be already applied or reversed"
 verdict = "allow"
 rationale = "Avoids reapplying changes; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -82,6 +93,7 @@ flag = "-d"
 translation_modifier = "changing to a specified directory before applying the patch"
 verdict = "allow"
 rationale = "Only changes the working directory for path resolution."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "patch"
@@ -89,3 +101,4 @@ flag = "-l"
 translation_modifier = "ignoring differences in whitespace when matching lines"
 verdict = "allow"
 rationale = "Makes matching more flexible; does not change what modifications are applied."
+arity = "Boolean"

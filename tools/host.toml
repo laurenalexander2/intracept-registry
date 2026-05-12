@@ -5,6 +5,7 @@ path = "host"
 translation = "Perform a DNS lookup for a hostname or IP address."
 verdict = "allow"
 rationale = "Read-only DNS query that modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "host"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "showing all available DNS record types"
 verdict = "allow"
 rationale = "Only changes the scope of the query; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -19,6 +21,7 @@ flag = "-t"
 translation_modifier = "querying for a specific DNS record type"
 verdict = "allow"
 rationale = "Only changes which record type is looked up."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "performing a zone transfer to list all records"
 verdict = "allow"
 rationale = "Requests a zone transfer from the server; read-only query that does not modify DNS data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -33,6 +37,7 @@ flag = "-4"
 translation_modifier = "using only IPv4 for the query"
 verdict = "allow"
 rationale = "Restricts transport to IPv4; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -40,6 +45,7 @@ flag = "-6"
 translation_modifier = "using only IPv6 for the query"
 verdict = "allow"
 rationale = "Restricts transport to IPv6; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -47,6 +53,7 @@ flag = "-C"
 translation_modifier = "checking consistency of start-of-authority records across all authoritative name servers"
 verdict = "allow"
 rationale = "Queries multiple servers for comparison; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -54,6 +61,7 @@ flag = "-r"
 translation_modifier = "sending a non-recursive query"
 verdict = "allow"
 rationale = "Changes query behavior to non-recursive; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -61,6 +69,7 @@ flag = "-T"
 translation_modifier = "using TCP instead of UDP for the query"
 verdict = "allow"
 rationale = "Changes the transport protocol; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -68,6 +77,7 @@ flag = "-v"
 translation_modifier = "showing verbose output with full record details"
 verdict = "allow"
 rationale = "Increases output detail; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -75,6 +85,7 @@ flag = "-W"
 translation_modifier = "setting a custom timeout in seconds for the query"
 verdict = "allow"
 rationale = "Changes the wait time; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "host"
@@ -82,3 +93,4 @@ flag = "-w"
 translation_modifier = "waiting indefinitely for a response"
 verdict = "allow"
 rationale = "Sets timeout to maximum; still a read-only query."
+arity = "Boolean"

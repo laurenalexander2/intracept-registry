@@ -3,17 +3,20 @@
 [[command]]
 path = "trimforce"
 translation = "Enable or disable TRIM commands on third-party solid-state drives."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies low-level storage behavior; some drives may not handle TRIM correctly, potentially causing data loss."
+risk_class = "novel"
 
 [[command]]
 path = "trimforce enable"
 translation = "Enable TRIM commands for third-party drives."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Enables TRIM which improves performance but may cause data loss on incompatible drives."
+risk_class = "novel"
 
 [[command]]
 path = "trimforce disable"
 translation = "Disable TRIM commands for third-party drives."
 verdict = "allow"
 rationale = "Stops sending TRIM commands; a conservative safety measure."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "sha1"
 translation = "Compute SHA-1 message digests for files."
 verdict = "allow"
 rationale = "Read-only hash computation; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sha1"
@@ -12,6 +13,7 @@ flag = "-s"
 translation_modifier = "computing the digest of a specified string"
 verdict = "allow"
 rationale = "Hashes a string argument; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sha1"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "verifying a digest against a specified checksum string"
 verdict = "allow"
 rationale = "Read-only comparison; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sha1"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "outputting only the digest without the filename"
 verdict = "allow"
 rationale = "Cosmetic output change; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sha1"
@@ -33,3 +37,4 @@ flag = "-r"
 translation_modifier = "reversing the output format"
 verdict = "allow"
 rationale = "Cosmetic output change; no state modification."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "smbdiagnose"
 translation = "Gather diagnostic information for troubleshooting SMB file sharing issues."
 verdict = "allow"
 rationale = "Collects system state and network traces for debugging; does not modify SMB configuration."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "smbdiagnose"
@@ -12,6 +13,7 @@ flag = "-s"
 translation_modifier = "including full sysdiagnose information in the output"
 verdict = "allow"
 rationale = "Adds more diagnostic data; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "smbdiagnose"
@@ -19,3 +21,4 @@ flag = "-f"
 translation_modifier = "writing the diagnostic output to a specified path"
 verdict = "allow"
 rationale = "Directs output location; no state modification."
+arity = "Boolean"

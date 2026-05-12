@@ -3,5 +3,6 @@
 [[command]]
 path = "createdb-17"
 translation = "Create a new PostgreSQL 17 database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a new database on the PostgreSQL server."
+risk_class = "novel"

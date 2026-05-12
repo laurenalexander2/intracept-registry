@@ -5,6 +5,7 @@ path = "perl"
 translation = "Run the Perl interpreter."
 verdict = "allow"
 rationale = "Executes arbitrary Perl code, which can modify files, make network requests, or run system commands."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "perl"
@@ -12,6 +13,7 @@ flag = "-e"
 translation_modifier = "executing a command string passed as an argument"
 verdict = "allow"
 rationale = "Runs inline code directly; the risk depends on what the code does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -19,13 +21,15 @@ flag = "-c"
 translation_modifier = "only checking syntax without executing"
 verdict = "allow"
 rationale = "Validates syntax without running the code; no side effects beyond startup initialization blocks."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
 flag = "-i"
 translation_modifier = "editing files in place"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies files directly on disk; original content may be lost without a backup extension."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -33,6 +37,7 @@ flag = "-n"
 translation_modifier = "wrapping the script in an implicit input-reading loop"
 verdict = "allow"
 rationale = "Changes how input is read but does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -40,6 +45,7 @@ flag = "-p"
 translation_modifier = "wrapping the script in an implicit loop that also prints each line"
 verdict = "allow"
 rationale = "Adds automatic printing; does not change destructive potential."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -47,6 +53,7 @@ flag = "-T"
 translation_modifier = "enabling taint checking for untrusted input"
 verdict = "allow"
 rationale = "Adds security restrictions on data from external sources; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -54,6 +61,7 @@ flag = "-w"
 translation_modifier = "enabling additional warnings"
 verdict = "allow"
 rationale = "Turns on extra diagnostic messages; does not change program behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -61,6 +69,7 @@ flag = "-l"
 translation_modifier = "automatically handling line endings on input and output"
 verdict = "allow"
 rationale = "Changes line-ending handling; does not affect safety."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -68,6 +77,7 @@ flag = "-a"
 translation_modifier = "splitting each input line into fields automatically"
 verdict = "allow"
 rationale = "Enables auto-split mode for text processing; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -75,6 +85,7 @@ flag = "-F"
 translation_modifier = "using a specific pattern as the field separator for auto-split"
 verdict = "allow"
 rationale = "Only changes how input lines are split into fields."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -82,6 +93,7 @@ flag = "-M"
 translation_modifier = "loading a module before running the script"
 verdict = "allow"
 rationale = "Pre-loads a Perl module; the risk depends on what the module does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -89,6 +101,7 @@ flag = "-d"
 translation_modifier = "running the script under the debugger"
 verdict = "allow"
 rationale = "Enters the interactive debugger; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "perl"
@@ -96,3 +109,4 @@ flag = "-v"
 translation_modifier = "printing the version and configuration summary"
 verdict = "allow"
 rationale = "Read-only version display; nothing is executed."
+arity = "Boolean"

@@ -5,29 +5,27 @@
 [[command]]
 path = "kill"
 translation = "Send a signal to one or more running processes, typically to stop them."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
-
 # ── Signal flags ──────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[flag]]
 applies_to = "kill"
 flag = "-9"
 translation_modifier = "forcing immediate termination with no chance for the process to clean up"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Immediately stops the process without allowing it to save data or release resources."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
 flag = "-KILL"
 translation_modifier = "forcing immediate termination with no chance for the process to clean up"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Same as -9; immediately stops the process without allowing it to save data or release resources."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -35,6 +33,7 @@ flag = "-15"
 translation_modifier = "requesting a graceful shutdown"
 verdict = "allow"
 rationale = "Asks the process to shut down cleanly; this is the default signal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -42,6 +41,7 @@ flag = "-TERM"
 translation_modifier = "requesting a graceful shutdown"
 verdict = "allow"
 rationale = "Same as -15; asks the process to terminate cleanly."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -49,6 +49,7 @@ flag = "-HUP"
 translation_modifier = "asking the process to reload its configuration or shut down"
 verdict = "allow"
 rationale = "May cause the process to reload settings or terminate, depending on the program."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -56,6 +57,7 @@ flag = "-1"
 translation_modifier = "asking the process to reload its configuration or shut down"
 verdict = "allow"
 rationale = "Same as -HUP; may cause the process to reload settings or terminate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -63,6 +65,7 @@ flag = "-INT"
 translation_modifier = "sending an interrupt as if the user pressed Control-C"
 verdict = "allow"
 rationale = "Interrupts the process the same way pressing Control-C would."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -70,6 +73,7 @@ flag = "-2"
 translation_modifier = "sending an interrupt as if the user pressed Control-C"
 verdict = "allow"
 rationale = "Same as -INT; interrupts the process the same way pressing Control-C would."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -77,6 +81,7 @@ flag = "-QUIT"
 translation_modifier = "requesting termination and a diagnostic snapshot of the process"
 verdict = "allow"
 rationale = "Asks the process to quit and may produce a diagnostic dump for debugging."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -84,6 +89,7 @@ flag = "-3"
 translation_modifier = "requesting termination and a diagnostic snapshot of the process"
 verdict = "allow"
 rationale = "Same as -QUIT; asks the process to quit and may produce a diagnostic dump."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -91,7 +97,7 @@ flag = "-STOP"
 translation_modifier = "pausing the process so it can be resumed later"
 verdict = "allow"
 rationale = "Suspends the process without terminating it; it can be resumed with a continue signal."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -99,7 +105,7 @@ flag = "-CONT"
 translation_modifier = "resuming a previously paused process"
 verdict = "allow"
 rationale = "Restarts a suspended process; it simply continues where it left off."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -107,8 +113,7 @@ flag = "-0"
 translation_modifier = "checking whether the process exists without actually sending a signal"
 verdict = "allow"
 rationale = "No signal is delivered; only tests if the process is running and the user has permission to signal it."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kill"
@@ -116,40 +121,27 @@ flag = "-l"
 translation_modifier = "listing all available signal names instead of sending a signal"
 verdict = "allow"
 rationale = "Read-only operation that prints signal names and exits."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
-
 # ── Combos ───────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[combo]]
 path = "kill -9"
 translation = "Immediately and forcefully terminate a process with no opportunity for it to save data, release resources, or clean up."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Sends an uncatchable signal that instantly kills the process, potentially causing data corruption or resource leaks."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "kill -HUP"
 translation = "Ask a process to reload its configuration files or shut down gracefully."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Commonly used to trigger configuration reloads in daemons; most programs handle this signal gracefully."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "kill -TERM"
 translation = "Request a process to shut down gracefully, giving it a chance to save data and release resources."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Sends the default termination signal, which most programs handle by performing an orderly shutdown."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "impossible"
-tags.target = ["process"]
-tags.safety_override = false
+risk_class = "novel"

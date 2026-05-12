@@ -5,6 +5,7 @@ path = "erb"
 translation = "Process Embedded Ruby template files and print the result."
 verdict = "allow"
 rationale = "Reads templates and writes output to the terminal; does not modify files in place."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "erb"
@@ -12,6 +13,7 @@ flag = "-x"
 translation_modifier = "printing the generated Ruby script instead of executing it"
 verdict = "allow"
 rationale = "Only outputs the script source; does not execute the template."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "erb"
@@ -19,6 +21,7 @@ flag = "-r"
 translation_modifier = "loading an additional Ruby library before processing"
 verdict = "allow"
 rationale = "Loads and executes arbitrary Ruby code from a library."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "erb"
@@ -26,3 +29,4 @@ flag = "-T"
 translation_modifier = "using a specific whitespace trim mode"
 verdict = "allow"
 rationale = "Only changes how whitespace is handled in template output."
+arity = "Boolean"

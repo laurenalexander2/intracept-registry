@@ -3,22 +3,25 @@
 [[command]]
 path = "shutdown"
 translation = "Shut down, reboot, or put the system to sleep at a specified time."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Halts or reboots the entire system, terminating all running processes and potentially causing data loss."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "shutdown"
 flag = "-h"
 translation_modifier = "halting and powering off the system"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Powers off the machine completely; all unsaved work is lost."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shutdown"
 flag = "-r"
 translation_modifier = "rebooting the system"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Restarts the system, terminating all processes; unsaved work is lost but the system comes back."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shutdown"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "putting the system to sleep"
 verdict = "allow"
 rationale = "Suspends the system; all processes are preserved and resume on wake."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shutdown"
@@ -33,13 +37,15 @@ flag = "-k"
 translation_modifier = "warning users and disabling logins without actually shutting down"
 verdict = "allow"
 rationale = "Prevents new logins but does not halt the system; existing sessions continue."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shutdown"
 flag = "-n"
 translation_modifier = "without flushing the file system cache"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips cache flush which can cause file system corruption and data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "shutdown"
@@ -47,3 +53,4 @@ flag = "-q"
 translation_modifier = "without broadcasting a warning message to users"
 verdict = "allow"
 rationale = "Suppresses notification; does not change the shutdown action itself."
+arity = "Boolean"

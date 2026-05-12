@@ -5,6 +5,7 @@ path = "arp"
 translation = "Display and modify the system table that maps network addresses to hardware addresses."
 verdict = "allow"
 rationale = "Can modify the system's address resolution table, which affects how network traffic reaches its destination."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "arp"
@@ -12,13 +13,15 @@ flag = "-a"
 translation_modifier = "showing all entries in the table"
 verdict = "allow"
 rationale = "Read-only display of all cached address mappings."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
 flag = "-d"
 translation_modifier = "deleting an entry from the table"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes an address mapping, which can disrupt network connectivity to the affected host."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "adding a static entry to the table"
 verdict = "allow"
 rationale = "Creates a permanent address mapping that overrides automatic resolution and persists until manually removed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
@@ -33,6 +37,7 @@ flag = "-S"
 translation_modifier = "replacing any existing entry with a new static entry"
 verdict = "allow"
 rationale = "Deletes and recreates an address mapping, which temporarily disrupts connectivity to that host."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
@@ -40,6 +45,7 @@ flag = "-n"
 translation_modifier = "showing addresses as numbers instead of resolving names"
 verdict = "allow"
 rationale = "Only changes output formatting; does not modify any data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
@@ -47,6 +53,7 @@ flag = "-i"
 translation_modifier = "limited to a specific network interface"
 verdict = "allow"
 rationale = "Narrows the scope of the operation to one interface; does not increase risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arp"
@@ -54,3 +61,4 @@ flag = "-f"
 translation_modifier = "reading multiple entries from a file"
 verdict = "allow"
 rationale = "Bulk-loads address mappings from a file, which could disrupt connectivity if entries are incorrect."
+arity = "Boolean"

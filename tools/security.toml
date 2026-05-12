@@ -5,241 +5,281 @@ path = "security"
 translation = "Manage keychains, keys, certificates, and other Security framework operations."
 verdict = "allow"
 rationale = "The bare command enters interactive mode or prints help; no modifications without subcommands."
+risk_class = "novel"
 
 [[command]]
 path = "security list-keychains"
 translation = "Display or set the keychain search list."
 verdict = "allow"
 rationale = "Displays keychain paths by default; setting the search list is low-impact and reversible."
+risk_class = "novel"
 
 [[command]]
 path = "security default-keychain"
 translation = "Display or set the default keychain."
 verdict = "allow"
 rationale = "Viewing or changing which keychain is the default is trivially reversible."
+risk_class = "novel"
 
 [[command]]
 path = "security login-keychain"
 translation = "Display or set the login keychain."
 verdict = "allow"
 rationale = "Viewing or changing the login keychain reference is trivially reversible."
+risk_class = "novel"
 
 [[command]]
 path = "security create-keychain"
 translation = "Create a new keychain."
 verdict = "allow"
 rationale = "Creates a new keychain file; does not modify existing keychains."
+risk_class = "novel"
 
 [[command]]
 path = "security delete-keychain"
 translation = "Delete keychains and remove them from the search list."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes keychain files containing passwords and certificates; recovery requires backups."
+risk_class = "novel"
 
 [[command]]
 path = "security lock-keychain"
 translation = "Lock a keychain so its contents cannot be accessed without a password."
 verdict = "allow"
 rationale = "Temporarily restricts access; unlocking reverses the action."
+risk_class = "novel"
 
 [[command]]
 path = "security unlock-keychain"
 translation = "Unlock a keychain to allow access to its contents."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Exposes keychain contents to authorized applications; the security posture is reduced until re-locked."
+risk_class = "novel"
 
 [[command]]
 path = "security set-keychain-settings"
 translation = "Configure auto-lock settings for a keychain."
 verdict = "allow"
 rationale = "Changes timeout and sleep-lock preferences; trivially reversible."
+risk_class = "novel"
 
 [[command]]
 path = "security set-keychain-password"
 translation = "Change the password for a keychain."
 verdict = "allow"
 rationale = "Alters the keychain's encryption password; forgetting the new password could lock out access."
+risk_class = "novel"
 
 [[command]]
 path = "security show-keychain-info"
 translation = "Display the settings for a keychain."
 verdict = "allow"
 rationale = "Read-only display of keychain settings."
+risk_class = "novel"
 
 [[command]]
 path = "security dump-keychain"
 translation = "Dump the contents of one or more keychains."
 verdict = "allow"
 rationale = "Read-only display of keychain items; with -d may expose passwords but does not modify state."
+risk_class = "novel"
 
 [[command]]
 path = "security create-keypair"
 translation = "Create an asymmetric key pair in a keychain."
 verdict = "allow"
 rationale = "Generates cryptographic keys that persist in the keychain; reversible by deletion."
+risk_class = "novel"
 
 [[command]]
 path = "security add-generic-password"
 translation = "Add a generic password item to a keychain."
 verdict = "allow"
 rationale = "Adds a new entry; does not modify or delete existing items."
+risk_class = "novel"
 
 [[command]]
 path = "security add-internet-password"
 translation = "Add an internet password item to a keychain."
 verdict = "allow"
 rationale = "Adds a new entry; does not modify or delete existing items."
+risk_class = "novel"
 
 [[command]]
 path = "security add-certificates"
 translation = "Add certificates from files to a keychain."
 verdict = "allow"
 rationale = "Imports certificate data into a keychain; does not modify existing entries."
+risk_class = "novel"
 
 [[command]]
 path = "security find-generic-password"
 translation = "Find and display a generic password item from a keychain."
 verdict = "allow"
 rationale = "Read-only search and display of keychain items."
+risk_class = "novel"
 
 [[command]]
 path = "security delete-generic-password"
 translation = "Delete a generic password item from a keychain."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a stored credential; recovery requires re-entry or backup restoration."
+risk_class = "novel"
 
 [[command]]
 path = "security find-internet-password"
 translation = "Find and display an internet password item from a keychain."
 verdict = "allow"
 rationale = "Read-only search and display of keychain items."
+risk_class = "novel"
 
 [[command]]
 path = "security delete-internet-password"
 translation = "Delete an internet password item from a keychain."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a stored credential; recovery requires re-entry or backup restoration."
+risk_class = "novel"
 
 [[command]]
 path = "security find-key"
 translation = "Search the keychain for cryptographic keys."
 verdict = "allow"
 rationale = "Read-only search of keys in the keychain."
+risk_class = "novel"
 
 [[command]]
 path = "security find-certificate"
 translation = "Find a certificate item in the keychain."
 verdict = "allow"
 rationale = "Read-only search and display of certificates."
+risk_class = "novel"
 
 [[command]]
 path = "security find-identity"
 translation = "Find an identity consisting of a certificate and its private key."
 verdict = "allow"
 rationale = "Read-only search and display of identity items."
+risk_class = "novel"
 
 [[command]]
 path = "security delete-certificate"
 translation = "Delete a certificate from a keychain."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a certificate; may break code signing or TLS trust until restored."
+risk_class = "novel"
 
 [[command]]
 path = "security delete-identity"
 translation = "Delete a certificate and its associated private key from a keychain."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes both the certificate and private key; the private key may be irrecoverable."
+risk_class = "novel"
 
 [[command]]
 path = "security import"
 translation = "Import items from a file into a keychain."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Adds keys, certificates, or identities to a keychain; may overwrite existing trust settings."
+risk_class = "novel"
 
 [[command]]
 path = "security export"
 translation = "Export items from a keychain to a file."
 verdict = "allow"
 rationale = "Reads keychain items and writes them to a file; the keychain itself is not modified."
+risk_class = "novel"
 
 [[command]]
 path = "security add-trusted-cert"
 translation = "Add a certificate to the system's trusted certificate store."
 verdict = "allow"
 rationale = "Changes which certificates are trusted for TLS and code signing; reversible but affects system security posture."
+risk_class = "novel"
 
 [[command]]
 path = "security remove-trusted-cert"
 translation = "Remove a certificate from the trusted certificate store."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "May break trust chains for TLS connections or code signing until the certificate is re-added."
+risk_class = "novel"
 
 [[command]]
 path = "security verify-cert"
 translation = "Verify the validity of one or more certificates."
 verdict = "allow"
 rationale = "Read-only validation check; modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "security authorize"
 translation = "Perform authorization operations using the Security framework."
 verdict = "allow"
 rationale = "Requests or creates authorization rights; may elevate privileges for subsequent operations."
+risk_class = "novel"
 
 [[command]]
 path = "security authorizationdb"
 translation = "Read or modify the system authorization policy database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes to the authorization database affect which operations require admin privileges system-wide."
+risk_class = "novel"
 
 [[command]]
 path = "security execute-with-privileges"
 translation = "Execute a tool with elevated privileges."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs arbitrary commands with elevated permissions; equivalent to granting sudo access."
+risk_class = "novel"
 
 [[command]]
 path = "security cms"
 translation = "Encode or decode Cryptographic Message Syntax messages."
 verdict = "allow"
 rationale = "Processes cryptographic message data; read-only transformation with no system state changes."
+risk_class = "novel"
 
 [[command]]
 path = "security dump-trust-settings"
 translation = "Display the contents of trust settings."
 verdict = "allow"
 rationale = "Read-only display of certificate trust configuration."
+risk_class = "novel"
 
 [[command]]
 path = "security trust-settings-export"
 translation = "Export trust settings to a file."
 verdict = "allow"
 rationale = "Reads trust settings and writes to a file; no system modification."
+risk_class = "novel"
 
 [[command]]
 path = "security trust-settings-import"
 translation = "Import trust settings from a file."
 verdict = "allow"
 rationale = "Modifies which certificates are trusted; reversible but affects the system's security posture."
+risk_class = "novel"
 
 [[command]]
 path = "security smartcards"
 translation = "Enable, disable, or list disabled SmartCard tokens."
 verdict = "allow"
 rationale = "Enables or disables SmartCard authentication tokens; affects login methods."
+risk_class = "novel"
 
 [[command]]
 path = "security error"
 translation = "Display a descriptive message for a given Security framework error code."
 verdict = "allow"
 rationale = "Read-only error code lookup; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "security dump-keychain"
 flag = "-d"
 translation_modifier = "decrypting and displaying item data including passwords"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Reveals stored secrets in output but does not modify the keychain."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security lock-keychain"
@@ -247,6 +287,7 @@ flag = "-a"
 translation_modifier = "locking all keychains"
 verdict = "allow"
 rationale = "Locks all keychains at once; reversible by unlocking."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security create-keypair"
@@ -254,6 +295,7 @@ flag = "-A"
 translation_modifier = "allowing any application to access the key without warning"
 verdict = "allow"
 rationale = "Removes access control restrictions; any application can use the key without user confirmation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security add-generic-password"
@@ -261,13 +303,15 @@ flag = "-U"
 translation_modifier = "updating the item if it already exists"
 verdict = "allow"
 rationale = "Overwrites an existing password entry rather than failing on duplicate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security add-generic-password"
 flag = "-A"
 translation_modifier = "allowing any application to access the item without warning"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes access control; any application can read the stored password."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security add-internet-password"
@@ -275,38 +319,44 @@ flag = "-U"
 translation_modifier = "updating the item if it already exists"
 verdict = "allow"
 rationale = "Overwrites an existing password entry rather than failing on duplicate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security add-internet-password"
 flag = "-A"
 translation_modifier = "allowing any application to access the item without warning"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes access control; any application can read the stored password."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security find-generic-password"
 flag = "-g"
 translation_modifier = "displaying the stored password in the output"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Reveals the password value but does not modify the keychain."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security find-generic-password"
 flag = "-w"
 translation_modifier = "displaying only the password value"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Outputs just the password string; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security find-internet-password"
 flag = "-g"
 translation_modifier = "displaying the stored password in the output"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Reveals the password value but does not modify the keychain."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "security find-internet-password"
 flag = "-w"
 translation_modifier = "displaying only the password value"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Outputs just the password string; read-only."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "xargs"
 translation = "Build and run commands using input read from a pipe or file."
 verdict = "allow"
 rationale = "Constructs and executes commands from piped input; the risk depends on which command is being run."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "xargs"
@@ -12,6 +13,7 @@ flag = "-0"
 translation_modifier = "using null characters as input separators instead of spaces and newlines"
 verdict = "allow"
 rationale = "Handles file names with spaces and special characters correctly; a robustness improvement."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -19,6 +21,7 @@ flag = "-I"
 translation_modifier = "replacing a placeholder string with each input item"
 verdict = "allow"
 rationale = "Changes how arguments are substituted into the command; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -26,6 +29,7 @@ flag = "-n"
 translation_modifier = "limiting each command invocation to a specified number of arguments"
 verdict = "allow"
 rationale = "Controls how many arguments are passed per execution; does not change what command is run."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -33,6 +37,7 @@ flag = "-P"
 translation_modifier = "running multiple command invocations in parallel"
 verdict = "allow"
 rationale = "Launches multiple processes at once, which increases resource usage and makes errors harder to trace."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -40,6 +45,7 @@ flag = "-p"
 translation_modifier = "prompting for confirmation before executing each command"
 verdict = "allow"
 rationale = "Adds an interactive confirmation step before each execution; a safety improvement."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -47,6 +53,7 @@ flag = "-t"
 translation_modifier = "printing each command to the screen before executing it"
 verdict = "allow"
 rationale = "Shows what will be run for visibility; does not change behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -54,6 +61,7 @@ flag = "-L"
 translation_modifier = "running the command once for every specified number of input lines"
 verdict = "allow"
 rationale = "Controls how input is batched; does not change which command is executed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -61,6 +69,7 @@ flag = "-J"
 translation_modifier = "inserting all input arguments at a specified position in the command"
 verdict = "allow"
 rationale = "Changes where arguments are placed in the command; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -68,6 +77,7 @@ flag = "-r"
 translation_modifier = "skipping execution if the input is empty"
 verdict = "allow"
 rationale = "Prevents running the command with no arguments; a safety improvement."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xargs"
@@ -75,3 +85,4 @@ flag = "-s"
 translation_modifier = "limiting the total command line length to a specified number of bytes"
 verdict = "allow"
 rationale = "Caps the size of each constructed command; does not change what is executed."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "zstdmt"
 translation = "Compress or decompress files using Zstandard with multi-threaded processing."
 verdict = "allow"
 rationale = "Creates compressed or decompressed output files; originals are unchanged by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "zstdmt"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"

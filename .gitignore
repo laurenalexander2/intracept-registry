@@ -18,6 +18,9 @@ progress-task-*.json
 # Quality-engine generated reports (engine/run.sh writes timestamped output here)
 engine/reports/
 
+# Phase 4a v0→v2 migration backups (transient --force net; rollback point is the v0.1.0-pre-rewrite tag).
+tools/*.toml.v0.bak
+
 # Local-only worktree / dispatch state.
 dispatch-notes/
 .claude-swarm/

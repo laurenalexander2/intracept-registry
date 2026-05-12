@@ -3,5 +3,6 @@
 [[command]]
 path = "disklabel"
 translation = "Display or modify disk partition labels."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifying partition labels can affect system ability to find and mount volumes."
+risk_class = "novel"

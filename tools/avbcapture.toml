@@ -5,6 +5,7 @@ path = "avbcapture"
 translation = "Capture AVB audio/video bridging streams."
 verdict = "allow"
 rationale = "Records network stream data for analysis."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "avbcapture"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting the existing output file"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing the existing output file."
+arity = "Boolean"

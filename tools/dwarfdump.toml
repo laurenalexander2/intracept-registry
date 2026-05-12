@@ -5,6 +5,7 @@ path = "dwarfdump"
 translation = "Display debug information from object files."
 verdict = "allow"
 rationale = "Read-only display of debug symbols."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dwarfdump"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "dumping all debug information sections"
 verdict = "allow"
 rationale = "Read-only display of all debug information."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "uuencode"
 translation = "Encode a binary file into ASCII text for transmission."
 verdict = "allow"
 rationale = "Writes encoded text to the terminal; does not modify the input file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "uuencode"
@@ -12,6 +13,7 @@ flag = "-m"
 translation_modifier = "using base64 encoding instead of traditional uuencode format"
 verdict = "allow"
 rationale = "Only changes the encoding algorithm; still outputs to the terminal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uuencode"
@@ -19,6 +21,7 @@ flag = "-r"
 translation_modifier = "excluding the framing header and footer lines from output"
 verdict = "allow"
 rationale = "Only changes output formatting; no data is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uuencode"
@@ -26,3 +29,4 @@ flag = "-o"
 translation_modifier = "writing output to a specified file instead of the terminal"
 verdict = "allow"
 rationale = "Writes to a file that may overwrite existing data."
+arity = "Boolean"

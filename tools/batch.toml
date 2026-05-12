@@ -3,8 +3,9 @@
 [[command]]
 path = "batch"
 translation = "Schedule commands to run when the system is not busy."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Schedules arbitrary commands for later execution without further confirmation."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "batch"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "reading the command from a file instead of typed input"
 verdict = "allow"
 rationale = "Runs the contents of a file as a scheduled job; risk depends on the file contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "batch"
@@ -19,6 +21,7 @@ flag = "-m"
 translation_modifier = "sending an email when the job finishes even if there was no output"
 verdict = "allow"
 rationale = "Only adds a notification; does not change what the job does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "batch"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "using a specific named queue"
 verdict = "allow"
 rationale = "Only changes which queue the job is placed in; does not affect what runs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "batch"
@@ -33,3 +37,4 @@ flag = "-v"
 translation_modifier = "showing the time the job will run"
 verdict = "allow"
 rationale = "Only adds informational output; does not change behavior."
+arity = "Boolean"

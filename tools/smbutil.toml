@@ -5,51 +5,60 @@ path = "smbutil"
 translation = "Interact with the SMB network file sharing subsystem."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil lookup"
 translation = "Resolve a NetBIOS name to an IP address."
 verdict = "allow"
 rationale = "Read-only network name resolution."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil status"
 translation = "Resolve a hostname to its NetBIOS workgroup and system name."
 verdict = "allow"
 rationale = "Read-only operation that queries the SMB server for its network status without making changes."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil view"
 translation = "List shared resources available on an SMB server."
 verdict = "allow"
 rationale = "Read-only listing of remote shares."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil identity"
 translation = "Display the authenticated user identity as known by an SMB server."
 verdict = "allow"
 rationale = "Read-only operation that displays the current SMB identity information without making changes."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil dfs"
 translation = "Display Distributed File System referrals for a specified SMB URL."
 verdict = "allow"
 rationale = "Read-only operation that queries Distributed File System referral information from the server without making changes."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil statshares"
 translation = "Display attributes of mounted SMB shares."
 verdict = "allow"
 rationale = "Read-only display of share attributes."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil multichannel"
 translation = "Display multichannel connection information for mounted SMB shares."
 verdict = "allow"
 rationale = "Read-only network connection query."
+risk_class = "novel"
 
 [[command]]
 path = "smbutil snapshot"
 translation = "List available snapshots for a mounted SMB share."
 verdict = "allow"
 rationale = "Read-only operation that lists available server-side snapshots without modifying or deleting any."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "productsign"
 translation = "Sign a macOS Installer product archive with a developer identity."
 verdict = "allow"
 rationale = "Adds a digital signature to a package; does not modify the package contents."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "productsign"
@@ -12,6 +13,7 @@ flag = "--sign"
 translation_modifier = "specifying the signing identity to use"
 verdict = "allow"
 rationale = "Selects the certificate for signing; required for the operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productsign"
@@ -19,6 +21,7 @@ flag = "--keychain"
 translation_modifier = "searching for the signing identity in a specific keychain"
 verdict = "allow"
 rationale = "Selects a non-default keychain; does not change the signing operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productsign"
@@ -26,6 +29,7 @@ flag = "--cert"
 translation_modifier = "embedding an intermediate certificate in the signed archive"
 verdict = "allow"
 rationale = "Adds certificates for chain-of-trust verification; does not change the package."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productsign"
@@ -33,6 +37,7 @@ flag = "--timestamp"
 translation_modifier = "including a trusted timestamp with the signature"
 verdict = "allow"
 rationale = "Adds a timestamp for long-term signature validity; a security-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productsign"
@@ -40,3 +45,4 @@ flag = "--timestamp=none"
 translation_modifier = "without including a trusted timestamp"
 verdict = "allow"
 rationale = "Disables timestamping; the signature may not be verifiable after the certificate expires."
+arity = "Boolean"

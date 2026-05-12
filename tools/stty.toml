@@ -5,6 +5,7 @@ path = "stty"
 translation = "Display or set terminal device options."
 verdict = "allow"
 rationale = "Changes terminal settings for the current session; settings reset on terminal close."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "stty"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "displaying all current terminal settings"
 verdict = "allow"
 rationale = "Read-only display of settings."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "stty"
@@ -19,3 +21,4 @@ flag = "-g"
 translation_modifier = "displaying settings in a format suitable for restoring later"
 verdict = "allow"
 rationale = "Read-only display in machine-readable format."
+arity = "Boolean"

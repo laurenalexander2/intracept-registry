@@ -7,24 +7,16 @@ path = "pnpm"
 translation = "Run the pnpm package manager for JavaScript projects."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
-
 # ── Installing ──────────────────────────────────────────────────────────────
+risk_class = "safe"
+
 
 [[command]]
 path = "pnpm install"
 translation = "Install all dependencies listed in the project's package.json."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Downloads and installs packages from the registry, which execute install scripts."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pnpm install"
@@ -32,17 +24,14 @@ flag = "--frozen-lockfile"
 translation_modifier = "failing if the lockfile would need to be updated"
 verdict = "allow"
 rationale = "Prevents lockfile changes; a safety check for CI environments."
+arity = "Boolean"
 
 [[command]]
 path = "pnpm add"
 translation = "Add a dependency to the project."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Downloads and installs a package, modifying package.json and the lockfile."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pnpm add"
@@ -50,6 +39,7 @@ flag = "--save-dev"
 translation_modifier = "as a development dependency"
 verdict = "allow"
 rationale = "Changes the dependency category but does not alter the installation behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pnpm add"
@@ -57,45 +47,34 @@ flag = "--global"
 translation_modifier = "installing the package globally on the system"
 verdict = "allow"
 rationale = "Modifies the global package directory, which affects all projects on the machine."
-
 # ── Removing ────────────────────────────────────────────────────────────────
+arity = "Boolean"
+
 
 [[command]]
 path = "pnpm remove"
 translation = "Remove a dependency from the project."
 verdict = "allow"
 rationale = "Uninstalls a package and modifies package.json and the lockfile."
-tags.scope = "local"
-tags.effect = ["delete", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
-
 # ── Updating ────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm update"
 translation = "Update project dependencies to newer versions."
 verdict = "allow"
 rationale = "Modifies the lockfile and installs new versions that may introduce breaking changes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
-
 # ── Running scripts ─────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm run"
 translation = "Run a script defined in the project's package.json."
 verdict = "allow"
 rationale = "Executes an arbitrary script, which may perform any action."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pnpm run"
@@ -103,181 +82,122 @@ flag = "--recursive"
 translation_modifier = "running the script in every package in the workspace"
 verdict = "allow"
 rationale = "Executes the script across all workspace packages, increasing the blast radius."
+arity = "Boolean"
 
 [[command]]
 path = "pnpm exec"
 translation = "Execute a command in the project's package environment."
 verdict = "allow"
 rationale = "Runs an arbitrary command with access to project binaries."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "pnpm dlx"
 translation = "Run a package in a temporary environment without installing it permanently."
 verdict = "allow"
 rationale = "Downloads and executes remote code from the registry."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
-
 # ── Scaffolding ─────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm create"
 translation = "Create a new project from a starter kit package."
 verdict = "allow"
 rationale = "Downloads and runs a project scaffolding tool from the registry."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "pnpm init"
 translation = "Create a new package.json file in the current directory."
 verdict = "allow"
 rationale = "Creates a configuration file; does not install anything."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Publishing ──────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm publish"
 translation = "Publish a package to the npm registry."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Makes the package publicly available on the registry, which is difficult to fully undo."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["package_registry"]
-tags.safety_override = false
-
 # ── Information ─────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm audit"
 translation = "Check installed packages for known security vulnerabilities."
 verdict = "allow"
 rationale = "Read-only security audit of dependencies."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "pnpm list"
 translation = "List all installed packages and their dependency trees."
 verdict = "allow"
 rationale = "Read-only display of installed packages."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "pnpm outdated"
 translation = "Check for outdated packages in the project."
 verdict = "allow"
 rationale = "Read-only comparison of installed versus latest versions."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "pnpm why"
 translation = "Show all packages that depend on a specified package."
 verdict = "allow"
 rationale = "Read-only display of the dependency chain."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
-
 # ── Configuration ───────────────────────────────────────────────────────────
+risk_class = "safe"
+
 
 [[command]]
 path = "pnpm config"
 translation = "Manage the pnpm configuration."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "pnpm self-update"
 translation = "Update pnpm to the latest version."
 verdict = "allow"
 rationale = "Updates the pnpm binary itself; does not affect project dependencies."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Store ───────────────────────────────────────────────────────────────────
+risk_class = "novel"
+
 
 [[command]]
 path = "pnpm store"
 translation = "Manage the pnpm content-addressable package store."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "pnpm store prune"
 translation = "Remove unreferenced packages from the pnpm content-addressable store."
 verdict = "allow"
 rationale = "Deletes cached packages no longer referenced by any project; they will be re-downloaded if needed."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
-
 # ── Combos ──────────────────────────────────────────────────────────────────
+risk_class = "destructive"
+
 
 [[combo]]
 path = "pnpm install --frozen-lockfile"
 translation = "Install all project dependencies from the registry, failing immediately if the lockfile would need any changes."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Downloads and executes install scripts from remote packages but enforces lockfile immutability for reproducible builds."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "pnpm add --save-dev"
 translation = "Download and install a package from the registry as a development-only dependency, updating package.json and the lockfile."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Fetches and installs remote code that runs install scripts, categorized as a dev dependency so it is excluded from production builds."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 

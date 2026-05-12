@@ -5,6 +5,7 @@ path = "split"
 translation = "Split a file into smaller pieces."
 verdict = "allow"
 rationale = "Creates new files from an input file; the original is unchanged."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "split"
@@ -12,6 +13,7 @@ flag = "-b"
 translation_modifier = "splitting by a specified byte count per piece"
 verdict = "allow"
 rationale = "Controls chunk size; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -19,6 +21,7 @@ flag = "-l"
 translation_modifier = "splitting by a specified number of lines per piece"
 verdict = "allow"
 rationale = "Controls chunk size by line count; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -26,6 +29,7 @@ flag = "-n"
 translation_modifier = "splitting into a specified number of equal-sized chunks"
 verdict = "allow"
 rationale = "Controls chunk count; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -33,6 +37,7 @@ flag = "-p"
 translation_modifier = "splitting at lines matching a specified pattern"
 verdict = "allow"
 rationale = "Uses regex to determine split points; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -40,6 +45,7 @@ flag = "-a"
 translation_modifier = "using a specified suffix length for output filenames"
 verdict = "allow"
 rationale = "Controls naming; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -47,6 +53,7 @@ flag = "-d"
 translation_modifier = "using numeric suffixes instead of alphabetic ones"
 verdict = "allow"
 rationale = "Only changes output filename format; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "split"
@@ -54,3 +61,4 @@ flag = "-c"
 translation_modifier = "without overwriting existing output files"
 verdict = "allow"
 rationale = "Prevents overwriting; a safety-improving option."
+arity = "Boolean"
