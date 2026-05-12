@@ -8,7 +8,7 @@ translation = "List open files and the processes that opened them."
 verdict = "allow"
 rationale = "Read-only listing of open files, network connections, and associated processes."
 # ── Flags ─────────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]
@@ -17,7 +17,8 @@ flag = "-i"
 translation_modifier = "showing only network connections"
 verdict = "allow"
 rationale = "Filters to network-related entries; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -25,7 +26,8 @@ flag = "-p"
 translation_modifier = "showing only files opened by a specific process"
 verdict = "allow"
 rationale = "Filters by process ID; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "lsof"
@@ -41,7 +43,8 @@ flag = "-u"
 translation_modifier = "showing only files opened by a specific user"
 verdict = "allow"
 rationale = "Filters by user; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -49,7 +52,8 @@ flag = "-c"
 translation_modifier = "showing only files opened by processes whose name starts with a given string"
 verdict = "allow"
 rationale = "Filters by command name prefix; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -89,7 +93,8 @@ flag = "+D"
 translation_modifier = "searching an entire directory tree for open files"
 verdict = "allow"
 rationale = "Expands the search scope to a full directory tree; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "lsof"
@@ -97,7 +102,8 @@ flag = "+d"
 translation_modifier = "searching a single directory for open files without descending into subdirectories"
 verdict = "allow"
 rationale = "Searches one directory level; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "lsof"
@@ -121,7 +127,8 @@ flag = "-s"
 translation_modifier = "filtering by connection state such as LISTEN or ESTABLISHED"
 verdict = "allow"
 rationale = "Narrows results to connections in a specific state; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -145,4 +152,5 @@ flag = "-g"
 translation_modifier = "showing only files opened by processes in a specific process group"
 verdict = "allow"
 rationale = "Filters by process group ID; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"

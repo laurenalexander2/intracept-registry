@@ -5,7 +5,7 @@ path = "file"
 translation = "Identify the type of a file by examining its contents."
 verdict = "allow"
 rationale = "Read-only analysis that inspects file contents without modifying anything."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "file"
@@ -61,7 +61,8 @@ flag = "-f"
 translation_modifier = "reading the list of files to examine from a specified file"
 verdict = "allow"
 rationale = "Reads file names from a list; still performs read-only inspection."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "file"

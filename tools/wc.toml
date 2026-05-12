@@ -5,7 +5,7 @@ path = "wc"
 translation = "Count lines, words, and bytes in files."
 verdict = "allow"
 rationale = "Read-only operation that displays counts without modifying any files."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "wc"

@@ -8,7 +8,7 @@ translation = "List currently running processes."
 verdict = "allow"
 rationale = "Read-only snapshot of running processes that does not modify anything."
 # ── Process selection ────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]
@@ -57,7 +57,8 @@ flag = "-u"
 translation_modifier = "for a specified user"
 verdict = "allow"
 rationale = "Filters the listing to a specific user's processes; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "ps"
@@ -65,7 +66,8 @@ flag = "-p"
 translation_modifier = "for a specified process ID"
 verdict = "allow"
 rationale = "Filters the listing to a single process; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "ps"
@@ -73,7 +75,8 @@ flag = "-G"
 translation_modifier = "for processes running with a specified group ID"
 verdict = "allow"
 rationale = "Filters the listing to a specific group; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "ps"
@@ -82,7 +85,8 @@ translation_modifier = "for processes attached to a specified terminal"
 verdict = "allow"
 rationale = "Filters the listing by terminal device; still read-only."
 # ── Output format ────────────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 
 [[flag]]
@@ -99,7 +103,8 @@ flag = "-o"
 translation_modifier = "showing only specified columns"
 verdict = "allow"
 rationale = "Customizes which columns appear in the output; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "ps"

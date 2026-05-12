@@ -8,7 +8,7 @@ translation = "Display the contents of a directory in a tree-like format."
 verdict = "allow"
 rationale = "Read-only directory listing that modifies nothing."
 # ── Filtering ────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]
@@ -33,7 +33,8 @@ flag = "-L"
 translation_modifier = "limiting the display to a specified number of directory levels"
 verdict = "allow"
 rationale = "Restricts traversal depth; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "tree"
@@ -41,7 +42,8 @@ flag = "-P"
 translation_modifier = "showing only files matching a wildcard pattern"
 verdict = "allow"
 rationale = "Filters displayed files by pattern; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "tree"
@@ -49,7 +51,8 @@ flag = "-I"
 translation_modifier = "excluding files matching a wildcard pattern"
 verdict = "allow"
 rationale = "Filters out files by pattern; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "tree"
@@ -74,7 +77,8 @@ translation_modifier = "skipping directories that contain more than the specifie
 verdict = "allow"
 rationale = "Limits output for large directories; still read-only."
 # ── Display options ──────────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 
 [[flag]]
@@ -200,7 +204,8 @@ translation_modifier = "writing the output to a file instead of the terminal"
 verdict = "allow"
 rationale = "Creates or overwrites a file with the listing output; the tree content itself is still read-only."
 # ── Symlink handling ─────────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 
 [[flag]]

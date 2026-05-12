@@ -8,7 +8,7 @@ translation = "Print the full path of the current working directory."
 verdict = "allow"
 rationale = "Read-only display of the current directory path."
 # ── Flags ─────────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]

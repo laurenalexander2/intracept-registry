@@ -5,7 +5,7 @@ path = "date"
 translation = "Display or set the system date and time."
 verdict = "allow"
 rationale = "Without arguments, displays the current date and time."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "date"

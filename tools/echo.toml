@@ -8,7 +8,7 @@ translation = "Print text to the standard output."
 verdict = "allow"
 rationale = "Write-only output to the terminal that does not modify any files or system state."
 # ── Flags ────────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]

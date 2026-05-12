@@ -73,7 +73,8 @@ flag = "-e"
 translation_modifier = "using an explicitly specified pattern, allowing multiple patterns or patterns starting with a dash"
 verdict = "allow"
 rationale = "Specifies one or more patterns; still read-only."
-arity = "Boolean"
+arity = "Repeated"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -82,7 +83,8 @@ translation_modifier = "reading patterns from a file"
 verdict = "allow"
 rationale = "Loads patterns from a file instead of the command line; still read-only."
 # ── Scope flags ──────────────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 
 [[flag]]
@@ -107,7 +109,8 @@ flag = "--include"
 translation_modifier = "searching only files whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of files searched; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -115,7 +118,8 @@ flag = "--exclude"
 translation_modifier = "skipping files whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of files searched; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -124,7 +128,8 @@ translation_modifier = "skipping directories whose names match a specified patte
 verdict = "allow"
 rationale = "Narrows the set of directories searched; still read-only."
 # ── Output format flags ─────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 
 [[flag]]
@@ -191,7 +196,8 @@ flag = "-A"
 translation_modifier = "including a specified number of lines after each match"
 verdict = "allow"
 rationale = "Adds trailing context lines to output; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"
@@ -199,7 +205,8 @@ flag = "-B"
 translation_modifier = "including a specified number of lines before each match"
 verdict = "allow"
 rationale = "Adds leading context lines to output; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"
@@ -208,7 +215,8 @@ translation_modifier = "including a specified number of lines before and after e
 verdict = "allow"
 rationale = "Adds surrounding context lines to output; still read-only."
 # ── Behavioral flags ────────────────────────────────────────────────────────
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 
 [[flag]]
@@ -225,7 +233,8 @@ flag = "-m"
 translation_modifier = "stopping after a specified number of matches"
 verdict = "allow"
 rationale = "Limits the number of matches returned; still read-only."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"

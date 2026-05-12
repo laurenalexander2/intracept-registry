@@ -8,7 +8,7 @@ translation = "Show the full path of a command by searching the system PATH."
 verdict = "allow"
 rationale = "Read-only lookup that displays file paths without modifying anything."
 # ── Flags ────────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "safe"
 
 
 [[flag]]

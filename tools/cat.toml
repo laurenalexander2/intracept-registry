@@ -5,7 +5,7 @@ path = "cat"
 translation = "Display the contents of one or more files."
 verdict = "allow"
 rationale = "Read-only display of file contents to the terminal."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "cat"
