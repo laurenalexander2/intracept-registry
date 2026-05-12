@@ -8,7 +8,7 @@ translation = "Send a signal to one or more running processes, typically to stop
 verdict = "ask"
 rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
 # ── Signal flags ──────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "destructive"
 
 
 [[flag]]
@@ -130,18 +130,18 @@ path = "kill -9"
 translation = "Immediately and forcefully terminate a process with no opportunity for it to save data, release resources, or clean up."
 verdict = "ask"
 rationale = "Sends an uncatchable signal that instantly kills the process, potentially causing data corruption or resource leaks."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[combo]]
 path = "kill -HUP"
 translation = "Ask a process to reload its configuration files or shut down gracefully."
 verdict = "ask"
 rationale = "Commonly used to trigger configuration reloads in daemons; most programs handle this signal gracefully."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[combo]]
 path = "kill -TERM"
 translation = "Request a process to shut down gracefully, giving it a chance to save data and release resources."
 verdict = "ask"
 rationale = "Sends the default termination signal, which most programs handle by performing an orderly shutdown."
-risk_class = "novel"
+risk_class = "destructive"

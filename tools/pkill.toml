@@ -8,7 +8,7 @@ translation = "Send a signal to all processes whose names match a pattern."
 verdict = "allow"
 rationale = "Signals processes by pattern match, which can terminate critical services if the pattern is too broad."
 # ── Flags ─────────────────────────────────────────────────────────────────────
-risk_class = "novel"
+risk_class = "destructive"
 
 
 [[flag]]
@@ -65,7 +65,8 @@ flag = "-u"
 translation_modifier = "restricted to processes owned by a specific user"
 verdict = "allow"
 rationale = "Filters by user but still signals all matching processes for that user."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "pkill"
@@ -73,7 +74,8 @@ flag = "-U"
 translation_modifier = "restricted to processes with a specific real user ID"
 verdict = "allow"
 rationale = "Filters by real user ID but still signals all matching processes."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "pkill"
@@ -81,7 +83,8 @@ flag = "-G"
 translation_modifier = "restricted to processes with a specific real group ID"
 verdict = "allow"
 rationale = "Filters by group but still signals all matching processes in that group."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "pkill"
@@ -89,7 +92,8 @@ flag = "-P"
 translation_modifier = "restricted to processes with a specific parent process ID"
 verdict = "allow"
 rationale = "Filters by parent process, which limits scope but may still match multiple children."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "pkill"
@@ -97,7 +101,8 @@ flag = "-t"
 translation_modifier = "restricted to processes running on a specific terminal"
 verdict = "allow"
 rationale = "Filters by terminal, limiting scope to a single terminal session."
-arity = "Boolean"
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "pkill"
@@ -105,7 +110,8 @@ flag = "-g"
 translation_modifier = "restricted to processes in a specific process group"
 verdict = "allow"
 rationale = "Filters by process group, which may contain multiple related processes."
-arity = "Boolean"
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "pkill"
@@ -113,7 +119,8 @@ flag = "-F"
 translation_modifier = "restricted to the process whose ID is stored in a specific file"
 verdict = "allow"
 rationale = "Targets a single process identified by a PID file, greatly reducing the blast radius."
-arity = "Boolean"
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "pkill"

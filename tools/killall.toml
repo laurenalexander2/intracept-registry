@@ -5,7 +5,7 @@ path = "killall"
 translation = "Send a signal to all processes matching a name."
 verdict = "allow"
 rationale = "Terminates all processes with the given name, which may include unintended processes."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "killall"

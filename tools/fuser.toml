@@ -5,7 +5,7 @@ path = "fuser"
 translation = "List the process IDs of all processes that have a specified file open."
 verdict = "allow"
 rationale = "Read-only query that reports which processes are using a file."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "fuser"

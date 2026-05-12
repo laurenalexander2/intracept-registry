@@ -5,7 +5,7 @@ path = "mv"
 translation = "Move or rename files and directories."
 verdict = "allow"
 rationale = "Relocates files, removing them from the original location; silently overwrites the destination by default."
-risk_class = "novel"
+risk_class = "safe"
 
 [[flag]]
 applies_to = "mv"
@@ -14,7 +14,7 @@ translation_modifier = "overwriting existing files without prompting"
 verdict = "allow"
 rationale = "Suppresses confirmation prompts, allowing silent overwrite of destination files."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "mv"
@@ -55,11 +55,11 @@ path = "mv -f"
 translation = "Move or rename files, overwriting any existing file at the destination without prompting for confirmation."
 verdict = "allow"
 rationale = "Suppresses all confirmation prompts, silently replacing destination files."
-risk_class = "priv_esc"
+risk_class = "destructive"
 
 [[combo]]
 path = "mv -i"
 translation = "Move or rename files, prompting for confirmation before overwriting any existing file at the destination."
 verdict = "allow"
 rationale = "Interactive confirmation reduces the risk of accidentally overwriting important files."
-risk_class = "novel"
+risk_class = "safe"

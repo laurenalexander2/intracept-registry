@@ -5,7 +5,7 @@ path = "dd"
 translation = "Copy and convert data between files, devices, or streams."
 verdict = "ask"
 rationale = "Writes raw data to files or devices, which can overwrite disk contents including partition tables and filesystems."
-risk_class = "novel"
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "dd"
@@ -13,7 +13,8 @@ flag = "if="
 translation_modifier = "reading from a specified input file or device"
 verdict = "allow"
 rationale = "Specifies the data source; does not add destructive capability."
-arity = "Boolean"
+arity = "KeyValue"
+value_type = "Path"
 
 [[flag]]
 applies_to = "dd"
@@ -21,7 +22,8 @@ flag = "of="
 translation_modifier = "writing to a specified output file or device"
 verdict = "ask"
 rationale = "Directs raw data to a target that may be a disk device, overwriting all existing content without confirmation."
-arity = "Boolean"
+arity = "KeyValue"
+value_type = "Path"
 
 [[flag]]
 applies_to = "dd"

@@ -30,7 +30,7 @@ translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Suppresses confirmation prompts and ignores nonexistent files; on a single file the blast radius is narrow, but it removes a safety check."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rm"
@@ -39,7 +39,7 @@ translation_modifier = "recursively through all subdirectories without asking fo
 verdict = "ask"
 rationale = "Combines recursive traversal with suppressed prompts, enabling irreversible destruction of entire directory trees."
 arity = "Boolean"
-risk_class_override = "priv_esc"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rm"
