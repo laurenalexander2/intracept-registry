@@ -78,7 +78,7 @@ path = "tsc --noEmit"
 translation = "Type-check TypeScript source code without writing any compiled JavaScript output files."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to catch type errors without producing build artifacts."
-risk_class = "safe"
+risk_class = "novel"
 
 [[combo]]
 path = "tsc --watch"

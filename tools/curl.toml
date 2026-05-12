@@ -240,7 +240,7 @@ path = "curl -k -L"
 translation = "Transfer data from a server, following redirects and skipping TLS certificate verification."
 verdict = "ask"
 rationale = "Combines redirect-following with disabled certificate checks, allowing connections to untrusted servers across the redirect chain."
-risk_class = "net_egress"
+risk_class = "priv_esc"
 
 [[combo]]
 path = "curl -L -o"

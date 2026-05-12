@@ -70,11 +70,11 @@ path = "black --check"
 translation = "Check whether Python source files need formatting without modifying them."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to enforce consistent formatting."
-risk_class = "safe"
+risk_class = "novel"
 
 [[combo]]
 path = "black --check --diff"
 translation = "Check whether Python source files need formatting and show the exact changes that would be made, without modifying any files."
 verdict = "allow"
 rationale = "Combines format checking with a diff preview, providing full visibility into what black would change."
-risk_class = "safe"
+risk_class = "novel"

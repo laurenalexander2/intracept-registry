@@ -838,6 +838,6 @@ path = "gcloud run deploy --allow-unauthenticated"
 translation = "Deploy a Cloud Run service and make it publicly accessible without any authentication requirement."
 verdict = "ask"
 rationale = "Exposes a live service to the public internet with no access controls, increasing the attack surface."
-risk_class = "net_egress"
+risk_class = "priv_esc"
 
 
