@@ -414,27 +414,54 @@ def _check_v0_tag_deprecation(issues: list[Issue], kind: str, eid: str, entry: d
 
 
 def _check_coherence(issues: list[Issue], kind: str, eid: str, entry: dict) -> None:
-    """Coherence checks between tags and verdict (WARN level)."""
+    """Coherence checks (WARN level).
+
+    Pre-Phase-4a (v0 vocabulary): tags ↔ verdict cross-checks (legacy).
+    Post-Phase-4a (v2 vocabulary): risk_class ↔ verdict default-tier check —
+    if the curator declared a less-severe verdict than the risk_class
+    default suggests, flag it. Lint rule 6 (S2 from the Phase 4→5 review):
+    `verdict_below_risk_class_default`.
+    """
     verdict = entry.get("verdict", "")
-    # Determine prefix based on kind
+
+    # --- v0 coherence checks (legacy, fire only on v0-shape entries) ---
     prefix = "tags"
     safety = entry.get(f"{prefix}.safety_override")
     reversibility = entry.get(f"{prefix}.reversibility")
     effect = entry.get(f"{prefix}.effect")
 
-    # safety_override=true + verdict="allow" → WARN
     if safety is True and verdict == "allow":
         issues.append(Issue("WARN", kind, eid, "safety_override=true but verdict is 'allow'"))
-
-    # reversibility="impossible" + verdict="allow" → WARN
     if reversibility == "impossible" and verdict == "allow":
         issues.append(Issue("WARN", kind, eid, "reversibility='impossible' but verdict is 'allow'"))
-
-    # effect only ["read"] + verdict="require_approval" → WARN
     if isinstance(effect, list) and effect == ["read"] and verdict == "require_approval":
         issues.append(Issue("WARN", kind, eid, "effect is only ['read'] but verdict is 'require_approval'"))
     elif effect == "read" and verdict == "require_approval":
         issues.append(Issue("WARN", kind, eid, "effect is only 'read' but verdict is 'require_approval'"))
+
+    # --- v2 verdict-below-risk_class-default check (lint rule 6) ---
+    # SCHEMA-v2.md §3 default verdicts: safe→allow; net_egress→ask;
+    # destructive, priv_esc, secret_read → warn. Genuine bugs are
+    # entries that declare a *real* high-severity risk_class but a
+    # softer verdict (e.g. `rm -rf` carrying verdict='ask' with
+    # risk_class='destructive'). The `novel` sentinel is excluded
+    # because it means "uncurated — preserve the curator's existing
+    # judgment until auto-derive promotes it." Warning on novel would
+    # flag every sentinel-filled entry from the bulk migration (~2200
+    # of them) — noise that drowns the real coherence violations.
+    rc = entry.get("risk_class")
+    if rc and rc != "novel" and verdict and verdict in VALID_VERDICTS:
+        verdict_rank = {"allow": 0, "ask": 1, "warn": 2}[verdict]
+        rc_default_rank = {
+            "safe": 0,
+            "net_egress": 1,
+            "destructive": 2, "priv_esc": 2, "secret_read": 2,
+        }.get(rc, 0)
+        if verdict_rank < rc_default_rank:
+            default_verdict = ["allow", "ask", "warn"][rc_default_rank]
+            issues.append(Issue("WARN", kind, eid,
+                f"verdict '{verdict}' is less severe than risk_class '{rc}' default "
+                f"'{default_verdict}'; user sees a softer prompt than the class warrants"))
 
 
 def collect_files(path: Path) -> list[Path]:
