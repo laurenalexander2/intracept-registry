@@ -68,7 +68,7 @@ claude-swarm --db .claude-swarm/bus.db review request --from {YOUR_SESSION_ID} -
 claude-swarm --db .claude-swarm/bus.db merge-ok {YOUR_SESSION_ID}
 ```
 
-**Commit (auto-prefixes with session ID):**
+**Commit (optional swarm wrapper — auto-prefixes with session ID; raw `git commit` is fine too):**
 ```
 claude-swarm --db .claude-swarm/bus.db commit "description" --session {YOUR_SESSION_ID}
 ```
@@ -95,8 +95,8 @@ claude-swarm --db .claude-swarm/bus.db orchestrate dashboard
 3. Share decisions and interfaces to shared context
 4. Claim files before editing
 5. Update status when starting, blocking, or completing
-6. Commit often
+6. Commit often (raw `git commit` is fine; the swarm `commit` wrapper is optional)
 7. Request review when ready
 8. Wait for merge-ok before pushing
-9. Push only via the CLI (never raw git push)
+9. Push only via the swarm CLI (never raw `git push`) — this is the only git op that MUST go through swarm
 10. Never force push
