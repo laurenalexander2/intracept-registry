@@ -69,9 +69,9 @@ flag = "--cache"
 translation_modifier = "caching results to speed up subsequent runs"
 verdict = "allow"
 rationale = "Writes a cache file for performance; does not change formatting behavior."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "prettier --check"

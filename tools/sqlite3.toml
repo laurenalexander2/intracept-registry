@@ -7,9 +7,9 @@ path = "sqlite3"
 translation = "Open and interact with a SQLite database."
 verdict = "allow"
 rationale = "Can create, modify, and delete data in SQLite database files; a new database is created if the file does not exist."
-# ── Safety and mode flags ────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Safety and mode flags ────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -41,9 +41,9 @@ flag = "-interactive"
 translation_modifier = "forcing interactive mode even when input is not a terminal"
 verdict = "allow"
 rationale = "Changes the I/O mode to interactive; does not add destructive capability."
-# ── Execution flags ─────────────���────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Execution flags ─────────────���────────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -59,9 +59,9 @@ flag = "-init"
 translation_modifier = "reading and executing commands from a specified file at startup"
 verdict = "allow"
 rationale = "Executes arbitrary SQL and dot-commands from a file, which may modify the database or filesystem."
-# ── Output formatting ──────────────��────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output formatting ──────────────��────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -69,9 +69,9 @@ flag = "-csv"
 translation_modifier = "formatting query output as comma-separated values"
 verdict = "allow"
 rationale = "Changes output format only; does not affect what queries are executed."
-# ── File handling flags ───────────────────────────────���────────────────��─────
 arity = "Boolean"
 
+# ── File handling flags ───────────────────────────────���────────────────��─────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -103,9 +103,9 @@ flag = "-deserialize"
 translation_modifier = "loading the entire database into memory before operating on it"
 verdict = "allow"
 rationale = "Reads the full database into memory; changes are not written back unless explicitly saved."
-# ── Error handling ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Error handling ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -113,9 +113,9 @@ flag = "-bail"
 translation_modifier = "stopping immediately after the first error"
 verdict = "allow"
 rationale = "Reduces risk by halting execution when an error occurs instead of continuing."
-# ── Testing and advanced ─────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Testing and advanced ─────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "sqlite3"
@@ -123,10 +123,10 @@ flag = "-unsafe-testing"
 translation_modifier = "enabling unsafe commands and modes intended only for testing"
 verdict = "ask"
 rationale = "Unlocks dangerous internal commands that can corrupt databases or access arbitrary memory."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "sqlite3 -cmd"

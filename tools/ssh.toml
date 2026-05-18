@@ -77,10 +77,10 @@ flag = "-A"
 translation_modifier = "forwarding the local SSH agent to the remote server"
 verdict = "ask"
 rationale = "Exposes local SSH keys to the remote server, which could be used by a compromised host to authenticate as you."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "ssh -i"

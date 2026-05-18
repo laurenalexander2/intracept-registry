@@ -101,9 +101,9 @@ flag = "--tls"
 translation_modifier = "connecting over an encrypted TLS connection"
 verdict = "allow"
 rationale = "Enables transport encryption; does not affect command capabilities."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "redis-cli -h -p"

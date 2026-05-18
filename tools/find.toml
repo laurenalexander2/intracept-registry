@@ -7,9 +7,9 @@ path = "find"
 translation = "Search for files and directories matching specified criteria."
 verdict = "allow"
 rationale = "Read-only search that lists matching files without modifying them."
-# ── Name and path filters ────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Name and path filters ────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -49,9 +49,9 @@ flag = "-iregex"
 translation_modifier = "matching files whose full path matches a regular expression, ignoring case"
 verdict = "allow"
 rationale = "Case-insensitive regex filter on the full path; does not modify files."
-# ── Type and attribute filters ───────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Type and attribute filters ───────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -99,9 +99,9 @@ flag = "-group"
 translation_modifier = "matching files belonging to a specific group"
 verdict = "allow"
 rationale = "Filters by file group; does not modify files."
-# ── Time filters ─────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Time filters ─────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -141,9 +141,9 @@ flag = "-newer"
 translation_modifier = "matching files modified more recently than a reference file"
 verdict = "allow"
 rationale = "Compares modification times; does not modify files."
-# ── Depth and traversal control ──────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Depth and traversal control ──────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -191,9 +191,9 @@ flag = "-x"
 translation_modifier = "without crossing filesystem boundaries"
 verdict = "allow"
 rationale = "Restricts search to the current filesystem; a scope-limiting option."
-# ── Boolean operators ────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Boolean operators ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -217,9 +217,9 @@ flag = "-and"
 translation_modifier = "requiring both the previous and the next condition to be true"
 verdict = "allow"
 rationale = "Combines filter expressions with logical AND; does not modify files."
-# ── Actions ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Actions ──────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "find"
@@ -267,10 +267,10 @@ flag = "-delete"
 translation_modifier = "deleting every matching file"
 verdict = "ask"
 rationale = "Permanently removes all files matching the search criteria without confirmation or recoverability."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "destructive"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "find -name -type"

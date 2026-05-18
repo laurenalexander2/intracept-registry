@@ -3,9 +3,9 @@
 [[command]]
 path = "tcpdump"
 translation = "Capture and display network traffic on an interface."
-verdict = "ask"
-rationale = "Reads network packets, which may contain sensitive data such as credentials or personal information."
-risk_class = "novel"
+verdict = "warn"
+rationale = "Reads every network packet on the interface, which may include credentials, session tokens, personal information, or other irreversible secret-leakage."
+risk_class = "secret_read"
 
 [[flag]]
 applies_to = "tcpdump"

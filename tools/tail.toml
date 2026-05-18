@@ -7,9 +7,9 @@ path = "tail"
 translation = "Display the last lines of a file."
 verdict = "allow"
 rationale = "Read-only display of file contents that modifies nothing."
-# ── Line and byte selection ──────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Line and byte selection ──────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tail"
@@ -35,10 +35,10 @@ flag = "-b"
 translation_modifier = "showing a specified number of 512-byte blocks instead of lines"
 verdict = "allow"
 rationale = "Changes the unit of output to 512-byte blocks; still read-only."
-# ── Following ────────────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "Int"
 
+# ── Following ────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tail"
@@ -54,9 +54,9 @@ flag = "-F"
 translation_modifier = "continuously following new output, reopening the file if it is rotated or renamed"
 verdict = "allow"
 rationale = "Like -f but handles log rotation by detecting inode changes; still read-only."
-# ── Display order ────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Display order ────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tail"

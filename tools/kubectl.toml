@@ -7,9 +7,9 @@ path = "kubectl"
 translation = "Run the Kubernetes command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Reading resources ─────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Reading resources ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl get"
@@ -77,9 +77,9 @@ path = "kubectl top"
 translation = "Display CPU and memory usage for nodes or pods."
 verdict = "allow"
 rationale = "Read-only metrics query from the Metrics Server."
-# ── Creating and applying resources ──────────────────────────────────────────
 risk_class = "novel"
 
+# ── Creating and applying resources ──────────────────────────────────────────
 
 [[command]]
 path = "kubectl create"
@@ -150,9 +150,9 @@ flag = "--recursive"
 translation_modifier = "processing all files in subdirectories"
 verdict = "allow"
 rationale = "Applies every manifest found recursively, increasing the scope of changes."
-# ── Deleting resources ────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Deleting resources ────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl delete"
@@ -208,36 +208,36 @@ flag = "--cascade"
 translation_modifier = "controlling whether dependent resources are also deleted"
 verdict = "allow"
 rationale = "A control parameter that changes cascade behavior; the default (background cascade) is the standard expectation."
-# ── Editing resources ─────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Editing resources ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl edit"
 translation = "Open a Kubernetes resource in a text editor for live modification."
 verdict = "ask"
 rationale = "Directly modifies live resources; changes take effect immediately on save."
-# ── Executing in containers ──────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Executing in containers ──────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl exec"
 translation = "Run a command inside a container in a running pod."
 verdict = "ask"
 rationale = "Executes arbitrary commands inside a live container, which could modify application state."
-# ── Port forwarding ──────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Port forwarding ──────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl port-forward"
 translation = "Forward a local port to a port on a pod or service."
 verdict = "allow"
 rationale = "Exposes a cluster-internal service to the local machine, bypassing normal network access controls."
-# ── Rollout management ───────────────────────────────────────────────────────
 risk_class = "net_egress"
 
+# ── Rollout management ───────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl rollout"
@@ -279,9 +279,9 @@ path = "kubectl rollout pause"
 translation = "Pause the rollout of a resource to prevent further updates."
 verdict = "allow"
 rationale = "Halts rollout progress; the workload may be left in a partially updated state."
-# ── Scaling ───────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Scaling ───────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl scale"
@@ -296,9 +296,9 @@ flag = "--all"
 translation_modifier = "for every resource of the specified type in the current isolated group"
 verdict = "ask"
 rationale = "Scales all matching resources at once, which could cause widespread service disruption."
-# ── Node management ──────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Node management ──────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl drain"
@@ -367,9 +367,9 @@ flag = "--all"
 translation_modifier = "on every node in the cluster"
 verdict = "ask"
 rationale = "Applies the taint to all nodes, which could make the entire cluster unschedulable for affected pods."
-# ── Labeling and annotating ──────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Labeling and annotating ──────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl label"
@@ -415,9 +415,9 @@ flag = "--overwrite"
 translation_modifier = "replacing existing annotation values"
 verdict = "allow"
 rationale = "Overwrites current annotations; annotations are generally informational."
-# ── Configuration ────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Configuration ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl config"
@@ -452,9 +452,9 @@ path = "kubectl config delete-context"
 translation = "Remove a context entry from the kubeconfig file."
 verdict = "allow"
 rationale = "Deletes a cluster context reference; the cluster itself is not affected."
-# ── Authorization ────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Authorization ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl auth"
@@ -468,18 +468,18 @@ path = "kubectl auth can-i"
 translation = "Check whether a specific action is allowed for the current user."
 verdict = "allow"
 rationale = "Read-only authorization check that does not modify any resources."
-# ── File copying ─────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── File copying ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl cp"
 translation = "Copy files between a local filesystem and a container in a pod."
 verdict = "ask"
 rationale = "Transfers files into or out of a running container, which could modify application state or exfiltrate data."
-# ── Proxying and debugging ──────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Proxying and debugging ──────────────────────────────────────────────────
 
 [[command]]
 path = "kubectl proxy"
@@ -500,9 +500,9 @@ path = "kubectl debug"
 translation = "Create a debugging container attached to a running pod or node."
 verdict = "ask"
 rationale = "Creates a temporary debugging container with potential access to the pod's filesystem and network."
-# ── Missing important commands ──────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Missing important commands ──────────────────────────────────────────────
 
 [[command]]
 path = "kubectl patch"
@@ -621,9 +621,9 @@ path = "kubectl events"
 translation = "List events from the Kubernetes cluster."
 verdict = "allow"
 rationale = "Read-only display of cluster events."
-# ── Missing flags on existing commands ──────────────────────────────────────
 risk_class = "novel"
 
+# ── Missing flags on existing commands ──────────────────────────────────────
 
 [[flag]]
 applies_to = "kubectl exec"
@@ -679,9 +679,9 @@ flag = "--replicas"
 translation_modifier = "to the specified number of replicas"
 verdict = "allow"
 rationale = "Setting replicas to zero effectively shuts down the application."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "kubectl delete --all"

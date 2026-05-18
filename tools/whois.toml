@@ -3,9 +3,9 @@
 [[command]]
 path = "whois"
 translation = "Query domain name registration and network information databases."
-verdict = "allow"
-rationale = "Read-only network query; modifies nothing."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only network query sent across the network to a domain registry server, revealing every domain being investigated."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "whois"

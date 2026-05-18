@@ -77,9 +77,9 @@ flag = "--config"
 translation_modifier = "using a specified configuration file"
 verdict = "allow"
 rationale = "Selects which configuration to use; does not change Jest's capabilities."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "jest --coverage --verbose"

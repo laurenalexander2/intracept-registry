@@ -7,9 +7,9 @@ path = "mkdir"
 translation = "Create new directories."
 verdict = "allow"
 rationale = "Creates empty directories; does not modify or overwrite existing files or directories."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "mkdir"

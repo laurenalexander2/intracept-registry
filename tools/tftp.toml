@@ -3,6 +3,6 @@
 [[command]]
 path = "tftp"
 translation = "Transfer files using the Trivial File Transfer Protocol."
-verdict = "allow"
-rationale = "Sends and receives files over the network without authentication; files can be overwritten on the remote or local side."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Sends and receives files across the network without authentication; files can be permanently overwritten on every endpoint and the unencrypted transport exposes contents to interception."
+risk_class = "net_egress"

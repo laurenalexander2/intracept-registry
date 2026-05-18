@@ -3,9 +3,9 @@
 [[command]]
 path = "ping"
 translation = "Send test packets to a network host to check if it is reachable."
-verdict = "allow"
-rationale = "Read-only network diagnostic that does not modify any system or remote state."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only network diagnostic that sends ICMP packets across the network to every router along the path, revealing what hosts are being probed."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "ping"

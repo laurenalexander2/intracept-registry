@@ -5,133 +5,133 @@ path = "rustup"
 translation = "Run the Rust toolchain installer and manager."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup update"
 translation = "Update installed Rust toolchains and rustup itself."
-verdict = "allow"
-rationale = "Downloads and installs newer toolchain versions locally."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Downloads and installs newer toolchain versions across the network from the upstream rust-lang servers; every toolchain binary then executes locally during builds."
+risk_class = "net_egress"
 
 [[command]]
 path = "rustup default"
 translation = "Set the default Rust toolchain."
 verdict = "allow"
 rationale = "Changes which toolchain is used by default; easily reversible."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup show"
 translation = "Show the active and installed Rust toolchains."
 verdict = "allow"
 rationale = "Read-only display of installed toolchains."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup toolchain"
 translation = "Manage Rust toolchain installations."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup toolchain install"
 translation = "Install a specific Rust toolchain."
-verdict = "allow"
-rationale = "Downloads and installs a toolchain locally."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Downloads a toolchain across the network from the upstream rust-lang servers; the toolchain binaries then execute locally during every build."
+risk_class = "net_egress"
 
 [[command]]
 path = "rustup toolchain uninstall"
 translation = "Remove an installed Rust toolchain."
 verdict = "allow"
 rationale = "Removes a local toolchain; can be reinstalled."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup toolchain list"
 translation = "List installed Rust toolchains."
 verdict = "allow"
 rationale = "Read-only listing of toolchains."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup target"
 translation = "Manage compilation targets for a Rust toolchain."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup target add"
 translation = "Add a compilation target to the active toolchain."
-verdict = "allow"
-rationale = "Downloads target support files; does not modify existing projects."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Downloads target support files across the network from the upstream rust-lang servers; the new target then participates in every cross-compilation build."
+risk_class = "net_egress"
 
 [[command]]
 path = "rustup target remove"
 translation = "Remove a compilation target from the active toolchain."
 verdict = "allow"
 rationale = "Removes locally installed target files; can be re-added."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup component"
 translation = "Manage components of a Rust toolchain."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup component add"
 translation = "Add a component to the active Rust toolchain."
-verdict = "allow"
-rationale = "Downloads and installs a component locally."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Downloads a component across the network from the upstream rust-lang servers; the new component then executes as part of every build that uses it."
+risk_class = "net_egress"
 
 [[command]]
 path = "rustup component remove"
 translation = "Remove a component from the active Rust toolchain."
 verdict = "allow"
 rationale = "Removes a local component; can be re-added."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup override"
 translation = "Manage directory-specific Rust toolchain overrides."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup override set"
 translation = "Set a Rust toolchain override for the current directory."
 verdict = "allow"
 rationale = "Changes which toolchain is used in this directory; easily reversible."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup override unset"
 translation = "Remove the Rust toolchain override for the current directory."
 verdict = "allow"
 rationale = "Restores the default toolchain for this directory."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup self uninstall"
 translation = "Uninstall rustup and all installed Rust toolchains."
-verdict = "ask"
-rationale = "Removes the entire Rust installation from the system."
-risk_class = "novel"
+verdict = "warn"
+rationale = "Permanently removes every Rust toolchain and rustup itself from the system; all toolchains must be reinstalled to rebuild Rust projects."
+risk_class = "destructive"
 
 [[command]]
 path = "rustup check"
 translation = "Check for available updates to Rust toolchains and rustup."
-verdict = "allow"
-rationale = "Read-only check that does not install anything."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only check that queries the upstream rust-lang servers across the network for every installed toolchain."
+risk_class = "net_egress"
 
 [[command]]
 path = "rustup run"
@@ -145,11 +145,11 @@ path = "rustup which"
 translation = "Display the path to the binary that would be run for a given command."
 verdict = "allow"
 rationale = "Read-only display of binary paths."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "rustup doc"
 translation = "Open the Rust documentation in a browser."
 verdict = "allow"
 rationale = "Opens a local documentation page; does not modify anything."
-risk_class = "novel"
+risk_class = "safe"

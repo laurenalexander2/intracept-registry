@@ -7,9 +7,9 @@ path = "git"
 translation = "Run the Git version control system."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Working area ──────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Working area ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git init"
@@ -78,9 +78,9 @@ flag = "--update"
 translation_modifier = "only for files already tracked by Git"
 verdict = "allow"
 rationale = "Limits scope to tracked files; will not add new untracked files."
-# ── Committing ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Committing ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git commit"
@@ -112,9 +112,9 @@ flag = "--all"
 translation_modifier = "automatically staging all modified and deleted tracked files before committing"
 verdict = "allow"
 rationale = "May commit changes the user did not intend to include."
-# ── Remote operations ─────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Remote operations ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "git push"
@@ -274,9 +274,9 @@ path = "git remote remove"
 translation = "Unregister a remote repository and delete its tracking branches."
 verdict = "allow"
 rationale = "Removes the remote configuration and all associated remote-tracking refs."
-# ── Branching and switching ───────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Branching and switching ───────────────────────────────────────────────────
 
 [[command]]
 path = "git branch"
@@ -341,9 +341,9 @@ flag = "-b"
 translation_modifier = "creating a new branch at the current commit"
 verdict = "allow"
 rationale = "Creates a new branch and switches to it; fully reversible."
-# ── Merging and rebasing ─────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Merging and rebasing ─────────────────────────────────────────────────────
 
 [[command]]
 path = "git merge"
@@ -422,9 +422,9 @@ flag = "--force-rebase"
 translation_modifier = "rewriting all commits even if they could be fast-forwarded"
 verdict = "allow"
 rationale = "Creates new commit hashes unnecessarily, but does not add destructive capability beyond what rebase already does."
-# ── Resetting and reverting ──────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Resetting and reverting ──────────────────────────────────────────────────
 
 [[command]]
 path = "git reset"
@@ -501,9 +501,9 @@ flag = "--abort"
 translation_modifier = "aborting the cherry-pick and restoring the previous state"
 verdict = "allow"
 rationale = "Safely cancels a cherry-pick in progress."
-# ── Stashing ─────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Stashing ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git stash"
@@ -561,9 +561,9 @@ flag = "--all"
 translation_modifier = "also saving untracked and ignored files"
 verdict = "allow"
 rationale = "Includes ignored files like build artifacts; the clean step may remove files the user expected to keep."
-# ── History and inspection ────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── History and inspection ────────────────────────────────────────────────────
 
 [[command]]
 path = "git log"
@@ -591,9 +591,9 @@ path = "git bisect"
 translation = "Use binary search to find the commit that introduced a bug."
 verdict = "allow"
 rationale = "Navigates history by checking out commits; the original branch is restored with bisect reset."
-# ── Removing and moving files ────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Removing and moving files ────────────────────────────────────────────────
 
 [[command]]
 path = "git rm"
@@ -640,10 +640,10 @@ flag = "--force"
 translation_modifier = "overwriting the destination even if it already exists"
 verdict = "allow"
 rationale = "Silently overwrites an existing file at the destination path."
-# ── Cleaning ─────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "destructive"
 
+# ── Cleaning ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git clean"
@@ -699,9 +699,9 @@ flag = "-i"
 translation_modifier = "interactively selecting which files to delete"
 verdict = "allow"
 rationale = "Gives the user per-file control, reducing the risk of accidental deletion."
-# ── Tags ─────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Tags ─────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git tag"
@@ -724,10 +724,10 @@ flag = "-f"
 translation_modifier = "overwriting an existing tag with the same name"
 verdict = "allow"
 rationale = "Silently moves a tag to a different commit, which can cause confusion for collaborators."
-# ── Submodules ───────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "destructive"
 
+# ── Submodules ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git submodule"
@@ -780,9 +780,9 @@ flag = "--recursive"
 translation_modifier = "including nested submodules at all levels"
 verdict = "allow"
 rationale = "Extends the update to nested submodules, increasing the scope of changes."
-# ── Worktrees ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Worktrees ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git worktree add"
@@ -819,9 +819,9 @@ path = "git worktree prune"
 translation = "Remove stale working tree administrative data."
 verdict = "allow"
 rationale = "Cleans up metadata for worktrees that have already been deleted from disk."
-# ── Patching ─────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Patching ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git am"
@@ -852,9 +852,9 @@ path = "git format-patch"
 translation = "Generate patch files from commits for email-based review or sharing."
 verdict = "allow"
 rationale = "Creates files on disk; does not modify the repository."
-# ── Maintenance ──────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Maintenance ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git gc"
@@ -878,9 +878,9 @@ flag = "--aggressive"
 translation_modifier = "spending extra time optimizing the repository more thoroughly"
 verdict = "allow"
 rationale = "More thorough repacking; safe but can take a very long time on large repositories."
-# ── Modern branch and file commands ─────────────────────────────────────────
 arity = "Boolean"
 
+# ── Modern branch and file commands ─────────────────────────────────────────
 
 [[command]]
 path = "git switch"
@@ -944,9 +944,9 @@ flag = "--worktree"
 translation_modifier = "overwriting the files in the working directory"
 verdict = "allow"
 rationale = "Replaces working tree files; uncommitted changes to those files are permanently lost."
-# ── Configuration ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Configuration ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "git config"
@@ -976,9 +976,9 @@ flag = "--unset-all"
 translation_modifier = "removing all values for a configuration key"
 verdict = "allow"
 rationale = "Removes all entries for a multivalue key; may affect hooks, aliases, or remote configurations."
-# ── Low-level ref manipulation ──────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Low-level ref manipulation ──────────────────────────────────────────────
 
 [[command]]
 path = "git update-ref"
@@ -993,9 +993,9 @@ flag = "-d"
 translation_modifier = "deleting the reference entirely"
 verdict = "ask"
 rationale = "Removes the reference entirely, which may make commits unreachable."
-# ── Missing commonly-used commands ──────────────────────────────────────────
 arity = "Boolean"
 
+# ── Missing commonly-used commands ──────────────────────────────────────────
 
 [[command]]
 path = "git status"
@@ -1030,9 +1030,9 @@ path = "git stash show"
 translation = "Show a summary of changes in a stash entry."
 verdict = "allow"
 rationale = "Read-only display of stash contents."
-# ── Missing critical flags on existing commands ─────────────────────────────
 risk_class = "safe"
 
+# ── Missing critical flags on existing commands ─────────────────────────────
 
 [[flag]]
 applies_to = "git rebase"
@@ -1136,9 +1136,9 @@ flag = "--message"
 translation_modifier = "with the commit message provided on the command line"
 verdict = "allow"
 rationale = "Specifies the message directly; does not change what is committed."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "git push --force"

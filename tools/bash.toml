@@ -7,9 +7,9 @@ path = "bash"
 translation = "Run the Bash shell interpreter."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands with full access to the user's environment and files."
-# ── Execution modes ──────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Execution modes ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "bash"
@@ -65,9 +65,9 @@ flag = "-r"
 translation_modifier = "in restricted mode, limiting certain operations"
 verdict = "allow"
 rationale = "Disables cd, setting PATH, and other actions; a security-hardening measure."
-# ── Syntax and debugging ─────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Syntax and debugging ─────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "bash"
@@ -91,9 +91,9 @@ flag = "-v"
 translation_modifier = "printing each line of the script as it is read"
 verdict = "allow"
 rationale = "Adds verbose output; does not change what commands are executed."
-# ── Error handling ────────────────────────────────────────────────────��──────
 arity = "Boolean"
 
+# ── Error handling ────────────────────────────────────────────────────��──────
 
 [[flag]]
 applies_to = "bash"
@@ -149,9 +149,9 @@ flag = "--posix"
 translation_modifier = "in POSIX-compliant mode, following the POSIX standard more strictly"
 verdict = "allow"
 rationale = "Restricts behavior to POSIX standards; disables some Bash-specific extensions."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "bash -c"

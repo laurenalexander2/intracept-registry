@@ -7,9 +7,9 @@ path = "npx"
 translation = "Run a command from a local or remote npm package."
 verdict = "allow"
 rationale = "Downloads and executes package binaries, which may run arbitrary code from the npm registry."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "npx"

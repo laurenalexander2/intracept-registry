@@ -3,9 +3,9 @@
 [[command]]
 path = "host"
 translation = "Perform a DNS lookup for a hostname or IP address."
-verdict = "allow"
-rationale = "Read-only DNS query that modifies nothing."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only DNS query sent across the network to every DNS resolver in the resolution path, revealing what hostnames are being investigated."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "host"

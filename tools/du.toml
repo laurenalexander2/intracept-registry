@@ -7,9 +7,9 @@ path = "du"
 translation = "Show the disk space used by files and directories."
 verdict = "allow"
 rationale = "Read-only display of disk usage statistics that does not modify anything."
-# ── Output format flags ───────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Output format flags ───────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "du"
@@ -41,9 +41,9 @@ flag = "-g"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows sizes in gigabyte blocks; still read-only."
-# ── Scope and filtering flags ────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Scope and filtering flags ────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "du"
@@ -93,10 +93,10 @@ flag = "-I"
 translation_modifier = "skipping files and directories that match a specified pattern"
 verdict = "allow"
 rationale = "Excludes matching paths from the report; still read-only."
-# ── Symbolic link and filesystem flags ───────────────────────────────────────
 arity = "Single"
 value_type = "String"
 
+# ── Symbolic link and filesystem flags ───────────────────────────────────────
 
 [[flag]]
 applies_to = "du"
@@ -128,9 +128,9 @@ flag = "-x"
 translation_modifier = "staying within a single filesystem and not crossing mount points"
 verdict = "allow"
 rationale = "Prevents traversal into other mounted filesystems; still read-only."
-# ── Measurement flags ────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Measurement flags ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "du"

@@ -3,9 +3,9 @@
 [[command]]
 path = "nslookup"
 translation = "Look up the address or name information for a domain using a name server."
-verdict = "allow"
-rationale = "Read-only network query that does not modify any system or server configuration."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only network query sent across the network to a DNS resolver, revealing every hostname being investigated."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "nslookup"

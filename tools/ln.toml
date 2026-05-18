@@ -63,9 +63,9 @@ flag = "-w"
 translation_modifier = "warning if the target of the shortcut does not currently exist"
 verdict = "allow"
 rationale = "Alerts about broken shortcuts; an informational safety check."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "ln -s"

@@ -5,70 +5,70 @@ path = "gem"
 translation = "Run the RubyGems package manager."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "gem install"
 translation = "Download and install a Ruby gem and its dependencies."
 verdict = "ask"
-rationale = "Downloads and installs packages that may execute native extension build scripts."
-risk_class = "novel"
+rationale = "Downloads and installs packages from a remote registry across the network; native extension build scripts may execute arbitrary code on every install."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem uninstall"
 translation = "Remove an installed Ruby gem."
 verdict = "allow"
-rationale = "Removes a locally installed gem; can be reinstalled."
-risk_class = "novel"
+rationale = "Removes a locally installed gem; can be reinstalled from the registry."
+risk_class = "safe"
 
 [[command]]
 path = "gem update"
 translation = "Update installed gems to the latest versions."
-verdict = "allow"
-rationale = "Downloads and installs newer versions that may introduce breaking changes."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Downloads newer versions from the remote registry across the network; every install may execute native extension build scripts."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem list"
 translation = "List installed Ruby gems."
 verdict = "allow"
 rationale = "Read-only listing of installed gems."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "gem search"
 translation = "Search for gems on the RubyGems repository."
-verdict = "allow"
-rationale = "Read-only search of the remote repository."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only search sent across the network to the remote registry, revealing every search query."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem build"
 translation = "Build a gem package from a gemspec file."
 verdict = "allow"
 rationale = "Creates a local .gem file; does not publish it."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "gem push"
 translation = "Upload a gem package to the RubyGems repository."
 verdict = "ask"
-rationale = "Publishes the gem publicly; published versions are difficult to fully remove."
-risk_class = "novel"
+rationale = "Publishes the gem publicly across the network; published versions are permanently visible and difficult to fully remove."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem environment"
 translation = "Display the RubyGems environment configuration."
 verdict = "allow"
 rationale = "Read-only display of environment settings."
-risk_class = "novel"
+risk_class = "safe"
 
 [[command]]
 path = "gem cleanup"
 translation = "Remove old versions of installed gems."
 verdict = "allow"
-rationale = "Deletes older gem versions from the local system."
-risk_class = "novel"
+rationale = "Deletes older gem versions from the local system; current versions are preserved."
+risk_class = "safe"
 
 [[flag]]
 applies_to = "gem update"

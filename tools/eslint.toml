@@ -77,9 +77,9 @@ flag = "--ignore-path"
 translation_modifier = "using a specified file to determine which paths to ignore"
 verdict = "allow"
 rationale = "Changes which files are skipped; does not modify any source files."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "eslint --fix"

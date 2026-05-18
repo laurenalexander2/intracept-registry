@@ -61,9 +61,9 @@ flag = "--exclude"
 translation_modifier = "skipping files matching a specified pattern"
 verdict = "allow"
 rationale = "Narrows which files are processed; does not change formatting behavior."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "black --check"

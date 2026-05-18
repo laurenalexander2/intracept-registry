@@ -7,9 +7,9 @@ path = "pip3"
 translation = "Run the Python package installer."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Installing ───────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Installing ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 install"
@@ -114,9 +114,9 @@ flag = "--no-cache-dir"
 translation_modifier = "without using or saving to the local cache"
 verdict = "allow"
 rationale = "Skips the download cache; forces fresh downloads but does not introduce additional risk."
-# ── Uninstalling ─────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Uninstalling ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 uninstall"
@@ -148,10 +148,10 @@ flag = "--break-system-packages"
 translation_modifier = "allowing removal from a system-managed Python installation"
 verdict = "ask"
 rationale = "Overrides the externally-managed environment guard, which may corrupt the system Python installation."
-# ── Inspecting ───────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Inspecting ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 list"
@@ -202,18 +202,18 @@ path = "pip3 inspect"
 translation = "Show detailed information about the current Python environment."
 verdict = "allow"
 rationale = "Read-only inspection of the Python environment and installed packages."
-# ── Downloading ──────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Downloading ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 download"
 translation = "Download Python packages to a directory without installing them."
 verdict = "allow"
 rationale = "Downloads package files to disk without installation or script execution."
-# ── Searching ────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Searching ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 search"
@@ -227,9 +227,9 @@ path = "pip3 index"
 translation = "Inspect information available from package indexes."
 verdict = "allow"
 rationale = "Read-only inspection of package index metadata."
-# ── Cache management ─────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Cache management ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 cache"
@@ -264,9 +264,9 @@ path = "pip3 cache remove"
 translation = "Remove specific packages from the pip download cache."
 verdict = "allow"
 rationale = "Deletes individual cached packages; they will be re-downloaded if needed."
-# ── Configuration ────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Configuration ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 config"
@@ -294,9 +294,9 @@ path = "pip3 config unset"
 translation = "Remove a pip configuration value."
 verdict = "allow"
 rationale = "Restores a single configuration key to its default; easily re-set."
-# ── Building ─────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Building ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "pip3 wheel"
@@ -310,9 +310,9 @@ path = "pip3 hash"
 translation = "Compute the hash of a package archive file."
 verdict = "allow"
 rationale = "Read-only computation of file hashes."
-# ── Combos ───────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "pip3 install --force-reinstall"

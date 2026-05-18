@@ -69,9 +69,9 @@ flag = "--incremental"
 translation_modifier = "saving build information to speed up subsequent compilations"
 verdict = "allow"
 rationale = "Writes a build info file for faster rebuilds; does not change compilation output."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "tsc --noEmit"

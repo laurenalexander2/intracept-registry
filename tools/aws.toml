@@ -7,9 +7,9 @@ path = "aws"
 translation = "Run the Amazon Web Services command-line interface."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── S3 ────────────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── S3 ────────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws s3"
@@ -177,10 +177,10 @@ flag = "--force"
 translation_modifier = "first deleting all objects in the bucket before removing it"
 verdict = "ask"
 rationale = "Empties and destroys the entire bucket and all its contents permanently."
-# ── EC2 ───────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── EC2 ───────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws ec2"
@@ -231,9 +231,9 @@ flag = "--dry-run"
 translation_modifier = "simulating the termination without actually destroying any instances"
 verdict = "allow"
 rationale = "No instances are terminated; only checks permissions."
-# ── IAM ───────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── IAM ───────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws iam"
@@ -296,9 +296,9 @@ path = "aws iam delete-role"
 translation = "Delete an IAM role."
 verdict = "ask"
 rationale = "Permanently removes the role; services depending on it will lose access."
-# ── Lambda ────────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Lambda ────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws lambda"
@@ -333,9 +333,9 @@ path = "aws lambda update-function-code"
 translation = "Replace the code of an existing Lambda function with new code."
 verdict = "ask"
 rationale = "Deploys new code to a running function, which immediately affects all future invocations."
-# ── STS ───────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── STS ───────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws sts"
@@ -356,9 +356,9 @@ path = "aws sts assume-role"
 translation = "Obtain temporary security credentials by assuming an IAM role."
 verdict = "ask"
 rationale = "Grants temporary credentials within already-authorized permissions; a standard authentication flow."
-# ── CloudFormation ────────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── CloudFormation ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws cloudformation"
@@ -379,9 +379,9 @@ path = "aws cloudformation delete-stack"
 translation = "Delete a CloudFormation stack and all of its associated resources."
 verdict = "ask"
 rationale = "Destroys the entire stack including compute instances, databases, and networking resources."
-# ── RDS ───────────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── RDS ───────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws rds"
@@ -410,10 +410,10 @@ flag = "--skip-final-snapshot"
 translation_modifier = "without creating a final backup snapshot of the data"
 verdict = "ask"
 rationale = "Skips the final snapshot, making the data permanently irrecoverable after deletion."
-# ── Global flags ──────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Global flags ──────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "aws"
@@ -429,9 +429,9 @@ flag = "--region"
 translation_modifier = "targeting a specific AWS region"
 verdict = "allow"
 rationale = "Operations will affect resources in the specified region; the wrong region may target production instead of staging."
-# ── ECS ──────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── ECS ──────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws ecs"
@@ -487,9 +487,9 @@ path = "aws ecs stop-task"
 translation = "Stop a running task on an ECS cluster."
 verdict = "ask"
 rationale = "Terminates a running container task, interrupting its workload."
-# ── SSM ──────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── SSM ──────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws ssm"
@@ -540,9 +540,9 @@ path = "aws ssm send-command"
 translation = "Run a command on one or more managed instances remotely."
 verdict = "ask"
 rationale = "Executes arbitrary commands on remote instances, which could modify systems or data."
-# ── CloudWatch Logs ──────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── CloudWatch Logs ──────────────────────────────────────────────────────────
 
 [[command]]
 path = "aws logs"
@@ -577,9 +577,9 @@ path = "aws logs tail"
 translation = "Stream log events from a CloudWatch Logs log group in real time."
 verdict = "allow"
 rationale = "Read-only streaming of log data."
-# ── Additional EC2 commands ──────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Additional EC2 commands ──────────────────────────────────────────────────
 
 [[command]]
 path = "aws ec2 start-instances"
@@ -607,9 +607,9 @@ path = "aws ec2 revoke-security-group-ingress"
 translation = "Remove an inbound rule from an EC2 security group."
 verdict = "ask"
 rationale = "Restricts network access; may break connectivity for running services that depend on the rule."
-# ── Additional Lambda commands ───────────────────────────────────────────────
 risk_class = "net_egress"
 
+# ── Additional Lambda commands ───────────────────────────────────────────────
 
 [[command]]
 path = "aws lambda list-functions"
@@ -623,9 +623,9 @@ path = "aws lambda update-function-configuration"
 translation = "Modify the settings of an existing Lambda function."
 verdict = "ask"
 rationale = "Changes runtime configuration such as memory, timeout, environment variables, and IAM role immediately."
-# ── Additional CloudFormation commands ───────────────────────────────────────
 risk_class = "novel"
 
+# ── Additional CloudFormation commands ───────────────────────────────────────
 
 [[command]]
 path = "aws cloudformation create-stack"
@@ -646,9 +646,9 @@ path = "aws cloudformation update-stack"
 translation = "Update an existing CloudFormation stack with a new template or parameters."
 verdict = "ask"
 rationale = "Modifies live infrastructure, which may cause replacements or deletions of existing resources."
-# ── Additional global flags ──────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Additional global flags ──────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "aws"
@@ -664,9 +664,9 @@ flag = "--no-cli-pager"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Disables the pager for output; no resources are modified."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "aws s3 rm --recursive"

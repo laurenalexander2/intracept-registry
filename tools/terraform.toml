@@ -7,9 +7,9 @@ path = "terraform"
 translation = "Run the Terraform infrastructure-as-code tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Core workflow ─────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Core workflow ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform init"
@@ -142,9 +142,9 @@ flag = "-refresh-only"
 translation_modifier = "only updating the state file to match real infrastructure without making changes"
 verdict = "allow"
 rationale = "Reconciles state with reality; may cause future plans to show unexpected changes."
-# ── Destruction ───────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Destruction ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform destroy"
@@ -168,9 +168,9 @@ flag = "-target"
 translation_modifier = "limited to a specific resource and its dependencies"
 verdict = "ask"
 rationale = "Limits destruction scope but can leave state inconsistent."
-# ── Import ────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Import ────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform import"
@@ -185,10 +185,10 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "ask"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
-# ── State management ─────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── State management ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform state"
@@ -279,10 +279,10 @@ flag = "-force"
 translation_modifier = "even if the state lineage or serial number does not match"
 verdict = "ask"
 rationale = "Bypasses safety checks that prevent overwriting divergent state, risking total state corruption."
-# ── Resource lifecycle ────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Resource lifecycle ────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform taint"
@@ -319,10 +319,10 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "ask"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
-# ── Output and graph ─────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Output and graph ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform output"
@@ -343,9 +343,9 @@ path = "terraform providers"
 translation = "Show the providers required by the current configuration."
 verdict = "allow"
 rationale = "Read-only display of provider dependencies."
-# ── Locking ───────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Locking ───────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform force-unlock"
@@ -360,9 +360,9 @@ flag = "-force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt; the risk is in the base command, not the prompt bypass."
-# ── Workspaces ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Workspaces ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform workspace"
@@ -404,18 +404,18 @@ path = "terraform workspace delete"
 translation = "Delete a Terraform workspace and its state."
 verdict = "ask"
 rationale = "Permanently removes the workspace state; resources tracked in it become unmanaged."
-# ── Authentication ────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Authentication ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform login"
 translation = "Authenticate with a remote Terraform service and save the credentials locally."
 verdict = "allow"
 rationale = "Stores authentication credentials on disk, which could be exposed if the machine is compromised."
-# ── Missing commands ────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── Missing commands ────────────────────────────────────────────────────────
 
 [[command]]
 path = "terraform show"
@@ -465,10 +465,10 @@ flag = "-lock=false"
 translation_modifier = "without acquiring a state lock"
 verdict = "ask"
 rationale = "Allows concurrent state modifications, which can corrupt the state file."
-# ── Missing flags on existing commands ──────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Missing flags on existing commands ──────────────────────────────────────
 
 [[flag]]
 applies_to = "terraform init"
@@ -549,9 +549,9 @@ flag = "-json"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output format to JSON; still a read-only validation."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "terraform apply -auto-approve"

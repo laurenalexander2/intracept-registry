@@ -7,9 +7,9 @@ path = "gcloud"
 translation = "Run the Google Cloud command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Global flags ─────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Global flags ─────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "gcloud"
@@ -42,9 +42,9 @@ flag = "--format"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output format (JSON, YAML, table, etc.); read-only display change."
-# ── Auth ─────────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Auth ─────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud auth"
@@ -79,9 +79,9 @@ path = "gcloud auth list"
 translation = "List the accounts currently authenticated with the CLI."
 verdict = "allow"
 rationale = "Read-only listing of authenticated accounts."
-# ── Config ───────────────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── Config ───────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud config set"
@@ -109,9 +109,9 @@ path = "gcloud config unset"
 translation = "Remove a CLI configuration property."
 verdict = "allow"
 rationale = "Resets a property to its default; only affects local CLI behavior."
-# ── Projects ─────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Projects ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud projects"
@@ -146,18 +146,18 @@ path = "gcloud projects delete"
 translation = "Mark a Google Cloud project for deletion."
 verdict = "ask"
 rationale = "Schedules the project and all its resources for permanent deletion after a grace period."
-# ── Compute ──────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Compute ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud compute"
 translation = "Manage Compute Engine resources."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-# ── Compute Engine instances ─────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Compute Engine instances ─────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud compute instances list"
@@ -302,9 +302,9 @@ path = "gcloud compute reset-windows-password"
 translation = "Reset the password for a Windows user on a Compute Engine instance and return the new credentials."
 verdict = "ask"
 rationale = "Generates new credentials for a remote Windows host; anyone holding the output can log in until the password is changed again."
-# ── Compute disks ────────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── Compute disks ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud compute disks list"
@@ -332,18 +332,18 @@ path = "gcloud compute disks snapshot"
 translation = "Create a snapshot of a Compute Engine persistent disk."
 verdict = "allow"
 rationale = "Creates a backup copy; does not modify the source disk."
-# ── Compute disks ────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Compute disks ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud compute disks"
 translation = "Manage Compute Engine persistent disks."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-# ── Compute firewall ─────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Compute firewall ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud compute firewall-rules list"
@@ -371,9 +371,9 @@ path = "gcloud compute firewall-rules update"
 translation = "Modify an existing Compute Engine firewall rule."
 verdict = "ask"
 rationale = "Changes network access controls that affect traffic flow to running services."
-# ── Cloud SQL ────────────────────────────────────────────────────────────────
 risk_class = "net_egress"
 
+# ── Cloud SQL ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud sql"
@@ -443,9 +443,9 @@ path = "gcloud sql databases delete"
 translation = "Delete a database from a Cloud SQL instance."
 verdict = "ask"
 rationale = "Permanently removes the database and all its data from the instance."
-# ── Cloud Storage ────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Cloud Storage ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud storage"
@@ -525,9 +525,9 @@ path = "gcloud storage cat"
 translation = "Output the contents of a Cloud Storage object to the terminal."
 verdict = "allow"
 rationale = "Read-only display of object contents."
-# ── GKE / Container ─────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── GKE / Container ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud container"
@@ -583,9 +583,9 @@ path = "gcloud container clusters get-credentials"
 translation = "Fetch cluster credentials and configure kubectl to use them."
 verdict = "allow"
 rationale = "Updates the local kubeconfig file; does not modify the cluster."
-# ── Cloud Run ────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Cloud Run ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud run"
@@ -637,9 +637,9 @@ path = "gcloud run services delete"
 translation = "Delete a Cloud Run service."
 verdict = "ask"
 rationale = "Permanently removes the service and all its revisions; incoming traffic will return errors."
-# ── Cloud Functions ──────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Cloud Functions ──────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud functions"
@@ -681,9 +681,9 @@ path = "gcloud functions logs read"
 translation = "Display log entries for a Cloud Function."
 verdict = "allow"
 rationale = "Read-only display of function logs."
-# ── IAM ──────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── IAM ──────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud iam"
@@ -725,9 +725,9 @@ path = "gcloud iam service-accounts keys delete"
 translation = "Delete a key from an IAM service account."
 verdict = "ask"
 rationale = "Revokes a credential; applications using it will lose authentication."
-# ── App Engine ───────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── App Engine ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud app"
@@ -771,9 +771,9 @@ path = "gcloud app logs read"
 translation = "Display log entries for an App Engine application."
 verdict = "allow"
 rationale = "Read-only display of application logs."
-# ── Init and components ──────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Init and components ──────────────────────────────────────────────────────
 
 [[command]]
 path = "gcloud init"
@@ -801,9 +801,9 @@ path = "gcloud components update"
 translation = "Update all installed Google Cloud CLI components to the latest version."
 verdict = "allow"
 rationale = "Updates local CLI binaries; does not affect cloud resources."
-# ── Combos ───────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "gcloud storage rm --recursive"

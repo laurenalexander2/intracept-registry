@@ -7,18 +7,18 @@ path = "make"
 translation = "Build targets by running commands defined in a Makefile."
 verdict = "allow"
 rationale = "Executes arbitrary shell commands defined in the Makefile, which may modify files or run programs."
-# ── Targets ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Targets ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "make clean"
 translation = "Remove build artifacts and generated files by running the clean target."
 verdict = "allow"
 rationale = "Executes the Makefile's clean target, which typically deletes compiled outputs and temporary files."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "make"
@@ -75,9 +75,9 @@ flag = "-C"
 translation_modifier = "changing to a specified directory before building"
 verdict = "allow"
 rationale = "Changes the working directory; does not add destructive capability."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "make -j"

@@ -7,9 +7,9 @@ path = "kill"
 translation = "Send a signal to one or more running processes, typically to stop them."
 verdict = "ask"
 rationale = "Terminates or signals a specific process by ID, which may interrupt important work or cause data loss."
-# ── Signal flags ──────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Signal flags ──────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "kill"
@@ -121,9 +121,9 @@ flag = "-l"
 translation_modifier = "listing all available signal names instead of sending a signal"
 verdict = "allow"
 rationale = "Read-only operation that prints signal names and exits."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "kill -9"

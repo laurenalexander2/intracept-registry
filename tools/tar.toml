@@ -150,9 +150,9 @@ flag = "--one-file-system"
 translation_modifier = "staying within a single file system and not crossing mount points"
 verdict = "allow"
 rationale = "Limits the scope of the archive; a safety-enhancing option."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "tar -f -x -z"

@@ -7,9 +7,9 @@ path = "echo"
 translation = "Print text to the standard output."
 verdict = "allow"
 rationale = "Write-only output to the terminal that does not modify any files or system state."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "echo"

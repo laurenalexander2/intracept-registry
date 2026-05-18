@@ -5,9 +5,9 @@ path = "grep"
 translation = "Search file contents for lines matching a pattern."
 verdict = "allow"
 rationale = "Read-only search that displays matching lines without modifying any files."
-# ── Search mode flags ────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Search mode flags ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -31,9 +31,9 @@ flag = "-P"
 translation_modifier = "using Perl-compatible regular expression syntax"
 verdict = "allow"
 rationale = "Changes the regex dialect to PCRE; still read-only."
-# ── Match modifiers ──────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Match modifiers ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -82,10 +82,10 @@ flag = "-f"
 translation_modifier = "reading patterns from a file"
 verdict = "allow"
 rationale = "Loads patterns from a file instead of the command line; still read-only."
-# ── Scope flags ──────────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "Path"
 
+# ── Scope flags ──────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -127,10 +127,10 @@ flag = "--exclude-dir"
 translation_modifier = "skipping directories whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of directories searched; still read-only."
-# ── Output format flags ─────────────────────────────────────────────────────
 arity = "Single"
 value_type = "String"
 
+# ── Output format flags ─────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -186,9 +186,9 @@ flag = "-o"
 translation_modifier = "showing only the matching portion of each line"
 verdict = "allow"
 rationale = "Changes output to show only the matched text; still read-only."
-# ── Context flags ────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Context flags ────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -214,10 +214,10 @@ flag = "-C"
 translation_modifier = "including a specified number of lines before and after each match"
 verdict = "allow"
 rationale = "Adds surrounding context lines to output; still read-only."
-# ── Behavioral flags ────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "Int"
 
+# ── Behavioral flags ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "grep"
@@ -250,9 +250,9 @@ flag = "-Z"
 translation_modifier = "separating output filenames with null characters instead of newlines"
 verdict = "allow"
 rationale = "Changes output delimiter for safe piping to xargs; still read-only."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "grep -n -r"

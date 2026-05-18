@@ -7,9 +7,9 @@ path = "chmod"
 translation = "Change file or directory permissions."
 verdict = "allow"
 rationale = "Modifies access controls, which can expose files to unauthorized users or lock out legitimate access."
-# ── Scope modifiers ────────────────────────────────────────────────────────��─
 risk_class = "novel"
 
+# ── Scope modifiers ────────────────────────────────────────────────────────��─
 
 [[flag]]
 applies_to = "chmod"
@@ -17,9 +17,9 @@ flag = "-R"
 translation_modifier = "recursively through all subdirectories"
 verdict = "ask"
 rationale = "Applies permission changes to an entire directory tree, greatly increasing the blast radius."
-# ── Symlink behavior ──────────────────────────────────────────���──────────────
 arity = "Boolean"
 
+# ── Symlink behavior ──────────────────────────────────────────���──────────────
 
 [[flag]]
 applies_to = "chmod"
@@ -51,9 +51,9 @@ flag = "-P"
 translation_modifier = "without following any symbolic links during recursive traversal"
 verdict = "allow"
 rationale = "The default behavior with -R; avoids reaching files outside the directory tree."
-# ── Output control ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output control ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "chmod"
@@ -69,9 +69,9 @@ flag = "-v"
 translation_modifier = "showing each file as its permissions are changed"
 verdict = "allow"
 rationale = "Adds verbose output without changing what permissions are modified."
-# ── ACL operations (macOS) ───────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── ACL operations (macOS) ───────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "chmod"
@@ -119,9 +119,9 @@ flag = "-i"
 translation_modifier = "removing inherited access control list entries"
 verdict = "allow"
 rationale = "Strips inherited ACL entries, which may change effective permissions on the file."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "chmod -R"

@@ -239,9 +239,9 @@ flag = "--compressed"
 translation_modifier = "requesting a compressed response and automatically decompressing it"
 verdict = "allow"
 rationale = "Negotiates transfer compression for efficiency; does not change what data is sent or received."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "curl -I"

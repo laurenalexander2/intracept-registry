@@ -7,9 +7,9 @@ path = "ps"
 translation = "List currently running processes."
 verdict = "allow"
 rationale = "Read-only snapshot of running processes that does not modify anything."
-# ── Process selection ────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Process selection ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "ps"
@@ -84,10 +84,10 @@ flag = "-t"
 translation_modifier = "for processes attached to a specified terminal"
 verdict = "allow"
 rationale = "Filters the listing by terminal device; still read-only."
-# ── Output format ────────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "String"
 
+# ── Output format ────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "ps"
@@ -128,9 +128,9 @@ flag = "-c"
 translation_modifier = "showing only the executable name instead of the full command line"
 verdict = "allow"
 rationale = "Shortens the command column to just the program name; still read-only."
-# ── Sorting ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Sorting ──────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "ps"
@@ -146,9 +146,9 @@ flag = "-m"
 translation_modifier = "sorted by memory usage"
 verdict = "allow"
 rationale = "Changes the sort order to show the most memory-intensive processes first; still read-only."
-# ── Thread display ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Thread display ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "ps"

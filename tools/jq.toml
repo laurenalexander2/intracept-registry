@@ -7,9 +7,9 @@ path = "jq"
 translation = "Process and transform JSON data using filter expressions."
 verdict = "allow"
 rationale = "Reads JSON from input or files and writes transformed results to the terminal; does not modify source files."
-# ── Input handling ───────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Input handling ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "jq"
@@ -57,9 +57,9 @@ flag = "--jsonargs"
 translation_modifier = "treating remaining arguments as JSON values instead of filenames"
 verdict = "allow"
 rationale = "Changes how trailing arguments are interpreted; does not modify files."
-# ── Output formatting ────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output formatting ────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "jq"
@@ -115,9 +115,9 @@ flag = "--indent"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes the number of spaces used for indentation; purely cosmetic."
-# ── Exit behavior ────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Exit behavior ────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "jq"
@@ -125,9 +125,9 @@ flag = "-e"
 translation_modifier = "setting the exit code based on whether the output is null or false"
 verdict = "allow"
 rationale = "Changes the exit code behavior; useful for conditionals in scripts."
-# ── Variables and filter source ──────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Variables and filter source ──────────────────────────────────────────────
 
 [[flag]]
 applies_to = "jq"
@@ -159,9 +159,9 @@ flag = "-f"
 translation_modifier = "loading the filter expression from a file instead of the command line"
 verdict = "allow"
 rationale = "Changes where the filter is read from; does not modify files."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "jq -e"

@@ -7,9 +7,9 @@ path = "which"
 translation = "Show the full path of a command by searching the system PATH."
 verdict = "allow"
 rationale = "Read-only lookup that displays file paths without modifying anything."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "which"

@@ -3,9 +3,9 @@
 [[command]]
 path = "traceroute"
 translation = "Show the network path that packets take to reach a remote host."
-verdict = "allow"
-rationale = "Read-only network diagnostic that maps the route to a destination without modifying anything."
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only network diagnostic that maps the route to a destination across the network, revealing every intermediate router and the host being probed."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "traceroute"

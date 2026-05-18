@@ -163,9 +163,9 @@ flag = "-u"
 translation_modifier = "updating dependencies to their latest versions"
 verdict = "allow"
 rationale = "Fetches newer versions of dependencies, which may introduce breaking changes."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "go build -o"

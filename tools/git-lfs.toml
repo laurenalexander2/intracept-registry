@@ -7,9 +7,9 @@ path = "git-lfs"
 translation = "Run the Git Large File Storage extension."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Setup ────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Setup ────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs install"
@@ -30,9 +30,9 @@ path = "git-lfs update"
 translation = "Update Git hooks for the current repository to use Git LFS."
 verdict = "allow"
 rationale = "Refreshes hook scripts; does not modify tracked files or history."
-# ── Tracking ─────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Tracking ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs track"
@@ -46,9 +46,9 @@ path = "git-lfs untrack"
 translation = "Remove file patterns from Git LFS tracking."
 verdict = "allow"
 rationale = "Stops tracking file types in LFS, which may cause large files to be stored directly in Git on future commits."
-# ── Transferring files ───────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Transferring files ───────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs fetch"
@@ -93,9 +93,9 @@ flag = "--dry-run"
 translation_modifier = "simulating the push without actually uploading anything"
 verdict = "allow"
 rationale = "No data is transmitted; only shows what would be pushed."
-# ── Working tree ─────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Working tree ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs checkout"
@@ -123,9 +123,9 @@ path = "git-lfs env"
 translation = "Display the current Git LFS environment and configuration."
 verdict = "allow"
 rationale = "Read-only display of configuration details."
-# ── Locking ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Locking ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs lock"
@@ -146,9 +146,9 @@ path = "git-lfs unlock"
 translation = "Remove the lock on a file on the Git LFS server."
 verdict = "allow"
 rationale = "Releases a lock, allowing others to edit the file again."
-# ── Migration ────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Migration ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs migrate"
@@ -200,9 +200,9 @@ flag = "--everything"
 translation_modifier = "across all refs in the repository"
 verdict = "ask"
 rationale = "Rewrites every ref in the repository, maximizing the scope of history changes."
-# ── Maintenance ──────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Maintenance ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git-lfs prune"

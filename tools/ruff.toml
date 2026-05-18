@@ -75,10 +75,10 @@ flag = "--unsafe-fixes"
 translation_modifier = "including fixes that may change code behavior"
 verdict = "allow"
 rationale = "Applies fixes that could alter runtime semantics, not just style."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "ruff check --fix"

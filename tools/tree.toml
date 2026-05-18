@@ -7,9 +7,9 @@ path = "tree"
 translation = "Display the contents of a directory in a tree-like format."
 verdict = "allow"
 rationale = "Read-only directory listing that modifies nothing."
-# ── Filtering ────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Filtering ────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tree"
@@ -76,10 +76,10 @@ flag = "--filelimit"
 translation_modifier = "skipping directories that contain more than the specified number of entries"
 verdict = "allow"
 rationale = "Limits output for large directories; still read-only."
-# ── Display options ──────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "Int"
 
+# ── Display options ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tree"
@@ -143,9 +143,9 @@ flag = "-i"
 translation_modifier = "without indentation lines, printing plain filenames"
 verdict = "allow"
 rationale = "Changes output format; still read-only."
-# ── Sorting ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Sorting ──────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tree"
@@ -169,9 +169,9 @@ flag = "-U"
 translation_modifier = "listing files in the order they appear on disk, unsorted"
 verdict = "allow"
 rationale = "Disables sorting; still read-only."
-# ── Output format ────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output format ────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tree"
@@ -203,10 +203,10 @@ flag = "-o"
 translation_modifier = "writing the output to a file instead of the terminal"
 verdict = "allow"
 rationale = "Creates or overwrites a file with the listing output; the tree content itself is still read-only."
-# ── Symlink handling ─────────────────────────────────────────────────────────
 arity = "Single"
 value_type = "Path"
 
+# ── Symlink handling ─────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "tree"

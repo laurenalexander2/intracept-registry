@@ -102,9 +102,9 @@ flag = "--local-infile"
 translation_modifier = "allowing the database to import data directly from files on the client machine"
 verdict = "ask"
 rationale = "Enables reading arbitrary files from the client filesystem into the database, which may expose sensitive data."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "mysql -e"

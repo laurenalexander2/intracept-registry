@@ -7,9 +7,9 @@ path = "docker-compose"
 translation = "Run the Docker Compose multi-container application tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Lifecycle ────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Lifecycle ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker-compose up"
@@ -138,9 +138,9 @@ path = "docker-compose unpause"
 translation = "Resume paused service containers."
 verdict = "allow"
 rationale = "Resumes previously paused containers; restores normal operation."
-# ── Container management ─────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Container management ─────────────────────────────────────────────────────
 
 [[command]]
 path = "docker-compose create"
@@ -209,9 +209,9 @@ path = "docker-compose scale"
 translation = "Change the number of running containers for a service."
 verdict = "allow"
 rationale = "Creates or removes containers to match the desired count."
-# ── Execution ────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Execution ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker-compose run"
@@ -266,9 +266,9 @@ flag = "-u"
 translation_modifier = "as a specified user"
 verdict = "allow"
 rationale = "Changes the user context for the command but does not add destructive capability."
-# ── Build and images ─────────────────────────────────────────────��───────────
 arity = "Boolean"
 
+# ── Build and images ─────────────────────────────────────────────��───────────
 
 [[command]]
 path = "docker-compose build"
@@ -304,9 +304,9 @@ path = "docker-compose images"
 translation = "List images used by the Compose project containers."
 verdict = "allow"
 rationale = "Read-only operation that lists images used by the defined services without modifying anything."
-# ── Information ──────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Information ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker-compose ps"
@@ -362,18 +362,18 @@ path = "docker-compose version"
 translation = "Show the Docker Compose version."
 verdict = "allow"
 rationale = "Read-only display of version information."
-# ── File operations ──────────────────────────────────────────────────���───────
 risk_class = "safe"
 
+# ── File operations ──────────────────────────────────────────────────���───────
 
 [[command]]
 path = "docker-compose cp"
 translation = "Copy files between a service container and the local filesystem."
 verdict = "allow"
 rationale = "Transfers files in or out of containers, which may overwrite existing files."
-# ── Combos ───────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "docker-compose up --build -d"

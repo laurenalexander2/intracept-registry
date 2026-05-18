@@ -168,9 +168,9 @@ path = "npm dedupe"
 translation = "Reduce duplication by restructuring the package dependency tree."
 verdict = "allow"
 rationale = "Reorganizes node_modules to eliminate duplicate packages; does not add or remove dependencies."
-# ── Flags ─────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Flags ─────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "npm install"
@@ -286,9 +286,9 @@ flag = "-g"
 translation_modifier = "updating globally installed packages"
 verdict = "allow"
 rationale = "Modifies the system-wide package directory, which can affect all Node.js projects."
-# ── Missing commands ────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Missing commands ────────────────────────────────────────────────────────
 
 [[command]]
 path = "npm test"
@@ -428,9 +428,9 @@ path = "npm shrinkwrap"
 translation = "Lock down the exact versions of all dependencies into an npm-shrinkwrap.json file."
 verdict = "allow"
 rationale = "Creates a lockfile; does not install or modify packages."
-# ── Missing flags on existing commands ──────────────────────────────────────
 risk_class = "novel"
 
+# ── Missing flags on existing commands ──────────────────────────────────────
 
 [[flag]]
 applies_to = "npm install"
@@ -487,9 +487,9 @@ flag = "--save"
 translation_modifier = "updating the version ranges in package.json to match"
 verdict = "allow"
 rationale = "Modifies package.json version constraints, which affects future installs."
-# ── Combos ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ──────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "npm audit fix --dry-run"

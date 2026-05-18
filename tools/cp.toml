@@ -7,9 +7,9 @@ path = "cp"
 translation = "Copy files and directories to a new location."
 verdict = "allow"
 rationale = "Copies a single named file; overwrites an existing destination file by default, but the original source is unchanged."
-# ── Flags ─────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Flags ─────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "cp"
@@ -130,9 +130,9 @@ flag = "-v"
 translation_modifier = "showing each file as it is copied"
 verdict = "allow"
 rationale = "Adds verbose output without changing what is copied."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "cp -r"

@@ -125,9 +125,9 @@ flag = "-G"
 translation_modifier = "with colorized output"
 verdict = "allow"
 rationale = "Enables color coding by file type; still read-only."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "ls -a -l"

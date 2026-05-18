@@ -7,9 +7,9 @@ path = "node"
 translation = "Run the Node.js JavaScript runtime."
 verdict = "allow"
 rationale = "Executes arbitrary JavaScript code with full access to the filesystem and network."
-# ── Execution modes ──────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Execution modes ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "node"
@@ -41,9 +41,9 @@ flag = "--input-type"
 translation_modifier = "treating the input as a specific module type"
 verdict = "allow"
 rationale = "Changes how the input is parsed; does not affect what code is executed."
-# ── Debugging ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Debugging ────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "node"
@@ -59,9 +59,9 @@ flag = "--inspect-brk"
 translation_modifier = "enabling the debugger and pausing before the first line executes"
 verdict = "allow"
 rationale = "Opens a debug port and pauses execution; does not change program behavior."
-# ── Security and permissions ─────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Security and permissions ─────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "node"
@@ -101,9 +101,9 @@ flag = "--disallow-code-generation-from-strings"
 translation_modifier = "preventing the use of eval and similar dynamic code execution"
 verdict = "allow"
 rationale = "Restricts dynamic code execution; a safety-enhancing option."
-# ── Module and loading ───────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Module and loading ───────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "node"
@@ -119,9 +119,9 @@ flag = "--import"
 translation_modifier = "preloading an ES module before the main script runs"
 verdict = "allow"
 rationale = "Loads and executes an ES module before the main script; the preloaded module may have side effects."
-# ── Resource limits ──────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Resource limits ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "node"
@@ -137,9 +137,9 @@ flag = "--abort-on-uncaught-exception"
 translation_modifier = "crashing with a core dump on unhandled errors instead of exiting gracefully"
 verdict = "allow"
 rationale = "Changes error handling behavior; may produce a core dump file but does not affect normal execution."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "node -e"

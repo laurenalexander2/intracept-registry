@@ -85,9 +85,9 @@ flag = "-u"
 translation_modifier = "using unbuffered output"
 verdict = "allow"
 rationale = "Disables output buffering for real-time processing; does not affect whether files are modified."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "sed -i"

@@ -1243,7 +1243,7 @@
       "verdict": "allow"
     },
     "bundle add": {
-      "rationale": "Modifies the Gemfile and installs a new dependency.",
+      "rationale": "Downloads a new gem across the network and modifies the Gemfile; native extension build scripts may execute arbitrary code on install.",
       "tool": "bundle",
       "translation": "Add a gem to the Gemfile and install it.",
       "verdict": "ask"
@@ -1255,13 +1255,13 @@
       "verdict": "allow"
     },
     "bundle exec": {
-      "rationale": "Executes an arbitrary command with the bundled gem versions loaded.",
+      "rationale": "Executes an arbitrary command with the bundled gem versions loaded; risk depends on the executed command.",
       "tool": "bundle",
       "translation": "Run a command in the context of the bundle's gem environment.",
       "verdict": "allow"
     },
     "bundle install": {
-      "rationale": "Downloads and installs gems that may include native extensions with system access.",
+      "rationale": "Downloads and installs gems across the network from a remote registry; every install may execute native extension build scripts with system access.",
       "tool": "bundle",
       "translation": "Install all Ruby gems specified in the Gemfile.",
       "verdict": "ask"
@@ -1273,10 +1273,10 @@
       "verdict": "allow"
     },
     "bundle outdated": {
-      "rationale": "Read-only comparison of installed versus available versions.",
+      "rationale": "Read-only comparison that queries the remote registry across the network for every installed gem, revealing the project's dependency list.",
       "tool": "bundle",
       "translation": "Show gems that have newer versions available.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "bundle remove": {
       "rationale": "Modifies the Gemfile; does not delete the gem from the system.",
@@ -1285,7 +1285,7 @@
       "verdict": "allow"
     },
     "bundle update": {
-      "rationale": "Modifies the lockfile and installs new gem versions that may introduce breaking changes.",
+      "rationale": "Downloads new gem versions across the network and modifies the lockfile; every update may introduce breaking changes or run native build scripts.",
       "tool": "bundle",
       "translation": "Update Ruby gems to their latest allowed versions.",
       "verdict": "ask"
@@ -2617,10 +2617,10 @@
       "verdict": "allow"
     },
     "dig": {
-      "rationale": "Read-only DNS query tool that does not modify any system configuration.",
+      "rationale": "Read-only DNS query tool that sends queries across the network to every DNS resolver in the resolution path, revealing what hosts are being investigated.",
       "tool": "dig",
       "translation": "Perform DNS lookups and display detailed query results.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "dirname": {
       "rationale": "Read-only text manipulation that does not access the file system.",
@@ -4639,7 +4639,7 @@
       "verdict": "allow"
     },
     "gem cleanup": {
-      "rationale": "Deletes older gem versions from the local system.",
+      "rationale": "Deletes older gem versions from the local system; current versions are preserved.",
       "tool": "gem",
       "translation": "Remove old versions of installed gems.",
       "verdict": "allow"
@@ -4651,7 +4651,7 @@
       "verdict": "allow"
     },
     "gem install": {
-      "rationale": "Downloads and installs packages that may execute native extension build scripts.",
+      "rationale": "Downloads and installs packages from a remote registry across the network; native extension build scripts may execute arbitrary code on every install.",
       "tool": "gem",
       "translation": "Download and install a Ruby gem and its dependencies.",
       "verdict": "ask"
@@ -4663,28 +4663,28 @@
       "verdict": "allow"
     },
     "gem push": {
-      "rationale": "Publishes the gem publicly; published versions are difficult to fully remove.",
+      "rationale": "Publishes the gem publicly across the network; published versions are permanently visible and difficult to fully remove.",
       "tool": "gem",
       "translation": "Upload a gem package to the RubyGems repository.",
       "verdict": "ask"
     },
     "gem search": {
-      "rationale": "Read-only search of the remote repository.",
+      "rationale": "Read-only search sent across the network to the remote registry, revealing every search query.",
       "tool": "gem",
       "translation": "Search for gems on the RubyGems repository.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "gem uninstall": {
-      "rationale": "Removes a locally installed gem; can be reinstalled.",
+      "rationale": "Removes a locally installed gem; can be reinstalled from the registry.",
       "tool": "gem",
       "translation": "Remove an installed Ruby gem.",
       "verdict": "allow"
     },
     "gem update": {
-      "rationale": "Downloads and installs newer versions that may introduce breaking changes.",
+      "rationale": "Downloads newer versions from the remote registry across the network; every install may execute native extension build scripts.",
       "tool": "gem",
       "translation": "Update installed gems to the latest versions.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "gh": {
       "rationale": "The bare command prints help text and modifies nothing.",
@@ -6055,10 +6055,10 @@
       "verdict": "allow"
     },
     "host": {
-      "rationale": "Read-only DNS query that modifies nothing.",
+      "rationale": "Read-only DNS query sent across the network to every DNS resolver in the resolution path, revealing what hostnames are being investigated.",
       "tool": "host",
       "translation": "Perform a DNS lookup for a hostname or IP address.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "hostname": {
       "rationale": "Without arguments, only displays the current hostname.",
@@ -8287,10 +8287,10 @@
       "verdict": "allow"
     },
     "nslookup": {
-      "rationale": "Read-only network query that does not modify any system or server configuration.",
+      "rationale": "Read-only network query sent across the network to a DNS resolver, revealing every hostname being investigated.",
       "tool": "nslookup",
       "translation": "Look up the address or name information for a domain using a name server.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "nsupdate": {
       "rationale": "Modifies live DNS records, which can redirect traffic, cause outages, or enable impersonation if used incorrectly.",
@@ -9055,16 +9055,16 @@
       "verdict": "allow"
     },
     "ping": {
-      "rationale": "Read-only network diagnostic that does not modify any system or remote state.",
+      "rationale": "Read-only network diagnostic that sends ICMP packets across the network to every router along the path, revealing what hosts are being probed.",
       "tool": "ping",
       "translation": "Send test packets to a network host to check if it is reachable.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "ping6": {
-      "rationale": "Read-only network diagnostic that sends and receives ping packets.",
+      "rationale": "Read-only network diagnostic that sends ICMPv6 packets across the network to every router along the path, revealing what hosts are being probed.",
       "tool": "ping6",
       "translation": "Send ICMPv6 echo requests to test IPv6 network connectivity.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "pip": {
       "rationale": "Alias for pip3; the bare command prints help text and modifies nothing.",
@@ -10651,10 +10651,10 @@
       "verdict": "allow"
     },
     "rustup check": {
-      "rationale": "Read-only check that does not install anything.",
+      "rationale": "Read-only check that queries the upstream rust-lang servers across the network for every installed toolchain.",
       "tool": "rustup",
       "translation": "Check for available updates to Rust toolchains and rustup.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "rustup component": {
       "rationale": "The bare subcommand prints help text.",
@@ -10663,10 +10663,10 @@
       "verdict": "allow"
     },
     "rustup component add": {
-      "rationale": "Downloads and installs a component locally.",
+      "rationale": "Downloads a component across the network from the upstream rust-lang servers; the new component then executes as part of every build that uses it.",
       "tool": "rustup",
       "translation": "Add a component to the active Rust toolchain.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "rustup component remove": {
       "rationale": "Removes a local component; can be re-added.",
@@ -10711,10 +10711,10 @@
       "verdict": "allow"
     },
     "rustup self uninstall": {
-      "rationale": "Removes the entire Rust installation from the system.",
+      "rationale": "Permanently removes every Rust toolchain and rustup itself from the system; all toolchains must be reinstalled to rebuild Rust projects.",
       "tool": "rustup",
       "translation": "Uninstall rustup and all installed Rust toolchains.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "rustup show": {
       "rationale": "Read-only display of installed toolchains.",
@@ -10729,10 +10729,10 @@
       "verdict": "allow"
     },
     "rustup target add": {
-      "rationale": "Downloads target support files; does not modify existing projects.",
+      "rationale": "Downloads target support files across the network from the upstream rust-lang servers; the new target then participates in every cross-compilation build.",
       "tool": "rustup",
       "translation": "Add a compilation target to the active toolchain.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "rustup target remove": {
       "rationale": "Removes locally installed target files; can be re-added.",
@@ -10747,10 +10747,10 @@
       "verdict": "allow"
     },
     "rustup toolchain install": {
-      "rationale": "Downloads and installs a toolchain locally.",
+      "rationale": "Downloads a toolchain across the network from the upstream rust-lang servers; the toolchain binaries then execute locally during every build.",
       "tool": "rustup",
       "translation": "Install a specific Rust toolchain.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "rustup toolchain list": {
       "rationale": "Read-only listing of toolchains.",
@@ -10765,10 +10765,10 @@
       "verdict": "allow"
     },
     "rustup update": {
-      "rationale": "Downloads and installs newer toolchain versions locally.",
+      "rationale": "Downloads and installs newer toolchain versions across the network from the upstream rust-lang servers; every toolchain binary then executes locally during builds.",
       "tool": "rustup",
       "translation": "Update installed Rust toolchains and rustup itself.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "rustup which": {
       "rationale": "Read-only display of binary paths.",
@@ -12349,10 +12349,10 @@
       "verdict": "allow"
     },
     "sudo": {
-      "rationale": "Elevates privileges to run commands as root; the executed command has unrestricted system access.",
+      "rationale": "Elevates privileges to run commands as root; the executed command has unrestricted system access and can permanently change any part of the system.",
       "tool": "sudo",
       "translation": "Execute a command as the superuser or another user.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "sum": {
       "rationale": "Read-only checksum calculation; modifies nothing.",
@@ -12637,10 +12637,10 @@
       "verdict": "allow"
     },
     "tcpdump": {
-      "rationale": "Reads network packets, which may contain sensitive data such as credentials or personal information.",
+      "rationale": "Reads every network packet on the interface, which may include credentials, session tokens, personal information, or other irreversible secret-leakage.",
       "tool": "tcpdump",
       "translation": "Capture and display network traffic on an interface.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tcsh": {
       "rationale": "Launches an interactive shell; the shell itself is just an interpreter.",
@@ -12877,10 +12877,10 @@
       "verdict": "allow"
     },
     "tftp": {
-      "rationale": "Sends and receives files over the network without authentication; files can be overwritten on the remote or local side.",
+      "rationale": "Sends and receives files across the network without authentication; files can be permanently overwritten on every endpoint and the unencrypted transport exposes contents to interception.",
       "tool": "tftp",
       "translation": "Transfer files using the Trivial File Transfer Protocol.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "tic": {
       "rationale": "Compiles terminal descriptions; writes to the terminfo database but does not affect running terminals.",
@@ -13261,10 +13261,10 @@
       "verdict": "allow"
     },
     "tofu apply": {
-      "rationale": "Modifies live cloud infrastructure; prompts for confirmation by default.",
+      "rationale": "Modifies live cloud infrastructure across the entire deployment; changes can permanently destroy or replace production resources.",
       "tool": "tofu",
       "translation": "Create or update infrastructure to match the OpenTofu configuration.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu console": {
       "rationale": "Read-only evaluation of expressions against the current state.",
@@ -13273,10 +13273,10 @@
       "verdict": "allow"
     },
     "tofu destroy": {
-      "rationale": "Tears down all managed resources; data loss is likely without external backups.",
+      "rationale": "Permanently tears down every managed resource across the entire deployment; data loss is likely without external backups.",
       "tool": "tofu",
       "translation": "Destroy all infrastructure managed by OpenTofu.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu fmt": {
       "rationale": "Modifies local files cosmetically; does not affect infrastructure.",
@@ -13285,16 +13285,16 @@
       "verdict": "allow"
     },
     "tofu force-unlock": {
-      "rationale": "Forcibly removes a lock that may be held by another running operation, risking state corruption.",
+      "rationale": "Forcibly removes a lock that may be held by another running operation, permanently risking state corruption across the entire deployment.",
       "tool": "tofu",
       "translation": "Release a stuck state lock.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu get": {
-      "rationale": "Downloads module source code; does not modify infrastructure.",
+      "rationale": "Downloads module source code across the network from public or private registries; every module then loads as part of subsequent tofu runs.",
       "tool": "tofu",
       "translation": "Download and install modules referenced in the configuration.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "tofu graph": {
       "rationale": "Read-only output of the resource dependency structure.",
@@ -13309,16 +13309,16 @@
       "verdict": "allow"
     },
     "tofu init": {
-      "rationale": "Downloads providers and modules; does not modify infrastructure.",
+      "rationale": "Downloads providers and modules across the network from public or private registries; every provider plugin then executes as part of subsequent tofu commands.",
       "tool": "tofu",
       "translation": "Initialize a working directory containing OpenTofu configuration files.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "tofu login": {
-      "rationale": "Stores credentials locally; does not modify infrastructure.",
+      "rationale": "Authenticates to a remote service across the network and permanently stores the resulting credentials locally for every future tofu invocation.",
       "tool": "tofu",
       "translation": "Obtain and save credentials for a remote OpenTofu service.",
-      "verdict": "allow"
+      "verdict": "warn"
     },
     "tofu logout": {
       "rationale": "Deletes stored credentials, which may break automated workflows.",
@@ -13333,10 +13333,10 @@
       "verdict": "allow"
     },
     "tofu plan": {
-      "rationale": "Read-only operation that shows proposed changes without applying them.",
+      "rationale": "Read-only operation that queries every provider API across the network to compute a diff; does not modify infrastructure but reveals the deployment shape.",
       "tool": "tofu",
       "translation": "Preview the changes OpenTofu would make to match the configuration.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "tofu providers": {
       "rationale": "Read-only display of provider requirements.",
@@ -13369,10 +13369,10 @@
       "verdict": "allow"
     },
     "tofu state mv": {
-      "rationale": "Renames or restructures resources in state; incorrect moves can cause resources to be recreated or orphaned.",
+      "rationale": "Renames or restructures resources in state; incorrect moves can permanently cause resources to be recreated or orphaned.",
       "tool": "tofu",
       "translation": "Move a resource to a different address in the state.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu state pull": {
       "rationale": "Read-only retrieval of the state file.",
@@ -13381,22 +13381,22 @@
       "verdict": "allow"
     },
     "tofu state push": {
-      "rationale": "Overwrites remote state, which can cause drift or loss of tracking for all managed resources.",
+      "rationale": "Permanently overwrites remote state, which can cause drift or loss of tracking for every managed resource in the deployment.",
       "tool": "tofu",
       "translation": "Upload a local state file to the remote backend.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu state replace-provider": {
-      "rationale": "Changes which provider manages resources; incorrect replacement can cause plan failures or resource recreation.",
+      "rationale": "Changes which provider manages every affected resource; incorrect replacement can permanently cause plan failures or resource recreation.",
       "tool": "tofu",
       "translation": "Replace the provider for resources in the state.",
       "verdict": "ask"
     },
     "tofu state rm": {
-      "rationale": "Orphans infrastructure from state management; the resource continues to exist but OpenTofu no longer tracks it.",
+      "rationale": "Orphans infrastructure from state management; the resource continues to exist but OpenTofu no longer tracks it, which can permanently break the deployment model.",
       "tool": "tofu",
       "translation": "Remove a resource from the OpenTofu state without destroying it.",
-      "verdict": "ask"
+      "verdict": "warn"
     },
     "tofu state show": {
       "rationale": "Read-only display of resource details.",
@@ -13441,7 +13441,7 @@
       "verdict": "allow"
     },
     "tofu workspace delete": {
-      "rationale": "Removes the workspace and its state; managed resources become untracked.",
+      "rationale": "Permanently removes the workspace and its state; every managed resource becomes untracked and may need manual cleanup.",
       "tool": "tofu",
       "translation": "Delete an OpenTofu workspace.",
       "verdict": "ask"
@@ -13519,10 +13519,10 @@
       "verdict": "allow"
     },
     "traceroute": {
-      "rationale": "Read-only network diagnostic that maps the route to a destination without modifying anything.",
+      "rationale": "Read-only network diagnostic that maps the route to a destination across the network, revealing every intermediate router and the host being probed.",
       "tool": "traceroute",
       "translation": "Show the network path that packets take to reach a remote host.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "traceroute6": {
       "rationale": "Read-only network diagnostic using probe packets; does not modify any system or network state.",
@@ -14058,6 +14058,12 @@
       "translation": "Configure the WebDAV file sharing service.",
       "verdict": "ask"
     },
+    "wget": {
+      "rationale": "Performs network requests that download remote content to local files; can permanently overwrite existing files and may pull in untrusted data from across the network.",
+      "tool": "wget",
+      "translation": "Download files from a server using HTTP, HTTPS, or FTP.",
+      "verdict": "ask"
+    },
     "what": {
       "rationale": "Read-only extraction of version strings; modifies nothing.",
       "tool": "what",
@@ -14095,10 +14101,10 @@
       "verdict": "allow"
     },
     "whois": {
-      "rationale": "Read-only network query; modifies nothing.",
+      "rationale": "Read-only network query sent across the network to a domain registry server, revealing every domain being investigated.",
       "tool": "whois",
       "translation": "Query domain name registration and network information databases.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "wish": {
       "rationale": "Launches a GUI scripting interpreter; risk depends on scripts executed.",
@@ -14305,13 +14311,13 @@
       "verdict": "allow"
     },
     "yarn": {
-      "rationale": "The bare command runs install by default; equivalent to yarn install.",
+      "rationale": "The bare command runs install by default, downloading every package in package.json across the network.",
       "tool": "yarn",
       "translation": "Run the Yarn package manager for JavaScript projects.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarn add": {
-      "rationale": "Downloads and installs a package, modifying package.json and the lockfile.",
+      "rationale": "Downloads a new package across the network and modifies package.json plus the lockfile; install scripts may execute arbitrary code.",
       "tool": "yarn",
       "translation": "Add a dependency to the project.",
       "verdict": "ask"
@@ -14329,10 +14335,10 @@
       "verdict": "allow"
     },
     "yarn dlx": {
-      "rationale": "Downloads and executes remote code from the registry.",
+      "rationale": "Downloads and executes remote code from the registry across the network in a one-shot temporary environment; every invocation pulls and runs arbitrary code.",
       "tool": "yarn",
       "translation": "Run a package in a temporary environment without installing it permanently.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarn exec": {
       "rationale": "Runs an arbitrary command with access to project binaries.",
@@ -14353,7 +14359,7 @@
       "verdict": "allow"
     },
     "yarn install": {
-      "rationale": "Downloads and installs packages from the registry, which execute install scripts that may modify the system.",
+      "rationale": "Downloads and installs packages across the network from the registry; every install script may execute arbitrary code on the system.",
       "tool": "yarn",
       "translation": "Install all dependencies listed in the project's package.json.",
       "verdict": "ask"
@@ -14365,13 +14371,13 @@
       "verdict": "allow"
     },
     "yarn npm audit": {
-      "rationale": "Read-only security audit of dependencies.",
+      "rationale": "Read-only security audit that sends every installed package name across the network to the registry's audit endpoint.",
       "tool": "yarn",
       "translation": "Check installed packages for known security vulnerabilities.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarn npm publish": {
-      "rationale": "Makes the package publicly available on the registry, which is difficult to fully undo.",
+      "rationale": "Uploads the package across the network to the public registry; published versions are permanently visible and difficult to fully undo.",
       "tool": "yarn",
       "translation": "Publish a package to the npm registry.",
       "verdict": "ask"
@@ -14389,7 +14395,7 @@
       "verdict": "allow"
     },
     "yarn remove": {
-      "rationale": "Uninstalls a package and modifies package.json and the lockfile.",
+      "rationale": "Uninstalls a package and modifies package.json and the lockfile locally.",
       "tool": "yarn",
       "translation": "Remove a dependency from the project.",
       "verdict": "allow"
@@ -14401,10 +14407,10 @@
       "verdict": "allow"
     },
     "yarn set version": {
-      "rationale": "Downloads a specific Yarn binary for the project; does not affect dependencies.",
+      "rationale": "Downloads a Yarn binary across the network for every project that uses this configuration; the binary then executes as the package manager.",
       "tool": "yarn",
       "translation": "Lock the Yarn version used by the project.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarn unlink": {
       "rationale": "Removes a development symbolic link and reinstalls the normal dependency.",
@@ -14413,16 +14419,16 @@
       "verdict": "allow"
     },
     "yarn up": {
-      "rationale": "Modifies the lockfile and installs new package versions that may introduce breaking changes.",
+      "rationale": "Downloads new package versions across the network and modifies the lockfile; every update may introduce breaking changes.",
       "tool": "yarn",
       "translation": "Update project dependencies to newer versions.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarn upgrade": {
-      "rationale": "Modifies the lockfile and installs new package versions that may introduce breaking changes.",
+      "rationale": "Downloads new package versions across the network and modifies the lockfile; every update may introduce breaking changes.",
       "tool": "yarn",
       "translation": "Update project dependencies to newer versions.",
-      "verdict": "allow"
+      "verdict": "ask"
     },
     "yarnpkg": {
       "rationale": "Installs, updates, and removes npm packages; modifies node_modules and lockfiles.",
@@ -40530,6 +40536,195 @@
       "rationale": "Only changes where diagnostic files are written.",
       "tool": "wdutil",
       "translation_modifier": "saving the output to a specified directory instead of the default location",
+      "verdict": "allow"
+    },
+    "wget --continue": {
+      "applies_to": "wget",
+      "rationale": "Long form of -c; resumes a partial download from where it stopped.",
+      "tool": "wget",
+      "translation_modifier": "continuing a previously partial download",
+      "verdict": "allow"
+    },
+    "wget --directory-prefix": {
+      "applies_to": "wget",
+      "rationale": "Long form of -P; sets the output directory for downloaded files.",
+      "tool": "wget",
+      "translation_modifier": "saving downloads under a specified directory prefix",
+      "verdict": "allow"
+    },
+    "wget --header": {
+      "applies_to": "wget",
+      "rationale": "Adds a header to the request; may carry authentication tokens but does not change the operation's scope.",
+      "tool": "wget",
+      "translation_modifier": "including a custom HTTP header",
+      "verdict": "allow"
+    },
+    "wget --method": {
+      "applies_to": "wget",
+      "rationale": "Changes the HTTP verb but does not inherently increase risk beyond the base command.",
+      "tool": "wget",
+      "translation_modifier": "using a specified HTTP method",
+      "verdict": "allow"
+    },
+    "wget --mirror": {
+      "applies_to": "wget",
+      "rationale": "Long form of -m; recursively mirrors a site to local disk.",
+      "tool": "wget",
+      "translation_modifier": "mirroring a remote site for offline browsing",
+      "verdict": "ask"
+    },
+    "wget --no-check-certificate": {
+      "applies_to": "wget",
+      "rationale": "Disables server identity verification, exposing the connection to interception or man-in-the-middle attacks.",
+      "tool": "wget",
+      "translation_modifier": "skipping TLS certificate verification",
+      "verdict": "ask"
+    },
+    "wget --no-clobber": {
+      "applies_to": "wget",
+      "rationale": "Prevents overwriting existing files, reducing the risk of accidental data loss.",
+      "tool": "wget",
+      "translation_modifier": "skipping any file that already exists locally",
+      "verdict": "allow"
+    },
+    "wget --output-document": {
+      "applies_to": "wget",
+      "rationale": "Long form of -O; writes remote content to a chosen local path.",
+      "tool": "wget",
+      "translation_modifier": "saving the response to a specified local file",
+      "verdict": "allow"
+    },
+    "wget --password": {
+      "applies_to": "wget",
+      "rationale": "Sends a password to the server on the command line, which may leak via process listings or shell history.",
+      "tool": "wget",
+      "translation_modifier": "authenticating with a specified password",
+      "verdict": "ask"
+    },
+    "wget --post-data": {
+      "applies_to": "wget",
+      "rationale": "Transmits data to a remote server in a POST request, which may include sensitive information.",
+      "tool": "wget",
+      "translation_modifier": "sending data in an HTTP POST body",
+      "verdict": "ask"
+    },
+    "wget --quiet": {
+      "applies_to": "wget",
+      "rationale": "Long form of -q; hides informational output but does not change the operation.",
+      "tool": "wget",
+      "translation_modifier": "suppressing all progress and status output",
+      "verdict": "allow"
+    },
+    "wget --recursive": {
+      "applies_to": "wget",
+      "rationale": "Long form of -r; crawls and downloads many linked files from a remote site.",
+      "tool": "wget",
+      "translation_modifier": "recursively downloading linked pages and resources",
+      "verdict": "ask"
+    },
+    "wget --timeout": {
+      "applies_to": "wget",
+      "rationale": "Sets timeouts for network operations; does not change what data is transferred.",
+      "tool": "wget",
+      "translation_modifier": "limiting the time allowed for connection, read, and DNS resolution",
+      "verdict": "allow"
+    },
+    "wget --timestamping": {
+      "applies_to": "wget",
+      "rationale": "Long form of -N; uses timestamping to avoid redundant downloads.",
+      "tool": "wget",
+      "translation_modifier": "only re-downloading files whose remote copy is newer",
+      "verdict": "allow"
+    },
+    "wget --tries": {
+      "applies_to": "wget",
+      "rationale": "Sets retry count; does not change the operation's scope.",
+      "tool": "wget",
+      "translation_modifier": "retrying the request a specified number of times on failure",
+      "verdict": "allow"
+    },
+    "wget --user": {
+      "applies_to": "wget",
+      "rationale": "Provides a username to the server; credentials may be exposed if the connection is not encrypted.",
+      "tool": "wget",
+      "translation_modifier": "authenticating with a specified username",
+      "verdict": "allow"
+    },
+    "wget --user-agent": {
+      "applies_to": "wget",
+      "rationale": "Changes the User-Agent header value; does not change the operation's scope.",
+      "tool": "wget",
+      "translation_modifier": "identifying the client with a specified User-Agent string",
+      "verdict": "allow"
+    },
+    "wget --verbose": {
+      "applies_to": "wget",
+      "rationale": "Long form of -v; increases output detail for debugging.",
+      "tool": "wget",
+      "translation_modifier": "showing verbose transfer details",
+      "verdict": "allow"
+    },
+    "wget -N": {
+      "applies_to": "wget",
+      "rationale": "Uses timestamping to skip up-to-date files; does not change the operation's scope.",
+      "tool": "wget",
+      "translation_modifier": "only re-downloading files whose remote copy is newer",
+      "verdict": "allow"
+    },
+    "wget -O": {
+      "applies_to": "wget",
+      "rationale": "Writes remote content to a chosen local path, which could overwrite existing files.",
+      "tool": "wget",
+      "translation_modifier": "saving the response to a specified local file",
+      "verdict": "allow"
+    },
+    "wget -P": {
+      "applies_to": "wget",
+      "rationale": "Sets the output directory; writes go to a chosen filesystem location.",
+      "tool": "wget",
+      "translation_modifier": "saving downloads under a specified directory prefix",
+      "verdict": "allow"
+    },
+    "wget -c": {
+      "applies_to": "wget",
+      "rationale": "Resumes a partial download; does not change the operation's scope.",
+      "tool": "wget",
+      "translation_modifier": "continuing a previously partial download",
+      "verdict": "allow"
+    },
+    "wget -m": {
+      "applies_to": "wget",
+      "rationale": "Enables a recursive, timestamping mirror that may download large amounts of remote content to local disk.",
+      "tool": "wget",
+      "translation_modifier": "mirroring a remote site for offline browsing",
+      "verdict": "ask"
+    },
+    "wget -o": {
+      "applies_to": "wget",
+      "rationale": "Redirects wget's log output to a file; does not affect what is downloaded.",
+      "tool": "wget",
+      "translation_modifier": "writing wget's own log messages to a specified file",
+      "verdict": "allow"
+    },
+    "wget -q": {
+      "applies_to": "wget",
+      "rationale": "Hides informational output but does not change the operation.",
+      "tool": "wget",
+      "translation_modifier": "suppressing all progress and status output",
+      "verdict": "allow"
+    },
+    "wget -r": {
+      "applies_to": "wget",
+      "rationale": "Crawls and downloads linked content from a remote site, potentially fetching many files and exposing the operator to mirror-large-trees risk.",
+      "tool": "wget",
+      "translation_modifier": "recursively downloading linked pages and resources",
+      "verdict": "ask"
+    },
+    "wget -v": {
+      "applies_to": "wget",
+      "rationale": "Increases output detail for debugging; does not change the operation.",
+      "tool": "wget",
+      "translation_modifier": "showing verbose transfer details",
       "verdict": "allow"
     },
     "which -a": {

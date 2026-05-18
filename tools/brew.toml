@@ -7,9 +7,9 @@ path = "brew"
 translation = "Run the Homebrew package manager for macOS."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Installing ───────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Installing ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew install"
@@ -49,9 +49,9 @@ flag = "--HEAD"
 translation_modifier = "installing the latest development version from the source repository"
 verdict = "allow"
 rationale = "Development versions may be unstable and introduce regressions or breaking changes."
-# ── Uninstalling ─────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Uninstalling ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew uninstall"
@@ -75,9 +75,9 @@ flag = "--zap"
 translation_modifier = "also removing all associated files, preferences, and caches"
 verdict = "ask"
 rationale = "Performs aggressive cleanup that deletes application data and configuration beyond the formula itself."
-# ── Upgrading ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Upgrading ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew upgrade"
@@ -100,19 +100,19 @@ flag = "--force"
 translation_modifier = "reinstalling even if already at the latest version"
 verdict = "ask"
 rationale = "Re-runs installation scripts unnecessarily; may disrupt currently working software."
-# ── Updating ─────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Updating ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew update"
 translation = "Fetch the latest Homebrew formula definitions from the repository."
 verdict = "allow"
 rationale = "Updates the local formula index; does not install or modify any software."
-# ── Searching and inspecting ─────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Searching and inspecting ─────────────────────────────────────────────────
 
 [[command]]
 path = "brew list"
@@ -170,9 +170,9 @@ path = "brew outdated"
 translation = "List installed formulas and casks that have newer versions available."
 verdict = "allow"
 rationale = "Read-only listing of outdated packages."
-# ── Diagnostics ──────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Diagnostics ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew doctor"
@@ -186,9 +186,9 @@ path = "brew config"
 translation = "Show Homebrew and system configuration details."
 verdict = "allow"
 rationale = "Read-only display of configuration."
-# ── Cleanup ──────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Cleanup ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew cleanup"
@@ -218,9 +218,9 @@ path = "brew autoremove"
 translation = "Remove formulas that were installed as dependencies but are no longer needed."
 verdict = "allow"
 rationale = "Uninstalls packages that may still be used by non-Homebrew software."
-# ── Services ─────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Services ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew services"
@@ -255,9 +255,9 @@ path = "brew services list"
 translation = "List all managed Homebrew background services and their status."
 verdict = "allow"
 rationale = "Read-only listing of service status."
-# ── Taps (third-party repositories) ─────────────────────────────────────────
 risk_class = "safe"
 
+# ── Taps (third-party repositories) ─────────────────────────────────────────
 
 [[command]]
 path = "brew tap"
@@ -271,9 +271,9 @@ path = "brew untap"
 translation = "Remove a third-party formula repository from Homebrew."
 verdict = "allow"
 rationale = "Removes the repository; installed formulas from it remain on disk."
-# ── Pinning ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Pinning ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew pin"
@@ -287,9 +287,9 @@ path = "brew unpin"
 translation = "Allow a previously pinned formula to be upgraded."
 verdict = "allow"
 rationale = "Removes the upgrade lock; the formula can now be upgraded normally."
-# ── Linking ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Linking ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "brew link"
@@ -320,10 +320,10 @@ flag = "--force"
 translation_modifier = "linking even if the formula is keg-only"
 verdict = "ask"
 rationale = "Overrides the keg-only restriction, which may conflict with system-provided software."
-# ── Cask-specific ───────────────────────────────────────────────────────���────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Cask-specific ───────────────────────────────────────────────────────���────
 
 [[command]]
 path = "brew reinstall"
@@ -338,9 +338,9 @@ flag = "--cask"
 translation_modifier = "reinstalling a macOS application instead of a command-line formula"
 verdict = "allow"
 rationale = "Reinstalls a graphical application; may require elevated permissions."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "brew install --cask"

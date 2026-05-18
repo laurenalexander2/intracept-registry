@@ -109,9 +109,9 @@ flag = "-6"
 translation_modifier = "using only IPv6 addresses"
 verdict = "allow"
 rationale = "Restricts the network protocol; does not change transfer capabilities."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "scp -i"

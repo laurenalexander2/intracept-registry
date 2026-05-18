@@ -7,9 +7,9 @@ path = "gh"
 translation = "Run the GitHub command-line tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Authentication ───────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Authentication ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh auth"
@@ -37,9 +37,9 @@ path = "gh auth status"
 translation = "Display the current authentication state."
 verdict = "allow"
 rationale = "Read-only display of login status."
-# ── Repositories ─────────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── Repositories ─────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh repo"
@@ -165,9 +165,9 @@ path = "gh repo sync"
 translation = "Sync a forked repository with its upstream."
 verdict = "ask"
 rationale = "Updates branch refs to match the upstream, which may overwrite divergent local changes."
-# ── Pull requests ────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Pull requests ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh pr"
@@ -378,9 +378,9 @@ path = "gh pr revert"
 translation = "Create a new pull request that reverts a previously merged pull request."
 verdict = "allow"
 rationale = "Creates a revert PR that, if merged, undoes changes in the base branch."
-# ── Issues ───────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Issues ───────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh issue"
@@ -466,9 +466,9 @@ path = "gh issue transfer"
 translation = "Move an issue to a different repository."
 verdict = "allow"
 rationale = "Transfers the issue, changing its URL and repository context."
-# ── Releases ─────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Releases ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh release"
@@ -566,9 +566,9 @@ path = "gh release edit"
 translation = "Modify a release's metadata or assets."
 verdict = "allow"
 rationale = "Changes a published release that users may be consuming."
-# ── Gists ────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Gists ────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh gist"
@@ -610,9 +610,9 @@ path = "gh gist delete"
 translation = "Permanently delete a gist from GitHub."
 verdict = "ask"
 rationale = "Removes the gist and all its files irreversibly; others may have linked to it."
-# ── Workflow runs ────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Workflow runs ────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh run"
@@ -668,9 +668,9 @@ path = "gh run delete"
 translation = "Delete a workflow run and its logs."
 verdict = "ask"
 rationale = "Permanently removes run history and artifacts, which may be needed for auditing."
-# ── Workflows ───────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Workflows ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh workflow"
@@ -712,9 +712,9 @@ path = "gh workflow disable"
 translation = "Disable a workflow so it no longer runs automatically."
 verdict = "allow"
 rationale = "Prevents the workflow from running, which may break CI/CD pipelines that depend on it."
-# ── Secrets ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Secrets ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh secret"
@@ -742,9 +742,9 @@ path = "gh secret delete"
 translation = "Delete a secret from a repository or organization."
 verdict = "ask"
 rationale = "Removes a secret that may be required by running workflows, potentially breaking deployments."
-# ── Variables ───────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Variables ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh variable"
@@ -772,9 +772,9 @@ path = "gh variable delete"
 translation = "Delete a GitHub Actions variable."
 verdict = "ask"
 rationale = "Removes a variable that may be required by running workflows, potentially breaking builds."
-# ── Cache ───────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Cache ───────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh cache"
@@ -803,18 +803,18 @@ flag = "--all"
 translation_modifier = "deleting all caches in the repository"
 verdict = "ask"
 rationale = "Removes every cache at once, which may significantly slow all subsequent workflow runs."
-# ── Browse ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Browse ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh browse"
 translation = "Open the current repository in a web browser."
 verdict = "allow"
 rationale = "Opens a URL in the browser; does not modify any resources."
-# ── Search ──────────────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Search ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh search"
@@ -856,9 +856,9 @@ path = "gh search code"
 translation = "Search for code across GitHub repositories."
 verdict = "allow"
 rationale = "Read-only search that lists matching code snippets."
-# ── Labels ──────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Labels ──────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh label"
@@ -901,10 +901,10 @@ flag = "--yes"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt on label deletion."
-# ── SSH keys ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── SSH keys ────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh ssh-key"
@@ -932,9 +932,9 @@ path = "gh ssh-key delete"
 translation = "Remove an SSH key from your GitHub account."
 verdict = "ask"
 rationale = "Revokes access for that key, which may break automated systems that depend on it."
-# ── API ──────────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── API ──────────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "gh api"
@@ -958,9 +958,9 @@ flag = "--paginate"
 translation_modifier = "fetching all pages of results automatically"
 verdict = "allow"
 rationale = "Follows pagination links to retrieve complete result sets; still read-only when used with GET."
-# ── Combos ──────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ──────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "gh pr create"

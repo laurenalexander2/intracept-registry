@@ -86,10 +86,10 @@ flag = "-y"
 translation_modifier = "skipping the confirmation prompt"
 verdict = "ask"
 rationale = "Removes packages without asking for confirmation, bypassing the interactive safety check."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "pip install -r"

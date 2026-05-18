@@ -7,9 +7,9 @@ path = "open"
 translation = "Open a file, directory, or URL with its default application."
 verdict = "allow"
 rationale = "Launches applications to view files; equivalent to double-clicking in Finder."
-# ── Application selection ────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Application selection ────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "open"
@@ -49,9 +49,9 @@ flag = "-h"
 translation_modifier = "searching for and opening a developer header file by name"
 verdict = "allow"
 rationale = "Searches SDK header locations; read-only lookup and display."
-# ── Input handling ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Input handling ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "open"
@@ -67,9 +67,9 @@ flag = "-u"
 translation_modifier = "treating the argument as a URL even if it matches a file path"
 verdict = "allow"
 rationale = "Forces URL handling instead of file path resolution; no additional risk."
-# ── Launch behavior ──────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Launch behavior ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "open"
@@ -117,9 +117,9 @@ flag = "-F"
 translation_modifier = "without restoring the application's saved window state"
 verdict = "allow"
 rationale = "Opens the application fresh; saved persistent state is discarded."
-# ── Application arguments and environment ────────────────────────────────────
 arity = "Boolean"
 
+# ── Application arguments and environment ────────────────────────────────────
 
 [[flag]]
 applies_to = "open"

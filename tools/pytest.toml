@@ -7,9 +7,9 @@ path = "pytest"
 translation = "Run Python tests using the pytest framework."
 verdict = "allow"
 rationale = "Executes test code; primarily a read-only testing operation."
-# ── Flags ────────────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Flags ────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "pytest"
@@ -97,9 +97,9 @@ flag = "--strict-markers"
 translation_modifier = "failing if any test uses an unregistered marker"
 verdict = "allow"
 rationale = "Adds stricter validation; a safety check that catches misconfigured tests."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "pytest --cov -v"

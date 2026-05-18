@@ -7,9 +7,9 @@ path = "python3"
 translation = "Run the Python 3 interpreter."
 verdict = "allow"
 rationale = "Executes arbitrary Python code, which can modify files, make network requests, or run system commands."
-# ── Execution mode flags ─────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Execution mode flags ─────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "python3"
@@ -41,9 +41,9 @@ flag = "--check"
 translation_modifier = "checking the script for syntax errors without executing it"
 verdict = "allow"
 rationale = "Read-only syntax validation; no code is executed."
-# ── Environment and isolation flags ──────────────────────────────────────────
 arity = "Boolean"
 
+# ── Environment and isolation flags ──────────────────────────────────────────
 
 [[flag]]
 applies_to = "python3"
@@ -75,9 +75,9 @@ flag = "-S"
 translation_modifier = "without importing the site module on startup"
 verdict = "allow"
 rationale = "Skips site-specific customizations; increases isolation."
-# ── Output and behavior flags ────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output and behavior flags ────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "python3"
@@ -149,9 +149,9 @@ flag = "-V"
 translation_modifier = "printing the version and exiting"
 verdict = "allow"
 rationale = "Read-only version display; nothing is executed."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "python3 -c"

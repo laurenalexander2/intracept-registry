@@ -77,9 +77,9 @@ flag = "--csv"
 translation_modifier = "formatting query output as comma-separated values"
 verdict = "allow"
 rationale = "Changes output format only; does not affect what queries are executed."
-# ── Combos ─────────────────────────���───────────────────────────────��─────────
 arity = "Boolean"
 
+# ── Combos ─────────────────────────���───────────────────────────────��─────────
 
 [[combo]]
 path = "psql -c"

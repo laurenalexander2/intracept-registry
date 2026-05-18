@@ -7,9 +7,9 @@ path = "docker"
 translation = "Run the Docker container management tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-# ── Container lifecycle ──────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Container lifecycle ──────────────────────────────────────────────────────
 
 [[command]]
 path = "docker run"
@@ -146,9 +146,9 @@ flag = "--cpus"
 translation_modifier = "limiting the number of CPU cores available to the container"
 verdict = "allow"
 rationale = "Constrains resource usage; a protective measure that does not increase risk."
-# ── Container management ─────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Container management ─────────────────────────────────────────────────────
 
 [[command]]
 path = "docker exec"
@@ -282,9 +282,9 @@ path = "docker update"
 translation = "Update resource limits and restart policy on one or more containers."
 verdict = "allow"
 rationale = "Changes runtime constraints such as memory limits; incorrect values may cause the container to be killed."
-# ── Inspection ───────────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Inspection ───────────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker ps"
@@ -343,9 +343,9 @@ path = "docker top"
 translation = "Display the running processes inside a container."
 verdict = "allow"
 rationale = "Read-only display of container processes."
-# ── Image management ─────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── Image management ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker build"
@@ -474,10 +474,10 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt before deleting images."
-# ── Image transfer ───────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Image transfer ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker save"
@@ -505,9 +505,9 @@ path = "docker import"
 translation = "Create a new image from a tar archive of a filesystem."
 verdict = "allow"
 rationale = "Creates a local image; does not affect running containers."
-# ── Network management ───────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Network management ───────────────────────────────────────────────────────
 
 [[command]]
 path = "docker network"
@@ -565,9 +565,9 @@ path = "docker network disconnect"
 translation = "Disconnect a container from a Docker network."
 verdict = "allow"
 rationale = "Removes network connectivity, which may disrupt the container's communication with other services."
-# ── Volume management ────────────────────────────────────────────────────────
 risk_class = "novel"
 
+# ── Volume management ────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker volume"
@@ -627,9 +627,9 @@ path = "docker volume ls"
 translation = "List all Docker volumes."
 verdict = "allow"
 rationale = "Read-only listing of Docker volumes."
-# ── System management ────────────────────────────────────────────────────────
 risk_class = "safe"
 
+# ── System management ────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker system prune"
@@ -683,10 +683,10 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt before removing stopped containers."
-# ── Authentication ───────────────────────────────────────────────────────────
 arity = "Boolean"
 risk_class_override = "priv_esc"
 
+# ── Authentication ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker login"
@@ -700,9 +700,9 @@ path = "docker logout"
 translation = "Remove stored credentials for a container registry."
 verdict = "allow"
 rationale = "Deletes locally stored credentials; reduces exposure but requires re-authentication."
-# ── Docker Compose ───────────────────────────────────────────────────────────
 risk_class = "secret_read"
 
+# ── Docker Compose ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker compose"
@@ -859,15 +859,15 @@ flag = "--rm"
 translation_modifier = "automatically removing the container when it exits"
 verdict = "allow"
 rationale = "Cleans up the one-off container on exit; prevents orphaned containers."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "docker run --privileged"
 translation = "Create and start a new container with full access to the host system's devices and kernel capabilities, bypassing all Docker security isolation."
-verdict = "ask"
-rationale = "Grants the container nearly unrestricted host access, equivalent to running processes directly on the host."
+verdict = "warn"
+rationale = "Grants the container nearly unrestricted host access, equivalent to running processes directly on the host with no isolation."
 risk_class = "priv_esc"
 
 [[combo]]
@@ -880,7 +880,7 @@ risk_class = "novel"
 [[combo]]
 path = "docker run --privileged -v"
 translation = "Create and start a new container with full host access and a mounted host directory, giving the container unrestricted read/write access to host files and kernel."
-verdict = "ask"
+verdict = "warn"
 rationale = "Combines full kernel access with host filesystem mounts, enabling complete control over the host system from inside the container."
 risk_class = "priv_esc"
 
@@ -894,28 +894,28 @@ risk_class = "novel"
 [[combo]]
 path = "docker system prune --all --force"
 translation = "Remove all unused containers, networks, and images without asking for confirmation, forcing re-downloads of any images needed later."
-verdict = "ask"
+verdict = "warn"
 rationale = "Bulk-deletes all unused Docker resources immediately with no confirmation prompt, potentially causing lengthy image re-downloads."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker system prune --all --force --volumes"
 translation = "Remove all unused containers, networks, images, and volumes without asking for confirmation, permanently destroying any persistent data in unused volumes."
-verdict = "ask"
+verdict = "warn"
 rationale = "The most destructive single Docker command — bulk-deletes everything unused including persistent volume data with no confirmation prompt."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker rm --force"
 translation = "Kill and remove a running container immediately, discarding any in-progress work without graceful shutdown."
-verdict = "ask"
+verdict = "warn"
 rationale = "Forcefully terminates and removes a running container, potentially causing data corruption in applications that need graceful shutdown."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker rm --force -v"
 translation = "Kill and remove a running container immediately, also permanently deleting its anonymous volumes and their data."
-verdict = "ask"
+verdict = "warn"
 rationale = "Combines forced container termination with anonymous volume deletion, permanently destroying both the container and its associated data."
 risk_class = "destructive"
 
@@ -936,34 +936,34 @@ risk_class = "novel"
 [[combo]]
 path = "docker rmi --force"
 translation = "Forcefully remove a local container image even if stopped containers still reference it."
-verdict = "allow"
+verdict = "warn"
 rationale = "Removes the image regardless of stopped container references; the image can be re-pulled from the registry."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker volume prune --force"
 translation = "Remove all unused Docker volumes and their data without asking for confirmation."
-verdict = "ask"
+verdict = "warn"
 rationale = "Permanently destroys data in all unused volumes with no confirmation prompt, making recovery impossible."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker container prune --force"
 translation = "Remove all stopped containers without asking for confirmation."
-verdict = "allow"
+verdict = "warn"
 rationale = "Deletes all stopped containers immediately; writable layer data not stored in volumes is lost."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker image prune --all --force"
 translation = "Remove all unused container images without asking for confirmation, not just dangling ones."
-verdict = "ask"
+verdict = "warn"
 rationale = "Deletes every image not referenced by a running container without prompting, requiring lengthy re-downloads to restore them."
 risk_class = "destructive"
 
 [[combo]]
 path = "docker network prune --force"
 translation = "Remove all unused Docker networks without asking for confirmation."
-verdict = "allow"
+verdict = "warn"
 rationale = "Deletes unused networks immediately; they can be recreated but services may need reconfiguration."
 risk_class = "destructive"

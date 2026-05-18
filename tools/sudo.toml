@@ -3,9 +3,9 @@
 [[command]]
 path = "sudo"
 translation = "Execute a command as the superuser or another user."
-verdict = "ask"
-rationale = "Elevates privileges to run commands as root; the executed command has unrestricted system access."
-risk_class = "novel"
+verdict = "warn"
+rationale = "Elevates privileges to run commands as root; the executed command has unrestricted system access and can permanently change any part of the system."
+risk_class = "priv_esc"
 
 [[flag]]
 applies_to = "sudo"
@@ -70,6 +70,7 @@ translation_modifier = "removing a specified user's cached credentials"
 verdict = "allow"
 rationale = "Removes cached authentication credentials; requires re-authentication."
 arity = "Boolean"
+
 [[flag]]
 applies_to = "sudo"
 flag = "--reset"

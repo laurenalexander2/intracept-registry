@@ -46,9 +46,9 @@ flag = "-h"
 translation_modifier = "without following symbolic links at the destination"
 verdict = "allow"
 rationale = "Renames the symbolic link itself instead of moving the file into the linked directory."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "mv -f"

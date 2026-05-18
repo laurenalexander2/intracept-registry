@@ -87,9 +87,9 @@ flag = "-x"
 translation_modifier = "without crossing filesystem mount points"
 verdict = "allow"
 rationale = "Restricts recursive deletion to the same filesystem, preventing accidental removal of files on mounted volumes."
-# ── Combos ───────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "rm -rf"

@@ -5,11 +5,11 @@
 [[command]]
 path = "dig"
 translation = "Perform DNS lookups and display detailed query results."
-verdict = "allow"
-rationale = "Read-only DNS query tool that does not modify any system configuration."
-# ── Query modifiers ──────────────────────────────────────────────────────────
-risk_class = "novel"
+verdict = "ask"
+rationale = "Read-only DNS query tool that sends queries across the network to every DNS resolver in the resolution path, revealing what hosts are being investigated."
+risk_class = "net_egress"
 
+# ── Query modifiers ──────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "dig"
@@ -65,9 +65,9 @@ flag = "-f"
 translation_modifier = "reading a list of lookup requests from a file"
 verdict = "allow"
 rationale = "Batch mode for multiple queries; still read-only."
-# ── Output control ───────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Output control ───────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "dig"
@@ -115,9 +115,9 @@ flag = "+multiline"
 translation_modifier = "printing records in a verbose multi-line format"
 verdict = "allow"
 rationale = "Changes output format for readability; still read-only."
-# ── Tracing and security ────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Tracing and security ────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "dig"
@@ -149,9 +149,9 @@ flag = "+nssearch"
 translation_modifier = "finding all authoritative name servers and showing their SOA records"
 verdict = "allow"
 rationale = "Queries multiple servers for zone authority information; still read-only."
-# ── Transport ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Transport ────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "dig"
@@ -183,9 +183,9 @@ flag = "+retry"
 translation_modifier = "setting the number of retry attempts for failed queries"
 verdict = "allow"
 rationale = "Controls retry behavior; still a read-only query."
-# ── Recursion ────────────────────────────────────────────────────────────────
 arity = "Boolean"
 
+# ── Recursion ────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "dig"

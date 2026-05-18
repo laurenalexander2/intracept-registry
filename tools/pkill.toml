@@ -7,9 +7,9 @@ path = "pkill"
 translation = "Send a signal to all processes whose names match a pattern."
 verdict = "allow"
 rationale = "Signals processes by pattern match, which can terminate critical services if the pattern is too broad."
-# ── Flags ─────────────────────────────────────────────────────────────────────
 risk_class = "destructive"
 
+# ── Flags ─────────────────────────────────────────────────────────────────────
 
 [[flag]]
 applies_to = "pkill"
