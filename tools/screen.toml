@@ -5,6 +5,7 @@ path = "screen"
 translation = "Start a terminal multiplexer session that persists after disconnecting."
 verdict = "allow"
 rationale = "Creates a persistent terminal session; does not modify files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "screen"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "reattaching to an existing detached session"
 verdict = "allow"
 rationale = "Reconnects to a running session; does not start anything new."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -19,6 +21,7 @@ flag = "-S"
 translation_modifier = "using a specified session name"
 verdict = "allow"
 rationale = "Names the session for easy identification; does not change behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -26,6 +29,7 @@ flag = "-d"
 translation_modifier = "detaching a currently attached session"
 verdict = "allow"
 rationale = "Disconnects a session without terminating it."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -33,6 +37,7 @@ flag = "-X"
 translation_modifier = "sending a command to a running session"
 verdict = "allow"
 rationale = "Executes a screen command in an existing session, which may affect running processes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -40,6 +45,7 @@ flag = "-ls"
 translation_modifier = "listing all existing sessions instead of starting a new one"
 verdict = "allow"
 rationale = "Read-only display of session information; does not start or modify anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -47,6 +53,7 @@ flag = "-R"
 translation_modifier = "reattaching to the first available session or creating a new one if none exist"
 verdict = "allow"
 rationale = "Conveniently resumes or starts a session; equivalent to normal usage."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -54,6 +61,7 @@ flag = "-dm"
 translation_modifier = "starting a new session in the background without attaching to it"
 verdict = "allow"
 rationale = "Creates a detached session; useful for running commands unattended."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -61,6 +69,7 @@ flag = "-c"
 translation_modifier = "using a specified configuration file instead of the default"
 verdict = "allow"
 rationale = "Only changes which configuration file is loaded."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -68,6 +77,7 @@ flag = "-L"
 translation_modifier = "recording all session output to a log file"
 verdict = "allow"
 rationale = "Creates a log file of terminal output; does not affect the session itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -75,6 +85,7 @@ flag = "-wipe"
 translation_modifier = "removing dead sessions from the session list"
 verdict = "allow"
 rationale = "Cleans up entries for sessions that have already terminated."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -82,6 +93,7 @@ flag = "-x"
 translation_modifier = "attaching to an already attached session for shared viewing"
 verdict = "allow"
 rationale = "Enables multiple users to view and interact with the same session simultaneously."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "screen"
@@ -89,3 +101,4 @@ flag = "-h"
 translation_modifier = "setting the scrollback history buffer to a specified number of lines"
 verdict = "allow"
 rationale = "Only changes how much output history is kept in memory."
+arity = "Boolean"

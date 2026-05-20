@@ -5,6 +5,7 @@ path = "unxz"
 translation = "Decompress XZ-compressed files."
 verdict = "allow"
 rationale = "Decompresses files creating the original output; non-destructive."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "unxz"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "errinfo"
 translation = "Display system call errors for running processes using DTrace."
 verdict = "allow"
 rationale = "Read-only diagnostic tool that monitors system call failures without modifying anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "errinfo"
@@ -12,6 +13,7 @@ flag = "-c"
 translation_modifier = "showing an aggregate frequency count of errors"
 verdict = "allow"
 rationale = "Only changes the output format to a summary report."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "errinfo"
@@ -19,6 +21,7 @@ flag = "-p"
 translation_modifier = "monitoring only a specific process ID"
 verdict = "allow"
 rationale = "Narrows the scope to a single process; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "errinfo"
@@ -26,3 +29,4 @@ flag = "-n"
 translation_modifier = "monitoring only processes with a specific name"
 verdict = "allow"
 rationale = "Narrows the scope to named processes; still read-only."
+arity = "Boolean"

@@ -1,0 +1,7 @@
+{
+  "kind": "invalid_verdict",
+  "msg_contains": "Allow",
+  "field_path": "command[0].verdict",
+  "valid_values": ["allow", "ask", "warn"],
+  "alias_accepted": ["require_approval"]
+}

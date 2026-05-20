@@ -5,6 +5,7 @@ path = "diff"
 translation = "Compare two files or directories and show the differences."
 verdict = "allow"
 rationale = "Read-only comparison that outputs differences without modifying either file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "diff"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "recursively comparing all files in subdirectories"
 verdict = "allow"
 rationale = "Extends comparison to entire directory trees; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -19,6 +21,7 @@ flag = "-u"
 translation_modifier = "showing differences in unified format with context lines"
 verdict = "allow"
 rationale = "Changes the output format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "only reporting whether files differ, not showing the details"
 verdict = "allow"
 rationale = "Simplifies output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "showing differences in context format with surrounding lines"
 verdict = "allow"
 rationale = "Changes the output format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -40,6 +45,7 @@ flag = "-i"
 translation_modifier = "ignoring differences between uppercase and lowercase letters"
 verdict = "allow"
 rationale = "Loosens the comparison criteria; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -47,6 +53,7 @@ flag = "-w"
 translation_modifier = "ignoring all whitespace differences"
 verdict = "allow"
 rationale = "Ignores spaces and tabs when comparing; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -54,6 +61,7 @@ flag = "-b"
 translation_modifier = "ignoring changes in the amount of whitespace"
 verdict = "allow"
 rationale = "Treats multiple spaces as equivalent to one; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -61,6 +69,7 @@ flag = "-B"
 translation_modifier = "ignoring changes that only add or remove blank lines"
 verdict = "allow"
 rationale = "Skips blank-line-only differences; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -68,6 +77,7 @@ flag = "-y"
 translation_modifier = "showing the two files side by side"
 verdict = "allow"
 rationale = "Changes the output layout; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -75,6 +85,7 @@ flag = "-a"
 translation_modifier = "treating all files as text even if they appear to contain non-text data"
 verdict = "allow"
 rationale = "Forces text comparison mode; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -82,6 +93,7 @@ flag = "-N"
 translation_modifier = "treating missing files as empty when comparing directories"
 verdict = "allow"
 rationale = "Shows full content of files that exist in only one directory; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -89,6 +101,7 @@ flag = "-p"
 translation_modifier = "showing which function each change appears in"
 verdict = "allow"
 rationale = "Adds function context to the output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -96,6 +109,7 @@ flag = "--color"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Adds color highlighting to the output; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "diff"
@@ -103,3 +117,4 @@ flag = "-d"
 translation_modifier = "trying harder to find the smallest possible set of differences"
 verdict = "allow"
 rationale = "Uses more processing power for a more precise result; still read-only."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "scandeps.pl"
 translation = "Scan Perl files and report their module dependencies."
 verdict = "allow"
 rationale = "Read-only static analysis of Perl source files; does not modify anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -12,6 +13,7 @@ flag = "-B"
 translation_modifier = "including core modules in the output"
 verdict = "allow"
 rationale = "Expands output to include built-in modules; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -19,6 +21,7 @@ flag = "-V"
 translation_modifier = "showing all files found during scanning"
 verdict = "allow"
 rationale = "Verbose output mode; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -26,6 +29,7 @@ flag = "-R"
 translation_modifier = "without recursing into discovered dependencies"
 verdict = "allow"
 rationale = "Limits scan depth; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -33,6 +37,7 @@ flag = "-x"
 translation_modifier = "executing the code and inspecting loaded modules at runtime"
 verdict = "allow"
 rationale = "Actually runs the scanned code, which may have side effects depending on the script."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -40,6 +45,7 @@ flag = "-c"
 translation_modifier = "compiling the code and inspecting loaded modules"
 verdict = "allow"
 rationale = "Compiles without full execution; startup initialization blocks still run but typical scripts are safe."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scandeps.pl"
@@ -47,3 +53,4 @@ flag = "-e"
 translation_modifier = "scanning a string of Perl code instead of a file"
 verdict = "allow"
 rationale = "Provides inline code for analysis; no file modification."
+arity = "Boolean"

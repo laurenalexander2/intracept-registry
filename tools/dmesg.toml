@@ -5,6 +5,7 @@ path = "dmesg"
 translation = "Display the system's kernel message log."
 verdict = "allow"
 rationale = "Read-only display of kernel log messages; requires administrator privileges but modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dmesg"
@@ -12,6 +13,7 @@ flag = "-M"
 translation_modifier = "reading messages from a specific system memory image file"
 verdict = "allow"
 rationale = "Only changes the source of the log data; still a read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "dmesg"
@@ -19,3 +21,4 @@ flag = "-N"
 translation_modifier = "using a specific kernel image to interpret the messages"
 verdict = "allow"
 rationale = "Only changes how messages are interpreted; still a read-only operation."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "strings"
 translation = "Find and display readable text embedded in non-text files."
 verdict = "allow"
 rationale = "Read-only extraction of text from files; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "strings"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "searching the entire file instead of just the data sections"
 verdict = "allow"
 rationale = "Expands the search scope; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "strings"
@@ -19,6 +21,7 @@ flag = "-o"
 translation_modifier = "showing the position of each string within the file"
 verdict = "allow"
 rationale = "Adds location information to output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "strings"
@@ -26,6 +29,7 @@ flag = "-n"
 translation_modifier = "using a custom minimum length for what counts as a string"
 verdict = "allow"
 rationale = "Changes the detection threshold; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "strings"
@@ -33,6 +37,7 @@ flag = "-t"
 translation_modifier = "showing each string's position in a specified number format"
 verdict = "allow"
 rationale = "Changes how position offsets are displayed; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "strings"
@@ -40,3 +45,4 @@ flag = "-arch"
 translation_modifier = "targeting a specific processor architecture in a multi-architecture file"
 verdict = "allow"
 rationale = "Selects which architecture to inspect; still read-only."
+arity = "Boolean"

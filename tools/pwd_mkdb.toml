@@ -3,5 +3,6 @@
 [[command]]
 path = "pwd_mkdb"
 translation = "Generate the password database files from the master password file."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rebuilds the system password database; errors can lock out users."
+risk_class = "novel"

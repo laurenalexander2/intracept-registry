@@ -5,6 +5,7 @@ path = "snmpwalk"
 translation = "Retrieve all values in a section of a network device's management data using SNMP."
 verdict = "allow"
 rationale = "Read-only SNMP walk; does not modify the remote device."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -26,6 +29,7 @@ flag = "-Cc"
 translation_modifier = "skipping the check for out-of-order results"
 verdict = "allow"
 rationale = "Disables a client-side safety check; no data is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -33,6 +37,7 @@ flag = "-CE"
 translation_modifier = "stopping the walk at a specific point instead of the end of the subtree"
 verdict = "allow"
 rationale = "Only narrows the scope of the read-only walk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -40,6 +45,7 @@ flag = "-Ci"
 translation_modifier = "including the starting point in the results"
 verdict = "allow"
 rationale = "Only adds one additional read-only value to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -47,6 +53,7 @@ flag = "-Cp"
 translation_modifier = "printing the total number of values found at the end"
 verdict = "allow"
 rationale = "Only adds a summary count to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -54,6 +61,7 @@ flag = "-Ct"
 translation_modifier = "printing the total time taken at the end"
 verdict = "allow"
 rationale = "Only adds timing information to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -61,6 +69,7 @@ flag = "-Os"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes how object names are displayed in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -68,6 +77,7 @@ flag = "-r"
 translation_modifier = "setting the number of retry attempts"
 verdict = "allow"
 rationale = "Only controls how many times a failed request is retried."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpwalk"
@@ -75,3 +85,4 @@ flag = "-t"
 translation_modifier = "setting the timeout between retries"
 verdict = "allow"
 rationale = "Only controls how long to wait before retrying a request."
+arity = "Boolean"

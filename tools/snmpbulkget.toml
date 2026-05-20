@@ -5,6 +5,7 @@ path = "snmpbulkget"
 translation = "Retrieve a large set of values from a network device in a single efficient SNMP request."
 verdict = "allow"
 rationale = "Read-only bulk SNMP query; does not modify the remote device."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpbulkget"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkget"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkget"
@@ -26,6 +29,7 @@ flag = "-Cn"
 translation_modifier = "specifying how many leading variables should not repeat"
 verdict = "allow"
 rationale = "Only tunes the bulk request structure; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkget"
@@ -33,6 +37,7 @@ flag = "-Cr"
 translation_modifier = "setting the maximum number of values to retrieve per variable"
 verdict = "allow"
 rationale = "Only controls the batch size of the bulk request; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpbulkget"
@@ -40,3 +45,4 @@ flag = "-Os"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes how object names are displayed in the output."
+arity = "Boolean"

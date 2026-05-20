@@ -3,5 +3,6 @@
 [[command]]
 path = "pg_createsubscriber-17"
 translation = "Convert a PostgreSQL physical standby server into a logical replication subscriber."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently changes the replication mode of a standby, which cannot be easily reversed."
+risk_class = "novel"

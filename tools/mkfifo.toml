@@ -5,6 +5,7 @@ path = "mkfifo"
 translation = "Create a named pipe (named pipe special file) in the filesystem."
 verdict = "allow"
 rationale = "Creates a special file entry; trivially removable with rm."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mkfifo"
@@ -12,3 +13,4 @@ flag = "-m"
 translation_modifier = "with specific file permission bits"
 verdict = "allow"
 rationale = "Sets permissions on the new named pipe; no additional risk beyond the base command."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "cupsenable"
 translation = "Start processing print jobs for a printer."
 verdict = "allow"
 rationale = "Enables a printer queue to resume processing jobs."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cupsenable"
@@ -12,13 +13,15 @@ flag = "--release"
 translation_modifier = "releasing held jobs for printing"
 verdict = "allow"
 rationale = "Resumes jobs that were held; equivalent to unpausing the queue."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cupsenable"
 flag = "-c"
 translation_modifier = "canceling all pending jobs on the printer"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes every queued job on the printer; those jobs must be resubmitted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cupsenable"
@@ -26,3 +29,4 @@ flag = "-E"
 translation_modifier = "using an encrypted connection to the print server"
 verdict = "allow"
 rationale = "Only changes connection security; does not affect printer state."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "vm_stat"
 translation = "Display virtual memory statistics for the system."
 verdict = "allow"
 rationale = "Read-only display of memory page statistics; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "vm_stat"
@@ -12,3 +13,4 @@ flag = "-c"
 translation_modifier = "stopping after a specified number of intervals"
 verdict = "allow"
 rationale = "Only limits how long the monitoring runs; read-only operation."
+arity = "Boolean"

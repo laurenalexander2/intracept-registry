@@ -5,6 +5,7 @@ path = "brotli"
 translation = "Compress or decompress files using the Brotli algorithm."
 verdict = "allow"
 rationale = "Compresses files, creating a new .br file; original is kept by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "brotli"
@@ -12,20 +13,23 @@ flag = "-d"
 translation_modifier = "decompressing instead of compressing"
 verdict = "allow"
 rationale = "Decompresses .br files, creating or replacing the original file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "brotli"
 flag = "--rm"
 translation_modifier = "removing the source file after successful compression or decompression"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently deletes the original input file, making recovery dependent on backups."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "brotli"
 flag = "-f"
 translation_modifier = "overwriting existing files without prompting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Silently overwrites existing output files without confirmation, which can cause data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "brotli"
@@ -33,3 +37,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"

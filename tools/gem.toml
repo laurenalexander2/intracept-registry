@@ -5,60 +5,70 @@ path = "gem"
 translation = "Run the RubyGems package manager."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "safe"
 
 [[command]]
 path = "gem install"
 translation = "Download and install a Ruby gem and its dependencies."
-verdict = "require_approval"
-rationale = "Downloads and installs packages that may execute native extension build scripts."
+verdict = "ask"
+rationale = "Downloads and installs packages from a remote registry across the network; native extension build scripts may execute arbitrary code on every install."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem uninstall"
 translation = "Remove an installed Ruby gem."
 verdict = "allow"
-rationale = "Removes a locally installed gem; can be reinstalled."
+rationale = "Removes a locally installed gem; can be reinstalled from the registry."
+risk_class = "safe"
 
 [[command]]
 path = "gem update"
 translation = "Update installed gems to the latest versions."
-verdict = "allow"
-rationale = "Downloads and installs newer versions that may introduce breaking changes."
+verdict = "ask"
+rationale = "Downloads newer versions from the remote registry across the network; every install may execute native extension build scripts."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem list"
 translation = "List installed Ruby gems."
 verdict = "allow"
 rationale = "Read-only listing of installed gems."
+risk_class = "safe"
 
 [[command]]
 path = "gem search"
 translation = "Search for gems on the RubyGems repository."
-verdict = "allow"
-rationale = "Read-only search of the remote repository."
+verdict = "ask"
+rationale = "Read-only search sent across the network to the remote registry, revealing every search query."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem build"
 translation = "Build a gem package from a gemspec file."
 verdict = "allow"
 rationale = "Creates a local .gem file; does not publish it."
+risk_class = "safe"
 
 [[command]]
 path = "gem push"
 translation = "Upload a gem package to the RubyGems repository."
-verdict = "require_approval"
-rationale = "Publishes the gem publicly; published versions are difficult to fully remove."
+verdict = "ask"
+rationale = "Publishes the gem publicly across the network; published versions are permanently visible and difficult to fully remove."
+risk_class = "net_egress"
 
 [[command]]
 path = "gem environment"
 translation = "Display the RubyGems environment configuration."
 verdict = "allow"
 rationale = "Read-only display of environment settings."
+risk_class = "safe"
 
 [[command]]
 path = "gem cleanup"
 translation = "Remove old versions of installed gems."
 verdict = "allow"
-rationale = "Deletes older gem versions from the local system."
+rationale = "Deletes older gem versions from the local system; current versions are preserved."
+risk_class = "safe"
 
 [[flag]]
 applies_to = "gem update"
@@ -66,6 +76,7 @@ flag = "--system"
 translation_modifier = "updating RubyGems itself to the latest version"
 verdict = "allow"
 rationale = "Modifies the package manager binary, which affects all future gem operations."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem install"
@@ -73,6 +84,7 @@ flag = "--no-document"
 translation_modifier = "skipping documentation generation"
 verdict = "allow"
 rationale = "Only skips building docs; speeds up installation without changing behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem install"
@@ -80,6 +92,7 @@ flag = "--user-install"
 translation_modifier = "installing into the user's home directory instead of the system directory"
 verdict = "allow"
 rationale = "Limits the install scope to the current user; avoids modifying system directories."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem install"
@@ -87,6 +100,7 @@ flag = "--force"
 translation_modifier = "bypassing dependency checks"
 verdict = "allow"
 rationale = "Skips dependency validation, which may leave the gem in a broken state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem install"
@@ -94,6 +108,7 @@ flag = "--version"
 translation_modifier = "installing a specific version of the gem"
 verdict = "allow"
 rationale = "Only constrains which version is installed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem install"
@@ -101,6 +116,7 @@ flag = "--ignore-dependencies"
 translation_modifier = "without installing any required dependency gems"
 verdict = "allow"
 rationale = "The installed gem may not work correctly without its dependencies."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem uninstall"
@@ -108,6 +124,7 @@ flag = "--all"
 translation_modifier = "removing all installed versions of the gem"
 verdict = "allow"
 rationale = "Removes every version at once; other gems that depend on them may break."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem uninstall"
@@ -115,6 +132,7 @@ flag = "--force"
 translation_modifier = "removing the gem even if other gems depend on it"
 verdict = "allow"
 rationale = "Ignores dependency requirements, which may break other installed gems."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem uninstall"
@@ -122,6 +140,7 @@ flag = "--executables"
 translation_modifier = "also removing the gem's installed executable scripts"
 verdict = "allow"
 rationale = "Cleans up executable files left behind; they can be reinstalled."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gem cleanup"
@@ -129,3 +148,4 @@ flag = "--dryrun"
 translation_modifier = "simulating the cleanup without actually removing anything"
 verdict = "allow"
 rationale = "No gems are deleted; only shows what would be removed."
+arity = "Boolean"

@@ -7,11 +7,7 @@ path = "git"
 translation = "Run the Git version control system."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Working area ──────────────────────────────────────────────────────────────
 
@@ -20,33 +16,21 @@ path = "git init"
 translation = "Create a new empty Git repository in the current directory."
 verdict = "allow"
 rationale = "Creates a .git directory; safe to run in an existing repo without data loss."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git clone"
 translation = "Download a remote repository and create a local copy."
 verdict = "allow"
 rationale = "Creates a new directory; does not modify any existing files."
-tags.scope = "remote"
-tags.effect = ["read", "create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "git add"
 translation = "Stage file changes for the next commit."
 verdict = "allow"
 rationale = "Only updates the staging area; no committed data is changed."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git add"
@@ -54,6 +38,7 @@ flag = "--all"
 translation_modifier = "including all modified, deleted, and new files in the entire repository"
 verdict = "allow"
 rationale = "May unintentionally stage files the user did not mean to include, such as secrets or build artifacts."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git add"
@@ -61,6 +46,7 @@ flag = "-A"
 translation_modifier = "including all modified, deleted, and new files in the entire repository"
 verdict = "allow"
 rationale = "Alias for --all; may unintentionally stage files the user did not mean to include."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git add"
@@ -68,7 +54,7 @@ flag = "--force"
 translation_modifier = "including files that are normally ignored by .gitignore"
 verdict = "allow"
 rationale = "Bypasses .gitignore rules, which may cause secrets or build artifacts to be tracked."
-tag_modifiers.safety_override = true
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git add"
@@ -76,6 +62,7 @@ flag = "--patch"
 translation_modifier = "interactively choosing individual hunks to stage"
 verdict = "allow"
 rationale = "Gives fine-grained control over what is staged; reduces accidental inclusion."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git add"
@@ -83,7 +70,7 @@ flag = "--dry-run"
 translation_modifier = "simulating the operation without actually staging anything"
 verdict = "allow"
 rationale = "No changes are made; only shows what would be staged."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git add"
@@ -91,6 +78,7 @@ flag = "--update"
 translation_modifier = "only for files already tracked by Git"
 verdict = "allow"
 rationale = "Limits scope to tracked files; will not add new untracked files."
+arity = "Boolean"
 
 # ── Committing ────────────────────────────────────────────────────────────────
 
@@ -99,11 +87,7 @@ path = "git commit"
 translation = "Save the staged changes as a new commit in the repository history."
 verdict = "allow"
 rationale = "Creates a local commit that can be amended or reset; does not affect the remote."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git commit"
@@ -111,7 +95,7 @@ flag = "--amend"
 translation_modifier = "replacing the most recent commit instead of creating a new one"
 verdict = "allow"
 rationale = "Rewrites the last commit; dangerous if that commit has already been pushed to a shared branch."
-tag_modifiers.reversibility = "difficult"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git commit"
@@ -119,7 +103,8 @@ flag = "--no-verify"
 translation_modifier = "skipping all pre-commit and commit-msg hook checks"
 verdict = "allow"
 rationale = "Bypasses safety hooks that may enforce linting, tests, or secret detection."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "git commit"
@@ -127,43 +112,42 @@ flag = "--all"
 translation_modifier = "automatically staging all modified and deleted tracked files before committing"
 verdict = "allow"
 rationale = "May commit changes the user did not intend to include."
+arity = "Boolean"
 
 # ── Remote operations ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "git push"
 translation = "Upload local commits to a remote repository."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git push"
 flag = "--force"
 translation_modifier = "overwriting remote history"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git push"
 flag = "--force-with-lease"
 translation_modifier = "overwriting remote history only if no one else has pushed"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Safer than --force but still rewrites history; fails if the remote has diverged."
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git push"
 flag = "--delete"
 translation_modifier = "deleting the specified branch or tag on the remote"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a remote ref, which may disrupt other contributors' workflows."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git push"
@@ -171,6 +155,7 @@ flag = "--all"
 translation_modifier = "pushing all local branches to the remote"
 verdict = "allow"
 rationale = "May push branches that were not intended to be shared."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git push"
@@ -178,6 +163,7 @@ flag = "--tags"
 translation_modifier = "including all local tags"
 verdict = "allow"
 rationale = "Publishes all tags, including ones that may not be ready for release."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git push"
@@ -185,7 +171,8 @@ flag = "--no-verify"
 translation_modifier = "skipping the pre-push hook checks"
 verdict = "allow"
 rationale = "Bypasses pre-push hooks that may enforce CI checks or branch protections."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "git push"
@@ -193,8 +180,7 @@ flag = "--dry-run"
 translation_modifier = "simulating the push without actually sending data"
 verdict = "allow"
 rationale = "No data is transmitted; only shows what would happen."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git push"
@@ -202,28 +188,23 @@ flag = "--prune"
 translation_modifier = "deleting remote branches that no longer exist locally"
 verdict = "allow"
 rationale = "Only removes remote refs the user has already deleted locally; the intent is explicit cleanup."
-tag_modifiers.effect = ["write", "delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git push"
 flag = "--mirror"
 translation_modifier = "making the remote an exact mirror of the local repository, deleting all non-matching refs"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destructively overwrites the entire remote to match local state, removing branches, tags, and history."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.effect = ["write", "delete"]
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git pull"
 translation = "Download changes from a remote repository and merge them into the current branch."
 verdict = "allow"
 rationale = "Modifies the working tree and branch history; can introduce merge conflicts."
-tags.scope = "remote"
-tags.effect = ["read", "write"]
-tags.reversibility = "difficult"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git pull"
@@ -231,25 +212,23 @@ flag = "--rebase"
 translation_modifier = "replaying local commits on top of the remote changes instead of merging"
 verdict = "allow"
 rationale = "Rewrites local commit hashes, which can cause issues if those commits were already shared."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git pull"
 flag = "--force"
 translation_modifier = "overwriting local tracking refs even when they are not ancestors"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forces reference updates that may discard local-only changes or cause unexpected history changes."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git fetch"
 translation = "Download new commits and branch information from a remote repository without modifying local branches."
 verdict = "allow"
 rationale = "Only updates remote-tracking references; the working tree and local branches are unchanged."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "git fetch"
@@ -257,6 +236,7 @@ flag = "--all"
 translation_modifier = "from all configured remotes"
 verdict = "allow"
 rationale = "Fetches from every remote but still does not modify local branches."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git fetch"
@@ -264,7 +244,7 @@ flag = "--prune"
 translation_modifier = "removing local remote-tracking branches that no longer exist on the remote"
 verdict = "allow"
 rationale = "Cleans up stale tracking refs; does not affect local branches or uncommitted work."
-tag_modifiers.effect = ["read", "delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git fetch"
@@ -272,40 +252,29 @@ flag = "--force"
 translation_modifier = "overwriting local refs even if the update is not a fast-forward"
 verdict = "allow"
 rationale = "Allows non-fast-forward ref updates which could cause confusion about remote history."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git remote"
 translation = "List the remote repositories connected to this repository."
 verdict = "allow"
 rationale = "Read-only listing of configured remotes."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git remote add"
 translation = "Register a new remote repository under a given name."
 verdict = "allow"
 rationale = "Adds a configuration entry; does not transfer any data."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git remote remove"
 translation = "Unregister a remote repository and delete its tracking branches."
 verdict = "allow"
 rationale = "Removes the remote configuration and all associated remote-tracking refs."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Branching and switching ───────────────────────────────────────────────────
 
@@ -314,11 +283,7 @@ path = "git branch"
 translation = "List, create, or manage branches."
 verdict = "allow"
 rationale = "Without flags, lists branches; creating a branch is trivially reversible."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git branch"
@@ -326,16 +291,16 @@ flag = "-d"
 translation_modifier = "deleting a branch that has been fully merged"
 verdict = "allow"
 rationale = "Deletes a merged branch; the commits remain reachable but the branch name is lost."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git branch"
 flag = "-D"
 translation_modifier = "forcefully deleting a branch even if it has unmerged commits"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes a branch regardless of merge status; unmerged commits may become unreachable."
-tag_modifiers.effect = ["delete"]
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git branch"
@@ -343,7 +308,8 @@ flag = "--force"
 translation_modifier = "resetting the branch pointer even if the branch already exists"
 verdict = "allow"
 rationale = "Moves an existing branch to a new commit, discarding its previous position."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git branch"
@@ -351,26 +317,23 @@ flag = "--all"
 translation_modifier = "including both local and remote-tracking branches"
 verdict = "allow"
 rationale = "Only affects the listing display; no branches are modified."
+arity = "Boolean"
 
 [[command]]
 path = "git checkout"
 translation = "Switch branches or restore files in the working tree."
 verdict = "allow"
 rationale = "Modifies the working tree; uncommitted changes on conflicting paths may be overwritten."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git checkout"
 flag = "--force"
 translation_modifier = "discarding any uncommitted local changes that conflict"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git checkout"
@@ -378,7 +341,7 @@ flag = "-b"
 translation_modifier = "creating a new branch at the current commit"
 verdict = "allow"
 rationale = "Creates a new branch and switches to it; fully reversible."
-tag_modifiers.effect = ["create"]
+arity = "Boolean"
 
 # ── Merging and rebasing ─────────────────────────────────────────────────────
 
@@ -387,11 +350,7 @@ path = "git merge"
 translation = "Combine another branch's changes into the current branch."
 verdict = "allow"
 rationale = "Modifies the current branch and working tree; can produce merge conflicts."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git merge"
@@ -399,6 +358,7 @@ flag = "--no-commit"
 translation_modifier = "without automatically creating a merge commit"
 verdict = "allow"
 rationale = "Gives the user a chance to inspect the merge result before committing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git merge"
@@ -406,6 +366,7 @@ flag = "--squash"
 translation_modifier = "squashing all incoming commits into a single set of changes without a merge commit"
 verdict = "allow"
 rationale = "Discards individual commit history from the merged branch."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git merge"
@@ -413,7 +374,7 @@ flag = "--abort"
 translation_modifier = "aborting the current merge and restoring the previous state"
 verdict = "allow"
 rationale = "Safely cancels a merge in progress and returns to the pre-merge state."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git merge"
@@ -421,18 +382,15 @@ flag = "--no-verify"
 translation_modifier = "skipping the pre-merge and commit-msg hook checks"
 verdict = "allow"
 rationale = "Bypasses safety hooks that may enforce code quality or policy."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "git rebase"
 translation = "Reapply commits from the current branch onto a different base commit."
 verdict = "allow"
 rationale = "Rewrites commit history; can cause data loss if used on shared branches."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git rebase"
@@ -440,6 +398,7 @@ flag = "--interactive"
 translation_modifier = "allowing individual commits to be reordered, edited, squashed, or dropped"
 verdict = "allow"
 rationale = "Gives more control over the rebase than the default; the risk of history rewriting is already in the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git rebase"
@@ -447,7 +406,7 @@ flag = "--abort"
 translation_modifier = "aborting the rebase and restoring the branch to its original state"
 verdict = "allow"
 rationale = "Safely cancels a rebase in progress; no commits are lost."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git rebase"
@@ -455,6 +414,7 @@ flag = "--continue"
 translation_modifier = "continuing after resolving conflicts in the current step"
 verdict = "allow"
 rationale = "Proceeds with the rebase; the user should verify conflict resolutions are correct."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git rebase"
@@ -462,6 +422,7 @@ flag = "--force-rebase"
 translation_modifier = "rewriting all commits even if they could be fast-forwarded"
 verdict = "allow"
 rationale = "Creates new commit hashes unnecessarily, but does not add destructive capability beyond what rebase already does."
+arity = "Boolean"
 
 # ── Resetting and reverting ──────────────────────────────────────────────────
 
@@ -470,11 +431,7 @@ path = "git reset"
 translation = "Move the current branch pointer to a different commit."
 verdict = "allow"
 rationale = "Changes which commit the branch points to; can unstage changes or rewrite local history."
-tags.scope = "local"
-tags.effect = ["write", "delete"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git reset"
@@ -482,7 +439,7 @@ flag = "--soft"
 translation_modifier = "keeping all changes staged for commit"
 verdict = "allow"
 rationale = "Only moves the branch pointer; staged and working tree files are untouched."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git reset"
@@ -490,28 +447,22 @@ flag = "--mixed"
 translation_modifier = "unstaging changes but keeping them in the working directory"
 verdict = "allow"
 rationale = "Default mode; preserves working tree changes while resetting the staging area."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git reset"
 flag = "--hard"
 translation_modifier = "discarding all uncommitted changes in the working directory"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently deletes uncommitted work with no built-in recovery mechanism."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.effect = ["write", "delete"]
-tag_modifiers.target = ["repository", "filesystem"]
+arity = "Boolean"
 
 [[command]]
 path = "git revert"
 translation = "Create a new commit that undoes the changes from a previous commit."
 verdict = "allow"
 rationale = "Modifies the branch by adding a new commit; safe because it does not rewrite history."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git revert"
@@ -519,6 +470,7 @@ flag = "--no-commit"
 translation_modifier = "applying the revert to the working tree without creating a commit"
 verdict = "allow"
 rationale = "Lets the user inspect the reverted changes before committing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git revert"
@@ -526,18 +478,14 @@ flag = "--abort"
 translation_modifier = "aborting the revert and restoring the previous state"
 verdict = "allow"
 rationale = "Safely cancels a revert in progress."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[command]]
 path = "git cherry-pick"
 translation = "Apply the changes from a specific commit onto the current branch."
 verdict = "allow"
 rationale = "Creates a new commit on the current branch; may produce conflicts."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git cherry-pick"
@@ -545,6 +493,7 @@ flag = "--no-commit"
 translation_modifier = "applying the changes to the working tree without creating a commit"
 verdict = "allow"
 rationale = "Lets the user inspect the result before committing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git cherry-pick"
@@ -552,7 +501,7 @@ flag = "--abort"
 translation_modifier = "aborting the cherry-pick and restoring the previous state"
 verdict = "allow"
 rationale = "Safely cancels a cherry-pick in progress."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 # ── Stashing ─────────────────────────────────────────────────────────────────
 
@@ -561,66 +510,42 @@ path = "git stash"
 translation = "Temporarily save uncommitted changes and revert the working tree to a clean state."
 verdict = "allow"
 rationale = "Changes are stored in the stash and can be reapplied later."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git stash pop"
 translation = "Reapply the most recently stashed changes and remove them from the stash."
 verdict = "allow"
 rationale = "Modifies the working tree; the stash entry is deleted if applied cleanly, making it harder to retry."
-tags.scope = "local"
-tags.effect = ["write", "delete"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git stash drop"
 translation = "Delete a specific entry from the stash."
 verdict = "allow"
 rationale = "Permanently removes stashed changes; they cannot be easily recovered."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "git stash clear"
 translation = "Delete all entries from the stash."
 verdict = "allow"
 rationale = "Permanently removes all stashed changes, but stash is local-only and entries are recoverable from reflog with effort."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "git stash list"
 translation = "List all stashed change sets."
 verdict = "allow"
 rationale = "Read-only display of stash entries."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git stash apply"
 translation = "Reapply the most recently stashed changes without removing them from the stash."
 verdict = "allow"
 rationale = "Modifies the working tree but keeps the stash entry intact for later use."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git stash"
@@ -628,6 +553,7 @@ flag = "--include-untracked"
 translation_modifier = "also saving untracked files"
 verdict = "allow"
 rationale = "Extends the stash to include untracked files; more comprehensive but still reversible."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git stash"
@@ -635,6 +561,7 @@ flag = "--all"
 translation_modifier = "also saving untracked and ignored files"
 verdict = "allow"
 rationale = "Includes ignored files like build artifacts; the clean step may remove files the user expected to keep."
+arity = "Boolean"
 
 # ── History and inspection ────────────────────────────────────────────────────
 
@@ -643,44 +570,28 @@ path = "git log"
 translation = "Show the commit history."
 verdict = "allow"
 rationale = "Read-only display of commit history."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git diff"
 translation = "Show the differences between files or commits."
 verdict = "allow"
 rationale = "Read-only comparison that modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git reflog"
 translation = "Show a log of every position the branch pointer has been moved to in the local repository."
 verdict = "allow"
 rationale = "Read-only display useful for recovering lost commits."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git bisect"
 translation = "Use binary search to find the commit that introduced a bug."
 verdict = "allow"
 rationale = "Navigates history by checking out commits; the original branch is restored with bisect reset."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Removing and moving files ────────────────────────────────────────────────
 
@@ -689,20 +600,16 @@ path = "git rm"
 translation = "Remove files from the working tree and the staging area."
 verdict = "allow"
 rationale = "Deletes files from disk and stages the removal; recoverable from committed history."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem", "repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git rm"
 flag = "--force"
 translation_modifier = "even if the file has uncommitted changes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes files with unstaged or staged modifications that may not be recoverable."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git rm"
@@ -710,8 +617,7 @@ flag = "--cached"
 translation_modifier = "only removing the file from the staging area while keeping it on disk"
 verdict = "allow"
 rationale = "Untracks the file without deleting it from the working tree."
-tag_modifiers.effect = ["write"]
-tag_modifiers.target = ["repository"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git rm"
@@ -719,17 +625,14 @@ flag = "-r"
 translation_modifier = "recursively through all subdirectories"
 verdict = "allow"
 rationale = "Removes all matching files in subdirectories, increasing the blast radius."
+arity = "Boolean"
 
 [[command]]
 path = "git mv"
 translation = "Move or rename a tracked file, directory, or symbolic link."
 verdict = "allow"
 rationale = "Renames files in the working tree and staging area; fully reversible."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem", "repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git mv"
@@ -737,49 +640,50 @@ flag = "--force"
 translation_modifier = "overwriting the destination even if it already exists"
 verdict = "allow"
 rationale = "Silently overwrites an existing file at the destination path."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 # ── Cleaning ─────────────────────────────────────────────────────────────────
 
 [[command]]
 path = "git clean"
 translation = "Remove untracked files from the working tree."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently deletes files that are not tracked by Git; no built-in recovery."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git clean"
 flag = "-f"
 translation_modifier = "proceeding with the actual deletion"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Required for git clean to execute; without it the command refuses to run. Risk matches the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clean"
 flag = "-d"
 translation_modifier = "including untracked directories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Extends deletion to entire directory trees, increasing the scope of data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clean"
 flag = "-x"
 translation_modifier = "including files normally excluded by .gitignore"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes ignored files such as build outputs, IDE configs, and environment files that may be irreplaceable."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git clean"
 flag = "-X"
 translation_modifier = "only removing files excluded by .gitignore"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Targets ignored files specifically, which may include build caches or local configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clean"
@@ -787,8 +691,7 @@ flag = "-n"
 translation_modifier = "simulating the operation without actually deleting anything"
 verdict = "allow"
 rationale = "Dry-run mode; only shows what would be removed."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clean"
@@ -796,6 +699,7 @@ flag = "-i"
 translation_modifier = "interactively selecting which files to delete"
 verdict = "allow"
 rationale = "Gives the user per-file control, reducing the risk of accidental deletion."
+arity = "Boolean"
 
 # ── Tags ─────────────────────────────────────────────────────────────────────
 
@@ -804,11 +708,7 @@ path = "git tag"
 translation = "Create, list, or manage tags that mark specific commits."
 verdict = "allow"
 rationale = "Creating or listing tags is trivially reversible and does not modify branch history."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git tag"
@@ -816,7 +716,7 @@ flag = "-d"
 translation_modifier = "deleting a local tag"
 verdict = "allow"
 rationale = "Removes the tag locally; the tag can be recreated if the commit hash is known."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git tag"
@@ -824,7 +724,8 @@ flag = "-f"
 translation_modifier = "overwriting an existing tag with the same name"
 verdict = "allow"
 rationale = "Silently moves a tag to a different commit, which can cause confusion for collaborators."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 # ── Submodules ───────────────────────────────────────────────────────────────
 
@@ -833,60 +734,45 @@ path = "git submodule"
 translation = "Inspect the status of submodules in this repository."
 verdict = "allow"
 rationale = "Without arguments, shows submodule status; read-only operation."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git submodule add"
 translation = "Register a new submodule and clone it into the working tree."
 verdict = "allow"
 rationale = "Adds a new dependency; does not modify existing code."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "git submodule update"
 translation = "Update submodules to the commit recorded in the parent repository."
 verdict = "allow"
 rationale = "Checks out specific commits in submodules, modifying their working trees."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "git submodule deinit"
 translation = "Unregister submodules and remove their working tree contents."
 verdict = "allow"
 rationale = "Removes submodule working tree data; can be re-initialized later."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git submodule deinit"
 flag = "--force"
 translation_modifier = "even if the submodule has local modifications"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Discards local changes in the submodule working tree without confirmation."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git submodule deinit"
 flag = "--all"
 translation_modifier = "unregistering every submodule in the repository"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes working tree data for all submodules at once."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git submodule update"
@@ -894,6 +780,7 @@ flag = "--recursive"
 translation_modifier = "including nested submodules at all levels"
 verdict = "allow"
 rationale = "Extends the update to nested submodules, increasing the scope of changes."
+arity = "Boolean"
 
 # ── Worktrees ────────────────────────────────────────────────────────────────
 
@@ -902,53 +789,37 @@ path = "git worktree add"
 translation = "Create a new working tree linked to this repository at a different path."
 verdict = "allow"
 rationale = "Creates a new directory; does not affect the existing working tree."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem", "repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git worktree list"
 translation = "List all working trees linked to this repository."
 verdict = "allow"
 rationale = "Read-only listing of worktrees."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git worktree remove"
 translation = "Delete a linked working tree and its administrative files."
 verdict = "allow"
 rationale = "Removes a working tree directory; uncommitted changes in it will be lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git worktree remove"
 flag = "--force"
 translation_modifier = "even if the working tree has uncommitted changes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes the working tree without checking for uncommitted work."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git worktree prune"
 translation = "Remove stale working tree administrative data."
 verdict = "allow"
 rationale = "Cleans up metadata for worktrees that have already been deleted from disk."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Patching ─────────────────────────────────────────────────────────────────
 
@@ -957,11 +828,7 @@ path = "git am"
 translation = "Apply a series of patches from email-formatted files to the current branch."
 verdict = "allow"
 rationale = "Creates new commits on the current branch; may produce conflicts."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git am"
@@ -969,7 +836,8 @@ flag = "--no-verify"
 translation_modifier = "skipping pre-applypatch and applypatch-msg hook checks"
 verdict = "allow"
 rationale = "Bypasses safety hooks that may enforce code quality or policy."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "git am"
@@ -977,18 +845,14 @@ flag = "--abort"
 translation_modifier = "aborting the patch application and restoring the previous state"
 verdict = "allow"
 rationale = "Safely cancels the operation and returns to the pre-am state."
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[command]]
 path = "git format-patch"
 translation = "Generate patch files from commits for email-based review or sharing."
 verdict = "allow"
 rationale = "Creates files on disk; does not modify the repository."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Maintenance ──────────────────────────────────────────────────────────────
 
@@ -997,19 +861,16 @@ path = "git gc"
 translation = "Run housekeeping to compress repository data and remove unreachable objects."
 verdict = "allow"
 rationale = "Permanently deletes unreachable objects after the grace period, making some recovery operations impossible."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git gc"
 flag = "--prune"
 translation_modifier = "immediately expiring unreachable objects regardless of their age"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes all unreachable objects without waiting for the default grace period, eliminating recovery options."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git gc"
@@ -1017,6 +878,7 @@ flag = "--aggressive"
 translation_modifier = "spending extra time optimizing the repository more thoroughly"
 verdict = "allow"
 rationale = "More thorough repacking; safe but can take a very long time on large repositories."
+arity = "Boolean"
 
 # ── Modern branch and file commands ─────────────────────────────────────────
 
@@ -1025,11 +887,7 @@ path = "git switch"
 translation = "Switch to a different branch."
 verdict = "allow"
 rationale = "Moves to an existing branch; safer than checkout because it refuses to overwrite uncommitted changes by default."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git switch"
@@ -1037,36 +895,32 @@ flag = "-c"
 translation_modifier = "creating a new branch at the current commit"
 verdict = "allow"
 rationale = "Creates a new branch and switches to it; fully reversible."
-tag_modifiers.effect = ["create"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git switch"
 flag = "--discard-changes"
 translation_modifier = "discarding all uncommitted local changes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "git switch"
 flag = "--force"
 translation_modifier = "discarding all uncommitted local changes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Alias for --discard-changes; permanently throws away uncommitted work."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[command]]
 path = "git restore"
 translation = "Restore files in the working tree to a previous state."
 verdict = "allow"
 rationale = "Overwrites working tree files with versions from another source; uncommitted changes to those files are lost."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git restore"
@@ -1074,8 +928,7 @@ flag = "--staged"
 translation_modifier = "unstaging the files without modifying the working tree"
 verdict = "allow"
 rationale = "Only removes files from the staging area; working tree is untouched."
-tag_modifiers.reversibility = "trivial"
-tag_modifiers.target = ["repository"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git restore"
@@ -1083,6 +936,7 @@ flag = "--source"
 translation_modifier = "from a specific commit or branch instead of the staging area"
 verdict = "allow"
 rationale = "Replaces working tree files with content from an arbitrary commit."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git restore"
@@ -1090,6 +944,7 @@ flag = "--worktree"
 translation_modifier = "overwriting the files in the working directory"
 verdict = "allow"
 rationale = "Replaces working tree files; uncommitted changes to those files are permanently lost."
+arity = "Boolean"
 
 # ── Configuration ───────────────────────────────────────────────────────────
 
@@ -1098,22 +953,14 @@ path = "git config"
 translation = "View or modify Git configuration settings."
 verdict = "allow"
 rationale = "Without arguments, prints help. Reading config values is read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git config --global"
 translation = "View or modify Git configuration settings for all repositories on this machine."
 verdict = "allow"
 rationale = "Changes apply to every repository the user interacts with, not just the current one."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["config"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "git config"
@@ -1121,7 +968,7 @@ flag = "--unset"
 translation_modifier = "removing a configuration value"
 verdict = "allow"
 rationale = "Removes a single config entry; can be re-set with the same command."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git config"
@@ -1129,28 +976,24 @@ flag = "--unset-all"
 translation_modifier = "removing all values for a configuration key"
 verdict = "allow"
 rationale = "Removes all entries for a multivalue key; may affect hooks, aliases, or remote configurations."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 # ── Low-level ref manipulation ──────────────────────────────────────────────
 
 [[command]]
 path = "git update-ref"
 translation = "Directly move a branch pointer or other reference to a different commit."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Low-level command that moves branch pointers without the safety checks of normal branch operations."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "git update-ref"
 flag = "-d"
 translation_modifier = "deleting the reference entirely"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the reference entirely, which may make commits unreachable."
-tag_modifiers.effect = ["delete"]
+arity = "Boolean"
 
 # ── Missing commonly-used commands ──────────────────────────────────────────
 
@@ -1159,55 +1002,35 @@ path = "git status"
 translation = "Show which files have been modified, staged, or are untracked in the working tree."
 verdict = "allow"
 rationale = "Read-only display of working tree state."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git show"
 translation = "Display the details and content changes of a specific commit."
 verdict = "allow"
 rationale = "Read-only display of commit data."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git blame"
 translation = "Show which commit and author last modified each line of a file."
 verdict = "allow"
 rationale = "Read-only annotation of file history."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git grep"
 translation = "Search for a text pattern in tracked files."
 verdict = "allow"
 rationale = "Read-only search that does not modify files."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "git stash show"
 translation = "Show a summary of changes in a stash entry."
 verdict = "allow"
 rationale = "Read-only display of stash contents."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Missing critical flags on existing commands ─────────────────────────────
 
@@ -1217,6 +1040,7 @@ flag = "--onto"
 translation_modifier = "replaying commits onto a specified target commit instead of the upstream"
 verdict = "allow"
 rationale = "Gives more control over where commits are replayed; the risk of history rewriting is already in the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clone"
@@ -1224,6 +1048,7 @@ flag = "--depth"
 translation_modifier = "creating a shallow clone with only the specified number of recent commits"
 verdict = "allow"
 rationale = "Reduces download size; the clone is functional but has truncated history."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clone"
@@ -1231,6 +1056,7 @@ flag = "--branch"
 translation_modifier = "checking out a specific branch or tag instead of the default"
 verdict = "allow"
 rationale = "Selects which branch to check out; does not affect existing files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git clone"
@@ -1238,6 +1064,7 @@ flag = "--recursive"
 translation_modifier = "also cloning all submodules"
 verdict = "allow"
 rationale = "Downloads additional repositories; no existing data is modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git log"
@@ -1245,6 +1072,7 @@ flag = "--oneline"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output formatting to one line per commit; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git log"
@@ -1252,6 +1080,7 @@ flag = "--graph"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Adds a visual branch graph to the output; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git log"
@@ -1259,6 +1088,7 @@ flag = "--all"
 translation_modifier = "including commits from all branches and refs"
 verdict = "allow"
 rationale = "Widens the log output to all branches; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git diff"
@@ -1266,6 +1096,7 @@ flag = "--staged"
 translation_modifier = "showing only changes that have been staged for commit"
 verdict = "allow"
 rationale = "Narrows the diff to the staging area; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git diff"
@@ -1273,6 +1104,7 @@ flag = "--stat"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Shows a summary of changed files instead of full diffs; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git tag"
@@ -1280,6 +1112,7 @@ flag = "-a"
 translation_modifier = "creating an annotated tag with a message"
 verdict = "allow"
 rationale = "Creates a full tag object with metadata; slightly more permanent than a lightweight tag but still reversible."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git stash"
@@ -1287,6 +1120,7 @@ flag = "--keep-index"
 translation_modifier = "keeping the staged changes in the staging area"
 verdict = "allow"
 rationale = "Only stashes unstaged changes; staged work remains in the index."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git remote"
@@ -1294,6 +1128,7 @@ flag = "-v"
 translation_modifier = "showing the fetch and push URLs for each remote"
 verdict = "allow"
 rationale = "Adds URL details to the listing; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "git commit"
@@ -1301,137 +1136,90 @@ flag = "--message"
 translation_modifier = "with the commit message provided on the command line"
 verdict = "allow"
 rationale = "Specifies the message directly; does not change what is committed."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "git push --force"
 translation = "Force-upload local commits to a remote repository, overwriting its history even if other contributors have pushed since."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "git push --force-with-lease"
 translation = "Upload local commits to a remote repository, overwriting its history only if no one else has pushed since your last fetch."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Safer than --force but still rewrites remote history; fails if the remote has diverged since your last fetch."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "git push --dry-run"
 translation = "Simulate uploading local commits to a remote repository without actually sending any data."
 verdict = "allow"
 rationale = "No data is transmitted; only shows what would happen."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[combo]]
 path = "git push --force --no-verify"
 translation = "Force-upload local commits to a remote repository, overwriting its history and skipping all pre-push hooks."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines history rewriting with hook bypass, removing both the remote safety net and local pre-push checks."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = true
+risk_class = "priv_esc"
 
 [[combo]]
 path = "git reset --hard"
 translation = "Discard all uncommitted changes and move the current branch to a specified commit, permanently erasing staged and working-directory modifications."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently deletes uncommitted work with no built-in recovery mechanism."
-tags.scope = "local"
-tags.effect = ["write", "delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "git reset --soft"
 translation = "Move the current branch pointer to a specified commit while keeping all changes staged for a new commit."
 verdict = "allow"
 rationale = "Only moves the branch pointer; all file contents remain intact in the staging area."
-tags.scope = "local"
-tags.effect = ["write", "delete"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "git clean -f"
 translation = "Permanently delete all untracked files from the working directory."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Untracked files are not stored in Git history and cannot be recovered once deleted."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "git clean -d -f"
 translation = "Permanently delete all untracked files and directories from the working directory."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Extends deletion to entire untracked directory trees, increasing the scope of irrecoverable data loss."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "git checkout --force"
 translation = "Switch branches or restore files, discarding all uncommitted local changes without warning."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently throws away uncommitted work in the working tree without confirmation."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["repository", "filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "git add --all"
 translation = "Stage every change in the entire working tree — new files, modifications, and deletions."
 verdict = "allow"
 rationale = "May unintentionally stage files the user did not mean to include, such as secrets or build artifacts, but only affects the staging area."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "git rm --force"
 translation = "Remove files from both the working directory and the repository index, even if they have uncommitted changes."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes files with unstaged or staged modifications that may not be recoverable from Git history."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem", "repository"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "git stash drop"
 translation = "Permanently delete a stash entry, discarding the saved changes with no way to recover them."
 verdict = "allow"
 rationale = "The stash entry is permanently removed; recovery is only possible via reflog before garbage collection."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["repository"]
-tags.safety_override = false
+risk_class = "destructive"

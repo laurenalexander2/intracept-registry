@@ -5,6 +5,7 @@ path = "logger"
 translation = "Write a message to the system log."
 verdict = "allow"
 rationale = "Adds an entry to the system log; does not modify files or processes."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "logger"
@@ -12,6 +13,7 @@ flag = "-p"
 translation_modifier = "using a specific facility and priority level"
 verdict = "allow"
 rationale = "Only changes the syslog facility and priority of the message."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "logger"
@@ -19,3 +21,4 @@ flag = "-t"
 translation_modifier = "tagging the log entry with a specific label"
 verdict = "allow"
 rationale = "Only changes the tag attached to the log message."
+arity = "Boolean"

@@ -5,26 +5,18 @@
 [[command]]
 path = "yarn"
 translation = "Run the Yarn package manager for JavaScript projects."
-verdict = "allow"
-rationale = "The bare command runs install by default; equivalent to yarn install."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "The bare command runs install by default, downloading every package in package.json across the network."
+risk_class = "net_egress"
 
 # ── Installing ──────────────────────────────────────────────────────────────
 
 [[command]]
 path = "yarn install"
 translation = "Install all dependencies listed in the project's package.json."
-verdict = "require_approval"
-rationale = "Downloads and installs packages from the registry, which execute install scripts that may modify the system."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads and installs packages across the network from the registry; every install script may execute arbitrary code on the system."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "yarn install"
@@ -32,6 +24,7 @@ flag = "--immutable"
 translation_modifier = "failing if the lockfile would need to be updated"
 verdict = "allow"
 rationale = "Prevents lockfile changes; a safety check for CI environments."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "yarn install"
@@ -39,19 +32,16 @@ flag = "--frozen-lockfile"
 translation_modifier = "failing if the lockfile would need to be updated"
 verdict = "allow"
 rationale = "Prevents lockfile changes; a safety check for CI environments in Yarn v1."
+arity = "Boolean"
 
 # ── Adding dependencies ─────────────────────────────────────────────────────
 
 [[command]]
 path = "yarn add"
 translation = "Add a dependency to the project."
-verdict = "require_approval"
-rationale = "Downloads and installs a package, modifying package.json and the lockfile."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads a new package across the network and modifies package.json plus the lockfile; install scripts may execute arbitrary code."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "yarn add"
@@ -59,19 +49,16 @@ flag = "--dev"
 translation_modifier = "as a development dependency"
 verdict = "allow"
 rationale = "Changes the dependency category but does not alter the installation behavior."
+arity = "Boolean"
 
-# ── Removing dependencies ─��─────────────────────────────────────────────────
+# ── Removing dependencies ───────────────────────────────────────────────────
 
 [[command]]
 path = "yarn remove"
 translation = "Remove a dependency from the project."
 verdict = "allow"
-rationale = "Uninstalls a package and modifies package.json and the lockfile."
-tags.scope = "local"
-tags.effect = ["delete", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+rationale = "Uninstalls a package and modifies package.json and the lockfile locally."
+risk_class = "safe"
 
 # ── Running scripts ─────────────────────────────────────────────────────────
 
@@ -80,22 +67,14 @@ path = "yarn run"
 translation = "Run a script defined in the project's package.json."
 verdict = "allow"
 rationale = "Executes an arbitrary script, which may perform any action."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "yarn dlx"
 translation = "Run a package in a temporary environment without installing it permanently."
-verdict = "allow"
-rationale = "Downloads and executes remote code from the registry."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads and executes remote code from the registry across the network in a one-shot temporary environment; every invocation pulls and runs arbitrary code."
+risk_class = "net_egress"
 
 # ── Cache ───────────────────────────────────────────────────────────────────
 
@@ -104,11 +83,7 @@ path = "yarn cache clean"
 translation = "Remove shared cache files used by Yarn."
 verdict = "allow"
 rationale = "Deletes cached packages; they will be re-downloaded on next install."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "yarn cache clean"
@@ -116,6 +91,7 @@ flag = "--all"
 translation_modifier = "removing the entire cache including mirror files"
 verdict = "allow"
 rationale = "Deletes all cached data, which may significantly slow down the next install."
+arity = "Boolean"
 
 # ── Scaffolding ─────────────────────────────────────────────────────────────
 
@@ -124,35 +100,23 @@ path = "yarn init"
 translation = "Create a new package.json file in the current directory."
 verdict = "allow"
 rationale = "Creates a configuration file; does not install anything."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Updating dependencies ───────────────────────────────────────────────────
 
 [[command]]
 path = "yarn up"
 translation = "Update project dependencies to newer versions."
-verdict = "allow"
-rationale = "Modifies the lockfile and installs new package versions that may introduce breaking changes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads new package versions across the network and modifies the lockfile; every update may introduce breaking changes."
+risk_class = "net_egress"
 
 [[command]]
 path = "yarn upgrade"
 translation = "Update project dependencies to newer versions."
-verdict = "allow"
-rationale = "Modifies the lockfile and installs new package versions that may introduce breaking changes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads new package versions across the network and modifies the lockfile; every update may introduce breaking changes."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "yarn upgrade"
@@ -160,17 +124,14 @@ flag = "--latest"
 translation_modifier = "ignoring the version ranges in package.json and upgrading to the absolute latest versions"
 verdict = "allow"
 rationale = "May introduce major-version breaking changes by bypassing semver range constraints."
+arity = "Boolean"
 
 [[command]]
 path = "yarn dedupe"
 translation = "Remove duplicate dependency versions by consolidating ranges."
 verdict = "allow"
 rationale = "Modifies the lockfile and may change which versions are installed."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Execution ───────────────────────────────────────────────────────────────
 
@@ -179,11 +140,7 @@ path = "yarn exec"
 translation = "Execute a shell command in the project environment."
 verdict = "allow"
 rationale = "Runs an arbitrary command with access to project binaries."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Information ─────────────────────────────────────────────────────────────
 
@@ -192,11 +149,7 @@ path = "yarn info"
 translation = "Display information about installed packages."
 verdict = "allow"
 rationale = "Read-only display of package metadata."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Linking ─────────────────────────────────────────────────────────────────
 
@@ -205,22 +158,14 @@ path = "yarn link"
 translation = "Connect the local project to another local package for development."
 verdict = "allow"
 rationale = "Creates a symbolic link for local development; easily reversible."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "yarn unlink"
 translation = "Disconnect the local project from a linked package."
 verdict = "allow"
 rationale = "Removes a development symbolic link and reinstalls the normal dependency."
-tags.scope = "local"
-tags.effect = ["delete", "create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Packaging ───────────────────────────────────────────────────────────────
 
@@ -229,92 +174,59 @@ path = "yarn pack"
 translation = "Generate a tarball from the current workspace."
 verdict = "allow"
 rationale = "Creates a local archive file; does not publish anything."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "yarn rebuild"
 translation = "Rebuild the project's native packages."
 verdict = "allow"
 rationale = "Re-runs native build scripts, which may compile code and modify the local environment."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
-# ── npm operations ─────────────────────────────────────────────────���────────
+# ── npm operations ─────────────────────────────────────────────────────────
 
 [[command]]
 path = "yarn npm audit"
 translation = "Check installed packages for known security vulnerabilities."
-verdict = "allow"
-rationale = "Read-only security audit of dependencies."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Read-only security audit that sends every installed package name across the network to the registry's audit endpoint."
+risk_class = "net_egress"
 
 [[command]]
 path = "yarn npm publish"
 translation = "Publish a package to the npm registry."
-verdict = "require_approval"
-rationale = "Makes the package publicly available on the registry, which is difficult to fully undo."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "impossible"
-tags.target = ["package_registry"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Uploads the package across the network to the public registry; published versions are permanently visible and difficult to fully undo."
+risk_class = "net_egress"
 
 # ── Version management ──────────────────────────────────────────────────────
 
 [[command]]
 path = "yarn set version"
 translation = "Lock the Yarn version used by the project."
-verdict = "allow"
-rationale = "Downloads a specific Yarn binary for the project; does not affect dependencies."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads a Yarn binary across the network for every project that uses this configuration; the binary then executes as the package manager."
+risk_class = "net_egress"
 
 # ── Combos ──────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "yarn install --frozen-lockfile"
 translation = "Install all project dependencies from the registry, failing immediately if the lockfile would need any changes."
-verdict = "require_approval"
-rationale = "Downloads and executes install scripts from remote packages but enforces lockfile immutability for reproducible builds."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Downloads and executes install scripts from remote packages across the network but enforces lockfile immutability for reproducible builds."
+risk_class = "net_egress"
 
 [[combo]]
 path = "yarn add --dev"
 translation = "Download and install a package from the registry as a development-only dependency, updating package.json and the lockfile."
-verdict = "require_approval"
-rationale = "Fetches and installs remote code that runs install scripts, categorized as a dev dependency so it is excluded from production builds."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "trivial"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
+verdict = "ask"
+rationale = "Fetches and installs remote code across the network that runs install scripts, categorized as a dev dependency so it is excluded from production builds."
+risk_class = "net_egress"
 
 [[combo]]
 path = "yarn upgrade --latest"
 translation = "Update all project dependencies to their absolute latest versions, ignoring the semver ranges specified in package.json."
-verdict = "allow"
-rationale = "Bypasses version range constraints and may introduce major breaking changes across multiple packages at once."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["package_registry", "filesystem"]
-tags.safety_override = false
-
+verdict = "ask"
+rationale = "Downloads new versions across the network for every dependency and bypasses semver constraints, potentially introducing breaking changes at scale."
+risk_class = "net_egress"

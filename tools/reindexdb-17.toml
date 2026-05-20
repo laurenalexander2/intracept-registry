@@ -5,6 +5,7 @@ path = "reindexdb-17"
 translation = "Rebuild indexes in a PostgreSQL 17 database."
 verdict = "allow"
 rationale = "Rebuilds indexes, which temporarily locks tables and uses additional disk space."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "reindexdb-17"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "operating on all databases in the cluster"
 verdict = "allow"
 rationale = "Affects every database in the PostgreSQL cluster, greatly increasing blast radius."
+arity = "Boolean"

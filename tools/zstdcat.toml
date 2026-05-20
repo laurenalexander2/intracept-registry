@@ -5,6 +5,7 @@ path = "zstdcat"
 translation = "Decompress Zstandard files and write the output to the terminal."
 verdict = "allow"
 rationale = "Read-only decompression to the terminal; does not modify files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "zstdcat"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"

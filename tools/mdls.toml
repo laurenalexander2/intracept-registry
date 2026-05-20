@@ -5,6 +5,7 @@ path = "mdls"
 translation = "Display the Spotlight metadata attributes for a file."
 verdict = "allow"
 rationale = "Read-only display of file metadata."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mdls"
@@ -12,6 +13,7 @@ flag = "-name"
 translation_modifier = "showing only a specific metadata attribute"
 verdict = "allow"
 rationale = "Only filters which attributes are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdls"
@@ -19,6 +21,7 @@ flag = "-raw"
 translation_modifier = "printing raw attribute values separated by null characters"
 verdict = "allow"
 rationale = "Changes output formatting for piping; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdls"
@@ -26,3 +29,4 @@ flag = "-nullMarker"
 translation_modifier = "using a specified string in place of null attribute values"
 verdict = "allow"
 rationale = "Changes how null values are displayed; still read-only."
+arity = "Boolean"

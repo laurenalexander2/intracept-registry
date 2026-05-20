@@ -7,6 +7,7 @@ path = "pwd"
 translation = "Print the full path of the current working directory."
 verdict = "allow"
 rationale = "Read-only display of the current directory path."
+risk_class = "safe"
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 
@@ -16,6 +17,7 @@ flag = "-L"
 translation_modifier = "showing the logical path including symbolic link names"
 verdict = "allow"
 rationale = "Displays the path as stored in the environment, preserving symbolic link names; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pwd"
@@ -23,3 +25,4 @@ flag = "-P"
 translation_modifier = "showing the physical path with all symbolic links resolved"
 verdict = "allow"
 rationale = "Resolves every symbolic link to show the true filesystem path; still read-only."
+arity = "Boolean"

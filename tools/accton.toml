@@ -3,5 +3,6 @@
 [[command]]
 path = "accton"
 translation = "Enable or disable process accounting."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies kernel-level process accounting, which is a system-wide setting."
+risk_class = "novel"

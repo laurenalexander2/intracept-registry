@@ -1,0 +1,7 @@
+{
+  "kind": "format_violation",
+  "schema": "rule-schema-v2.json",
+  "field_path": "/id",
+  "expected_format": "uuid",
+  "msg_contains": "not-a-uuid"
+}

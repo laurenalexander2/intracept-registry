@@ -1,0 +1,23 @@
+# Invalid: combo path references a flag not declared in [[flag]] entries.
+
+[[command]]
+path = "cf-tool"
+translation = "Base tool."
+verdict = "allow"
+rationale = "Base allows two flags; combo references an undeclared third flag."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "cf-tool"
+flag = "-v"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Declared flag."
+arity = "Boolean"
+
+[[combo]]
+path = "cf-tool --undeclared"
+translation = "Run with an undeclared flag."
+verdict = "ask"
+rationale = "Combo path references a flag string not present in [[flag]] entries for this base."
+risk_class = "novel"

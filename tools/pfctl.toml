@@ -3,8 +3,9 @@
 [[command]]
 path = "pfctl"
 translation = "Control the macOS packet filter firewall and network address translation rules."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Manages firewall rules that control network traffic; incorrect changes can block connectivity."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pfctl"
@@ -12,13 +13,15 @@ flag = "-e"
 translation_modifier = "enabling the packet filter"
 verdict = "allow"
 rationale = "Activates the firewall, which may block traffic depending on loaded rules."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pfctl"
 flag = "-d"
 translation_modifier = "disabling the packet filter"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Turns off the firewall entirely, exposing the system to unfiltered network traffic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pfctl"
@@ -26,13 +29,15 @@ flag = "-f"
 translation_modifier = "loading rules from a specified configuration file"
 verdict = "allow"
 rationale = "Replaces the active ruleset, which immediately changes what traffic is allowed or blocked."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pfctl"
 flag = "-F"
 translation_modifier = "flushing specified filter parameters"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Clears firewall rules, states, or tables, which may disrupt active connections or remove security policies."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pfctl"
@@ -40,6 +45,7 @@ flag = "-s"
 translation_modifier = "showing the specified filter state or rules"
 verdict = "allow"
 rationale = "Read-only display of firewall configuration and state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pfctl"
@@ -47,3 +53,4 @@ flag = "-n"
 translation_modifier = "parsing rules without actually loading them"
 verdict = "allow"
 rationale = "Dry run that validates rules without changing the active configuration."
+arity = "Boolean"

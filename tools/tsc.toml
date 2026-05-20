@@ -5,11 +5,7 @@ path = "tsc"
 translation = "Compile TypeScript source code into JavaScript."
 verdict = "allow"
 rationale = "Compiles TypeScript files and writes JavaScript output to disk; a standard build step."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "tsc"
@@ -17,7 +13,7 @@ flag = "--noEmit"
 translation_modifier = "checking types without writing any output files"
 verdict = "allow"
 rationale = "Read-only type checking that produces no output files."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -25,6 +21,7 @@ flag = "--watch"
 translation_modifier = "continuously recompiling when source files change"
 verdict = "allow"
 rationale = "Keeps the compiler running to rebuild on changes; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -32,6 +29,7 @@ flag = "--strict"
 translation_modifier = "enabling all strict type-checking options"
 verdict = "allow"
 rationale = "Increases the strictness of type checking; does not change output behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -39,6 +37,7 @@ flag = "--outDir"
 translation_modifier = "writing compiled output to a specified directory"
 verdict = "allow"
 rationale = "Changes where output files are written; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -46,6 +45,7 @@ flag = "--project"
 translation_modifier = "using a specified tsconfig.json configuration file"
 verdict = "allow"
 rationale = "Selects which configuration to use; does not change the compiler's capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -53,6 +53,7 @@ flag = "--declaration"
 translation_modifier = "generating type declaration files alongside the JavaScript output"
 verdict = "allow"
 rationale = "Produces additional .d.ts files; does not change the compilation behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -60,6 +61,7 @@ flag = "--sourceMap"
 translation_modifier = "generating source map files for debugging"
 verdict = "allow"
 rationale = "Produces additional .map files; does not change the compilation behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tsc"
@@ -67,6 +69,7 @@ flag = "--incremental"
 translation_modifier = "saving build information to speed up subsequent compilations"
 verdict = "allow"
 rationale = "Writes a build info file for faster rebuilds; does not change compilation output."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -75,19 +78,11 @@ path = "tsc --noEmit"
 translation = "Type-check TypeScript source code without writing any compiled JavaScript output files."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to catch type errors without producing build artifacts."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "tsc --watch"
 translation = "Compile TypeScript source code and continuously recompile whenever source files change."
 verdict = "allow"
 rationale = "Keeps the compiler running as a long-lived process that rebuilds on file changes, standard for development workflows."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "mongosh"
 translation = "Connect to a MongoDB database."
 verdict = "allow"
 rationale = "Connects to a live database where any command can be executed, including destructive operations like dropDatabase."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mongosh"
@@ -12,6 +13,7 @@ flag = "--host"
 translation_modifier = "connecting to a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -19,6 +21,7 @@ flag = "--port"
 translation_modifier = "connecting on a specified port"
 verdict = "allow"
 rationale = "Specifies which port to connect on; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -26,6 +29,7 @@ flag = "--username"
 translation_modifier = "authenticating as a specified user"
 verdict = "allow"
 rationale = "Specifies the authentication identity; the user's permissions determine what operations are allowed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -33,20 +37,23 @@ flag = "--password"
 translation_modifier = "authenticating with a specified password"
 verdict = "allow"
 rationale = "Provides authentication credentials for the connection."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
 flag = "--eval"
 translation_modifier = "executing a specified JavaScript expression and then exiting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs arbitrary database commands directly, including destructive operations like drop or deleteMany."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
 flag = "--file"
 translation_modifier = "executing JavaScript commands from a file and then exiting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs an entire script that may contain destructive operations and is harder to review at execution time."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -54,6 +61,7 @@ flag = "--authenticationDatabase"
 translation_modifier = "authenticating against a specified database"
 verdict = "allow"
 rationale = "Selects which database holds the user credentials; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -61,6 +69,7 @@ flag = "--tls"
 translation_modifier = "connecting over an encrypted TLS connection"
 verdict = "allow"
 rationale = "Enables transport encryption; does not affect command capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -68,6 +77,7 @@ flag = "--quiet"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Suppresses startup messages and connection information; cosmetic only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -75,6 +85,7 @@ flag = "--nodb"
 translation_modifier = "starting without connecting to any database"
 verdict = "allow"
 rationale = "Launches the shell without a database connection; no data can be modified until a connection is made."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mongosh"
@@ -82,3 +93,4 @@ flag = "--shell"
 translation_modifier = "entering interactive mode after running a file or eval command"
 verdict = "allow"
 rationale = "Keeps the session open for interactive use; does not change what commands are available."
+arity = "Boolean"

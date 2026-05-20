@@ -5,6 +5,7 @@ path = "pg_basebackup-17"
 translation = "Take a base backup of a running PostgreSQL server."
 verdict = "allow"
 rationale = "Creates a backup copy of the database; does not modify the running server."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_basebackup-17"
@@ -12,3 +13,4 @@ flag = "--no-verify"
 translation_modifier = "skipping verification of checksums during the backup"
 verdict = "allow"
 rationale = "Bypasses checksum verification; the backup may contain corrupt pages."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "notifyutil"
 translation = "Post, monitor, or inspect macOS system notifications and their state values."
 verdict = "allow"
 rationale = "Interacts with the notification system for debugging; does not modify files or services."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "notifyutil"
@@ -12,6 +13,7 @@ flag = "-p"
 translation_modifier = "posting a notification for a specified key"
 verdict = "allow"
 rationale = "Sends a notification event; may trigger registered listeners."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "notifyutil"
@@ -19,6 +21,7 @@ flag = "-w"
 translation_modifier = "waiting and watching for notifications on a specified key"
 verdict = "allow"
 rationale = "Read-only monitoring of notification events."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "notifyutil"
@@ -26,6 +29,7 @@ flag = "-g"
 translation_modifier = "getting the current state value for a specified key"
 verdict = "allow"
 rationale = "Read-only retrieval of a notification state value."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "notifyutil"
@@ -33,3 +37,4 @@ flag = "-s"
 translation_modifier = "setting the state value for a specified key"
 verdict = "allow"
 rationale = "Sets a notification state value; only affects the notification system, not files or services."
+arity = "Boolean"

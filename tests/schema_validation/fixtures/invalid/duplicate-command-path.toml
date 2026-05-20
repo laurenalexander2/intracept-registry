@@ -1,0 +1,15 @@
+# Invalid: two [[command]] entries with the same path string in one file.
+
+[[command]]
+path = "dup-cmd"
+translation = "First definition."
+verdict = "allow"
+rationale = "Duplicate command path is rejected."
+risk_class = "safe"
+
+[[command]]
+path = "dup-cmd"
+translation = "Second definition with the same path."
+verdict = "ask"
+rationale = "Should trip the duplicate-path check."
+risk_class = "net_egress"

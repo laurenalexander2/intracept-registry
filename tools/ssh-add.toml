@@ -5,6 +5,7 @@ path = "ssh-add"
 translation = "Add private key identities to the SSH authentication agent."
 verdict = "allow"
 rationale = "Loads keys into the agent for passwordless authentication; keys can be removed later."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -12,6 +13,7 @@ flag = "-D"
 translation_modifier = "deleting all identities from the agent"
 verdict = "allow"
 rationale = "Removes all loaded keys requiring re-authentication for future SSH connections."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -19,6 +21,7 @@ flag = "-d"
 translation_modifier = "removing specified identities from the agent"
 verdict = "allow"
 rationale = "Removes specific keys; they can be re-added."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "listing fingerprints of all loaded identities"
 verdict = "allow"
 rationale = "Read-only display of loaded keys."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -33,6 +37,7 @@ flag = "-L"
 translation_modifier = "listing public key parameters of all loaded identities"
 verdict = "allow"
 rationale = "Read-only display of public keys."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -40,6 +45,7 @@ flag = "-t"
 translation_modifier = "setting a lifetime after which the identity is automatically removed"
 verdict = "allow"
 rationale = "Adds an expiration to loaded keys; reduces exposure time."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -47,6 +53,7 @@ flag = "-K"
 translation_modifier = "storing the key in the macOS Keychain"
 verdict = "allow"
 rationale = "Persists the key for automatic loading; removable from keychain later."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -54,6 +61,7 @@ flag = "-c"
 translation_modifier = "requiring confirmation before each use of the identity"
 verdict = "allow"
 rationale = "Adds a safety prompt before authentication; reduces risk of unintended key use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -61,6 +69,7 @@ flag = "-x"
 translation_modifier = "locking the agent with a password"
 verdict = "allow"
 rationale = "Prevents key use until unlocked; a security-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -68,6 +77,7 @@ flag = "-X"
 translation_modifier = "unlocking a previously locked agent"
 verdict = "allow"
 rationale = "Restores access to loaded keys; requires the lock password."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -75,6 +85,7 @@ flag = "--apple-use-keychain"
 translation_modifier = "storing the passphrase in the macOS Keychain"
 verdict = "allow"
 rationale = "Persists the passphrase for automatic loading; removable from keychain later."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -82,6 +93,7 @@ flag = "--apple-load-keychain"
 translation_modifier = "loading identities using passphrases stored in the macOS Keychain"
 verdict = "allow"
 rationale = "Loads keys non-interactively using saved passphrases; no new keys are created."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -89,6 +101,7 @@ flag = "-T"
 translation_modifier = "testing whether the agent can use specified keys by performing a sign-and-verify operation"
 verdict = "allow"
 rationale = "Read-only test of key usability; does not modify the agent or keys."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ssh-add"
@@ -96,3 +109,4 @@ flag = "-q"
 translation_modifier = "suppressing output after a successful operation"
 verdict = "allow"
 rationale = "Only changes output verbosity; does not affect behavior."
+arity = "Boolean"

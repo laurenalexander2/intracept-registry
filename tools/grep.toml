@@ -5,11 +5,7 @@ path = "grep"
 translation = "Search file contents for lines matching a pattern."
 verdict = "allow"
 rationale = "Read-only search that displays matching lines without modifying any files."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Search mode flags ────────────────────────────────────────────────────────
 
@@ -19,6 +15,7 @@ flag = "-E"
 translation_modifier = "using extended regular expression syntax"
 verdict = "allow"
 rationale = "Changes the regex dialect; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -26,6 +23,7 @@ flag = "-F"
 translation_modifier = "treating the pattern as a literal string instead of a regular expression"
 verdict = "allow"
 rationale = "Disables regex interpretation; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -33,6 +31,7 @@ flag = "-P"
 translation_modifier = "using Perl-compatible regular expression syntax"
 verdict = "allow"
 rationale = "Changes the regex dialect to PCRE; still read-only."
+arity = "Boolean"
 
 # ── Match modifiers ──────────────────────────────────────────────────────────
 
@@ -42,6 +41,7 @@ flag = "-i"
 translation_modifier = "matching case-insensitively"
 verdict = "allow"
 rationale = "Broadens matches to ignore case; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -49,6 +49,7 @@ flag = "-w"
 translation_modifier = "matching only whole words"
 verdict = "allow"
 rationale = "Narrows matches to word boundaries; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -56,6 +57,7 @@ flag = "-x"
 translation_modifier = "matching only entire lines"
 verdict = "allow"
 rationale = "Requires the pattern to match the full line; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -63,6 +65,7 @@ flag = "-v"
 translation_modifier = "showing only lines that do not match"
 verdict = "allow"
 rationale = "Inverts the match; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -70,6 +73,8 @@ flag = "-e"
 translation_modifier = "using an explicitly specified pattern, allowing multiple patterns or patterns starting with a dash"
 verdict = "allow"
 rationale = "Specifies one or more patterns; still read-only."
+arity = "Repeated"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -77,6 +82,8 @@ flag = "-f"
 translation_modifier = "reading patterns from a file"
 verdict = "allow"
 rationale = "Loads patterns from a file instead of the command line; still read-only."
+arity = "Single"
+value_type = "Path"
 
 # ── Scope flags ──────────────────────────────────────────────────────────────
 
@@ -86,6 +93,7 @@ flag = "-r"
 translation_modifier = "recursively through all subdirectories"
 verdict = "allow"
 rationale = "Searches files in subdirectories; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -93,6 +101,7 @@ flag = "-R"
 translation_modifier = "recursively through all subdirectories, following symbolic links"
 verdict = "allow"
 rationale = "Like -r but follows symbolic links, potentially expanding search scope; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -100,6 +109,8 @@ flag = "--include"
 translation_modifier = "searching only files whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of files searched; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -107,6 +118,8 @@ flag = "--exclude"
 translation_modifier = "skipping files whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of files searched; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "grep"
@@ -114,6 +127,8 @@ flag = "--exclude-dir"
 translation_modifier = "skipping directories whose names match a specified pattern"
 verdict = "allow"
 rationale = "Narrows the set of directories searched; still read-only."
+arity = "Single"
+value_type = "String"
 
 # ── Output format flags ─────────────────────────────────────────────────────
 
@@ -123,6 +138,7 @@ flag = "-l"
 translation_modifier = "showing only the names of files that contain a match"
 verdict = "allow"
 rationale = "Changes output format to filenames only; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -130,6 +146,7 @@ flag = "-L"
 translation_modifier = "showing only the names of files that do not contain a match"
 verdict = "allow"
 rationale = "Inverts file-level matching to show non-matching files; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -137,6 +154,7 @@ flag = "-c"
 translation_modifier = "showing only the count of matching lines per file"
 verdict = "allow"
 rationale = "Changes output to counts; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -144,6 +162,7 @@ flag = "-n"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Adds line numbers to output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -151,6 +170,7 @@ flag = "-H"
 translation_modifier = "always showing the filename for each match"
 verdict = "allow"
 rationale = "Prefixes each match with the filename; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -158,6 +178,7 @@ flag = "-h"
 translation_modifier = "suppressing the filename prefix in output"
 verdict = "allow"
 rationale = "Removes filename prefixes from output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -165,6 +186,7 @@ flag = "-o"
 translation_modifier = "showing only the matching portion of each line"
 verdict = "allow"
 rationale = "Changes output to show only the matched text; still read-only."
+arity = "Boolean"
 
 # ── Context flags ────────────────────────────────────────────────────────────
 
@@ -174,6 +196,8 @@ flag = "-A"
 translation_modifier = "including a specified number of lines after each match"
 verdict = "allow"
 rationale = "Adds trailing context lines to output; still read-only."
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"
@@ -181,6 +205,8 @@ flag = "-B"
 translation_modifier = "including a specified number of lines before each match"
 verdict = "allow"
 rationale = "Adds leading context lines to output; still read-only."
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"
@@ -188,6 +214,8 @@ flag = "-C"
 translation_modifier = "including a specified number of lines before and after each match"
 verdict = "allow"
 rationale = "Adds surrounding context lines to output; still read-only."
+arity = "Single"
+value_type = "Int"
 
 # ── Behavioral flags ────────────────────────────────────────────────────────
 
@@ -197,6 +225,7 @@ flag = "-q"
 translation_modifier = "suppressing all output and only setting the exit code"
 verdict = "allow"
 rationale = "Produces no output; useful in scripts for testing whether a match exists."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -204,6 +233,8 @@ flag = "-m"
 translation_modifier = "stopping after a specified number of matches"
 verdict = "allow"
 rationale = "Limits the number of matches returned; still read-only."
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "grep"
@@ -211,6 +242,7 @@ flag = "-s"
 translation_modifier = "suppressing error messages about nonexistent or unreadable files"
 verdict = "allow"
 rationale = "Silences file access errors; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "grep"
@@ -218,6 +250,7 @@ flag = "-Z"
 translation_modifier = "separating output filenames with null characters instead of newlines"
 verdict = "allow"
 rationale = "Changes output delimiter for safe piping to xargs; still read-only."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -226,52 +259,32 @@ path = "grep -n -r"
 translation = "Recursively search all files in subdirectories for lines matching a pattern, showing the file name and line number for each match."
 verdict = "allow"
 rationale = "Combines recursive traversal with line numbers for efficient codebase-wide searching; entirely read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "grep --include -n -r"
 translation = "Recursively search only files whose names match a specified pattern, showing file names and line numbers for each match."
 verdict = "allow"
 rationale = "Narrows recursive search to specific file types, reducing noise while remaining entirely read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "grep -c"
 translation = "Count the number of lines matching a pattern in each file instead of displaying the matching lines."
 verdict = "allow"
 rationale = "Produces a numeric summary rather than full output; entirely read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "grep -l -r"
 translation = "Recursively search all files in subdirectories and list only the names of files that contain a match."
 verdict = "allow"
 rationale = "Identifies which files contain a pattern across a directory tree without showing individual lines; entirely read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "grep -v"
 translation = "Search file contents and show only the lines that do not match the given pattern."
 verdict = "allow"
 rationale = "Inverts the match to display non-matching lines; entirely read-only."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"

@@ -5,6 +5,7 @@ path = "uttype"
 translation = "Query Uniform Type Identifier information for file types."
 verdict = "allow"
 rationale = "Read-only type identifier lookup; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "uttype"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "displaying all known uniform type identifiers"
 verdict = "allow"
 rationale = "Read-only display of type identifier information."
+arity = "Boolean"

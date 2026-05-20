@@ -3,8 +3,9 @@
 [[command]]
 path = "traceroute"
 translation = "Show the network path that packets take to reach a remote host."
-verdict = "allow"
-rationale = "Read-only network diagnostic that maps the route to a destination without modifying anything."
+verdict = "ask"
+rationale = "Read-only network diagnostic that maps the route to a destination across the network, revealing every intermediate router and the host being probed."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "traceroute"
@@ -12,6 +13,7 @@ flag = "-n"
 translation_modifier = "showing addresses as numbers instead of looking up hostnames"
 verdict = "allow"
 rationale = "Skips name lookups for faster output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -19,6 +21,7 @@ flag = "-m"
 translation_modifier = "limiting the maximum number of hops to check"
 verdict = "allow"
 rationale = "Caps how far the trace goes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "sending a specified number of test packets per hop"
 verdict = "allow"
 rationale = "Controls how many probes are sent at each hop; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -33,6 +37,7 @@ flag = "-w"
 translation_modifier = "waiting a specified number of seconds for each reply"
 verdict = "allow"
 rationale = "Sets the per-hop timeout; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -40,6 +45,7 @@ flag = "-I"
 translation_modifier = "using ping-style packets instead of the default method"
 verdict = "allow"
 rationale = "Switches the probe type; may produce different results through firewalls but is still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -47,6 +53,7 @@ flag = "-P"
 translation_modifier = "using a specified network protocol for probes"
 verdict = "allow"
 rationale = "Allows testing whether specific protocols are blocked along the path; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -54,6 +61,7 @@ flag = "-p"
 translation_modifier = "starting from a specified port number"
 verdict = "allow"
 rationale = "Changes the base port used for probes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -61,6 +69,7 @@ flag = "-f"
 translation_modifier = "starting the trace at a specified hop number"
 verdict = "allow"
 rationale = "Skips the first few hops; useful for diagnosing a known segment of the path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -68,6 +77,7 @@ flag = "-s"
 translation_modifier = "sending from a specified source address"
 verdict = "allow"
 rationale = "Sets the source address for outgoing probes; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -75,6 +85,7 @@ flag = "-i"
 translation_modifier = "sending probes through a specified network interface"
 verdict = "allow"
 rationale = "Selects which network interface to use; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "traceroute"
@@ -82,3 +93,4 @@ flag = "-v"
 translation_modifier = "showing detailed information about received packets"
 verdict = "allow"
 rationale = "Increases output verbosity; still read-only."
+arity = "Boolean"

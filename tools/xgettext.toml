@@ -5,6 +5,7 @@ path = "xgettext"
 translation = "Extract translatable strings from source code into a PO template file."
 verdict = "allow"
 rationale = "Reads source files and creates a new .pot file; does not modify source code."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "xgettext"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "ecpg"
 translation = "Preprocess embedded SQL in C source files for PostgreSQL."
 verdict = "allow"
 rationale = "Generates C source code from embedded SQL; does not connect to or modify any database."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ecpg"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "enabling automatic transaction commits"
 verdict = "allow"
 rationale = "Only affects generated code behavior; the preprocessor itself modifies nothing at runtime."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ecpg"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "automatically generating C code from embedded SQL"
 verdict = "allow"
 rationale = "Controls code generation mode; does not affect any database."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ecpg"
@@ -26,3 +29,4 @@ flag = "-o"
 translation_modifier = "writing the output to a specific file"
 verdict = "allow"
 rationale = "Only changes the output destination; overwrites are limited to the named file."
+arity = "Boolean"

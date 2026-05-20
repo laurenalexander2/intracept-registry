@@ -3,8 +3,9 @@
 [[command]]
 path = "halt"
 translation = "Shut down and power off the system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Immediately terminates all processes and powers off the machine, causing loss of any unsaved work."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "halt"
@@ -12,24 +13,28 @@ flag = "-l"
 translation_modifier = "without recording the halt in the system log"
 verdict = "allow"
 rationale = "Only suppresses log recording; does not change the halt behavior itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "halt"
 flag = "-N"
 translation_modifier = "without flushing the file system cache during process cleanup but still syncing at the kernel level"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the initial cache flush, which may cause data loss if devices are unavailable, though a kernel-level sync still occurs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "halt"
 flag = "-n"
 translation_modifier = "without flushing the filesystem cache"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skipping the cache flush can cause filesystem corruption and data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "halt"
 flag = "-q"
 translation_modifier = "quickly without gracefully terminating processes"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Performs an ungraceful shutdown, skipping process cleanup."
+arity = "Boolean"

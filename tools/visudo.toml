@@ -3,5 +3,6 @@
 [[command]]
 path = "visudo"
 translation = "Safely edit the sudoers file with syntax validation."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies sudo access control rules; errors can lock out administrative access or grant unintended privileges."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "uncompress"
 translation = "Decompress files compressed with the compress utility."
 verdict = "allow"
 rationale = "Restores the original file from a .Z compressed file; the compressed file is removed after decompression."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "uncompress"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "overwriting existing files without asking for confirmation"
 verdict = "allow"
 rationale = "Suppresses confirmation prompts when the output file already exists."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uncompress"
@@ -19,6 +21,7 @@ flag = "-v"
 translation_modifier = "showing the compression ratio for each file"
 verdict = "allow"
 rationale = "Only adds informational output; no change to behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "uncompress"
@@ -26,3 +29,4 @@ flag = "-c"
 translation_modifier = "writing decompressed output to the terminal instead of replacing the file"
 verdict = "allow"
 rationale = "Leaves the compressed file unmodified; only writes to the terminal."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "bc"
 translation = "Run an interactive calculator with unlimited precision."
 verdict = "allow"
 rationale = "Performs mathematical calculations and does not modify any files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "bc"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "loading the standard math library with extra functions"
 verdict = "allow"
 rationale = "Preloads math functions like sine and cosine; read-only computation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bc"
@@ -19,6 +21,7 @@ flag = "-i"
 translation_modifier = "forcing interactive mode"
 verdict = "allow"
 rationale = "Enables interactive prompts; no effect on data or files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bc"
@@ -26,6 +29,7 @@ flag = "-q"
 translation_modifier = "suppressing the startup banner"
 verdict = "allow"
 rationale = "Cosmetic change that hides the welcome message."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bc"
@@ -33,6 +37,7 @@ flag = "-e"
 translation_modifier = "evaluating the given expression directly"
 verdict = "allow"
 rationale = "Runs a calculation from the command line instead of interactively; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bc"
@@ -40,6 +45,7 @@ flag = "-s"
 translation_modifier = "restricting to the standard feature set only"
 verdict = "allow"
 rationale = "Disables non-standard extensions; limits functionality but modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "bc"
@@ -47,3 +53,4 @@ flag = "-w"
 translation_modifier = "showing warnings for non-standard features"
 verdict = "allow"
 rationale = "Enables extra warning messages without changing computation behavior."
+arity = "Boolean"

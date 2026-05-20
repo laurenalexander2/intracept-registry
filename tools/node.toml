@@ -7,11 +7,7 @@ path = "node"
 translation = "Run the Node.js JavaScript runtime."
 verdict = "allow"
 rationale = "Executes arbitrary JavaScript code with full access to the filesystem and network."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Execution modes ──────────────────────────────────────────────────────────
 
@@ -21,6 +17,7 @@ flag = "-e"
 translation_modifier = "evaluating a string of JavaScript passed as an argument"
 verdict = "allow"
 rationale = "Runs inline code directly; the risk depends on what the code does."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -28,6 +25,7 @@ flag = "-p"
 translation_modifier = "evaluating a JavaScript expression and printing the result"
 verdict = "allow"
 rationale = "Executes inline code and outputs the return value; same risk as -e."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -35,9 +33,7 @@ flag = "--check"
 translation_modifier = "only checking the script for syntax errors without executing it"
 verdict = "allow"
 rationale = "Validates syntax without running the code; no side effects."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
-tag_modifiers.target = ["filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -45,6 +41,7 @@ flag = "--input-type"
 translation_modifier = "treating the input as a specific module type"
 verdict = "allow"
 rationale = "Changes how the input is parsed; does not affect what code is executed."
+arity = "Boolean"
 
 # ── Debugging ────────────────────────────────────────────────────────────────
 
@@ -54,7 +51,7 @@ flag = "--inspect"
 translation_modifier = "enabling the debugger on the default port"
 verdict = "allow"
 rationale = "Opens a debug port for local inspection; does not change program behavior."
-tag_modifiers.target = ["process", "filesystem", "network"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -62,7 +59,7 @@ flag = "--inspect-brk"
 translation_modifier = "enabling the debugger and pausing before the first line executes"
 verdict = "allow"
 rationale = "Opens a debug port and pauses execution; does not change program behavior."
-tag_modifiers.target = ["process", "filesystem", "network"]
+arity = "Boolean"
 
 # ── Security and permissions ─────────────────────────────────────────────────
 
@@ -72,6 +69,7 @@ flag = "--experimental-permission"
 translation_modifier = "enabling the permission model to restrict filesystem and child process access"
 verdict = "allow"
 rationale = "Adds security restrictions; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -79,6 +77,7 @@ flag = "--allow-fs-read"
 translation_modifier = "granting read access to specified filesystem paths under the permission model"
 verdict = "allow"
 rationale = "Opens a specific read permission; still more restrictive than default unrestricted mode."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -86,6 +85,7 @@ flag = "--allow-fs-write"
 translation_modifier = "granting write access to specified filesystem paths under the permission model"
 verdict = "allow"
 rationale = "Opens write permission to specific paths; less restrictive than blocking all writes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -93,6 +93,7 @@ flag = "--allow-child-process"
 translation_modifier = "allowing the script to spawn child processes under the permission model"
 verdict = "allow"
 rationale = "Permits spawning subprocesses, which could execute arbitrary commands."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -100,6 +101,7 @@ flag = "--disallow-code-generation-from-strings"
 translation_modifier = "preventing the use of eval and similar dynamic code execution"
 verdict = "allow"
 rationale = "Restricts dynamic code execution; a safety-enhancing option."
+arity = "Boolean"
 
 # ── Module and loading ───────────────────────────────────────────────────────
 
@@ -109,6 +111,7 @@ flag = "--require"
 translation_modifier = "preloading a specified module before the main script runs"
 verdict = "allow"
 rationale = "Loads and executes a module before the main script; the preloaded module may have side effects."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -116,6 +119,7 @@ flag = "--import"
 translation_modifier = "preloading an ES module before the main script runs"
 verdict = "allow"
 rationale = "Loads and executes an ES module before the main script; the preloaded module may have side effects."
+arity = "Boolean"
 
 # ── Resource limits ──────────────────────────────────────────────────────────
 
@@ -125,6 +129,7 @@ flag = "--max-old-space-size"
 translation_modifier = "setting the maximum memory available for the JavaScript heap in megabytes"
 verdict = "allow"
 rationale = "Adjusts a resource limit; does not change what code is executed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "node"
@@ -132,6 +137,7 @@ flag = "--abort-on-uncaught-exception"
 translation_modifier = "crashing with a core dump on unhandled errors instead of exiting gracefully"
 verdict = "allow"
 rationale = "Changes error handling behavior; may produce a core dump file but does not affect normal execution."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -140,19 +146,11 @@ path = "node -e"
 translation = "Evaluate a string of JavaScript code passed directly on the command line and execute it."
 verdict = "allow"
 rationale = "Runs arbitrary inline JavaScript that can perform any operation the runtime supports."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "node --inspect"
 translation = "Run a Node.js script with the Chrome DevTools debugger listening on the default port for remote inspection."
 verdict = "allow"
 rationale = "Opens a local debug port that allows stepping through code and inspecting state, but does not change program behavior."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["process", "filesystem", "network"]
-tags.safety_override = false
+risk_class = "novel"

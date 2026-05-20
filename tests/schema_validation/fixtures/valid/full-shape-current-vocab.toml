@@ -1,0 +1,34 @@
+# Full-shape valid TOML using the CURRENT (pre-Phase-4a) vocabulary
+# (allow / require_approval), so it passes today's lint.py. The
+# new-vocab variant lives in future-lint/valid/full-shape.toml.
+
+[[command]]
+path = "git push"
+translation = "Upload local commits to a remote repository."
+verdict = "require_approval"
+rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["repository"]
+tags.safety_override = false
+
+[[flag]]
+applies_to = "git push"
+flag = "--force"
+translation_modifier = "overwriting any conflicting remote history"
+verdict = "require_approval"
+rationale = "Rewrites the remote branch's commit history; can permanently discard other contributors' work."
+tag_modifiers.reversibility = "impossible"
+tag_modifiers.safety_override = true
+
+[[combo]]
+path = "git push --force"
+translation = "Overwrite the remote branch's history with the local branch, discarding any commits that diverged."
+verdict = "require_approval"
+rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "impossible"
+tags.target = ["repository"]
+tags.safety_override = true

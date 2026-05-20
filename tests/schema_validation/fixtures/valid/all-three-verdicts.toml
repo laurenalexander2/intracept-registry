@@ -1,0 +1,24 @@
+# All three locked Phase 1 verdicts (allow/ask/warn) plus their canonical
+# risk_class assignments per SCHEMA-v2.md §3.
+# Schema fixture for Phase 1.
+
+[[command]]
+path = "ls"
+translation = "List directory contents."
+verdict = "allow"
+rationale = "Read-only directory listing with no side effects on disk or network."
+risk_class = "safe"
+
+[[command]]
+path = "npm install"
+translation = "Install JavaScript packages declared in package.json."
+verdict = "ask"
+rationale = "Reaches the public npm registry and executes arbitrary install scripts shipped by third-party packages."
+risk_class = "net_egress"
+
+[[command]]
+path = "rm"
+translation = "Delete files or directories."
+verdict = "warn"
+rationale = "Removes filesystem entries irreversibly; recovery requires backup or undelete tooling and frequently destroys uncommitted work."
+risk_class = "destructive"

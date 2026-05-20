@@ -5,38 +5,44 @@ path = "asr"
 translation = "Run the Apple Software Restore disk imaging tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "asr restore"
 translation = "Copy a disk image or volume onto a target volume."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites the target volume with the source data, destroying all existing content."
+risk_class = "novel"
 
 [[command]]
 path = "asr imagescan"
 translation = "Prepare a disk image for efficient restoring by adding checksum data."
 verdict = "allow"
 rationale = "Only adds verification metadata to the image file; does not modify any volumes."
+risk_class = "novel"
 
 [[command]]
 path = "asr info"
 translation = "Display information about volumes in a source image."
 verdict = "allow"
 rationale = "Read-only operation that shows image contents; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "asr restore"
 flag = "--erase"
 translation_modifier = "erasing the target volume before restoring"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Completely wipes the destination volume before writing; all existing data is destroyed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "asr restore"
 flag = "--noprompt"
 translation_modifier = "without asking for confirmation before erasing the target"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Suppresses the confirmation prompt, increasing the chance of accidental data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "asr restore"
@@ -44,6 +50,7 @@ flag = "--noverify"
 translation_modifier = "skipping verification of the restored data"
 verdict = "allow"
 rationale = "Skips integrity checks after restoring, which may leave corrupted data undetected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "asr restore"
@@ -51,6 +58,7 @@ flag = "--source"
 translation_modifier = "specifying the disk image or volume to copy from"
 verdict = "allow"
 rationale = "Only identifies the source; the destructive action is in the restore itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "asr restore"
@@ -58,3 +66,4 @@ flag = "--target"
 translation_modifier = "specifying the volume to overwrite with the restored data"
 verdict = "allow"
 rationale = "Only identifies the destination; the destructive action is in the restore itself."
+arity = "Boolean"

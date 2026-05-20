@@ -5,33 +5,39 @@ path = "nfsd"
 translation = "Run the NFS server background service to serve files to network clients."
 verdict = "allow"
 rationale = "Starts a network service that exposes local files to remote clients based on the exports configuration."
+risk_class = "novel"
 
 [[command]]
 path = "nfsd enable"
 translation = "Enable the NFS server to start automatically on boot."
 verdict = "allow"
 rationale = "Configures the NFS server to persist across reboots, exposing exports continuously."
+risk_class = "novel"
 
 [[command]]
 path = "nfsd disable"
 translation = "Disable the NFS server from starting automatically on boot."
 verdict = "allow"
 rationale = "Stops the NFS service from auto-starting; a safe shutdown operation."
+risk_class = "novel"
 
 [[command]]
 path = "nfsd stop"
 translation = "Stop the currently running NFS server."
 verdict = "allow"
 rationale = "Interrupts active NFS client connections, which may disrupt remote file access."
+risk_class = "novel"
 
 [[command]]
 path = "nfsd update"
 translation = "Reload the NFS exports configuration without restarting the server."
 verdict = "allow"
 rationale = "Changes which directories are shared; new exports take effect immediately."
+risk_class = "novel"
 
 [[command]]
 path = "nfsd checkexports"
 translation = "Validate the NFS exports file for syntax errors."
 verdict = "allow"
 rationale = "Read-only validation that does not modify the running configuration."
+risk_class = "novel"

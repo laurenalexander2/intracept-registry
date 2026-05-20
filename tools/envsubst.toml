@@ -5,6 +5,7 @@ path = "envsubst"
 translation = "Replace environment variable references in text with their values."
 verdict = "allow"
 rationale = "Reads from input and writes to the terminal; does not modify files directly."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "envsubst"
@@ -12,3 +13,4 @@ flag = "-v"
 translation_modifier = "listing the variable names found instead of substituting them"
 verdict = "allow"
 rationale = "Only lists variable names; does not perform substitution."
+arity = "Boolean"

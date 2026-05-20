@@ -3,12 +3,14 @@
 [[command]]
 path = "xsanctl"
 translation = "Control and configure Xsan storage area network volumes."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Manages storage area network volumes and configuration; incorrect changes can disrupt shared storage access."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "xsanctl"
 flag = "--force"
 translation_modifier = "forcing the operation without safety checks"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Bypasses safety checks on storage area network operations; may cause data loss on shared storage."
+arity = "Boolean"

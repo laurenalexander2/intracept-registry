@@ -5,6 +5,7 @@ path = "mount_smbfs"
 translation = "Mount a shared folder from an SMB file server."
 verdict = "allow"
 rationale = "Attaches a remote network share to the local directory tree, enabling read-write access by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mount_smbfs"
@@ -12,3 +13,4 @@ flag = "-N"
 translation_modifier = "without prompting for a password"
 verdict = "allow"
 rationale = "Skips the password prompt; credentials must be provided another way."
+arity = "Boolean"

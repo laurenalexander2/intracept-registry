@@ -5,6 +5,7 @@ path = "kswitch"
 translation = "Switch between Kerberos credential caches."
 verdict = "allow"
 rationale = "Changes which credential cache is the default; does not create or destroy credentials."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "kswitch"
@@ -12,6 +13,7 @@ flag = "-c"
 translation_modifier = "switching to a specific named credential cache"
 verdict = "allow"
 rationale = "Selects a different cache by name; does not modify any credentials."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kswitch"
@@ -19,6 +21,7 @@ flag = "-p"
 translation_modifier = "switching to the cache associated with a specific principal"
 verdict = "allow"
 rationale = "Selects a cache by principal name; does not modify any credentials."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kswitch"
@@ -26,3 +29,4 @@ flag = "-i"
 translation_modifier = "choosing the cache interactively"
 verdict = "allow"
 rationale = "Prompts the user to pick a cache; does not modify any credentials."
+arity = "Boolean"

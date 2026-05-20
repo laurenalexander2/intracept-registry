@@ -5,13 +5,15 @@ path = "cancel"
 translation = "Cancel pending print jobs."
 verdict = "allow"
 rationale = "Removes jobs from the print queue, which may lose documents waiting to print."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cancel"
 flag = "-a"
 translation_modifier = "canceling all jobs on all printers"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes every pending print job across all printers at once."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cancel"
@@ -19,6 +21,7 @@ flag = "-u"
 translation_modifier = "canceling all jobs owned by a specific user"
 verdict = "allow"
 rationale = "Removes all pending jobs for one user; those jobs must be resubmitted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cancel"
@@ -26,6 +29,7 @@ flag = "-x"
 translation_modifier = "also deleting the job data files"
 verdict = "allow"
 rationale = "Removes the stored print data in addition to canceling, making recovery impossible."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cancel"
@@ -33,6 +37,7 @@ flag = "-E"
 translation_modifier = "using an encrypted connection to the print server"
 verdict = "allow"
 rationale = "Only changes connection security; does not affect which jobs are canceled."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cancel"
@@ -40,3 +45,4 @@ flag = "-h"
 translation_modifier = "connecting to a specific print server"
 verdict = "allow"
 rationale = "Only changes which server is contacted."
+arity = "Boolean"

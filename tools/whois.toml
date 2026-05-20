@@ -3,8 +3,9 @@
 [[command]]
 path = "whois"
 translation = "Query domain name registration and network information databases."
-verdict = "allow"
-rationale = "Read-only network query; modifies nothing."
+verdict = "ask"
+rationale = "Read-only network query sent across the network to a domain registry server, revealing every domain being investigated."
+risk_class = "net_egress"
 
 [[flag]]
 applies_to = "whois"
@@ -12,6 +13,7 @@ flag = "-h"
 translation_modifier = "querying a specified server instead of the default"
 verdict = "allow"
 rationale = "Redirects the query to a different server; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -19,6 +21,7 @@ flag = "-p"
 translation_modifier = "connecting on a specified port"
 verdict = "allow"
 rationale = "Changes the connection port; still a read-only query."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -26,6 +29,7 @@ flag = "-a"
 translation_modifier = "querying the American internet registry database"
 verdict = "allow"
 rationale = "Selects a specific regional database; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -33,6 +37,7 @@ flag = "-r"
 translation_modifier = "querying the European internet registry database"
 verdict = "allow"
 rationale = "Selects a specific regional database; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -40,6 +45,7 @@ flag = "-Q"
 translation_modifier = "performing a quick lookup without following referrals"
 verdict = "allow"
 rationale = "Limits the query to a single server; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -47,6 +53,7 @@ flag = "-R"
 translation_modifier = "following referrals to other servers recursively"
 verdict = "allow"
 rationale = "Follows referrals for more complete results; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "whois"
@@ -54,3 +61,4 @@ flag = "-S"
 translation_modifier = "showing raw, unfiltered output from the server"
 verdict = "allow"
 rationale = "Disables output filtering; still read-only."
+arity = "Boolean"

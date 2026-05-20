@@ -5,6 +5,7 @@ path = "msgmerge"
 translation = "Merge existing translations with an updated PO template file."
 verdict = "allow"
 rationale = "Combines translations with a new template; writes to the terminal unless --update is used."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msgmerge"
@@ -12,6 +13,7 @@ flag = "-U"
 translation_modifier = "updating the translation file in place"
 verdict = "allow"
 rationale = "Modifies the existing PO file directly, which could discard translations if the template has changed significantly."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "msgmerge"
@@ -19,3 +21,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

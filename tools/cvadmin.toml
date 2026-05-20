@@ -3,5 +3,6 @@
 [[command]]
 path = "cvadmin"
 translation = "Administer Xsan volumes."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Manages shared storage volumes that may affect multiple users."
+risk_class = "novel"

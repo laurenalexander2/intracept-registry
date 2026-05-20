@@ -5,6 +5,7 @@ path = "cksum"
 translation = "Compute checksums and byte counts of files."
 verdict = "allow"
 rationale = "Read-only checksum computation."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cksum"
@@ -12,3 +13,4 @@ flag = "-o"
 translation_modifier = "using a specified historic checksum algorithm instead of the default"
 verdict = "allow"
 rationale = "Only changes which checksum algorithm is used; no state modification."
+arity = "Boolean"

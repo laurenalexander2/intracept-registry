@@ -1,0 +1,33 @@
+# Full-shape valid TOML — [[command]] + [[flag]] + [[combo]] per SCHEMA.md.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 2.
+
+[[command]]
+path = "git push"
+translation = "Upload local commits to a remote repository."
+verdict = "ask"
+rationale = "Publishes local changes to a shared remote; incorrect pushes can disrupt collaborators."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "difficult"
+tags.target = ["repository"]
+tags.safety_override = false
+
+[[flag]]
+applies_to = "git push"
+flag = "--force"
+translation_modifier = "overwriting any conflicting remote history"
+verdict = "warn"
+rationale = "Rewrites the remote branch's commit history; can permanently discard other contributors' work."
+tag_modifiers.reversibility = "impossible"
+tag_modifiers.safety_override = true
+
+[[combo]]
+path = "git push --force"
+translation = "Overwrite the remote branch's history with the local branch, discarding any commits that diverged."
+verdict = "warn"
+rationale = "Rewrites the remote branch's commit history, which can permanently discard other contributors' work."
+tags.scope = "remote"
+tags.effect = ["write"]
+tags.reversibility = "impossible"
+tags.target = ["repository"]
+tags.safety_override = true

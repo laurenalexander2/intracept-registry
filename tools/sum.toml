@@ -5,6 +5,7 @@ path = "sum"
 translation = "Compute a checksum and block count for a file."
 verdict = "allow"
 rationale = "Read-only checksum calculation; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sum"
@@ -12,3 +13,4 @@ flag = "-r"
 translation_modifier = "using the BSD checksum algorithm"
 verdict = "allow"
 rationale = "Only changes which checksum algorithm is used; no state modification."
+arity = "Boolean"

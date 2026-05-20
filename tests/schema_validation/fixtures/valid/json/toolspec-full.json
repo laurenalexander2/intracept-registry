@@ -1,0 +1,24 @@
+{
+  "name": "git",
+  "subcommand_chain": ["push"],
+  "risk_class": "net_egress",
+  "translation": "Upload local commits to a remote repository.",
+  "effects": ["network", "writes"],
+  "flags": [
+    {
+      "name": "--force",
+      "aliases": ["-f"],
+      "description": "Overwrite remote history.",
+      "value_type": "bool",
+      "risk_class_override": "destructive",
+      "effects": ["writes"]
+    }
+  ],
+  "combos": [
+    {
+      "flags": ["--force"],
+      "translation": "Overwrite the remote branch's history with the local branch.",
+      "risk_class": "destructive"
+    }
+  ]
+}

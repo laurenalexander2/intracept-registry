@@ -5,20 +5,23 @@ path = "psql-17"
 translation = "Open the PostgreSQL 17 interactive terminal for executing SQL queries."
 verdict = "allow"
 rationale = "Provides direct SQL access to databases, allowing data modification and schema changes."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "psql-17"
 flag = "-c"
 translation_modifier = "executing a single SQL command and then exiting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs arbitrary SQL directly, including destructive statements like DROP or DELETE, without an interactive session."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
 flag = "-f"
 translation_modifier = "executing SQL commands from a file and then exiting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs an entire SQL script, which may contain destructive operations and is harder to review at execution time."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -26,6 +29,7 @@ flag = "-h"
 translation_modifier = "connecting to a specified database server host"
 verdict = "allow"
 rationale = "Specifies which server to connect to; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -33,6 +37,7 @@ flag = "-U"
 translation_modifier = "connecting as a specified database user"
 verdict = "allow"
 rationale = "Specifies the authentication identity; the user's permissions determine what operations are allowed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -40,6 +45,7 @@ flag = "-d"
 translation_modifier = "connecting to a specified database"
 verdict = "allow"
 rationale = "Selects which database to operate on; does not change what operations can be performed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -47,6 +53,7 @@ flag = "-1"
 translation_modifier = "wrapping all commands in a single transaction that rolls back on error"
 verdict = "allow"
 rationale = "Adds transactional safety by ensuring all commands succeed or none take effect."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -54,6 +61,7 @@ flag = "-w"
 translation_modifier = "connecting without prompting for a password"
 verdict = "allow"
 rationale = "Relies on passwordless authentication methods, which may indicate a less secure connection configuration."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -61,6 +69,7 @@ flag = "-W"
 translation_modifier = "forcing a password prompt before connecting"
 verdict = "allow"
 rationale = "Ensures the user must provide a password, adding an explicit authentication step."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "psql-17"
@@ -68,3 +77,4 @@ flag = "--csv"
 translation_modifier = "formatting query output as comma-separated values"
 verdict = "allow"
 rationale = "Changes output format only; does not affect what queries are executed."
+arity = "Boolean"

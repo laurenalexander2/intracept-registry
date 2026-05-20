@@ -5,12 +5,14 @@ path = "wdutil"
 translation = "Collect wireless diagnostic information and manage Wi-Fi settings."
 verdict = "allow"
 rationale = "Primarily diagnostic; collects Wi-Fi logs and state information."
+risk_class = "novel"
 
 [[command]]
 path = "wdutil diagnose"
 translation = "Run all wireless diagnostic tests and save the results to a directory."
 verdict = "allow"
 rationale = "Collects diagnostic information into files; does not change network settings."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "wdutil diagnose"
@@ -18,21 +20,25 @@ flag = "-f"
 translation_modifier = "saving the output to a specified directory instead of the default location"
 verdict = "allow"
 rationale = "Only changes where diagnostic files are written."
+arity = "Boolean"
 
 [[command]]
 path = "wdutil info"
 translation = "Display detailed information about the current Wi-Fi environment."
 verdict = "allow"
 rationale = "Read-only display of Wi-Fi status; modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "wdutil log"
 translation = "Enable or disable logging for specific network services."
 verdict = "allow"
 rationale = "Toggles diagnostic logging categories; does not change network connectivity."
+risk_class = "novel"
 
 [[command]]
 path = "wdutil dump"
 translation = "Save the temporary Wi-Fi log buffer to a file."
 verdict = "allow"
 rationale = "Writes buffered log data to a file; does not change network settings."
+risk_class = "novel"

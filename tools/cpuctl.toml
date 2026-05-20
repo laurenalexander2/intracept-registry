@@ -3,5 +3,6 @@
 [[command]]
 path = "cpuctl"
 translation = "Manage CPU cores on macOS."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Enables or disables CPU cores, affecting system performance and stability."
+risk_class = "novel"

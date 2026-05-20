@@ -1,0 +1,16 @@
+# Invalid: flag's applies_to references a command not declared in this file.
+
+[[command]]
+path = "orphan-base"
+translation = "Real base command."
+verdict = "allow"
+rationale = "This command exists; the flag below mis-references a different name."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "nonexistent-base"
+flag = "--never"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Flag's applies_to does not match any [[command]] in this file."
+arity = "Boolean"

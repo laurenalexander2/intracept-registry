@@ -5,6 +5,7 @@ path = "opendiff"
 translation = "Open two files or directories in FileMerge for graphical comparison or merging."
 verdict = "allow"
 rationale = "Launches FileMerge for visual diff; does not modify files unless the user explicitly saves a merge."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "opendiff"
@@ -12,3 +13,4 @@ flag = "-merge"
 translation_modifier = "saving the merged result to a specified file"
 verdict = "allow"
 rationale = "Enables writing a merged file, which could overwrite the target if it already exists."
+arity = "Boolean"

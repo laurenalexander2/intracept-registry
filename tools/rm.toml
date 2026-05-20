@@ -5,27 +5,23 @@ path = "rm"
 translation = "Delete files."
 verdict = "allow"
 rationale = "Removes a single named file; prompts for confirmation if the file is not writable."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "rm"
 flag = "-r"
 translation_modifier = "recursively through all subdirectories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes entire directory trees, which can cause significant data loss if misapplied."
-tag_modifiers.reversibility = "impossible"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
 flag = "-R"
 translation_modifier = "recursively through all subdirectories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Equivalent to -r; deletes entire directory trees, which can cause significant data loss if misapplied."
-tag_modifiers.reversibility = "impossible"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -33,16 +29,17 @@ flag = "-f"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Suppresses confirmation prompts and ignores nonexistent files; on a single file the blast radius is narrow, but it removes a safety check."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rm"
 flag = "-rf"
 translation_modifier = "recursively through all subdirectories without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines recursive traversal with suppressed prompts, enabling irreversible destruction of entire directory trees."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "destructive"
 
 [[flag]]
 applies_to = "rm"
@@ -50,6 +47,7 @@ flag = "-i"
 translation_modifier = "prompting for confirmation before each file"
 verdict = "allow"
 rationale = "Adds an interactive confirmation step before every deletion, reducing the chance of accidental removal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -57,6 +55,7 @@ flag = "-I"
 translation_modifier = "prompting for confirmation once when deleting more than three files or removing directories recursively"
 verdict = "allow"
 rationale = "Provides a single batch confirmation prompt for bulk operations, offering meaningful protection with less interruption than -i."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -64,6 +63,7 @@ flag = "-d"
 translation_modifier = "including empty directories"
 verdict = "allow"
 rationale = "Allows removal of directories in addition to regular files, expanding the scope of deletion."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -71,6 +71,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Displays each file as it is removed; does not change what is deleted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -78,7 +79,7 @@ flag = "-W"
 translation_modifier = "attempting to undelete the named files"
 verdict = "allow"
 rationale = "Recovers previously deleted files in a union file system; restores data rather than destroying it."
-tag_modifiers.effect = ["write"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rm"
@@ -86,60 +87,41 @@ flag = "-x"
 translation_modifier = "without crossing filesystem mount points"
 verdict = "allow"
 rationale = "Restricts recursive deletion to the same filesystem, preventing accidental removal of files on mounted volumes."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "rm -rf"
 translation = "Recursively delete an entire directory tree and all its contents without prompting for confirmation, even for read-only files."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Silently and irreversibly destroys entire directory hierarchies with no confirmation or recovery mechanism."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "rm -r"
 translation = "Recursively delete a directory and everything inside it, prompting for confirmation on read-only files."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys entire directory trees, which is effectively irreversible without backups."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "rm -f"
 translation = "Delete files without prompting for confirmation, silently ignoring files that do not exist."
 verdict = "allow"
 rationale = "Suppresses all confirmation prompts and errors for missing files, but the blast radius is limited to explicitly named files."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "rm -i"
 translation = "Delete files, prompting for explicit confirmation before each individual file is removed."
 verdict = "allow"
 rationale = "Interactive confirmation before every deletion provides strong protection against accidental removal."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "rm -I -r"
 translation = "Recursively delete a directory tree, prompting once for confirmation before proceeding with the bulk deletion."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provides a single confirmation prompt before irreversibly destroying an entire directory hierarchy."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"

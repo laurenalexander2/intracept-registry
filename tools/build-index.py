@@ -58,6 +58,17 @@ def _load_toml(path: Path) -> dict:
 _REQUIRED_COMMAND_KEYS = ("path", "translation", "verdict", "rationale")
 _REQUIRED_FLAG_KEYS = ("applies_to", "flag", "translation_modifier", "verdict", "rationale")
 
+# v2 locked vocabularies — kept in sync with tools/lint.py and the frozen
+# JSON-schema snapshot at intracept/fixtures/schema/rule-schema-v2.json.
+# matcher.rs::parse_verdict coerces unknowns to Allow at runtime — TD-H3
+# closes the upstream gap by rejecting unknown verdict values at index
+# build time so the runtime coerce-to-allow path is never exercised on a
+# value the curator actually intended to set.
+_VALID_VERDICTS = frozenset({"allow", "ask", "warn"})
+_VALID_RISK_CLASSES = frozenset({
+    "safe", "net_egress", "novel", "destructive", "priv_esc", "secret_read",
+})
+
 
 def _missing_required(entry: dict, required: tuple[str, ...]) -> list[str]:
     return [k for k in required if k not in entry]
@@ -102,6 +113,18 @@ def _validate_file(path: Path, commands: list[dict], flags: list[dict]) -> list[
         if cmd_path in seen_paths:
             errors.append(f"{path.name}: duplicate command path '{cmd_path}'")
         seen_paths.add(cmd_path)
+        verdict = cmd["verdict"]
+        if verdict not in _VALID_VERDICTS:
+            errors.append(
+                f"{path.name}: [[command]] '{cmd_path}' has invalid verdict "
+                f"'{verdict}' (must be one of {sorted(_VALID_VERDICTS)})"
+            )
+        rc = cmd.get("risk_class")
+        if rc is not None and rc not in _VALID_RISK_CLASSES:
+            errors.append(
+                f"{path.name}: [[command]] '{cmd_path}' has invalid risk_class "
+                f"'{rc}' (must be one of {sorted(_VALID_RISK_CLASSES)})"
+            )
 
     seen_flag_keys: set[str] = set()
     for idx, flag in enumerate(flags):
@@ -125,6 +148,18 @@ def _validate_file(path: Path, commands: list[dict], flags: list[dict]) -> list[
                 f"{path.name}: duplicate flag entry '{key}' (same applies_to+flag)"
             )
         seen_flag_keys.add(key)
+        verdict = flag["verdict"]
+        if verdict not in _VALID_VERDICTS:
+            errors.append(
+                f"{path.name}: [[flag]] '{key}' has invalid verdict "
+                f"'{verdict}' (must be one of {sorted(_VALID_VERDICTS)})"
+            )
+        override = flag.get("risk_class_override")
+        if override is not None and override not in _VALID_RISK_CLASSES:
+            errors.append(
+                f"{path.name}: [[flag]] '{key}' has invalid risk_class_override "
+                f"'{override}' (must be one of {sorted(_VALID_RISK_CLASSES)})"
+            )
     return errors
 
 

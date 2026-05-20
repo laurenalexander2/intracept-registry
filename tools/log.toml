@@ -5,42 +5,49 @@ path = "log"
 translation = "Access the macOS unified logging system."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "log show"
 translation = "Display log messages from the system log or a log archive."
 verdict = "allow"
 rationale = "Read-only display of stored log entries; modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "log stream"
 translation = "Watch new log messages in real time."
 verdict = "allow"
 rationale = "Read-only monitoring of live log entries; modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "log collect"
 translation = "Gather system logs into an archive file for later analysis."
 verdict = "allow"
 rationale = "Creates a copy of log data; does not modify the original logs."
+risk_class = "novel"
 
 [[command]]
 path = "log config"
 translation = "Change the logging level or persistence settings for the system or a specific process."
 verdict = "allow"
 rationale = "Modifies which log messages are captured or retained, which can affect debugging and auditing."
+risk_class = "novel"
 
 [[command]]
 path = "log erase"
 translation = "Delete log data from the system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes log entries, destroying diagnostic and audit information."
+risk_class = "novel"
 
 [[command]]
 path = "log stats"
 translation = "Display a statistical breakdown of log data."
 verdict = "allow"
 rationale = "Read-only analysis of log storage; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "log show"
@@ -48,6 +55,7 @@ flag = "--predicate"
 translation_modifier = "filtering messages using a search expression"
 verdict = "allow"
 rationale = "Only narrows which log entries are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -55,6 +63,7 @@ flag = "--last"
 translation_modifier = "showing only messages from a recent time period"
 verdict = "allow"
 rationale = "Only limits the time range displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -62,6 +71,7 @@ flag = "--info"
 translation_modifier = "including informational-level messages in the output"
 verdict = "allow"
 rationale = "Only adds more log entries to the display."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -69,6 +79,7 @@ flag = "--debug"
 translation_modifier = "including debug-level messages in the output"
 verdict = "allow"
 rationale = "Only adds more log entries to the display."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -76,6 +87,7 @@ flag = "--process"
 translation_modifier = "filtering to messages from a specific process"
 verdict = "allow"
 rationale = "Only narrows which log entries are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -83,6 +95,7 @@ flag = "--style"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes the output format; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -90,6 +103,7 @@ flag = "--start"
 translation_modifier = "showing messages starting from a specific date and time"
 verdict = "allow"
 rationale = "Only limits the time range displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -97,6 +111,7 @@ flag = "--end"
 translation_modifier = "showing messages up to a specific date and time"
 verdict = "allow"
 rationale = "Only limits the time range displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -104,6 +119,7 @@ flag = "--archive"
 translation_modifier = "reading from a log archive file instead of the live system"
 verdict = "allow"
 rationale = "Only changes the data source; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log show"
@@ -111,6 +127,7 @@ flag = "--signpost"
 translation_modifier = "including performance signpost entries in the output"
 verdict = "allow"
 rationale = "Only adds more entries to the display."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log stream"
@@ -118,6 +135,7 @@ flag = "--predicate"
 translation_modifier = "filtering messages using a search expression"
 verdict = "allow"
 rationale = "Only narrows which log entries are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log stream"
@@ -125,6 +143,7 @@ flag = "--level"
 translation_modifier = "setting the minimum message level to display"
 verdict = "allow"
 rationale = "Only controls which severity levels are shown."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log stream"
@@ -132,6 +151,7 @@ flag = "--process"
 translation_modifier = "filtering to messages from a specific process"
 verdict = "allow"
 rationale = "Only narrows which log entries are displayed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log stream"
@@ -139,6 +159,7 @@ flag = "--style"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only changes the output format; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log stream"
@@ -146,6 +167,7 @@ flag = "--timeout"
 translation_modifier = "stopping the stream after a specified duration"
 verdict = "allow"
 rationale = "Only limits how long the stream runs."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log collect"
@@ -153,6 +175,7 @@ flag = "--output"
 translation_modifier = "saving the archive to a specified path"
 verdict = "allow"
 rationale = "Only controls where the archive file is written."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log collect"
@@ -160,6 +183,7 @@ flag = "--last"
 translation_modifier = "collecting only logs from a recent time period"
 verdict = "allow"
 rationale = "Only limits the time range collected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log collect"
@@ -167,6 +191,7 @@ flag = "--start"
 translation_modifier = "collecting logs starting from a specific date and time"
 verdict = "allow"
 rationale = "Only limits the time range collected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log collect"
@@ -174,6 +199,7 @@ flag = "--size"
 translation_modifier = "limiting the archive to a specified size"
 verdict = "allow"
 rationale = "Only limits the amount of data collected."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log config"
@@ -181,6 +207,7 @@ flag = "--status"
 translation_modifier = "displaying the current logging settings instead of changing them"
 verdict = "allow"
 rationale = "Read-only display of configuration; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log config"
@@ -188,6 +215,7 @@ flag = "--reset"
 translation_modifier = "reverting logging settings to their defaults"
 verdict = "allow"
 rationale = "Changes logging configuration, which may stop capturing messages that were previously being recorded."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log config"
@@ -195,6 +223,7 @@ flag = "--mode"
 translation_modifier = "setting the logging level or persistence mode"
 verdict = "allow"
 rationale = "Changes which messages are captured or persisted, affecting diagnostic capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log config"
@@ -202,17 +231,20 @@ flag = "--subsystem"
 translation_modifier = "targeting a specific application or framework subsystem"
 verdict = "allow"
 rationale = "Only scopes the configuration change to a particular subsystem."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log erase"
 flag = "--all"
 translation_modifier = "deleting all log data including fault and error records"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys all system log data, eliminating any diagnostic or audit trail."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "log erase"
 flag = "--ttl"
 translation_modifier = "deleting only time-limited log content"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a subset of log data that may be needed for diagnostics."
+arity = "Boolean"

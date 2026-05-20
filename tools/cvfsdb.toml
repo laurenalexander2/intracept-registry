@@ -3,5 +3,6 @@
 [[command]]
 path = "cvfsdb"
 translation = "Manage the Xsan filesystem database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Directly manipulates the filesystem metadata database."
+risk_class = "novel"

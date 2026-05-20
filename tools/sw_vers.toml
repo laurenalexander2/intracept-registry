@@ -5,6 +5,7 @@ path = "sw_vers"
 translation = "Display macOS system version information."
 verdict = "allow"
 rationale = "Read-only display of OS version; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sw_vers"
@@ -12,6 +13,7 @@ flag = "--productName"
 translation_modifier = "showing only the operating system name"
 verdict = "allow"
 rationale = "Read-only output filter; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sw_vers"
@@ -19,6 +21,7 @@ flag = "--productVersion"
 translation_modifier = "showing only the operating system version number"
 verdict = "allow"
 rationale = "Read-only output filter; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sw_vers"
@@ -26,3 +29,4 @@ flag = "--buildVersion"
 translation_modifier = "showing only the build version identifier"
 verdict = "allow"
 rationale = "Read-only output filter; modifies nothing."
+arity = "Boolean"

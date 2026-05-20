@@ -3,5 +3,6 @@
 [[command]]
 path = "ssh-copy-id"
 translation = "Install a public key on a remote server for passwordless SSH authentication."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Adds a public key to the remote authorized_keys file, granting future access without a password."
+risk_class = "novel"

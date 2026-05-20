@@ -5,6 +5,7 @@ path = "unzip"
 translation = "Extract files from a zip archive."
 verdict = "allow"
 rationale = "Extracts files to disk, potentially overwriting existing files at the destination."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "unzip"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "overwriting existing files without prompting"
 verdict = "allow"
 rationale = "Silently replaces existing files during extraction."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "never overwriting existing files"
 verdict = "allow"
 rationale = "Prevents overwriting; a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "listing the archive contents without extracting"
 verdict = "allow"
 rationale = "Read-only listing; no files are created or modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -33,6 +37,7 @@ flag = "-d"
 translation_modifier = "extracting into a specified directory"
 verdict = "allow"
 rationale = "Changes the extraction destination; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -40,6 +45,7 @@ flag = "-t"
 translation_modifier = "testing the archive integrity without extracting"
 verdict = "allow"
 rationale = "Read-only integrity check; no files are created or modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -47,6 +53,7 @@ flag = "-q"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Suppresses output messages; does not change extraction behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -54,6 +61,7 @@ flag = "-u"
 translation_modifier = "updating only files that are newer than existing copies and extracting new files"
 verdict = "allow"
 rationale = "Overwrites older files and creates new ones during extraction."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -61,6 +69,7 @@ flag = "-f"
 translation_modifier = "extracting only files that already exist on disk and are newer in the archive"
 verdict = "allow"
 rationale = "Overwrites existing files with newer versions from the archive."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -68,6 +77,7 @@ flag = "-p"
 translation_modifier = "extracting file data to standard output instead of creating files"
 verdict = "allow"
 rationale = "Does not create files on disk; data is written to standard output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -75,6 +85,7 @@ flag = "-j"
 translation_modifier = "extracting without recreating the directory structure"
 verdict = "allow"
 rationale = "Flattens all files into one directory, which may cause files with the same name to overwrite each other."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -82,6 +93,7 @@ flag = "-x"
 translation_modifier = "excluding specified files from extraction"
 verdict = "allow"
 rationale = "Reduces the set of files extracted; a scope-reducing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -89,6 +101,7 @@ flag = "-C"
 translation_modifier = "matching filenames without regard to uppercase or lowercase"
 verdict = "allow"
 rationale = "Changes filename matching behavior; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "unzip"
@@ -96,3 +109,4 @@ flag = "-Z"
 translation_modifier = "displaying detailed archive information instead of extracting"
 verdict = "allow"
 rationale = "Read-only display of archive metadata; no files are modified."
+arity = "Boolean"

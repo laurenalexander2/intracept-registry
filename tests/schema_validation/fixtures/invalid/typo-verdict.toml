@@ -1,0 +1,14 @@
+# TD-H3 motivating fixture: typo'd verdict value.
+# build-index.py and lint.py both must reject this.
+# Schema fixture for Phase 1; invalid case 1.
+
+[[command]]
+path = "ls"
+translation = "List directory contents."
+verdict = "alllow"
+rationale = "Typo in verdict value; must be rejected."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false

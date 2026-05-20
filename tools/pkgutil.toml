@@ -5,6 +5,7 @@ path = "pkgutil"
 translation = "Query and manipulate macOS installer packages and installation receipts."
 verdict = "allow"
 rationale = "Primarily reads package metadata and receipt information."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -12,6 +13,7 @@ flag = "--packages"
 translation_modifier = "listing all installed package IDs"
 verdict = "allow"
 rationale = "Read-only listing of installed packages."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -19,6 +21,7 @@ flag = "--pkgs-plist"
 translation_modifier = "listing all installed package IDs in property list format"
 verdict = "allow"
 rationale = "Read-only listing in plist format."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -26,6 +29,7 @@ flag = "--files"
 translation_modifier = "listing all files installed by a specific package"
 verdict = "allow"
 rationale = "Read-only listing of files from a package receipt."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -33,6 +37,7 @@ flag = "--only-files"
 translation_modifier = "listing only files, excluding directories"
 verdict = "allow"
 rationale = "Filters the file listing to exclude directories."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -40,6 +45,7 @@ flag = "--only-dirs"
 translation_modifier = "listing only directories, excluding files"
 verdict = "allow"
 rationale = "Filters the file listing to exclude regular files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -47,6 +53,7 @@ flag = "--pkg-info"
 translation_modifier = "displaying detailed information about a specific package"
 verdict = "allow"
 rationale = "Read-only display of package metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -54,6 +61,7 @@ flag = "--pkg-info-plist"
 translation_modifier = "displaying detailed package information in property list format"
 verdict = "allow"
 rationale = "Read-only display of package metadata in plist format."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -61,6 +69,7 @@ flag = "--export-plist"
 translation_modifier = "printing all receipt information for a package in property list format"
 verdict = "allow"
 rationale = "Read-only export of receipt data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -68,6 +77,7 @@ flag = "--forget"
 translation_modifier = "removing the receipt for a specified package from the database"
 verdict = "allow"
 rationale = "Deletes the installation receipt, making the system forget a package was installed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -75,6 +85,7 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Bypasses confirmation for package database modifications."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -82,6 +93,7 @@ flag = "--volume"
 translation_modifier = "operating on a specific volume instead of the root volume"
 verdict = "allow"
 rationale = "Changes which volume is queried; does not modify data by itself."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -89,6 +101,7 @@ flag = "--regexp"
 translation_modifier = "matching package IDs using a regular expression pattern"
 verdict = "allow"
 rationale = "Changes how package IDs are matched; does not modify data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -96,6 +109,7 @@ flag = "--expand"
 translation_modifier = "expanding a flat package into a directory for inspection"
 verdict = "allow"
 rationale = "Extracts package contents to a new directory; does not install anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -103,6 +117,7 @@ flag = "--flatten"
 translation_modifier = "creating a flat package from a directory"
 verdict = "allow"
 rationale = "Creates a new package file; may overwrite an existing file at the output path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -110,6 +125,7 @@ flag = "--bom"
 translation_modifier = "extracting bill of materials files from a package"
 verdict = "allow"
 rationale = "Extracts bill of materials files to a temporary directory for inspection."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -117,6 +133,7 @@ flag = "--payload-files"
 translation_modifier = "listing the files archived within an uninstalled package"
 verdict = "allow"
 rationale = "Read-only listing of files inside a package payload."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -124,6 +141,7 @@ flag = "--check-signature"
 translation_modifier = "verifying the signature and certificate chain of a package"
 verdict = "allow"
 rationale = "Read-only verification of the package signature."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -131,6 +149,7 @@ flag = "--learn"
 translation_modifier = "updating the access control list entries in a package receipt"
 verdict = "allow"
 rationale = "Modifies receipt data, which affects future repair operations on the package."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -138,6 +157,7 @@ flag = "--file-info"
 translation_modifier = "displaying metadata known about a specific file path"
 verdict = "allow"
 rationale = "Read-only display of file receipt information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pkgutil"
@@ -145,3 +165,4 @@ flag = "--groups"
 translation_modifier = "listing all package groups"
 verdict = "allow"
 rationale = "Read-only listing of package groups."
+arity = "Boolean"

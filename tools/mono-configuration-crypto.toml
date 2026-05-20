@@ -5,6 +5,7 @@ path = "mono-configuration-crypto"
 translation = "Manage encryption keys and encrypt or decrypt .NET configuration file sections."
 verdict = "allow"
 rationale = "Creates, imports, exports, or removes cryptographic keys that protect configuration data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -12,13 +13,15 @@ flag = "-c"
 translation_modifier = "creating a new RSA key pair"
 verdict = "allow"
 rationale = "Generates a new key that may replace an existing one in the key store."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
 flag = "-r"
 translation_modifier = "removing a key container from the store"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes a cryptographic key; encrypted configuration sections become unreadable without the key."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -26,6 +29,7 @@ flag = "-e"
 translation_modifier = "encrypting a configuration section"
 verdict = "allow"
 rationale = "Encrypts a section of the config file, making it unreadable without the key."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -33,6 +37,7 @@ flag = "-d"
 translation_modifier = "decrypting a configuration section"
 verdict = "allow"
 rationale = "Restores an encrypted section to plaintext; read-oriented operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -40,6 +45,7 @@ flag = "-l"
 translation_modifier = "listing all key container names in the store"
 verdict = "allow"
 rationale = "Read-only listing of key containers."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -47,6 +53,7 @@ flag = "-x"
 translation_modifier = "exporting a key from a container to a file"
 verdict = "allow"
 rationale = "Writes a cryptographic key to a file, which could expose it."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mono-configuration-crypto"
@@ -54,3 +61,4 @@ flag = "-i"
 translation_modifier = "importing a key from a file into a container"
 verdict = "allow"
 rationale = "Adds or replaces a key in the store from an external file."
+arity = "Boolean"

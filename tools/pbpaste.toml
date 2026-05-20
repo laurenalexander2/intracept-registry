@@ -5,6 +5,7 @@ path = "pbpaste"
 translation = "Output the current contents of the macOS clipboard to standard output."
 verdict = "allow"
 rationale = "Read-only retrieval of clipboard contents."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pbpaste"
@@ -12,6 +13,7 @@ flag = "-pboard"
 translation_modifier = "reading from a specific pasteboard instead of the default general one"
 verdict = "allow"
 rationale = "Selects which pasteboard to read from; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pbpaste"
@@ -19,3 +21,4 @@ flag = "-Prefer"
 translation_modifier = "preferring a specific data type such as plain text, rich text, or PostScript"
 verdict = "allow"
 rationale = "Changes which format is preferred when reading; still read-only."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "slapcat"
 translation = "Export the contents of an LDAP database to LDAP data interchange format."
 verdict = "allow"
 rationale = "Read-only export of database contents; the database is not modified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "slapcat"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "writing output to a specified file"
 verdict = "allow"
 rationale = "Directs output to a file; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapcat"
@@ -19,3 +21,4 @@ flag = "-a"
 translation_modifier = "filtering output to only entries matching a specified condition"
 verdict = "allow"
 rationale = "Restricts output scope; no state modification."
+arity = "Boolean"

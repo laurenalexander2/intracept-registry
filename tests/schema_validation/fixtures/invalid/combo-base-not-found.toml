@@ -1,0 +1,15 @@
+# Invalid: combo path does not start with any declared command path.
+
+[[command]]
+path = "cb-real"
+translation = "The actually declared command."
+verdict = "allow"
+rationale = "Combo below refers to a different name."
+risk_class = "safe"
+
+[[combo]]
+path = "cb-imaginary --flag"
+translation = "Combo with no matching base."
+verdict = "ask"
+rationale = "Combo path starts with 'cb-imaginary' which is not declared as any [[command]]."
+risk_class = "novel"

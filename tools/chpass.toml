@@ -3,5 +3,6 @@
 [[command]]
 path = "chpass"
 translation = "Change user account information."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies user account details in the system directory."
+risk_class = "novel"

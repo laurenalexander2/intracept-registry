@@ -5,6 +5,8 @@ on:
     paths:
       - 'tools/**/*.toml'
       - 'tools/lint.py'
+      - 'tools/build-index.py'
+      - 'registry.json'
 
 jobs:
   lint:
@@ -19,5 +21,8 @@ jobs:
       - name: Run registry linter
         run: python tools/lint.py tools/
 
-      - name: Run lint tests
-        run: python -m pytest tools/test_lint.py -v
+      - name: Run lint + build-index tests
+        run: python -m pytest tools/ -v
+
+      - name: Verify registry.json is in sync with tools/*.toml (TD-H4)
+        run: python tools/build-index.py --check

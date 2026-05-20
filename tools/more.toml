@@ -5,6 +5,7 @@ path = "more"
 translation = "Display file contents one screen at a time in the terminal."
 verdict = "allow"
 rationale = "Read-only display of file contents; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "more"
@@ -12,6 +13,7 @@ flag = "-N"
 translation_modifier = "showing line numbers at the start of each line"
 verdict = "allow"
 rationale = "Adds line numbers to the display; purely cosmetic and changes nothing on disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -19,6 +21,7 @@ flag = "-i"
 translation_modifier = "ignoring upper and lower case differences when searching"
 verdict = "allow"
 rationale = "Makes text searches case-insensitive; read-only behavior change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "collapsing multiple blank lines into a single blank line"
 verdict = "allow"
 rationale = "Compresses consecutive blank lines in the display; does not alter the file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -33,6 +37,7 @@ flag = "-S"
 translation_modifier = "cutting off long lines at the screen edge instead of wrapping them"
 verdict = "allow"
 rationale = "Changes how long lines are displayed; does not modify the file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -40,6 +45,7 @@ flag = "-F"
 translation_modifier = "exiting immediately if the entire file fits on one screen"
 verdict = "allow"
 rationale = "Skips the pager entirely for short files; read-only convenience behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -47,6 +53,7 @@ flag = "-n"
 translation_modifier = "hiding line numbers from prompts and status messages"
 verdict = "allow"
 rationale = "Suppresses line number information in the display; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "more"
@@ -54,3 +61,4 @@ flag = "+F"
 translation_modifier = "following the end of the file in real time as new content is added"
 verdict = "allow"
 rationale = "Continuously watches for new data appended to the file; read-only monitoring."
+arity = "Boolean"

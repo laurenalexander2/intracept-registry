@@ -5,51 +5,60 @@ path = "sqlx"
 translation = "Run the SQLx command-line utility for managing SQL databases in Rust projects."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx database"
 translation = "Manage database creation and deletion."
 verdict = "allow"
 rationale = "Subcommand group for creating and dropping databases."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx database create"
 translation = "Create the database specified in the connection string."
 verdict = "allow"
 rationale = "Creates a new database; reversible by dropping it."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx database drop"
 translation = "Drop the database specified in the connection string."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the entire database and all its data; irrecoverable without backups."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx prepare"
 translation = "Generate query metadata for offline compile-time verification."
 verdict = "allow"
 rationale = "Reads the database schema and generates metadata files; does not modify the database."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx migrate"
 translation = "Manage database schema migrations."
 verdict = "allow"
 rationale = "Subcommand group for creating and running schema migrations."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx migrate run"
 translation = "Run pending database migrations."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Applies schema changes to the database which may alter tables, columns, or data; reversal requires a separate down migration."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx migrate revert"
 translation = "Revert the last applied database migration."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rolls back schema changes which may drop tables or columns; data in those structures may be lost."
+risk_class = "novel"
 
 [[command]]
 path = "sqlx migrate add"
 translation = "Create a new migration file."
 verdict = "allow"
 rationale = "Creates an empty migration file in the project; does not modify the database."
+risk_class = "novel"

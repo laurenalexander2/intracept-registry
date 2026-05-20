@@ -3,8 +3,9 @@
 [[command]]
 path = "slapconfig"
 translation = "Configure the OpenDirectory LDAP server and related background services."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies LDAP server configuration; incorrect changes can break directory services and authentication."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "slapconfig"
@@ -12,6 +13,7 @@ flag = "-defaultsuffix"
 translation_modifier = "displaying the default LDAP suffix based on DNS name"
 verdict = "allow"
 rationale = "Read-only query of the default suffix."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapconfig"
@@ -19,31 +21,36 @@ flag = "-getstyle"
 translation_modifier = "displaying whether the server is master, replica, client, or standalone"
 verdict = "allow"
 rationale = "Read-only operation that displays the current directory replication style without making changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapconfig"
 flag = "-destroyldapserver"
 translation_modifier = "turning off the LDAP server and deleting its database"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the LDAP database and notifies peers of removal; directory data is irrecoverable without backups."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapconfig"
 flag = "-createldapmasterandadmin"
 translation_modifier = "creating a new master LDAP server with an administrator account"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Sets up a new directory master which changes the authentication infrastructure."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapconfig"
 flag = "-createreplica"
 translation_modifier = "creating a new replica from an existing LDAP master"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Establishes replication which copies and synchronizes directory data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "slapconfig"
 flag = "-addreplica"
 translation_modifier = "adding a replication link with a specified server"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates unidirectional replication; incorrect setup can cause data inconsistencies."
+arity = "Boolean"

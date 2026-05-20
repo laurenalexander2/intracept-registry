@@ -5,6 +5,7 @@ path = "fping"
 translation = "Send ICMP ping requests to multiple hosts in parallel."
 verdict = "allow"
 rationale = "Read-only network diagnostic that sends ICMP echo requests and reports responses."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "fping"
@@ -12,6 +13,7 @@ flag = "-g"
 translation_modifier = "generating a target list from a CIDR range or IP range"
 verdict = "allow"
 rationale = "Expands the target list; still sends only ICMP echo requests."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "sending a specific number of pings to each target"
 verdict = "allow"
 rationale = "Only changes how many pings are sent; read-only network diagnostic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "continuously pinging targets in a loop"
 verdict = "allow"
 rationale = "Sends pings indefinitely; still a read-only diagnostic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -33,6 +37,7 @@ flag = "-a"
 translation_modifier = "showing only hosts that are reachable"
 verdict = "allow"
 rationale = "Only filters the output; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -40,6 +45,7 @@ flag = "-u"
 translation_modifier = "showing only hosts that are unreachable"
 verdict = "allow"
 rationale = "Only filters the output; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -47,6 +53,7 @@ flag = "-q"
 translation_modifier = "suppressing per-ping output and showing only summary"
 verdict = "allow"
 rationale = "Only changes the output format; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fping"
@@ -54,3 +61,4 @@ flag = "--all"
 translation_modifier = "pinging all addresses in the specified network range"
 verdict = "allow"
 rationale = "Sends ICMP packets to all addresses in a range; read-only network probing."
+arity = "Boolean"

@@ -3,5 +3,6 @@
 [[command]]
 path = "pg_upgrade-17"
 translation = "Upgrade a PostgreSQL database cluster to a new major version."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the database cluster in place; a failed upgrade can leave the cluster in an unusable state."
+risk_class = "novel"

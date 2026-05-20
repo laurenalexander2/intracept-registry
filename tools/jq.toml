@@ -7,11 +7,7 @@ path = "jq"
 translation = "Process and transform JSON data using filter expressions."
 verdict = "allow"
 rationale = "Reads JSON from input or files and writes transformed results to the terminal; does not modify source files."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Input handling ───────────────────────────────────────────────────────────
 
@@ -21,6 +17,7 @@ flag = "-n"
 translation_modifier = "using null as the input instead of reading data"
 verdict = "allow"
 rationale = "Changes the input source to null; useful for constructing JSON from scratch."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -28,6 +25,7 @@ flag = "-s"
 translation_modifier = "reading all inputs into a single array before processing"
 verdict = "allow"
 rationale = "Changes how input is consumed; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -35,6 +33,7 @@ flag = "-R"
 translation_modifier = "reading each input line as a plain string instead of JSON"
 verdict = "allow"
 rationale = "Changes how input is parsed; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -42,6 +41,7 @@ flag = "--slurpfile"
 translation_modifier = "loading a JSON file into a named variable as an array"
 verdict = "allow"
 rationale = "Reads an additional file for use in the filter; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -49,6 +49,7 @@ flag = "--rawfile"
 translation_modifier = "loading a file's raw text into a named string variable"
 verdict = "allow"
 rationale = "Reads an additional file as plain text for use in the filter; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -56,6 +57,7 @@ flag = "--jsonargs"
 translation_modifier = "treating remaining arguments as JSON values instead of filenames"
 verdict = "allow"
 rationale = "Changes how trailing arguments are interpreted; does not modify files."
+arity = "Boolean"
 
 # ── Output formatting ────────────────────────────────────────────────────────
 
@@ -65,6 +67,7 @@ flag = "-r"
 translation_modifier = "outputting raw strings without JSON quoting"
 verdict = "allow"
 rationale = "Changes output formatting; does not modify input files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -72,6 +75,7 @@ flag = "--raw-output0"
 translation_modifier = "outputting raw strings separated by null bytes instead of newlines"
 verdict = "allow"
 rationale = "Changes output delimiters for use with xargs -0; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -79,6 +83,7 @@ flag = "-c"
 translation_modifier = "outputting compact single-line JSON"
 verdict = "allow"
 rationale = "Changes output formatting; does not modify input files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -86,6 +91,7 @@ flag = "-j"
 translation_modifier = "outputting raw strings without a trailing newline"
 verdict = "allow"
 rationale = "Changes output formatting; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -93,6 +99,7 @@ flag = "-S"
 translation_modifier = "sorting object keys alphabetically in the output"
 verdict = "allow"
 rationale = "Changes output ordering; does not modify input files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -100,6 +107,7 @@ flag = "--tab"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output indentation to tabs; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -107,6 +115,7 @@ flag = "--indent"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes the number of spaces used for indentation; purely cosmetic."
+arity = "Boolean"
 
 # ── Exit behavior ────────────────────────────────────────────────────────────
 
@@ -116,6 +125,7 @@ flag = "-e"
 translation_modifier = "setting the exit code based on whether the output is null or false"
 verdict = "allow"
 rationale = "Changes the exit code behavior; useful for conditionals in scripts."
+arity = "Boolean"
 
 # ── Variables and filter source ──────────────────────────────────────────────
 
@@ -125,6 +135,7 @@ flag = "--arg"
 translation_modifier = "passing a named string variable into the filter"
 verdict = "allow"
 rationale = "Provides input to the jq program; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -132,6 +143,7 @@ flag = "--argjson"
 translation_modifier = "passing a named JSON value into the filter"
 verdict = "allow"
 rationale = "Provides input to the jq program as parsed JSON; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -139,6 +151,7 @@ flag = "--args"
 translation_modifier = "treating remaining arguments as string values for positional access"
 verdict = "allow"
 rationale = "Provides positional string arguments accessible via $ARGS; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jq"
@@ -146,6 +159,7 @@ flag = "-f"
 translation_modifier = "loading the filter expression from a file instead of the command line"
 verdict = "allow"
 rationale = "Changes where the filter is read from; does not modify files."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -154,30 +168,18 @@ path = "jq -e"
 translation = "Process JSON data and set the exit code to indicate whether the result is null or false, for use in conditional scripts."
 verdict = "allow"
 rationale = "Adds exit-code signaling to the read-only JSON filter, enabling shell-level branching on query results."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "jq -r"
 translation = "Process JSON data and output string values without surrounding quotes or JSON formatting."
 verdict = "allow"
 rationale = "Strips JSON quoting from string output, commonly used to extract plain-text values for use in shell pipelines."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "jq -s"
 translation = "Read all JSON inputs into a single array, then process the combined data as one unit."
 verdict = "allow"
 rationale = "Collects multiple JSON values into one array before filtering, useful for cross-document aggregation."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"

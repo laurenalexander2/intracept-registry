@@ -5,6 +5,7 @@ path = "netstat"
 translation = "Display network connections, routing tables, interface statistics, and protocol information."
 verdict = "allow"
 rationale = "Read-only display of network status information; modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "netstat"
@@ -12,6 +13,7 @@ flag = "-a"
 translation_modifier = "including server (listening) connections"
 verdict = "allow"
 rationale = "Shows additional connection information; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "showing addresses as numbers instead of resolving hostnames"
 verdict = "allow"
 rationale = "Changes output format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -26,6 +29,7 @@ flag = "-r"
 translation_modifier = "showing the routing table"
 verdict = "allow"
 rationale = "Read-only display of routing information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -33,6 +37,7 @@ flag = "-s"
 translation_modifier = "showing per-protocol statistics"
 verdict = "allow"
 rationale = "Read-only display of protocol statistics."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -40,6 +45,7 @@ flag = "-i"
 translation_modifier = "showing network interface state"
 verdict = "allow"
 rationale = "Read-only display of interface information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -47,6 +53,7 @@ flag = "-l"
 translation_modifier = "showing full IPv6 addresses without truncation"
 verdict = "allow"
 rationale = "Only changes address display format; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -54,6 +61,7 @@ flag = "-p"
 translation_modifier = "limited to a specific network protocol"
 verdict = "allow"
 rationale = "Filters output to one protocol; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -61,6 +69,7 @@ flag = "-f"
 translation_modifier = "limited to a specific address family"
 verdict = "allow"
 rationale = "Filters output to one address family; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -68,6 +77,7 @@ flag = "-L"
 translation_modifier = "showing the size of connection listen queues"
 verdict = "allow"
 rationale = "Read-only display of queue information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -75,6 +85,7 @@ flag = "-W"
 translation_modifier = "showing full addresses without truncating"
 verdict = "allow"
 rationale = "Only changes output formatting; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -82,6 +93,7 @@ flag = "-b"
 translation_modifier = "showing byte counts for each interface"
 verdict = "allow"
 rationale = "Adds byte count information to the display; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -89,6 +101,7 @@ flag = "-w"
 translation_modifier = "refreshing the display at a specified interval in seconds"
 verdict = "allow"
 rationale = "Continuously displays updated statistics; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -96,6 +109,7 @@ flag = "-g"
 translation_modifier = "showing multicast group memberships"
 verdict = "allow"
 rationale = "Read-only display of multicast information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "netstat"
@@ -103,3 +117,4 @@ flag = "-m"
 translation_modifier = "showing memory buffer statistics"
 verdict = "allow"
 rationale = "Read-only display of memory management information."
+arity = "Boolean"

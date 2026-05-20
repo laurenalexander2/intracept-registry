@@ -1,0 +1,15 @@
+# Invalid: flag entry missing the required "flag" field.
+
+[[command]]
+path = "mfn"
+translation = "Base command for the broken flag below."
+verdict = "allow"
+rationale = "Base is fine; the flag entry is missing the flag-name field."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "mfn"
+translation_modifier = ""
+verdict = "allow"
+rationale = "Required field 'flag' is absent."
+arity = "Boolean"

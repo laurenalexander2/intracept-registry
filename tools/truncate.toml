@@ -3,5 +3,6 @@
 [[command]]
 path = "truncate"
 translation = "Set a file to a specified size, extending or shrinking it."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Shrinking a file permanently discards data beyond the new size; recovery requires backups."
+risk_class = "novel"

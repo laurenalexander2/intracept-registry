@@ -5,6 +5,7 @@ path = "mount_apfs"
 translation = "Mount an APFS volume to the filesystem."
 verdict = "allow"
 rationale = "Attaches a local APFS volume to the directory tree, changing the directory tree for all processes."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mount_apfs"
@@ -12,3 +13,4 @@ flag = "-s"
 translation_modifier = "mounting a specific snapshot of the volume as read-only"
 verdict = "allow"
 rationale = "Mounts a point-in-time snapshot; read-only and does not affect the live volume."
+arity = "Boolean"

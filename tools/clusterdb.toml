@@ -5,6 +5,7 @@ path = "clusterdb"
 translation = "Cluster all tables in a PostgreSQL database."
 verdict = "allow"
 rationale = "Rewrites table data on disk for physical ordering, locking tables during the process."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "clusterdb"
@@ -12,3 +13,4 @@ flag = "--all"
 translation_modifier = "operating on all databases in the cluster"
 verdict = "allow"
 rationale = "Affects every database in the PostgreSQL cluster, greatly increasing blast radius."
+arity = "Boolean"

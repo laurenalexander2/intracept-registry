@@ -7,11 +7,7 @@ path = "find"
 translation = "Search for files and directories matching specified criteria."
 verdict = "allow"
 rationale = "Read-only search that lists matching files without modifying them."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Name and path filters ────────────────────────────────────────────────────
 
@@ -21,6 +17,7 @@ flag = "-name"
 translation_modifier = "matching files by name pattern"
 verdict = "allow"
 rationale = "Filters search results by filename; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -28,6 +25,7 @@ flag = "-iname"
 translation_modifier = "matching files by name pattern, ignoring case"
 verdict = "allow"
 rationale = "Case-insensitive filename filter; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -35,6 +33,7 @@ flag = "-path"
 translation_modifier = "matching files by their full path pattern"
 verdict = "allow"
 rationale = "Filters by full pathname; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -42,6 +41,7 @@ flag = "-regex"
 translation_modifier = "matching files whose full path matches a regular expression"
 verdict = "allow"
 rationale = "Filters by regex on the entire path; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -49,6 +49,7 @@ flag = "-iregex"
 translation_modifier = "matching files whose full path matches a regular expression, ignoring case"
 verdict = "allow"
 rationale = "Case-insensitive regex filter on the full path; does not modify files."
+arity = "Boolean"
 
 # ── Type and attribute filters ───────────────────────────────────────────────
 
@@ -58,6 +59,7 @@ flag = "-type"
 translation_modifier = "matching only the specified file type"
 verdict = "allow"
 rationale = "Filters by type (file, directory, symbolic link, etc.); does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -65,6 +67,7 @@ flag = "-empty"
 translation_modifier = "matching only empty files or directories"
 verdict = "allow"
 rationale = "Filters to empty items; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -72,6 +75,7 @@ flag = "-size"
 translation_modifier = "matching files by size"
 verdict = "allow"
 rationale = "Filters by file size; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -79,6 +83,7 @@ flag = "-perm"
 translation_modifier = "matching files by permission bits"
 verdict = "allow"
 rationale = "Filters by file permissions; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -86,6 +91,7 @@ flag = "-user"
 translation_modifier = "matching files owned by a specific user"
 verdict = "allow"
 rationale = "Filters by file owner; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -93,6 +99,7 @@ flag = "-group"
 translation_modifier = "matching files belonging to a specific group"
 verdict = "allow"
 rationale = "Filters by file group; does not modify files."
+arity = "Boolean"
 
 # ── Time filters ─────────────────────────────────────────────────────────────
 
@@ -102,6 +109,7 @@ flag = "-mtime"
 translation_modifier = "matching files by last modification time"
 verdict = "allow"
 rationale = "Filters by modification date; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -109,6 +117,7 @@ flag = "-mmin"
 translation_modifier = "matching files modified within a specified number of minutes"
 verdict = "allow"
 rationale = "Filters by recent modification time; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -116,6 +125,7 @@ flag = "-ctime"
 translation_modifier = "matching files by last status change time"
 verdict = "allow"
 rationale = "Filters by inode change date; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -123,6 +133,7 @@ flag = "-atime"
 translation_modifier = "matching files by last access time"
 verdict = "allow"
 rationale = "Filters by access date; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -130,6 +141,7 @@ flag = "-newer"
 translation_modifier = "matching files modified more recently than a reference file"
 verdict = "allow"
 rationale = "Compares modification times; does not modify files."
+arity = "Boolean"
 
 # ── Depth and traversal control ──────────────────────────────────────────────
 
@@ -139,6 +151,7 @@ flag = "-maxdepth"
 translation_modifier = "limiting the search to a specified number of directory levels"
 verdict = "allow"
 rationale = "Restricts the search depth; a scope-limiting option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -146,6 +159,7 @@ flag = "-mindepth"
 translation_modifier = "skipping results above a specified directory depth"
 verdict = "allow"
 rationale = "Excludes shallow results from the output; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -153,6 +167,7 @@ flag = "-depth"
 translation_modifier = "processing directory contents before the directory itself"
 verdict = "allow"
 rationale = "Changes traversal order; does not modify files on its own."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -160,6 +175,7 @@ flag = "-prune"
 translation_modifier = "skipping the contents of matched directories"
 verdict = "allow"
 rationale = "Prevents descent into matching directories; a scope-limiting option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -167,6 +183,7 @@ flag = "-L"
 translation_modifier = "following symbolic links during traversal"
 verdict = "allow"
 rationale = "Follows symbolic links, which may expand the search scope but remains read-only by default."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -174,6 +191,7 @@ flag = "-x"
 translation_modifier = "without crossing filesystem boundaries"
 verdict = "allow"
 rationale = "Restricts search to the current filesystem; a scope-limiting option."
+arity = "Boolean"
 
 # ── Boolean operators ────────────────────────────────────────────────────────
 
@@ -183,6 +201,7 @@ flag = "-not"
 translation_modifier = "inverting the next condition"
 verdict = "allow"
 rationale = "Negates a filter expression; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -190,6 +209,7 @@ flag = "-or"
 translation_modifier = "matching if either the previous or the next condition is true"
 verdict = "allow"
 rationale = "Combines filter expressions with logical OR; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -197,6 +217,7 @@ flag = "-and"
 translation_modifier = "requiring both the previous and the next condition to be true"
 verdict = "allow"
 rationale = "Combines filter expressions with logical AND; does not modify files."
+arity = "Boolean"
 
 # ── Actions ──────────────────────────────────────────────────────────────────
 
@@ -206,6 +227,7 @@ flag = "-print"
 translation_modifier = "printing each matching path on its own line"
 verdict = "allow"
 rationale = "Default action; outputs matching paths without modifying files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -213,6 +235,7 @@ flag = "-print0"
 translation_modifier = "separating results with null characters instead of newlines"
 verdict = "allow"
 rationale = "Changes output formatting for safe piping to xargs; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -220,7 +243,7 @@ flag = "-exec"
 translation_modifier = "running a specified command on each matching file"
 verdict = "allow"
 rationale = "Executes an arbitrary command for each result; the risk depends entirely on the command being run."
-tag_modifiers.effect = ["execute"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -228,7 +251,7 @@ flag = "-execdir"
 translation_modifier = "running a specified command from each matching file's directory"
 verdict = "allow"
 rationale = "Executes a command from the file's directory; slightly safer than -exec but risk still depends on the command."
-tag_modifiers.effect = ["execute"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
@@ -236,16 +259,16 @@ flag = "-ok"
 translation_modifier = "prompting for confirmation before running a command on each matching file"
 verdict = "allow"
 rationale = "Like -exec but asks before each execution, preventing accidental operations."
-tag_modifiers.effect = ["execute"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "find"
 flag = "-delete"
 translation_modifier = "deleting every matching file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes all files matching the search criteria without confirmation or recoverability."
-tag_modifiers.effect = ["delete"]
-tag_modifiers.reversibility = "impossible"
+arity = "Boolean"
+risk_class_override = "destructive"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -254,74 +277,46 @@ path = "find -name -type"
 translation = "Search for files or directories matching a name pattern and restricted to a specific file type such as regular file or directory."
 verdict = "allow"
 rationale = "Combines two read-only filters to narrow search results precisely."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "find -delete -name"
 translation = "Search for files matching a name pattern and permanently delete every match from disk."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines a filename filter with immediate deletion, permanently removing all matching files with no recovery path."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "find -exec -name"
 translation = "Search for files matching a name pattern and run a specified command on each match."
 verdict = "allow"
 rationale = "The risk depends entirely on the command passed to -exec; the find portion is a read-only filter."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "find -delete -empty"
 translation = "Find all empty files and directories and permanently delete them."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Silently removes every empty file and directory under the search path with no confirmation or recovery."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "find -delete -mtime"
 translation = "Find files by their last modification time and permanently delete every match."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Combines a time-based filter with immediate deletion, which can silently remove large numbers of files based on age."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "find -regex -type"
 translation = "Search for files or directories whose full path matches a regular expression, restricted to a specific file type."
 verdict = "allow"
 rationale = "Combines two read-only filters using regex for flexible path matching."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "find -delete -name -type"
 translation = "Search for entries matching a name pattern and file type, then permanently delete every match."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Targets files precisely by name and type before deleting, but still permanently removes all matches with no recovery."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"

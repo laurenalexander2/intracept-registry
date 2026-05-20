@@ -3,76 +3,88 @@
 [[command]]
 path = "mkpassdb"
 translation = "Create or modify the macOS Server password server database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Directly manipulates the authentication database; incorrect changes can lock out users or compromise security."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --deleteslot"
 translation = "Invalidate a user slot in the password server database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes a user's authentication entry from the database."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --dump"
 translation = "Display all user IDs and names stored in the password server database."
 verdict = "allow"
 rationale = "Read-only listing of database entries."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --header"
 translation = "Display the password server database header information."
 verdict = "allow"
 rationale = "Read-only display of database metadata."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --key"
 translation = "Display the RSA public key stored in the password server database."
 verdict = "allow"
 rationale = "Read-only display of the public key."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --list"
 translation = "List all supported authentication methods available to the password server."
 verdict = "allow"
 rationale = "Read-only listing that does not require root."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --mergedb"
 translation = "Merge a snapshot of a password server database into the current database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Overwrites authentication entries in the live database, which can disrupt user access."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --setadmin"
 translation = "Promote a user slot to administrator privileges in the password server."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants elevated privileges that allow full control over the password server."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --setglobalpolicy"
 translation = "Set the default password policies for all users on the password server."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes authentication policies server-wide, potentially locking out users who do not meet the new policy."
+risk_class = "novel"
 
 [[command]]
 path = "mkpassdb --rekeydb"
 translation = "Generate a new RSA key pair for the password server database."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Replaces encryption keys; existing users will not be able to authenticate until reconfigured."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mkpassdb"
 flag = "-o"
 translation_modifier = "overwriting the existing database entirely"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the entire existing authentication database; all password server users lose access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mkpassdb"
 flag = "-a"
 translation_modifier = "adding a new administrator account"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates an account with elevated privileges over the password server."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mkpassdb"
@@ -80,3 +92,4 @@ flag = "-b"
 translation_modifier = "adding a new non-administrative user account"
 verdict = "allow"
 rationale = "Adds a standard user to the authentication database."
+arity = "Boolean"

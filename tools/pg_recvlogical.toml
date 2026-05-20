@@ -5,10 +5,12 @@ path = "pg_recvlogical"
 translation = "Stream logical replication changes from a PostgreSQL server."
 verdict = "allow"
 rationale = "Receives logical decoding output; does not modify the source database."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_recvlogical"
 flag = "--drop"
 translation_modifier = "dropping the replication slot before starting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys an existing replication slot, which may break replication."
+arity = "Boolean"

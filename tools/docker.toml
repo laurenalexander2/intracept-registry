@@ -7,11 +7,7 @@ path = "docker"
 translation = "Run the Docker container management tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Container lifecycle ──────────────────────────────────────────────────────
 
@@ -20,11 +16,7 @@ path = "docker run"
 translation = "Create and start a new container from an image."
 verdict = "allow"
 rationale = "Starts a process that consumes resources and may expose ports or mount host paths."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker run"
@@ -32,7 +24,7 @@ flag = "--rm"
 translation_modifier = "automatically removing the container when it exits"
 verdict = "allow"
 rationale = "Cleans up the container on exit, preventing orphaned containers."
-tag_modifiers.effect = ["create", "execute", "delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -40,31 +32,32 @@ flag = "-d"
 translation_modifier = "in the background"
 verdict = "allow"
 rationale = "Runs the container detached; the container continues running after the command returns."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
 flag = "--privileged"
 translation_modifier = "with full access to the host system's devices and kernel capabilities"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants the container nearly unrestricted host access, bypassing all security isolation."
-tag_modifiers.safety_override = true
-tag_modifiers.target = ["container", "filesystem", "process"]
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "docker run"
 flag = "-v"
 translation_modifier = "mounting a host directory or volume into the container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Gives the container read/write access to host files, which could lead to data modification or exposure."
-tag_modifiers.target = ["container", "filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
 flag = "--network"
 translation_modifier = "connecting the container to a specific network"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Controls network isolation; using 'host' mode exposes all host ports to the container."
-tag_modifiers.target = ["container", "network"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -72,15 +65,16 @@ flag = "-p"
 translation_modifier = "publishing a container port to the host"
 verdict = "allow"
 rationale = "Exposes the container's service on the host network, making it accessible externally."
-tag_modifiers.target = ["container", "network"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
 flag = "--cap-add"
 translation_modifier = "granting additional Linux kernel capabilities to the container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Weakens container isolation by adding specific kernel privileges."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "docker run"
@@ -88,6 +82,7 @@ flag = "--cap-drop"
 translation_modifier = "removing Linux kernel capabilities from the container"
 verdict = "allow"
 rationale = "Strengthens container isolation by dropping specific kernel privileges."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -95,14 +90,15 @@ flag = "--read-only"
 translation_modifier = "making the container's root filesystem read-only"
 verdict = "allow"
 rationale = "Improves security by preventing writes to the container filesystem."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
 flag = "--pid"
 translation_modifier = "sharing process visibility with the host or another container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Using 'host' mode allows the container to see and signal all host processes."
-tag_modifiers.target = ["container", "process"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -110,6 +106,7 @@ flag = "--env"
 translation_modifier = "setting an environment variable inside the container"
 verdict = "allow"
 rationale = "Environment variables may contain secrets; they are visible in container inspection output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -117,6 +114,7 @@ flag = "--name"
 translation_modifier = "assigning a specific name to the container"
 verdict = "allow"
 rationale = "Names the container for easier reference; no behavioral change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -124,6 +122,7 @@ flag = "-it"
 translation_modifier = "with an interactive terminal attached"
 verdict = "allow"
 rationale = "Allocates a terminal for interactive use; no additional risk beyond the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -131,6 +130,7 @@ flag = "--restart"
 translation_modifier = "with a specific restart policy when the container exits"
 verdict = "allow"
 rationale = "Containers with 'always' or 'unless-stopped' policies restart automatically, which may persist unintended workloads."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -138,6 +138,7 @@ flag = "--memory"
 translation_modifier = "limiting the container's memory usage"
 verdict = "allow"
 rationale = "Constrains resource usage; a protective measure that does not increase risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker run"
@@ -145,6 +146,7 @@ flag = "--cpus"
 translation_modifier = "limiting the number of CPU cores available to the container"
 verdict = "allow"
 rationale = "Constrains resource usage; a protective measure that does not increase risk."
+arity = "Boolean"
 
 # ── Container management ─────────────────────────────────────────────────────
 
@@ -153,19 +155,16 @@ path = "docker exec"
 translation = "Run a command inside a running container."
 verdict = "allow"
 rationale = "Executes arbitrary commands inside an existing container's environment."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker exec"
 flag = "--privileged"
 translation_modifier = "with elevated privileges inside the container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants the executed command extended kernel capabilities beyond the container's defaults."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "docker exec"
@@ -173,6 +172,7 @@ flag = "-u"
 translation_modifier = "as a specific user"
 verdict = "allow"
 rationale = "Running as root inside the container grants full control over the container's filesystem."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker exec"
@@ -180,28 +180,21 @@ flag = "-it"
 translation_modifier = "with an interactive terminal attached"
 verdict = "allow"
 rationale = "Allocates a terminal for interactive use; no additional risk beyond the base command."
+arity = "Boolean"
 
 [[command]]
 path = "docker stop"
 translation = "Gracefully stop one or more running containers."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Interrupts a running service; the containerized workload is stopped."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker kill"
 translation = "Immediately terminate one or more running containers."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Immediately terminates the container without allowing the process to clean up gracefully."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker kill"
@@ -209,123 +202,87 @@ flag = "-s"
 translation_modifier = "using a specific signal"
 verdict = "allow"
 rationale = "Different signals have different effects; some may cause data corruption if the process is not signal-safe."
+arity = "Boolean"
 
 [[command]]
 path = "docker rm"
 translation = "Delete one or more stopped containers."
 verdict = "allow"
 rationale = "Permanently removes the container and its writable layer; data not in volumes is lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker rm"
 flag = "--force"
 translation_modifier = "killing and removing a running container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forcefully kills a running container before removing it, potentially causing data loss."
-tag_modifiers.safety_override = true
-tag_modifiers.reversibility = "impossible"
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "docker rm"
 flag = "-v"
 translation_modifier = "also deleting anonymous volumes attached to the container"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes anonymous volumes and their data along with the container."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.target = ["container", "filesystem"]
+arity = "Boolean"
 
 [[command]]
 path = "docker start"
 translation = "Start one or more stopped containers."
 verdict = "allow"
 rationale = "Resumes a previously created container; equivalent to restarting a stopped service."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker restart"
 translation = "Stop and then start one or more containers."
 verdict = "allow"
 rationale = "Interrupts running processes in the container before restarting them."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker pause"
 translation = "Suspend all processes in one or more running containers."
 verdict = "allow"
 rationale = "Freezes the container's processes; the container remains in memory but stops serving requests."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker unpause"
 translation = "Resume all processes in one or more paused containers."
 verdict = "allow"
 rationale = "Resumes previously paused container processes; restores normal operation."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker create"
 translation = "Create a new container from an image without starting it."
 verdict = "allow"
 rationale = "Prepares a container but does not run it; no processes are started."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker cp"
 translation = "Copy files between a container and the local filesystem."
 verdict = "allow"
 rationale = "Transfers files into or out of a container, which could modify application state or exfiltrate data."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem", "container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker rename"
 translation = "Rename an existing container."
 verdict = "allow"
 rationale = "Changes only the container's name; does not affect its state or data."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker update"
 translation = "Update resource limits and restart policy on one or more containers."
 verdict = "allow"
 rationale = "Changes runtime constraints such as memory limits; incorrect values may cause the container to be killed."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Inspection ───────────────────────────────────────────────────────────────
 
@@ -334,11 +291,7 @@ path = "docker ps"
 translation = "List running containers."
 verdict = "allow"
 rationale = "Read-only display of container status."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "docker ps"
@@ -346,17 +299,14 @@ flag = "-a"
 translation_modifier = "including stopped containers"
 verdict = "allow"
 rationale = "Shows all containers regardless of state; read-only operation."
+arity = "Boolean"
 
 [[command]]
 path = "docker logs"
 translation = "Display the log output of a container."
 verdict = "allow"
 rationale = "Read-only access to container logs."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "docker logs"
@@ -364,6 +314,7 @@ flag = "-f"
 translation_modifier = "streaming new log lines as they are produced"
 verdict = "allow"
 rationale = "Follows the log stream; still a read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker logs"
@@ -371,39 +322,28 @@ flag = "--tail"
 translation_modifier = "showing only the specified number of most recent lines"
 verdict = "allow"
 rationale = "Limits output to recent lines; read-only operation."
+arity = "Boolean"
 
 [[command]]
 path = "docker inspect"
 translation = "Show detailed configuration and state information for a Docker object."
 verdict = "allow"
 rationale = "Read-only display of object metadata."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker stats"
 translation = "Display a live stream of resource usage statistics for running containers."
 verdict = "allow"
 rationale = "Read-only monitoring display of CPU, memory, and network usage."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker top"
 translation = "Display the running processes inside a container."
 verdict = "allow"
 rationale = "Read-only display of container processes."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── Image management ─────────────────────────────────────────────────────────
 
@@ -412,11 +352,7 @@ path = "docker build"
 translation = "Build a container image from a Dockerfile."
 verdict = "allow"
 rationale = "Creates a new image locally; does not affect running containers or remote registries."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker build"
@@ -424,6 +360,7 @@ flag = "--no-cache"
 translation_modifier = "without using any cached layers from previous builds"
 verdict = "allow"
 rationale = "Forces a full rebuild; slower but ensures all layers are fresh."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker build"
@@ -431,6 +368,7 @@ flag = "-f"
 translation_modifier = "using a specific Dockerfile instead of the default"
 verdict = "allow"
 rationale = "Allows building from an alternate Dockerfile; no additional risk beyond the chosen file's contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker build"
@@ -438,6 +376,7 @@ flag = "--build-arg"
 translation_modifier = "passing a build-time variable to the Dockerfile"
 verdict = "allow"
 rationale = "Build args may contain secrets that get baked into image layers if not handled carefully."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker build"
@@ -445,17 +384,14 @@ flag = "-t"
 translation_modifier = "tagging the resulting image with a name and optional version"
 verdict = "allow"
 rationale = "Assigns a name to the built image; no additional risk."
+arity = "Boolean"
 
 [[command]]
 path = "docker pull"
 translation = "Download a container image from a registry."
 verdict = "allow"
 rationale = "Downloads an image; does not run or modify anything locally."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container", "package_registry"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker pull"
@@ -463,17 +399,14 @@ flag = "--all-tags"
 translation_modifier = "downloading every tagged version of the image"
 verdict = "allow"
 rationale = "Can consume significant disk space and bandwidth by pulling all image variants."
+arity = "Boolean"
 
 [[command]]
 path = "docker push"
 translation = "Upload a local container image to a registry."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Publishes an image to a shared registry where others may pull and run it."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["container", "package_registry"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker push"
@@ -481,28 +414,21 @@ flag = "--all-tags"
 translation_modifier = "uploading every tagged version of the image"
 verdict = "allow"
 rationale = "Publishes all local tags for the image, which may include experimental or unready versions."
+arity = "Boolean"
 
 [[command]]
 path = "docker images"
 translation = "List locally stored container images."
 verdict = "allow"
 rationale = "Read-only display of local images."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker rmi"
 translation = "Delete one or more local container images."
 verdict = "allow"
 rationale = "Removes images from local storage; they must be re-pulled if needed again."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker rmi"
@@ -510,47 +436,37 @@ flag = "--force"
 translation_modifier = "even if the image is used by stopped containers"
 verdict = "allow"
 rationale = "Forcefully removes a local image; the image can be re-pulled from the registry."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "docker tag"
 translation = "Create a new tag that refers to an existing local image."
 verdict = "allow"
 rationale = "Adds a name alias to an existing image; no data is modified or uploaded."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker commit"
 translation = "Create a new image from a container's current state."
 verdict = "allow"
 rationale = "Creates a new local image; does not modify the running container or push to a registry."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker image prune"
 translation = "Remove unused container images."
 verdict = "allow"
 rationale = "Deletes dangling images by default; they must be rebuilt or re-pulled if needed."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker image prune"
 flag = "--all"
 translation_modifier = "including all unused images, not just dangling ones"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes every image not referenced by a container, causing lengthy re-downloads."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker image prune"
@@ -558,7 +474,8 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt before deleting images."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 # ── Image transfer ───────────────────────────────────────────────────────────
 
@@ -567,44 +484,28 @@ path = "docker save"
 translation = "Export one or more container images to a tar archive."
 verdict = "allow"
 rationale = "Creates a local file; does not modify images or containers."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker load"
 translation = "Import container images from a tar archive."
 verdict = "allow"
 rationale = "Adds images to local storage; does not affect running containers."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker export"
 translation = "Export a container's filesystem as a tar archive."
 verdict = "allow"
 rationale = "Creates a local file from the container's filesystem; does not modify the container."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker import"
 translation = "Create a new image from a tar archive of a filesystem."
 verdict = "allow"
 rationale = "Creates a local image; does not affect running containers."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Network management ───────────────────────────────────────────────────────
 
@@ -613,44 +514,28 @@ path = "docker network"
 translation = "Manage Docker networks."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["network"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker network create"
 translation = "Create a new Docker network."
 verdict = "allow"
 rationale = "Creates a network configuration; does not affect running containers until they join it."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["network"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker network rm"
 translation = "Delete one or more Docker networks."
 verdict = "allow"
 rationale = "Removes the network; containers still connected to it will lose connectivity."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["network"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "docker network prune"
 translation = "Remove all Docker networks not used by any container."
 verdict = "allow"
 rationale = "Deletes unused networks in bulk; a network may be needed later even if currently unused."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["network"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker network prune"
@@ -658,40 +543,29 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt, increasing the chance of accidental deletion."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "docker network ls"
 translation = "List all Docker networks."
 verdict = "allow"
 rationale = "Read-only listing of networks."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["network"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker network connect"
 translation = "Connect a container to a Docker network."
 verdict = "allow"
 rationale = "Adds a network interface to the container; the container gains connectivity to that network."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["network", "container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker network disconnect"
 translation = "Disconnect a container from a Docker network."
 verdict = "allow"
 rationale = "Removes network connectivity, which may disrupt the container's communication with other services."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["network", "container"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Volume management ────────────────────────────────────────────────────────
 
@@ -700,33 +574,21 @@ path = "docker volume"
 translation = "Manage Docker volumes."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker volume create"
 translation = "Create a new Docker volume for persistent data storage."
 verdict = "allow"
 rationale = "Creates an empty volume; does not affect existing data."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker volume rm"
 translation = "Delete one or more Docker volumes and their data."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently destroys the volume and all data stored in it."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker volume rm"
@@ -734,103 +596,86 @@ flag = "--force"
 translation_modifier = "without raising an error if the volume does not exist"
 verdict = "allow"
 rationale = "Only suppresses 'not found' errors; does not add destructive capability beyond the base command."
+arity = "Boolean"
 
 [[command]]
 path = "docker volume prune"
 translation = "Remove all Docker volumes not currently used by any container."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Bulk-deletes unused volumes; data in those volumes is permanently lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker volume prune"
 flag = "--all"
 translation_modifier = "including named volumes, not just anonymous ones"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Extends deletion to explicitly named volumes which often contain important persistent data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker volume prune"
 flag = "--force"
 translation_modifier = "without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the confirmation prompt before bulk-deleting volumes."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "docker volume ls"
 translation = "List all Docker volumes."
 verdict = "allow"
 rationale = "Read-only listing of Docker volumes."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── System management ────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker system prune"
 translation = "Remove all unused containers, networks, and dangling images."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Bulk-deletes multiple types of unused Docker resources at once."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container", "network"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker system prune"
 flag = "--all"
 translation_modifier = "including all unused images, not just dangling ones"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes every unused image, causing lengthy re-downloads, but images are recoverable from registries."
-tag_modifiers.target = ["container", "network", "filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker system prune"
 flag = "--volumes"
 translation_modifier = "also deleting unused volumes and their data"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Extends the prune to include volumes, permanently destroying persistent data."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.target = ["container", "network", "filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker system prune"
 flag = "--force"
 translation_modifier = "without asking for confirmation"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the confirmation prompt before a bulk-delete of multiple resource types."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[command]]
 path = "docker system df"
 translation = "Show how much disk space Docker is using."
 verdict = "allow"
 rationale = "Read-only display of disk usage by Docker objects."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container", "filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker container prune"
 translation = "Remove all stopped containers."
 verdict = "allow"
 rationale = "Deletes all stopped containers and their writable layers; data not in volumes is lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker container prune"
@@ -838,31 +683,24 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt before removing stopped containers."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 # ── Authentication ───────────────────────────────────────────────────────────
 
 [[command]]
 path = "docker login"
 translation = "Authenticate to a container registry and save the credentials locally."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Stores registry credentials on disk, which could be exposed if the machine is compromised."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["credentials", "package_registry"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "docker logout"
 translation = "Remove stored credentials for a container registry."
 verdict = "allow"
 rationale = "Deletes locally stored credentials; reduces exposure but requires re-authentication."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 # ── Docker Compose ───────────────────────────────────────────────────────────
 
@@ -871,22 +709,14 @@ path = "docker compose"
 translation = "Manage multi-container applications defined in a Compose file."
 verdict = "allow"
 rationale = "The bare subcommand prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker compose up"
 translation = "Create and start all services defined in the Compose file."
 verdict = "allow"
 rationale = "Starts potentially many containers with network and volume configurations."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container", "network"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker compose up"
@@ -894,6 +724,7 @@ flag = "-d"
 translation_modifier = "in the background"
 verdict = "allow"
 rationale = "Runs services detached; they continue running after the command returns."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker compose up"
@@ -901,6 +732,7 @@ flag = "--build"
 translation_modifier = "rebuilding images before starting"
 verdict = "allow"
 rationale = "Ensures images are up to date; adds build time but no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker compose up"
@@ -908,27 +740,22 @@ flag = "--force-recreate"
 translation_modifier = "recreating containers even if their configuration has not changed"
 verdict = "allow"
 rationale = "Destroys and recreates containers, which may cause brief downtime and loss of container state."
-tag_modifiers.effect = ["create", "execute", "delete"]
+arity = "Boolean"
 
 [[command]]
 path = "docker compose down"
 translation = "Stop and remove all containers and networks defined in the Compose file."
 verdict = "allow"
 rationale = "Stops services and removes containers and networks; named volumes are preserved by default."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container", "network"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker compose down"
 flag = "-v"
 translation_modifier = "also deleting named volumes declared in the Compose file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes volumes and their data, including databases and application state."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.target = ["container", "network", "filesystem"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker compose down"
@@ -936,6 +763,7 @@ flag = "--rmi"
 translation_modifier = "also removing images used by the services"
 verdict = "allow"
 rationale = "Deletes service images which must be rebuilt or re-pulled to restart services."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "docker compose down"
@@ -943,94 +771,63 @@ flag = "--remove-orphans"
 translation_modifier = "also removing containers for services no longer defined in the Compose file"
 verdict = "allow"
 rationale = "Removes containers that may have been intentionally kept from a previous configuration."
+arity = "Boolean"
 
 [[command]]
 path = "docker compose ps"
 translation = "List containers managed by the current Compose project."
 verdict = "allow"
 rationale = "Read-only display of Compose-managed container status."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker compose logs"
 translation = "Display log output from services defined in the Compose file."
 verdict = "allow"
 rationale = "Read-only access to service logs."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "docker compose build"
 translation = "Build or rebuild images for services defined in the Compose file."
 verdict = "allow"
 rationale = "Creates local images; does not affect running containers or remote registries."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker compose pull"
 translation = "Download images for services defined in the Compose file."
 verdict = "allow"
 rationale = "Downloads images; does not run or modify anything."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["container", "package_registry"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker compose restart"
 translation = "Restart running containers for services defined in the Compose file."
 verdict = "allow"
 rationale = "Interrupts running services briefly; container data is preserved."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker compose exec"
 translation = "Run a command inside a running Compose service container."
 verdict = "allow"
 rationale = "Executes arbitrary commands inside an existing service container."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker compose stop"
 translation = "Stop running containers for services without removing them."
 verdict = "allow"
 rationale = "Stops services; containers and their data are preserved for restart."
-tags.scope = "local"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "docker compose rm"
 translation = "Remove stopped service containers."
 verdict = "allow"
 rationale = "Deletes stopped containers and their writable layers; data not in volumes is lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "docker compose rm"
@@ -1038,27 +835,23 @@ flag = "--force"
 translation_modifier = "without asking for confirmation"
 verdict = "allow"
 rationale = "Skips the confirmation prompt before removing containers."
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 [[flag]]
 applies_to = "docker compose rm"
 flag = "-v"
 translation_modifier = "also deleting anonymous volumes attached to the containers"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes anonymous volumes and their data along with the containers."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.target = ["container", "filesystem"]
+arity = "Boolean"
 
 [[command]]
 path = "docker compose run"
 translation = "Run a one-off command against a Compose service."
 verdict = "allow"
 rationale = "Creates and starts a new container to execute an arbitrary command."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "docker compose run"
@@ -1066,171 +859,111 @@ flag = "--rm"
 translation_modifier = "automatically removing the container when it exits"
 verdict = "allow"
 rationale = "Cleans up the one-off container on exit; prevents orphaned containers."
-tag_modifiers.effect = ["create", "execute", "delete"]
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "docker run --privileged"
 translation = "Create and start a new container with full access to the host system's devices and kernel capabilities, bypassing all Docker security isolation."
-verdict = "require_approval"
-rationale = "Grants the container nearly unrestricted host access, equivalent to running processes directly on the host."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container", "filesystem", "process"]
-tags.safety_override = true
+verdict = "warn"
+rationale = "Grants the container nearly unrestricted host access, equivalent to running processes directly on the host with no isolation."
+risk_class = "priv_esc"
 
 [[combo]]
 path = "docker run -it --rm"
 translation = "Create and start a new container with an interactive terminal attached, automatically removing the container when it exits."
 verdict = "allow"
 rationale = "Standard pattern for interactive one-off containers that clean up after themselves."
-tags.scope = "local"
-tags.effect = ["create", "execute", "delete"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "docker run --privileged -v"
 translation = "Create and start a new container with full host access and a mounted host directory, giving the container unrestricted read/write access to host files and kernel."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Combines full kernel access with host filesystem mounts, enabling complete control over the host system from inside the container."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container", "filesystem", "process"]
-tags.safety_override = true
+risk_class = "priv_esc"
 
 [[combo]]
 path = "docker run -d"
 translation = "Create and start a new container in the background, returning control immediately while the container continues running."
 verdict = "allow"
 rationale = "Standard pattern for running services; the container persists until explicitly stopped."
-tags.scope = "local"
-tags.effect = ["create", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "docker system prune --all --force"
 translation = "Remove all unused containers, networks, and images without asking for confirmation, forcing re-downloads of any images needed later."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Bulk-deletes all unused Docker resources immediately with no confirmation prompt, potentially causing lengthy image re-downloads."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container", "network", "filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker system prune --all --force --volumes"
 translation = "Remove all unused containers, networks, images, and volumes without asking for confirmation, permanently destroying any persistent data in unused volumes."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "The most destructive single Docker command — bulk-deletes everything unused including persistent volume data with no confirmation prompt."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["container", "network", "filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker rm --force"
 translation = "Kill and remove a running container immediately, discarding any in-progress work without graceful shutdown."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Forcefully terminates and removes a running container, potentially causing data corruption in applications that need graceful shutdown."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["container"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker rm --force -v"
 translation = "Kill and remove a running container immediately, also permanently deleting its anonymous volumes and their data."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Combines forced container termination with anonymous volume deletion, permanently destroying both the container and its associated data."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["container", "filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker build --no-cache -t"
 translation = "Build a container image from scratch without using cached layers, tagging the result with a specific name and optional version."
 verdict = "allow"
 rationale = "Forces a complete rebuild and tags it; slower but guarantees all layers are freshly built."
-tags.scope = "local"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "docker exec -it"
 translation = "Open an interactive terminal session inside a running container."
 verdict = "allow"
 rationale = "Standard pattern for interactive debugging or administration inside a running container."
-tags.scope = "local"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "docker rmi --force"
 translation = "Forcefully remove a local container image even if stopped containers still reference it."
-verdict = "allow"
+verdict = "warn"
 rationale = "Removes the image regardless of stopped container references; the image can be re-pulled from the registry."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker volume prune --force"
 translation = "Remove all unused Docker volumes and their data without asking for confirmation."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Permanently destroys data in all unused volumes with no confirmation prompt, making recovery impossible."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["filesystem"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker container prune --force"
 translation = "Remove all stopped containers without asking for confirmation."
-verdict = "allow"
+verdict = "warn"
 rationale = "Deletes all stopped containers immediately; writable layer data not stored in volumes is lost."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker image prune --all --force"
 translation = "Remove all unused container images without asking for confirmation, not just dangling ones."
-verdict = "require_approval"
+verdict = "warn"
 rationale = "Deletes every image not referenced by a running container without prompting, requiring lengthy re-downloads to restore them."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["container"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "docker network prune --force"
 translation = "Remove all unused Docker networks without asking for confirmation."
-verdict = "allow"
+verdict = "warn"
 rationale = "Deletes unused networks immediately; they can be recreated but services may need reconfiguration."
-tags.scope = "local"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["network"]
-tags.safety_override = true
+risk_class = "destructive"

@@ -5,6 +5,7 @@ path = "sdiff"
 translation = "Display two files side by side highlighting differences."
 verdict = "allow"
 rationale = "Read-only comparison of two files; modifies nothing by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sdiff"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "interactively merging differences into an output file"
 verdict = "allow"
 rationale = "Creates or overwrites an output file with merged content; the merge is user-directed but writes to disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sdiff"
@@ -19,6 +21,7 @@ flag = "-l"
 translation_modifier = "printing only the left column for identical lines"
 verdict = "allow"
 rationale = "Cosmetic display change; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sdiff"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "suppressing identical lines from output"
 verdict = "allow"
 rationale = "Filters display output; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sdiff"
@@ -33,3 +37,4 @@ flag = "-w"
 translation_modifier = "limiting output to a specified column width"
 verdict = "allow"
 rationale = "Cosmetic formatting change; no state modification."
+arity = "Boolean"

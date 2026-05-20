@@ -3,5 +3,6 @@
 [[command]]
 path = "ping6"
 translation = "Send ICMPv6 echo requests to test IPv6 network connectivity."
-verdict = "allow"
-rationale = "Read-only network diagnostic that sends and receives ping packets."
+verdict = "ask"
+rationale = "Read-only network diagnostic that sends ICMPv6 packets across the network to every router along the path, revealing what hosts are being probed."
+risk_class = "net_egress"

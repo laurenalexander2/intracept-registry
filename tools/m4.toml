@@ -5,6 +5,7 @@ path = "m4"
 translation = "Process text through a macro expansion engine."
 verdict = "allow"
 rationale = "Reads input, expands macros, and writes to the terminal; does not modify files in place."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "m4"
@@ -12,6 +13,7 @@ flag = "-D"
 translation_modifier = "defining a macro with a specific value"
 verdict = "allow"
 rationale = "Only sets a macro definition for processing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -19,6 +21,7 @@ flag = "-I"
 translation_modifier = "adding a directory to the include search path"
 verdict = "allow"
 rationale = "Only changes where include files are searched."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -26,6 +29,7 @@ flag = "-U"
 translation_modifier = "removing a macro definition before processing"
 verdict = "allow"
 rationale = "Only unsets a macro; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -33,6 +37,7 @@ flag = "-E"
 translation_modifier = "stopping execution after the first warning"
 verdict = "allow"
 rationale = "Makes warnings fatal; a stricter processing mode that modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -40,6 +45,7 @@ flag = "-P"
 translation_modifier = "requiring a prefix on all built-in macro names"
 verdict = "allow"
 rationale = "Reduces naming conflicts by requiring explicit prefixes; does not modify files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -47,6 +53,7 @@ flag = "-s"
 translation_modifier = "inserting line-tracking directives in the output"
 verdict = "allow"
 rationale = "Adds metadata to output for tracking source locations; does not modify input files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -54,6 +61,7 @@ flag = "-G"
 translation_modifier = "disabling all non-standard extensions"
 verdict = "allow"
 rationale = "Restricts to traditional behavior; limits functionality but modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -61,6 +69,7 @@ flag = "-d"
 translation_modifier = "enabling debug output for macro expansion"
 verdict = "allow"
 rationale = "Adds diagnostic tracing; read-only debugging output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -68,6 +77,7 @@ flag = "-t"
 translation_modifier = "tracing a specific macro whenever it is used"
 verdict = "allow"
 rationale = "Enables debug tracing for a single macro; read-only diagnostic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "m4"
@@ -75,3 +85,4 @@ flag = "-e"
 translation_modifier = "writing output immediately without buffering"
 verdict = "allow"
 rationale = "Changes output timing but not content; does not modify files."
+arity = "Boolean"

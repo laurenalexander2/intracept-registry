@@ -5,6 +5,7 @@ path = "productbuild"
 translation = "Build a macOS Installer product archive from component packages."
 verdict = "allow"
 rationale = "Creates a product archive file; does not install anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "productbuild"
@@ -12,6 +13,7 @@ flag = "--distribution"
 translation_modifier = "using a distribution file to define the installer presentation and choices"
 verdict = "allow"
 rationale = "Controls the installer UI and package selection; does not modify packages."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -19,6 +21,7 @@ flag = "--package-path"
 translation_modifier = "searching a specific directory for component packages"
 verdict = "allow"
 rationale = "Specifies where to find packages; does not modify them."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -26,6 +29,7 @@ flag = "--resources"
 translation_modifier = "including localized resources such as license files and images"
 verdict = "allow"
 rationale = "Adds UI resources to the product archive; does not change package contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -33,6 +37,7 @@ flag = "--component"
 translation_modifier = "packaging a specific application bundle into the product archive"
 verdict = "allow"
 rationale = "Includes a bundle; does not modify the bundle."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -40,6 +45,7 @@ flag = "--root"
 translation_modifier = "packaging a destination root directory into the product archive"
 verdict = "allow"
 rationale = "Includes a directory tree; does not modify the source files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -47,6 +53,7 @@ flag = "--package"
 translation_modifier = "including an existing component package in the product archive"
 verdict = "allow"
 rationale = "Adds a pre-built package; does not modify it."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -54,6 +61,7 @@ flag = "--synthesize"
 translation_modifier = "generating a distribution file instead of building a product archive"
 verdict = "allow"
 rationale = "Outputs a distribution file for customization; does not create a product archive."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -61,6 +69,7 @@ flag = "--product"
 translation_modifier = "applying pre-install requirements from a property list"
 verdict = "allow"
 rationale = "Sets system requirements for installation; only affects metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -68,6 +77,7 @@ flag = "--sign"
 translation_modifier = "digitally signing the product archive with a developer identity"
 verdict = "allow"
 rationale = "Adds a signature for trust verification; does not change the archive contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -75,6 +85,7 @@ flag = "--keychain"
 translation_modifier = "searching for the signing identity in a specific keychain"
 verdict = "allow"
 rationale = "Selects a non-default keychain; does not change the signing operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -82,6 +93,7 @@ flag = "--timestamp"
 translation_modifier = "including a trusted timestamp with the signature"
 verdict = "allow"
 rationale = "Adds a timestamp for long-term signature validity; a security-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -89,6 +101,7 @@ flag = "--scripts"
 translation_modifier = "including scripts for use by distribution commands"
 verdict = "allow"
 rationale = "Embedded scripts can run during installation and make arbitrary system changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -96,6 +109,7 @@ flag = "--plugins"
 translation_modifier = "including installer plugin bundles"
 verdict = "allow"
 rationale = "Adds custom installer UI plugins; does not change package contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -103,6 +117,7 @@ flag = "--identifier"
 translation_modifier = "setting a unique identifier for the product"
 verdict = "allow"
 rationale = "Labels the product for identification; does not change contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -110,6 +125,7 @@ flag = "--version"
 translation_modifier = "setting the version number for the product"
 verdict = "allow"
 rationale = "Labels the product version; does not change contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -117,6 +133,7 @@ flag = "--quiet"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only suppresses status messages on standard output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "productbuild"
@@ -124,3 +141,4 @@ flag = "--component-compression"
 translation_modifier = "controlling the compression algorithm for bundled components"
 verdict = "allow"
 rationale = "Affects archive size and compatibility; does not change the contents."
+arity = "Boolean"

@@ -7,11 +7,7 @@ path = "aws"
 translation = "Run the Amazon Web Services command-line interface."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "safe"
 
 # ── S3 ────────────────────────────────────────────────────────────────────────
 
@@ -20,22 +16,14 @@ path = "aws s3"
 translation = "Manage Amazon S3 buckets and objects using high-level commands."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws s3 ls"
 translation = "List S3 buckets or the contents of an S3 path."
 verdict = "allow"
 rationale = "Read-only listing of buckets or objects."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws s3 ls"
@@ -43,17 +31,14 @@ flag = "--recursive"
 translation_modifier = "including all objects in all subdirectories"
 verdict = "allow"
 rationale = "Widens the listing but remains read-only."
+arity = "Boolean"
 
 [[command]]
 path = "aws s3 cp"
 translation = "Copy files between the local filesystem and S3, or between S3 locations."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Transfers data that may overwrite existing objects at the destination."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws s3 cp"
@@ -61,6 +46,7 @@ flag = "--recursive"
 translation_modifier = "including all files in all subdirectories"
 verdict = "allow"
 rationale = "Copies entire directory trees, increasing the scope and potential for unintended overwrites."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 cp"
@@ -68,8 +54,7 @@ flag = "--dryrun"
 translation_modifier = "simulating the operation without actually copying anything"
 verdict = "allow"
 rationale = "No data is transferred; only shows what would happen."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 cp"
@@ -77,6 +62,7 @@ flag = "--acl"
 translation_modifier = "setting the access control policy on the destination objects"
 verdict = "allow"
 rationale = "Incorrect ACLs can expose objects publicly or restrict legitimate access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 cp"
@@ -84,24 +70,22 @@ flag = "--sse"
 translation_modifier = "encrypting the destination objects with server-side encryption"
 verdict = "allow"
 rationale = "Adds encryption; improves security posture."
+arity = "Boolean"
 
 [[command]]
 path = "aws s3 mv"
 translation = "Move files between the local filesystem and S3, or between S3 locations."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes files from the source after copying to the destination."
-tags.scope = "remote"
-tags.effect = ["write", "delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "aws s3 mv"
 flag = "--recursive"
 translation_modifier = "including all files in all subdirectories"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Moves entire directory trees, deleting all source files after transfer."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 mv"
@@ -109,26 +93,22 @@ flag = "--dryrun"
 translation_modifier = "simulating the operation without actually moving anything"
 verdict = "allow"
 rationale = "No data is transferred or deleted; only shows what would happen."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[command]]
 path = "aws s3 rm"
 translation = "Delete objects from an S3 bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes objects from S3; recovery depends on versioning being enabled."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "aws s3 rm"
 flag = "--recursive"
 translation_modifier = "including all objects under the specified prefix"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes all objects matching the prefix, potentially wiping entire bucket contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 rm"
@@ -136,8 +116,7 @@ flag = "--dryrun"
 translation_modifier = "simulating the deletion without actually removing anything"
 verdict = "allow"
 rationale = "No objects are deleted; only shows what would be removed."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 rm"
@@ -145,6 +124,7 @@ flag = "--include"
 translation_modifier = "only for objects matching the specified pattern"
 verdict = "allow"
 rationale = "Narrows scope to matching objects; the destructive risk is in the base command and --recursive."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 rm"
@@ -152,25 +132,22 @@ flag = "--exclude"
 translation_modifier = "skipping objects matching the specified pattern"
 verdict = "allow"
 rationale = "Narrows scope by excluding matching objects; the destructive risk is in the base command and --recursive."
+arity = "Boolean"
 
 [[command]]
 path = "aws s3 sync"
 translation = "Synchronize the contents of a local directory and an S3 prefix."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Uploads, downloads, or copies objects to make the destination match the source."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws s3 sync"
 flag = "--delete"
 translation_modifier = "removing files in the destination that do not exist in the source"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes destination objects not present in the source, which can cause permanent data loss."
-tag_modifiers.effect = ["write", "delete"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws s3 sync"
@@ -178,39 +155,30 @@ flag = "--dryrun"
 translation_modifier = "simulating the sync without actually transferring or deleting anything"
 verdict = "allow"
 rationale = "No data is modified; only shows what would happen."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[command]]
 path = "aws s3 mb"
 translation = "Create a new S3 bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates an empty bucket; does not modify existing data."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws s3 rb"
 translation = "Delete an S3 bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the bucket; fails if non-empty unless --force is used."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "aws s3 rb"
 flag = "--force"
 translation_modifier = "first deleting all objects in the bucket before removing it"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Empties and destroys the entire bucket and all its contents permanently."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 # ── EC2 ───────────────────────────────────────────────────────────────────────
 
@@ -219,33 +187,21 @@ path = "aws ec2"
 translation = "Manage Amazon EC2 compute instances and related resources."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ec2 describe-instances"
 translation = "List details about EC2 instances."
 verdict = "allow"
 rationale = "Read-only query of instance metadata."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ec2 run-instances"
 translation = "Launch one or more new EC2 instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates billable compute resources; instances begin running immediately."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws ec2 run-instances"
@@ -253,30 +209,21 @@ flag = "--dry-run"
 translation_modifier = "simulating the launch without actually creating any instances"
 verdict = "allow"
 rationale = "No instances are created; only checks permissions and validates parameters."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 [[command]]
 path = "aws ec2 stop-instances"
 translation = "Stop one or more running EC2 instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Stops instances, which interrupts running workloads but preserves data on EBS volumes."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ec2 terminate-instances"
 translation = "Permanently shut down and destroy one or more EC2 instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates instances and deletes their instance store volumes; EBS root volumes are deleted by default."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "aws ec2 terminate-instances"
@@ -284,8 +231,7 @@ flag = "--dry-run"
 translation_modifier = "simulating the termination without actually destroying any instances"
 verdict = "allow"
 rationale = "No instances are terminated; only checks permissions."
-tag_modifiers.effect = ["read"]
-tag_modifiers.reversibility = "trivial"
+arity = "Boolean"
 
 # ── IAM ───────────────────────────────────────────────────────────────────────
 
@@ -294,99 +240,63 @@ path = "aws iam"
 translation = "Manage AWS Identity and Access Management users, roles, and policies."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam create-user"
 translation = "Create a new IAM user."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Adds a new identity that can be granted access to AWS resources."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam delete-user"
 translation = "Delete an IAM user."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the user identity; all associated permissions are lost."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "aws iam attach-user-policy"
 translation = "Attach a managed IAM policy to a user."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants permissions to the user; overly broad policies can create security vulnerabilities."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam create-access-key"
 translation = "Create a new access key pair for an IAM user."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Generates long-lived credentials; the risk is in how the key is stored and used, not in the creation itself."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam delete-access-key"
 translation = "Delete an access key pair for an IAM user."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Invalidates the access key; applications using it will lose access immediately."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "aws iam attach-role-policy"
 translation = "Attach a managed IAM policy to a role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants permissions to the role; overly broad policies can create security vulnerabilities."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam create-role"
 translation = "Create a new IAM role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates a role that can be assumed by services or users to gain permissions."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws iam delete-role"
 translation = "Delete an IAM role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the role; services depending on it will lose access."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "destructive"
 
 # ── Lambda ────────────────────────────────────────────────────────────────────
 
@@ -395,55 +305,35 @@ path = "aws lambda"
 translation = "Manage AWS Lambda serverless functions."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws lambda invoke"
 translation = "Execute a Lambda function and return its response."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Runs the function's code, which may modify databases, send messages, or trigger other services."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws lambda create-function"
 translation = "Create a new Lambda function with the specified code and configuration."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deploys executable code that can access AWS resources based on its execution role."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws lambda delete-function"
 translation = "Permanently delete a Lambda function and all its versions."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the function and its code; there is no undo."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "aws lambda update-function-code"
 translation = "Replace the code of an existing Lambda function with new code."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deploys new code to a running function, which immediately affects all future invocations."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── STS ───────────────────────────────────────────────────────────────────────
 
@@ -452,33 +342,21 @@ path = "aws sts"
 translation = "Manage AWS Security Token Service for temporary credentials."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws sts get-caller-identity"
 translation = "Display the IAM identity currently being used for AWS API calls."
 verdict = "allow"
 rationale = "Read-only query that returns the current user or role identity."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 [[command]]
 path = "aws sts assume-role"
 translation = "Obtain temporary security credentials by assuming an IAM role."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Grants temporary credentials within already-authorized permissions; a standard authentication flow."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "credentials"]
-tags.safety_override = false
+risk_class = "secret_read"
 
 # ── CloudFormation ────────────────────────────────────────────────────────────
 
@@ -487,33 +365,21 @@ path = "aws cloudformation"
 translation = "Manage AWS CloudFormation infrastructure stacks."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws cloudformation deploy"
 translation = "Deploy a CloudFormation template to create or update a stack."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates or modifies cloud infrastructure, which may affect running services and incur costs."
-tags.scope = "remote"
-tags.effect = ["create", "write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws cloudformation delete-stack"
 translation = "Delete a CloudFormation stack and all of its associated resources."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the entire stack including compute instances, databases, and networking resources."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 # ── RDS ───────────────────────────────────────────────────────────────────────
 
@@ -522,42 +388,30 @@ path = "aws rds"
 translation = "Manage Amazon RDS database instances."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws rds create-db-instance"
 translation = "Create a new RDS database instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provisions a billable database resource; the instance starts running immediately."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws rds delete-db-instance"
 translation = "Delete an RDS database instance."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the database instance; a final snapshot is created by default, making data recoverable."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "database"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[flag]]
 applies_to = "aws rds delete-db-instance"
 flag = "--skip-final-snapshot"
 translation_modifier = "without creating a final backup snapshot of the data"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Skips the final snapshot, making the data permanently irrecoverable after deletion."
-tag_modifiers.reversibility = "impossible"
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 # ── Global flags ──────────────────────────────────────────────────────────────
 
@@ -567,6 +421,7 @@ flag = "--profile"
 translation_modifier = "using a named credential profile instead of the default"
 verdict = "allow"
 rationale = "Switches the identity used for all operations; the wrong profile may target a different account or have different permissions."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws"
@@ -574,6 +429,7 @@ flag = "--region"
 translation_modifier = "targeting a specific AWS region"
 verdict = "allow"
 rationale = "Operations will affect resources in the specified region; the wrong region may target production instead of staging."
+arity = "Boolean"
 
 # ── ECS ──────────────────────────────────────────────────────────────────────
 
@@ -582,88 +438,56 @@ path = "aws ecs"
 translation = "Manage Amazon Elastic Container Service clusters and tasks."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs list-clusters"
 translation = "List all ECS clusters in the account."
 verdict = "allow"
 rationale = "Read-only listing of cluster names."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs list-services"
 translation = "List the services running in an ECS cluster."
 verdict = "allow"
 rationale = "Read-only listing of services."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs describe-services"
 translation = "Show detailed information about one or more ECS services."
 verdict = "allow"
 rationale = "Read-only display of service configuration and status."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs update-service"
 translation = "Update the configuration of an ECS service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes the running service, which may trigger new deployments, change task counts, or modify networking."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs delete-service"
 translation = "Delete an ECS service from a cluster."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the service and stops its tasks; the service must be drained first or --force used."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "aws ecs run-task"
 translation = "Launch a new task on an ECS cluster."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Starts a container task that consumes resources and may access other AWS services."
-tags.scope = "remote"
-tags.effect = ["create", "execute"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ecs stop-task"
 translation = "Stop a running task on an ECS cluster."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Terminates a running container task, interrupting its workload."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── SSM ──────────────────────────────────────────────────────────────────────
 
@@ -672,22 +496,14 @@ path = "aws ssm"
 translation = "Manage AWS Systems Manager resources and operations."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ssm get-parameter"
 translation = "Retrieve the value of a parameter from the AWS Systems Manager Parameter Store."
 verdict = "allow"
 rationale = "Read-only retrieval of a stored parameter value."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws ssm get-parameter"
@@ -695,17 +511,14 @@ flag = "--with-decryption"
 translation_modifier = "decrypting the value if it is a SecureString"
 verdict = "allow"
 rationale = "Reveals the plaintext value of encrypted secrets."
+arity = "Boolean"
 
 [[command]]
 path = "aws ssm put-parameter"
 translation = "Create or update a parameter in the AWS Systems Manager Parameter Store."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Stores a value that may be used by applications and automation across the account."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "config"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "aws ssm put-parameter"
@@ -713,28 +526,21 @@ flag = "--overwrite"
 translation_modifier = "replacing an existing parameter value"
 verdict = "allow"
 rationale = "Overwrites the current value, which may affect running applications that reference it."
+arity = "Boolean"
 
 [[command]]
 path = "aws ssm start-session"
 translation = "Start an interactive shell session on an EC2 instance via Systems Manager."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens a remote shell to a running instance, enabling arbitrary command execution."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ssm send-command"
 translation = "Run a command on one or more managed instances remotely."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Executes arbitrary commands on remote instances, which could modify systems or data."
-tags.scope = "remote"
-tags.effect = ["execute"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── CloudWatch Logs ──────────────────────────────────────────────────────────
 
@@ -743,101 +549,65 @@ path = "aws logs"
 translation = "Manage Amazon CloudWatch Logs log groups and log streams."
 verdict = "allow"
 rationale = "The bare subcommand prints help text."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws logs describe-log-groups"
 translation = "List CloudWatch Logs log groups in the account."
 verdict = "allow"
 rationale = "Read-only listing of log groups."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws logs get-log-events"
 translation = "Retrieve log events from a specific CloudWatch Logs log stream."
 verdict = "allow"
 rationale = "Read-only retrieval of log data."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws logs delete-log-group"
 translation = "Delete a CloudWatch Logs log group and all its log data."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently removes the log group and all stored log events."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[command]]
 path = "aws logs tail"
 translation = "Stream log events from a CloudWatch Logs log group in real time."
 verdict = "allow"
 rationale = "Read-only streaming of log data."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Additional EC2 commands ──────────────────────────────────────────────────
 
 [[command]]
 path = "aws ec2 start-instances"
 translation = "Start one or more stopped EC2 instances."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Starts instances that begin incurring charges and running workloads."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ec2 describe-security-groups"
 translation = "List details about EC2 security groups."
 verdict = "allow"
 rationale = "Read-only query of security group rules."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws ec2 authorize-security-group-ingress"
 translation = "Add an inbound rule to an EC2 security group."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens network access to resources; overly broad rules can expose services to the internet."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 [[command]]
 path = "aws ec2 revoke-security-group-ingress"
 translation = "Remove an inbound rule from an EC2 security group."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Restricts network access; may break connectivity for running services that depend on the rule."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "trivial"
-tags.target = ["cloud", "network"]
-tags.safety_override = false
+risk_class = "net_egress"
 
 # ── Additional Lambda commands ───────────────────────────────────────────────
 
@@ -846,57 +616,37 @@ path = "aws lambda list-functions"
 translation = "List all Lambda functions in the account."
 verdict = "allow"
 rationale = "Read-only listing of function names and configurations."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws lambda update-function-configuration"
 translation = "Modify the settings of an existing Lambda function."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes runtime configuration such as memory, timeout, environment variables, and IAM role immediately."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Additional CloudFormation commands ───────────────────────────────────────
 
 [[command]]
 path = "aws cloudformation create-stack"
 translation = "Create a new CloudFormation stack from a template."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Provisions cloud infrastructure that incurs costs and may affect existing resources."
-tags.scope = "remote"
-tags.effect = ["create"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws cloudformation describe-stacks"
 translation = "Show detailed information about one or more CloudFormation stacks."
 verdict = "allow"
 rationale = "Read-only display of stack status and outputs."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[command]]
 path = "aws cloudformation update-stack"
 translation = "Update an existing CloudFormation stack with a new template or parameters."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies live infrastructure, which may cause replacements or deletions of existing resources."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 # ── Additional global flags ──────────────────────────────────────────────────
 
@@ -906,6 +656,7 @@ flag = "--output"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Changes output format only; no resources are modified."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "aws"
@@ -913,83 +664,56 @@ flag = "--no-cli-pager"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Disables the pager for output; no resources are modified."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
 [[combo]]
 path = "aws s3 rm --recursive"
 translation = "Delete all objects under a specified S3 prefix, potentially wiping the entire contents of a bucket."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Recursively removes every object matching the prefix with no confirmation prompt; recovery depends on versioning."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "aws s3 rb --force"
 translation = "Empty an S3 bucket by deleting all its objects and then permanently destroy the bucket itself."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Irreversibly removes both the data and the bucket; the bucket name may not be immediately reusable."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "aws s3 sync --delete"
 translation = "Synchronize a local directory and an S3 prefix, deleting any files in the destination that do not exist in the source."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes destination objects not present in the source, which can cause permanent data loss alongside the sync."
-tags.scope = "remote"
-tags.effect = ["write", "delete"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "destructive"
 
 [[combo]]
 path = "aws rds delete-db-instance --skip-final-snapshot"
 translation = "Delete an RDS database instance without creating a final backup snapshot, permanently destroying all data."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Bypasses the default final snapshot, making all database data permanently irrecoverable after deletion."
-tags.scope = "remote"
-tags.effect = ["delete"]
-tags.reversibility = "impossible"
-tags.target = ["cloud", "database"]
-tags.safety_override = true
+risk_class = "destructive"
 
 [[combo]]
 path = "aws s3 cp --recursive"
 translation = "Copy an entire directory tree between the local filesystem and S3, or between S3 locations, overwriting any existing objects at the destination."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Transfers a full directory tree that may silently overwrite existing data at the destination."
-tags.scope = "remote"
-tags.effect = ["write"]
-tags.reversibility = "difficult"
-tags.target = ["cloud", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "aws ec2 run-instances --dry-run"
 translation = "Simulate launching EC2 instances to validate permissions and parameters without actually creating any resources."
 verdict = "allow"
 rationale = "No instances are created; only checks whether the caller has the required permissions and the parameters are valid."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "aws s3 rm --dryrun --recursive"
 translation = "Simulate recursively deleting all objects under an S3 prefix without actually removing anything."
 verdict = "allow"
 rationale = "No objects are deleted; only displays what would be removed, allowing safe review before execution."
-tags.scope = "remote"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["cloud"]
-tags.safety_override = false
+risk_class = "destructive"
 

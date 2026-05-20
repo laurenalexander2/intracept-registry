@@ -5,6 +5,7 @@ path = "cd"
 translation = "Change the current working directory."
 verdict = "allow"
 rationale = "Shell built-in that changes the directory context; fully reversible and modifies no files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cd"
@@ -12,6 +13,7 @@ flag = "-P"
 translation_modifier = "resolving symbolic links to use the physical directory path"
 verdict = "allow"
 rationale = "Changes how the path is resolved; does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cd"
@@ -19,3 +21,4 @@ flag = "-L"
 translation_modifier = "following symbolic links instead of resolving them"
 verdict = "allow"
 rationale = "Default behavior on most shells; does not modify any files."
+arity = "Boolean"

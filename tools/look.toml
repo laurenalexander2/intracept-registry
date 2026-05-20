@@ -5,6 +5,7 @@ path = "look"
 translation = "Display lines in a sorted file that begin with a given string."
 verdict = "allow"
 rationale = "Read-only search that writes matching lines to the terminal."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "look"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "ignoring case differences"
 verdict = "allow"
 rationale = "Only changes how characters are compared; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "look"
@@ -19,6 +21,7 @@ flag = "-d"
 translation_modifier = "comparing only letters and numbers"
 verdict = "allow"
 rationale = "Only changes which characters are considered during comparison; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "look"
@@ -26,3 +29,4 @@ flag = "-t"
 translation_modifier = "stopping the comparison at a specific character in the search string"
 verdict = "allow"
 rationale = "Only changes how much of the search string is used; read-only operation."
+arity = "Boolean"

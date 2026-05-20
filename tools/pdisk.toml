@@ -3,8 +3,9 @@
 [[command]]
 path = "pdisk"
 translation = "View or edit Apple partition tables on disk devices."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifying partition tables can destroy all data on the disk if done incorrectly."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pdisk"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "listing the partition tables for all or specified devices"
 verdict = "allow"
 rationale = "Read-only display of partition information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pdisk"
@@ -19,10 +21,12 @@ flag = "-r"
 translation_modifier = "in read-only mode"
 verdict = "allow"
 rationale = "Prevents any modifications to the disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pdisk"
 flag = "-i"
 translation_modifier = "in interactive editing mode"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Opens an interactive session where partition modifications can be made and written to disk."
+arity = "Boolean"

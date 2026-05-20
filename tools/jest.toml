@@ -5,11 +5,7 @@ path = "jest"
 translation = "Run JavaScript and TypeScript tests using the Jest test framework."
 verdict = "allow"
 rationale = "Executes test suites that may have side effects depending on the tests, but the primary purpose is validation."
-tags.scope = "local"
-tags.effect = ["read", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "jest"
@@ -17,6 +13,7 @@ flag = "--coverage"
 translation_modifier = "collecting and reporting code coverage statistics"
 verdict = "allow"
 rationale = "Adds coverage instrumentation and writes a coverage report; does not change test behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -24,6 +21,7 @@ flag = "--verbose"
 translation_modifier = "showing detailed results for each individual test"
 verdict = "allow"
 rationale = "Increases output detail; does not change test execution."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -31,6 +29,7 @@ flag = "--watch"
 translation_modifier = "continuously re-running tests when source files change"
 verdict = "allow"
 rationale = "Keeps Jest running as a long-lived process that re-runs on file changes."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -38,6 +37,7 @@ flag = "--watchAll"
 translation_modifier = "continuously re-running all tests when any file changes"
 verdict = "allow"
 rationale = "Like --watch but re-runs all tests instead of only affected ones."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -45,6 +45,7 @@ flag = "--bail"
 translation_modifier = "stopping after the first test failure"
 verdict = "allow"
 rationale = "Reduces execution scope on failure; a time-saving option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -52,6 +53,7 @@ flag = "--ci"
 translation_modifier = "running in continuous integration mode with stricter snapshot behavior"
 verdict = "allow"
 rationale = "Fails on new snapshots instead of creating them; a safety-enhancing option for CI."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -59,6 +61,7 @@ flag = "--forceExit"
 translation_modifier = "forcefully terminating the process after all tests complete"
 verdict = "allow"
 rationale = "Kills lingering async handles; may mask resource leaks but does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -66,7 +69,7 @@ flag = "--updateSnapshot"
 translation_modifier = "overwriting existing test snapshots with new values"
 verdict = "allow"
 rationale = "Rewrites snapshot files, which changes the expected test output baseline."
-tag_modifiers.effect = ["read", "write", "execute"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jest"
@@ -74,6 +77,7 @@ flag = "--config"
 translation_modifier = "using a specified configuration file"
 verdict = "allow"
 rationale = "Selects which configuration to use; does not change Jest's capabilities."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -82,19 +86,11 @@ path = "jest --coverage --verbose"
 translation = "Run all tests with detailed per-test results and collect code coverage statistics."
 verdict = "allow"
 rationale = "Comprehensive test run with full visibility into individual results and coverage metrics."
-tags.scope = "local"
-tags.effect = ["read", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "jest --watch"
 translation = "Run tests related to changed files and continuously re-run them whenever source files change."
 verdict = "allow"
 rationale = "Long-lived development mode that provides fast feedback on code changes."
-tags.scope = "local"
-tags.effect = ["read", "execute"]
-tags.reversibility = "trivial"
-tags.target = ["process", "filesystem"]
-tags.safety_override = false
+risk_class = "novel"

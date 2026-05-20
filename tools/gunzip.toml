@@ -5,6 +5,7 @@ path = "gunzip"
 translation = "Decompress gzip-compressed files."
 verdict = "allow"
 rationale = "Replaces compressed files with their decompressed versions, removing the original compressed file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "gunzip"
@@ -12,6 +13,7 @@ flag = "-k"
 translation_modifier = "keeping the original compressed file"
 verdict = "allow"
 rationale = "Preserves the input file instead of deleting it after decompression."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gunzip"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "writing decompressed output to the terminal instead of replacing the file"
 verdict = "allow"
 rationale = "Leaves original files intact; only writes to the terminal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gunzip"
@@ -26,6 +29,7 @@ flag = "-f"
 translation_modifier = "overwriting existing files without prompting"
 verdict = "allow"
 rationale = "Forces overwriting of output files and allows decompression even in unusual situations."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gunzip"
@@ -33,6 +37,7 @@ flag = "-r"
 translation_modifier = "recursively through all subdirectories"
 verdict = "allow"
 rationale = "Decompresses files throughout a directory tree, replacing each with its decompressed version."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gunzip"
@@ -40,6 +45,7 @@ flag = "-t"
 translation_modifier = "testing the compressed file integrity without decompressing"
 verdict = "allow"
 rationale = "Read-only integrity check that does not modify any files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "gunzip"
@@ -47,9 +53,11 @@ flag = "--force"
 translation_modifier = "overwriting existing output files without prompting"
 verdict = "allow"
 rationale = "Overwrites existing output files without confirmation; recoverable from backups."
+arity = "Boolean"
 [[flag]]
 applies_to = "gunzip"
 flag = "--recursive"
 translation_modifier = "recursively through all files in subdirectories"
 verdict = "allow"
 rationale = "Processes entire directory trees, increasing the scope of files affected."
+arity = "Boolean"

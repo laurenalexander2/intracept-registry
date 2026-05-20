@@ -5,27 +5,32 @@ path = "shortcuts"
 translation = "Run the Shortcuts command-line utility for managing and executing shortcuts."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "shortcuts run"
 translation = "Execute a specified shortcut."
 verdict = "allow"
 rationale = "Runs a shortcut which may perform arbitrary actions depending on its contents."
+risk_class = "novel"
 
 [[command]]
 path = "shortcuts list"
 translation = "List all available shortcuts."
 verdict = "allow"
 rationale = "Read-only listing of shortcuts."
+risk_class = "novel"
 
 [[command]]
 path = "shortcuts view"
 translation = "Open a shortcut in the Shortcuts application for viewing."
 verdict = "allow"
 rationale = "Opens the Shortcuts app; does not modify the shortcut."
+risk_class = "novel"
 
 [[command]]
 path = "shortcuts sign"
 translation = "Sign a shortcut file for distribution."
 verdict = "allow"
 rationale = "Creates a signed version of a shortcut file; does not modify the original."
+risk_class = "novel"

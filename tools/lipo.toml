@@ -5,6 +5,7 @@ path = "lipo"
 translation = "Create or manipulate universal (multi-architecture) binary files."
 verdict = "allow"
 rationale = "Without a command, only displays architecture information from input files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "lipo"
@@ -12,6 +13,7 @@ flag = "-create"
 translation_modifier = "creating a universal binary from one or more architecture-specific files"
 verdict = "allow"
 rationale = "Creates a new output file; does not modify input files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -19,6 +21,7 @@ flag = "-thin"
 translation_modifier = "extracting a single architecture from a universal binary"
 verdict = "allow"
 rationale = "Creates a new single-architecture output file; does not modify the input."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -26,6 +29,7 @@ flag = "-archs"
 translation_modifier = "displaying only the architecture names present in the file"
 verdict = "allow"
 rationale = "Read-only display of architecture information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -33,6 +37,7 @@ flag = "-remove"
 translation_modifier = "removing a specific architecture from a universal binary"
 verdict = "allow"
 rationale = "Creates a new output file with the architecture removed; does not modify the input."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -40,6 +45,7 @@ flag = "-output"
 translation_modifier = "writing the result to a specific output file"
 verdict = "allow"
 rationale = "Only specifies the destination file path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -47,6 +53,7 @@ flag = "-info"
 translation_modifier = "displaying a brief description of architectures in the file"
 verdict = "allow"
 rationale = "Read-only display of architecture information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -54,6 +61,7 @@ flag = "-detailed_info"
 translation_modifier = "displaying detailed architecture information from the universal file header"
 verdict = "allow"
 rationale = "Read-only display of detailed architecture metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -61,6 +69,7 @@ flag = "-extract"
 translation_modifier = "copying a specific architecture into a new universal output file"
 verdict = "allow"
 rationale = "Creates a new output file; does not modify the input."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -68,6 +77,7 @@ flag = "-replace"
 translation_modifier = "replacing the contents of a specific architecture in a universal binary"
 verdict = "allow"
 rationale = "Creates a new output file with the replaced architecture; does not modify the input."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lipo"
@@ -75,3 +85,4 @@ flag = "-verify_arch"
 translation_modifier = "checking whether specified architectures are present in the file"
 verdict = "allow"
 rationale = "Read-only check; returns an exit code without modifying anything."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "otool"
 translation = "Display the contents and structure of Apple platform object files and libraries."
 verdict = "allow"
 rationale = "Read-only inspection of binary file metadata and code; does not modify anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "otool"
@@ -12,6 +13,7 @@ flag = "-L"
 translation_modifier = "showing the shared libraries the file links against"
 verdict = "allow"
 rationale = "Read-only display of library dependencies."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -19,6 +21,7 @@ flag = "-h"
 translation_modifier = "showing the binary file header"
 verdict = "allow"
 rationale = "Read-only display of the file header."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "showing the load commands"
 verdict = "allow"
 rationale = "Read-only display of load command details."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -33,6 +37,7 @@ flag = "-t"
 translation_modifier = "showing the executable code section"
 verdict = "allow"
 rationale = "Read-only display of the text section contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -40,6 +45,7 @@ flag = "-d"
 translation_modifier = "showing the data section"
 verdict = "allow"
 rationale = "Read-only display of the data section contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -47,6 +53,7 @@ flag = "-D"
 translation_modifier = "showing only the install name of a shared library"
 verdict = "allow"
 rationale = "Read-only display of a single metadata value."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -54,6 +61,7 @@ flag = "-v"
 translation_modifier = "showing symbolic names instead of raw numbers"
 verdict = "allow"
 rationale = "Improves readability of output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -61,6 +69,7 @@ flag = "-V"
 translation_modifier = "showing symbolic names for both instructions and their operands"
 verdict = "allow"
 rationale = "Provides the most detailed symbolic disassembly; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -68,6 +77,7 @@ flag = "-I"
 translation_modifier = "showing the indirect symbol table"
 verdict = "allow"
 rationale = "Read-only display of indirect symbol references."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -75,6 +85,7 @@ flag = "-r"
 translation_modifier = "showing the relocation entries"
 verdict = "allow"
 rationale = "Read-only display of relocation information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -82,6 +93,7 @@ flag = "-S"
 translation_modifier = "showing the contents of the archive symbol definition file"
 verdict = "allow"
 rationale = "Read-only display of archive metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "otool"
@@ -89,3 +101,4 @@ flag = "-P"
 translation_modifier = "showing the info property list embedded in the binary"
 verdict = "allow"
 rationale = "Read-only display of embedded metadata."
+arity = "Boolean"

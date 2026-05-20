@@ -3,8 +3,9 @@
 [[command]]
 path = "tcpdump"
 translation = "Capture and display network traffic on an interface."
-verdict = "require_approval"
-rationale = "Reads network packets, which may contain sensitive data such as credentials or personal information."
+verdict = "warn"
+rationale = "Reads every network packet on the interface, which may include credentials, session tokens, personal information, or other irreversible secret-leakage."
+risk_class = "secret_read"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -12,6 +13,7 @@ flag = "-i"
 translation_modifier = "capturing on a specified network interface"
 verdict = "allow"
 rationale = "Selects which interface to monitor; does not change the capture behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -19,6 +21,7 @@ flag = "-w"
 translation_modifier = "writing captured packets to a file"
 verdict = "allow"
 rationale = "Saves potentially sensitive network data to disk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -26,6 +29,7 @@ flag = "-r"
 translation_modifier = "reading packets from a previously captured file"
 verdict = "allow"
 rationale = "Reads from a file instead of the network; no live capture."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "stopping after capturing a specified number of packets"
 verdict = "allow"
 rationale = "Limits the capture duration; a scope-reducing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -40,6 +45,7 @@ flag = "-n"
 translation_modifier = "displaying IP addresses instead of resolving hostnames"
 verdict = "allow"
 rationale = "Changes output formatting; does not change capture behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -47,6 +53,7 @@ flag = "-A"
 translation_modifier = "displaying packet contents as readable text"
 verdict = "allow"
 rationale = "Shows packet payloads in readable form, which may expose sensitive data on screen."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -54,6 +61,7 @@ flag = "-X"
 translation_modifier = "displaying packet contents in both hexadecimal and text"
 verdict = "allow"
 rationale = "Shows detailed packet payloads, which may expose sensitive data on screen."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -61,6 +69,7 @@ flag = "-e"
 translation_modifier = "including hardware addresses in each line of output"
 verdict = "allow"
 rationale = "Adds link-layer header information to the display; still a read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -68,6 +77,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Increases output verbosity; does not change capture behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -75,6 +85,7 @@ flag = "-D"
 translation_modifier = "listing all available network interfaces instead of capturing"
 verdict = "allow"
 rationale = "Read-only display of available interfaces; no packets are captured."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -82,6 +93,7 @@ flag = "-s"
 translation_modifier = "capturing only a specified number of bytes from each packet"
 verdict = "allow"
 rationale = "Limits the amount of data captured per packet; a scope-reducing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -89,6 +101,7 @@ flag = "-G"
 translation_modifier = "rotating the capture file at a specified interval in seconds"
 verdict = "allow"
 rationale = "Creates multiple capture files over time, which may consume significant disk space."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -96,6 +109,7 @@ flag = "-C"
 translation_modifier = "rotating the capture file when it reaches a specified size"
 verdict = "allow"
 rationale = "Creates multiple capture files, which may consume significant disk space."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "tcpdump"
@@ -103,3 +117,4 @@ flag = "-F"
 translation_modifier = "reading the capture filter expression from a file"
 verdict = "allow"
 rationale = "Changes how the filter is specified; does not add capture capability."
+arity = "Boolean"

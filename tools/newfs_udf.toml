@@ -3,5 +3,6 @@
 [[command]]
 path = "newfs_udf"
 translation = "Create a new Universal Disk Format filesystem on a device."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Formats a device, destroying all existing data on the partition."
+risk_class = "novel"

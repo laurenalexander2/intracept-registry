@@ -5,6 +5,7 @@ path = "finger"
 translation = "Display information about system users."
 verdict = "allow"
 rationale = "Read-only query of user account information."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "finger"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "showing detailed multi-line output including home directory and login shell"
 verdict = "allow"
 rationale = "Only changes the amount of detail displayed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -19,6 +21,7 @@ flag = "-s"
 translation_modifier = "showing brief single-line output"
 verdict = "allow"
 rationale = "Only changes the output format; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -26,6 +29,7 @@ flag = "-m"
 translation_modifier = "matching only login names instead of also matching real names"
 verdict = "allow"
 rationale = "Only changes the matching behavior; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -33,6 +37,7 @@ flag = "-p"
 translation_modifier = "hiding the contents of plan, project, and public key files"
 verdict = "allow"
 rationale = "Only suppresses display of extra user files; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -40,6 +45,7 @@ flag = "-k"
 translation_modifier = "without checking the user accounting database"
 verdict = "allow"
 rationale = "Only skips the accounting database lookup; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -47,6 +53,7 @@ flag = "-h"
 translation_modifier = "showing the remote host instead of office information in short format"
 verdict = "allow"
 rationale = "Only changes which field is displayed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -54,6 +61,7 @@ flag = "-o"
 translation_modifier = "showing office location and phone instead of the remote host in short format"
 verdict = "allow"
 rationale = "Only changes which field is displayed; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "finger"
@@ -61,3 +69,4 @@ flag = "-g"
 translation_modifier = "showing only the real name from the user information field"
 verdict = "allow"
 rationale = "Only restricts which user details are displayed; read-only operation."
+arity = "Boolean"

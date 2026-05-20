@@ -1,0 +1,30 @@
+# Valid: multi-level polyalias subcommand chain.
+
+[[command]]
+path = "demo-tool"
+translation = "Base of a polyalias chain."
+verdict = "allow"
+rationale = "Read-only inspection at the base level."
+risk_class = "safe"
+
+[[command]]
+path = "demo-tool remote"
+translation = "Manage remote endpoints."
+verdict = "allow"
+rationale = "Lists configured remotes; read-only."
+risk_class = "safe"
+
+[[command]]
+path = "demo-tool remote add"
+translation = "Add a new remote endpoint configuration."
+verdict = "ask"
+rationale = "Writes a new remote URL into local configuration; introduces a network destination."
+risk_class = "net_egress"
+
+[[flag]]
+applies_to = "demo-tool remote add"
+flag = "--fetch"
+translation_modifier = "immediately fetching from the new remote"
+verdict = "ask"
+rationale = "Adds the remote and immediately performs an outbound fetch."
+arity = "Boolean"

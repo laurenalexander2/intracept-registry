@@ -5,6 +5,7 @@ path = "jot"
 translation = "Generate a sequence of numbers or random data."
 verdict = "allow"
 rationale = "Writes generated data to the terminal; does not modify any files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "jot"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "generating random data instead of sequential data"
 verdict = "allow"
 rationale = "Only changes the data generation mode."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jot"
@@ -19,6 +21,7 @@ flag = "-w"
 translation_modifier = "formatting each output value using a printf-style format string"
 verdict = "allow"
 rationale = "Only changes the output format."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jot"
@@ -26,6 +29,7 @@ flag = "-s"
 translation_modifier = "using a specific string to separate output values"
 verdict = "allow"
 rationale = "Only changes the delimiter between values."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "jot"
@@ -33,3 +37,4 @@ flag = "-c"
 translation_modifier = "printing each value as a character"
 verdict = "allow"
 rationale = "Only changes the output format to character representation."
+arity = "Boolean"

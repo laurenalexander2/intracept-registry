@@ -1,0 +1,7 @@
+# Invalid: missing required field "rationale" on a command.
+
+[[command]]
+path = "missing-ra"
+translation = "Example with missing rationale."
+verdict = "allow"
+risk_class = "safe"

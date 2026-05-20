@@ -3,8 +3,9 @@
 [[command]]
 path = "snmpset"
 translation = "Set the value of a variable on a network device using SNMP."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies configuration or state on a remote network device; incorrect values can disrupt services."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpset"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpset"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpset"
@@ -26,6 +29,7 @@ flag = "-r"
 translation_modifier = "setting the number of retry attempts"
 verdict = "allow"
 rationale = "Only controls how many times a failed request is retried."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpset"
@@ -33,3 +37,4 @@ flag = "-t"
 translation_modifier = "setting the timeout between retries"
 verdict = "allow"
 rationale = "Only controls how long to wait before retrying a request."
+arity = "Boolean"

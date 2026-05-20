@@ -1,0 +1,7 @@
+{
+  "kind": "invalid_enum_value",
+  "schema": "rule-schema-v2.json",
+  "field_path": "/origin",
+  "msg_contains": "made-up-layer",
+  "valid_values": ["registry-default", "org-default", "profile-default", "agent-authored", "user-override"]
+}

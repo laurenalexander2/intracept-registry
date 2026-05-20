@@ -3,5 +3,6 @@
 [[command]]
 path = "systemkeychain"
 translation = "Manage the system keychain used for system-wide credentials."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the system keychain which stores credentials used by system services; incorrect changes can break services."
+risk_class = "novel"

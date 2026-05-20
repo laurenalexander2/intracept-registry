@@ -7,6 +7,7 @@ path = "npx"
 translation = "Run a command from a local or remote npm package."
 verdict = "allow"
 rationale = "Downloads and executes package binaries, which may run arbitrary code from the npm registry."
+risk_class = "novel"
 
 # ── Flags ────────────────────────────────────────────────────────────────────
 
@@ -16,6 +17,7 @@ flag = "--package"
 translation_modifier = "using a specific package instead of inferring it from the command name"
 verdict = "allow"
 rationale = "Explicitly specifies which package to use; does not change the execution model."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "npx"
@@ -23,6 +25,7 @@ flag = "-c"
 translation_modifier = "running a shell command string in the package environment"
 verdict = "allow"
 rationale = "Executes an arbitrary shell command with the package binaries available on the PATH."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "npx"
@@ -30,6 +33,7 @@ flag = "--yes"
 translation_modifier = "without prompting for confirmation before downloading packages"
 verdict = "allow"
 rationale = "Skips the confirmation prompt, allowing automatic download and execution of remote code."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "npx"
@@ -37,6 +41,7 @@ flag = "--no"
 translation_modifier = "refusing to download packages that are not already installed locally"
 verdict = "allow"
 rationale = "Prevents fetching remote packages, limiting execution to locally installed binaries only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "npx"
@@ -44,6 +49,7 @@ flag = "-w"
 translation_modifier = "running the command in the context of a specific workspace"
 verdict = "allow"
 rationale = "Scopes execution to a named workspace; does not change the execution model."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "npx"
@@ -51,3 +57,4 @@ flag = "--workspaces"
 translation_modifier = "running the command in every workspace in the project"
 verdict = "allow"
 rationale = "Executes the command across all workspaces, increasing the scope of any side effects."
+arity = "Boolean"

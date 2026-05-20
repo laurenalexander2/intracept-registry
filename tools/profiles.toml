@@ -3,5 +3,6 @@
 [[command]]
 path = "profiles"
 translation = "Manage macOS configuration profiles for device management and policy enforcement."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Installs or removes configuration profiles that can change system settings and restrictions."
+risk_class = "novel"

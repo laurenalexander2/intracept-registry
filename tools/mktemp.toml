@@ -5,6 +5,7 @@ path = "mktemp"
 translation = "Create a temporary file or directory with a unique name."
 verdict = "allow"
 rationale = "Creates a small temporary file in a temp directory; trivially removable."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mktemp"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "creating a directory instead of a file"
 verdict = "allow"
 rationale = "Creates a temporary directory instead of a file; still trivially removable."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mktemp"
@@ -19,6 +21,7 @@ flag = "-u"
 translation_modifier = "unlinking the file before exiting, leaving only the generated name"
 verdict = "allow"
 rationale = "Operates in unsafe mode introducing a race condition, but creates no persistent file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mktemp"
@@ -26,6 +29,7 @@ flag = "-t"
 translation_modifier = "using a prefix and the system temp directory to generate the path"
 verdict = "allow"
 rationale = "Controls the naming template; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mktemp"
@@ -33,3 +37,4 @@ flag = "-p"
 translation_modifier = "in a specified directory instead of the default temp location"
 verdict = "allow"
 rationale = "Changes the target directory for the temporary file; no additional risk."
+arity = "Boolean"

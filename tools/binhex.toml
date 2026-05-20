@@ -5,6 +5,7 @@ path = "binhex"
 translation = "Encode or decode BinHex format files."
 verdict = "allow"
 rationale = "Converts file format; outputs to the terminal by default."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "binhex"
@@ -12,3 +13,4 @@ flag = "--overwrite"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Replaces existing files without prompting."
+arity = "Boolean"

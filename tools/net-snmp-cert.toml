@@ -5,6 +5,7 @@ path = "net-snmp-cert"
 translation = "Manage TLS certificates for Net-SNMP secure communications."
 verdict = "allow"
 rationale = "Creates, imports, and manages certificates that control SNMP authentication and encryption."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "net-snmp-cert"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing certificates without prompting"
 verdict = "allow"
 rationale = "Replaces existing SNMP certificates; may disrupt monitoring until reconfigured."
+arity = "Boolean"

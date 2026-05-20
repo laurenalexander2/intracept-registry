@@ -5,6 +5,7 @@ path = "mdimport"
 translation = "Import files into the macOS Spotlight metadata index."
 verdict = "allow"
 rationale = "Triggers re-indexing of files for Spotlight search; does not modify file contents."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mdimport"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "re-indexing all files handled by a specified Spotlight plugin"
 verdict = "allow"
 rationale = "Triggers a re-index for a plugin's file types; does not modify file contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdimport"
@@ -19,6 +21,7 @@ flag = "-t"
 translation_modifier = "testing the import without storing results in the index"
 verdict = "allow"
 rationale = "Dry run that displays import results without modifying the Spotlight index."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdimport"
@@ -26,6 +29,7 @@ flag = "-d"
 translation_modifier = "printing debugging information during import"
 verdict = "allow"
 rationale = "Only adds diagnostic output; requires -t so no index changes occur."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdimport"
@@ -33,6 +37,7 @@ flag = "-L"
 translation_modifier = "listing all installed Spotlight import plugins"
 verdict = "allow"
 rationale = "Read-only display of installed plugins; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdimport"
@@ -40,6 +45,7 @@ flag = "-A"
 translation_modifier = "listing all known metadata attributes and their descriptions"
 verdict = "allow"
 rationale = "Read-only display of attribute definitions; modifies nothing."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mdimport"
@@ -47,3 +53,4 @@ flag = "-X"
 translation_modifier = "printing the Spotlight schema definition"
 verdict = "allow"
 rationale = "Read-only display of the schema; modifies nothing."
+arity = "Boolean"

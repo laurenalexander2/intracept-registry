@@ -5,24 +5,28 @@ path = "flask"
 translation = "Run the Flask web application command-line interface."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "flask run"
 translation = "Start a local Flask development web server."
 verdict = "allow"
 rationale = "Starts a network-accessible server that executes application code and listens for connections."
+risk_class = "novel"
 
 [[command]]
 path = "flask shell"
 translation = "Open an interactive Python shell within the Flask application context."
 verdict = "allow"
 rationale = "Provides an interactive shell with access to the application and its database connections."
+risk_class = "novel"
 
 [[command]]
 path = "flask routes"
 translation = "Display all registered URL routes for the Flask application."
 verdict = "allow"
 rationale = "Read-only display of route configuration."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "flask run"
@@ -30,6 +34,7 @@ flag = "--debug"
 translation_modifier = "enabling debug mode with auto-reloading and detailed error pages"
 verdict = "allow"
 rationale = "Debug mode exposes a live debugger in the browser that can execute arbitrary Python code."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "flask"
@@ -37,3 +42,4 @@ flag = "--app"
 translation_modifier = "loading a specific Flask application module"
 verdict = "allow"
 rationale = "Only specifies which application to load; does not change behavior."
+arity = "Boolean"

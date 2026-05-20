@@ -3,8 +3,9 @@
 [[command]]
 path = "newfs_msdos"
 translation = "Create a new FAT12, FAT16, or FAT32 filesystem on a device."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Formats a device, destroying all existing data on the partition."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "newfs_msdos"
@@ -12,6 +13,7 @@ flag = "-N"
 translation_modifier = "only printing parameters without actually creating the filesystem"
 verdict = "allow"
 rationale = "Dry run that does not modify the device."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "newfs_msdos"
@@ -19,3 +21,4 @@ flag = "-F"
 translation_modifier = "using a specified filesystem type"
 verdict = "allow"
 rationale = "Selects FAT12, FAT16, or FAT32; no additional risk beyond the base command."
+arity = "Boolean"

@@ -3,22 +3,25 @@
 [[command]]
 path = "fsck"
 translation = "Check and repair filesystem consistency."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies filesystem metadata to fix inconsistencies, which can cause data loss if the filesystem is mounted."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "fsck"
 flag = "-p"
 translation_modifier = "automatically repairing safe inconsistencies without prompting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Makes corrections automatically; limits repairs to those considered safe, but still modifies filesystem metadata."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fsck"
 flag = "-y"
 translation_modifier = "answering yes to all repair prompts"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Approves all repairs without review, including potentially destructive corrections."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fsck"
@@ -26,10 +29,12 @@ flag = "-n"
 translation_modifier = "checking without making any repairs"
 verdict = "allow"
 rationale = "Read-only mode that reports problems but does not modify the filesystem."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fsck"
 flag = "-f"
 translation_modifier = "checking even if the filesystem is marked clean"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forces a check on a clean filesystem, which may make repairs that would otherwise be skipped."
+arity = "Boolean"

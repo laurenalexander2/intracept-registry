@@ -5,51 +5,60 @@ path = "alembic"
 translation = "Run the Alembic database migration tool for SQLAlchemy."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "alembic upgrade"
 translation = "Apply database migrations forward to a specified revision."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies database schema and data, which may be difficult to reverse."
+risk_class = "novel"
 
 [[command]]
 path = "alembic downgrade"
 translation = "Revert database migrations backward to a specified revision."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Rolls back database schema changes, potentially losing data added since the migration."
+risk_class = "novel"
 
 [[command]]
 path = "alembic revision"
 translation = "Create a new migration revision file."
 verdict = "allow"
 rationale = "Creates a local file; does not modify the database."
+risk_class = "novel"
 
 [[command]]
 path = "alembic current"
 translation = "Display the current database migration revision."
 verdict = "allow"
 rationale = "Read-only display of the current migration state."
+risk_class = "novel"
 
 [[command]]
 path = "alembic history"
 translation = "Show the history of migration revisions."
 verdict = "allow"
 rationale = "Read-only display of migration history."
+risk_class = "novel"
 
 [[command]]
 path = "alembic heads"
 translation = "Show the current head revisions."
 verdict = "allow"
 rationale = "Read-only display of migration branch heads."
+risk_class = "novel"
 
 [[command]]
 path = "alembic stamp"
 translation = "Mark the database as being at a specific migration revision without running migrations."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes the recorded migration state, which may cause future migrations to skip or reapply steps."
+risk_class = "novel"
 
 [[command]]
 path = "alembic check"
 translation = "Check if the database is up to date with the latest migration."
 verdict = "allow"
 rationale = "Read-only comparison of database state against migration files."
+risk_class = "novel"

@@ -3,5 +3,6 @@
 [[command]]
 path = "dscl"
 translation = "Interact with the macOS Directory Service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Can create, read, modify, and delete directory entries including user accounts."
+risk_class = "novel"

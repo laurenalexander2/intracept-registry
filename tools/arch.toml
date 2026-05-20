@@ -5,6 +5,7 @@ path = "arch"
 translation = "Print the system's processor architecture or run a program under a specific architecture."
 verdict = "allow"
 rationale = "With no arguments, displays architecture info; when running a program, it only changes which version of the program runs."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "arch"
@@ -12,6 +13,7 @@ flag = "-32"
 translation_modifier = "using the 32-bit version of the program"
 verdict = "allow"
 rationale = "Selects a different architecture variant but does not modify any files or system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arch"
@@ -19,6 +21,7 @@ flag = "-64"
 translation_modifier = "using the 64-bit version of the program"
 verdict = "allow"
 rationale = "Selects a different architecture variant but does not modify any files or system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arch"
@@ -26,6 +29,7 @@ flag = "-arch"
 translation_modifier = "targeting a specific named architecture"
 verdict = "allow"
 rationale = "Selects a specific architecture variant but does not modify any files or system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arch"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "clearing all environment variables before running the program"
 verdict = "allow"
 rationale = "Only affects the environment passed to the child process; does not modify files or system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arch"
@@ -40,6 +45,7 @@ flag = "-e"
 translation_modifier = "setting an environment variable for the program"
 verdict = "allow"
 rationale = "Only affects the environment passed to the child process; does not modify files or system state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "arch"
@@ -47,3 +53,4 @@ flag = "-d"
 translation_modifier = "removing an environment variable before running the program"
 verdict = "allow"
 rationale = "Only affects the environment passed to the child process; does not modify files or system state."
+arity = "Boolean"

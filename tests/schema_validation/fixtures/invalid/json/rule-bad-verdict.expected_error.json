@@ -1,0 +1,7 @@
+{
+  "kind": "invalid_enum_value",
+  "schema": "rule-schema-v2.json",
+  "field_path": "/verdict",
+  "msg_contains": "alllow",
+  "valid_values": ["allow", "ask", "warn"]
+}

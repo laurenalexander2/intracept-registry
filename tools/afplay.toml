@@ -5,6 +5,7 @@ path = "afplay"
 translation = "Play an audio file."
 verdict = "allow"
 rationale = "Plays audio to the speaker; does not modify files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "afplay"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "at a specified volume level"
 verdict = "allow"
 rationale = "Adjusts playback volume; no state change beyond audio output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "afplay"
@@ -19,6 +21,7 @@ flag = "-t"
 translation_modifier = "for a specified number of seconds"
 verdict = "allow"
 rationale = "Limits playback duration; no additional risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "afplay"
@@ -26,6 +29,7 @@ flag = "-r"
 translation_modifier = "at a specified playback speed"
 verdict = "allow"
 rationale = "Adjusts playback rate; purely cosmetic adjustment to audio output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "afplay"
@@ -33,3 +37,4 @@ flag = "-q"
 translation_modifier = "using a specified quality level for rate-scaled playback"
 verdict = "allow"
 rationale = "Controls resampling quality; no state change beyond audio output."
+arity = "Boolean"

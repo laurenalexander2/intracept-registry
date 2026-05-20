@@ -5,54 +5,63 @@ path = "scalar"
 translation = "Manage large Git repositories with performance optimizations."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "scalar clone"
 translation = "Clone a repository with Scalar performance optimizations enabled."
 verdict = "allow"
 rationale = "Creates a new local repository and downloads data from a remote; disk space is consumed but no existing data is modified."
+risk_class = "novel"
 
 [[command]]
 path = "scalar list"
 translation = "List all repositories currently registered with Scalar."
 verdict = "allow"
 rationale = "Read-only listing of registered enlistments."
+risk_class = "novel"
 
 [[command]]
 path = "scalar register"
 translation = "Register a repository with Scalar and start background maintenance."
 verdict = "allow"
 rationale = "Adds a repository to the maintenance list; trivially reversible with unregister."
+risk_class = "novel"
 
 [[command]]
 path = "scalar unregister"
 translation = "Remove a repository from Scalar's list and stop background maintenance."
 verdict = "allow"
 rationale = "Stops maintenance scheduling; does not delete any data."
+risk_class = "novel"
 
 [[command]]
 path = "scalar run"
 translation = "Run a specified maintenance task on a registered repository."
 verdict = "allow"
 rationale = "Executes Git maintenance operations like repacking; optimizes internal storage without data loss."
+risk_class = "novel"
 
 [[command]]
 path = "scalar reconfigure"
 translation = "Reapply Scalar's optimized Git configuration to a registered repository."
 verdict = "allow"
 rationale = "Updates Git config settings; does not modify repository content."
+risk_class = "novel"
 
 [[command]]
 path = "scalar diagnose"
 translation = "Collect diagnostic information about a Scalar enlistment into a zip file."
 verdict = "allow"
 rationale = "Read-only data gathering that writes a zip file; no destructive action."
+risk_class = "novel"
 
 [[command]]
 path = "scalar delete"
 translation = "Delete a Scalar enlistment from the local file system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes the entire enlistment directory including the repository; recovery requires re-cloning or backups."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "scalar clone"
@@ -60,6 +69,7 @@ flag = "--single-branch"
 translation_modifier = "cloning only the history of a single branch"
 verdict = "allow"
 rationale = "Reduces the amount of data fetched; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scalar clone"
@@ -67,6 +77,7 @@ flag = "--branch"
 translation_modifier = "checking out a specified branch instead of the default"
 verdict = "allow"
 rationale = "Selects a different branch to check out; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scalar clone"
@@ -74,6 +85,7 @@ flag = "--full-clone"
 translation_modifier = "disabling sparse-checkout to fetch all files"
 verdict = "allow"
 rationale = "Downloads more data but does not modify or destroy anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scalar clone"
@@ -81,6 +93,7 @@ flag = "--no-src"
 translation_modifier = "placing the repository directly in the enlistment directory without a src subdirectory"
 verdict = "allow"
 rationale = "Changes directory layout; no data risk."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scalar reconfigure"
@@ -88,3 +101,4 @@ flag = "--all"
 translation_modifier = "across all registered enlistments"
 verdict = "allow"
 rationale = "Applies config to all registered repositories; no destructive action."
+arity = "Boolean"

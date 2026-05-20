@@ -3,8 +3,9 @@
 [[command]]
 path = "newfs_exfat"
 translation = "Create a new exFAT filesystem on a device."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Formats a device, destroying all existing data on the partition."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "newfs_exfat"
@@ -12,3 +13,4 @@ flag = "-N"
 translation_modifier = "only printing parameters without actually creating the filesystem"
 verdict = "allow"
 rationale = "Dry run that does not modify the device."
+arity = "Boolean"

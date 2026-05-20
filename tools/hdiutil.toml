@@ -5,12 +5,14 @@ path = "hdiutil"
 translation = "Run the macOS disk image manipulation tool."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil attach"
 translation = "Mount a disk image as a device on the system."
 verdict = "allow"
 rationale = "Attaches a disk image and mounts its volumes, making the contents accessible."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil attach"
@@ -18,6 +20,7 @@ flag = "-readonly"
 translation_modifier = "mounting the image in read-only mode"
 verdict = "allow"
 rationale = "Prevents any modifications to the disk image contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil attach"
@@ -25,6 +28,7 @@ flag = "-nomount"
 translation_modifier = "attaching without mounting any volumes"
 verdict = "allow"
 rationale = "Only creates the device node; no volumes are mounted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil attach"
@@ -32,6 +36,7 @@ flag = "-nobrowse"
 translation_modifier = "hiding the mounted volumes from the Finder"
 verdict = "allow"
 rationale = "Cosmetic change; the volumes are still accessible."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil attach"
@@ -39,6 +44,7 @@ flag = "-noverify"
 translation_modifier = "skipping the checksum verification of the disk image"
 verdict = "allow"
 rationale = "Bypasses integrity checking; a corrupted image may be mounted without warning."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil attach"
@@ -46,32 +52,37 @@ flag = "-shadow"
 translation_modifier = "redirecting writes to a separate shadow file instead of the original image"
 verdict = "allow"
 rationale = "Preserves the original disk image; all changes go to the shadow file."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil detach"
 translation = "Unmount and disconnect a disk image from the system."
 verdict = "allow"
 rationale = "Unmounts volumes and detaches the device; data in flight may be lost if not flushed."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil detach"
 flag = "-force"
 translation_modifier = "forcibly detaching even if files are still open"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forces detachment regardless of open files, which may cause data loss or corruption."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil create"
 translation = "Create a new disk image."
 verdict = "allow"
 rationale = "Creates a new disk image file; does not modify existing files unless overwrite is specified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil create"
 flag = "-ov"
 translation_modifier = "overwriting an existing image file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the existing disk image and replaces it with a new one."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil create"
@@ -79,6 +90,7 @@ flag = "-encryption"
 translation_modifier = "encrypting the disk image with a passphrase"
 verdict = "allow"
 rationale = "Adds encryption to the new image; improves security."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil create"
@@ -86,6 +98,7 @@ flag = "-srcfolder"
 translation_modifier = "creating the image from the contents of a folder"
 verdict = "allow"
 rationale = "Reads the source folder to populate the image; does not modify the source."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil create"
@@ -93,6 +106,7 @@ flag = "-size"
 translation_modifier = "setting the size of the new disk image"
 verdict = "allow"
 rationale = "Specifies the capacity of the new image; does not affect existing files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil create"
@@ -100,25 +114,29 @@ flag = "-type"
 translation_modifier = "setting the disk image type such as sparse or fixed-size"
 verdict = "allow"
 rationale = "Determines how storage is allocated; does not affect existing files."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil verify"
 translation = "Verify the checksum of a read-only disk image."
 verdict = "allow"
 rationale = "Read-only integrity check that does not modify the image."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil convert"
 translation = "Convert a disk image to a different format."
 verdict = "allow"
 rationale = "Creates a new disk image in the target format; the original is preserved unless overwritten."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil convert"
 flag = "-ov"
 translation_modifier = "overwriting an existing output file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Destroys the existing file at the output path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil convert"
@@ -126,18 +144,21 @@ flag = "-format"
 translation_modifier = "specifying the output disk image format"
 verdict = "allow"
 rationale = "Determines the output format; does not affect the source image."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil compact"
 translation = "Reclaim unused space in a sparse disk image."
 verdict = "allow"
 rationale = "Modifies the disk image file to reduce its size on disk."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil burn"
 translation = "Burn a disk image to optical media."
 verdict = "allow"
 rationale = "Writes data to physical media, which is not easily reversible for write-once discs."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil burn"
@@ -145,25 +166,29 @@ flag = "-noverify"
 translation_modifier = "skipping verification after burning"
 verdict = "allow"
 rationale = "Bypasses post-burn verification; a failed burn may go undetected."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil info"
 translation = "Display information about currently attached disk images."
 verdict = "allow"
 rationale = "Read-only display of attached image information."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil resize"
 translation = "Resize a disk image or its partitions."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes the size of a disk image, which can cause data loss if shrinking below used capacity."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "hdiutil resize"
 flag = "-size"
 translation_modifier = "setting the new size of the disk image"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Shrinking below used capacity causes data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "hdiutil resize"
@@ -171,45 +196,53 @@ flag = "-limits"
 translation_modifier = "displaying the minimum and maximum possible sizes instead of resizing"
 verdict = "allow"
 rationale = "Read-only query that prints size constraints without modifying the image."
+arity = "Boolean"
 
 [[command]]
 path = "hdiutil checksum"
 translation = "Calculate a checksum for a disk image."
 verdict = "allow"
 rationale = "Read-only computation that does not modify the image."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil imageinfo"
 translation = "Display detailed properties of a disk image."
 verdict = "allow"
 rationale = "Read-only display of image metadata."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil isencrypted"
 translation = "Check whether a disk image is encrypted."
 verdict = "allow"
 rationale = "Read-only query that does not modify the image."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil segment"
 translation = "Split a disk image into multiple smaller segment files."
 verdict = "allow"
 rationale = "Creates new segment files; the original image is preserved."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil makehybrid"
 translation = "Create a hybrid disk image compatible with multiple filesystems."
 verdict = "allow"
 rationale = "Creates a new image file; may overwrite an existing file at the output path."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil erasekeys"
 translation = "Destroy encryption keys for an encrypted disk image, making its data permanently inaccessible."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Permanently renders the encrypted data unrecoverable by destroying the keys."
+risk_class = "novel"
 
 [[command]]
 path = "hdiutil chpass"
 translation = "Change the passphrase on an encrypted disk image."
 verdict = "allow"
 rationale = "Changes the encryption passphrase; data remains accessible with the new passphrase."
+risk_class = "novel"

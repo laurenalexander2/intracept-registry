@@ -5,6 +5,7 @@ path = "fgrep"
 translation = "Search files for lines matching a fixed string pattern."
 verdict = "allow"
 rationale = "Read-only search operation that modifies nothing."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "fgrep"
@@ -12,6 +13,7 @@ flag = "-r"
 translation_modifier = "recursively through all subdirectories"
 verdict = "allow"
 rationale = "Expands the search scope but remains a read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fgrep"
@@ -19,6 +21,7 @@ flag = "-i"
 translation_modifier = "ignoring case differences"
 verdict = "allow"
 rationale = "Only changes pattern matching behavior; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fgrep"
@@ -26,6 +29,7 @@ flag = "-v"
 translation_modifier = "selecting only non-matching lines"
 verdict = "allow"
 rationale = "Inverts the match criteria; still a read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fgrep"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "showing only a count of matching lines"
 verdict = "allow"
 rationale = "Only changes output format; read-only operation."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "fgrep"
@@ -40,3 +45,4 @@ flag = "-l"
 translation_modifier = "showing only the names of files with matches"
 verdict = "allow"
 rationale = "Only changes output format; read-only operation."
+arity = "Boolean"

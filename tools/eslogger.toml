@@ -5,6 +5,7 @@ path = "eslogger"
 translation = "Stream Endpoint Security events to standard output or the system log."
 verdict = "allow"
 rationale = "Read-only monitoring tool that observes system events without modifying anything."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "eslogger"
@@ -12,6 +13,7 @@ flag = "--list-events"
 translation_modifier = "listing all supported event types instead of streaming"
 verdict = "allow"
 rationale = "Only prints available event names and exits."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "eslogger"
@@ -19,3 +21,4 @@ flag = "--oslog"
 translation_modifier = "writing events to the unified logging system instead of standard output"
 verdict = "allow"
 rationale = "Changes the output destination to the system log; still a read-only operation."
+arity = "Boolean"

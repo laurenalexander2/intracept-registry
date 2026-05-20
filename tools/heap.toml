@@ -5,6 +5,7 @@ path = "heap"
 translation = "List all memory allocations in the heap of a running process."
 verdict = "allow"
 rationale = "Read-only inspection of process memory; does not modify the target process."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "heap"
@@ -12,6 +13,7 @@ flag = "-s"
 translation_modifier = "sorting output by total size instead of count"
 verdict = "allow"
 rationale = "Only changes output ordering."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -19,6 +21,7 @@ flag = "-sortBySize"
 translation_modifier = "sorting output by total size instead of count"
 verdict = "allow"
 rationale = "Only changes output ordering."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -26,6 +29,7 @@ flag = "-z"
 translation_modifier = "separating output by memory zone instead of showing an aggregate"
 verdict = "allow"
 rationale = "Only changes how results are grouped in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -33,6 +37,7 @@ flag = "-zones"
 translation_modifier = "separating output by memory zone instead of showing an aggregate"
 verdict = "allow"
 rationale = "Only changes how results are grouped in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -40,6 +45,7 @@ flag = "-guessNonObjects"
 translation_modifier = "identifying non-object memory blocks referenced by objects"
 verdict = "allow"
 rationale = "Performs deeper read-only analysis of memory contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -47,6 +53,7 @@ flag = "-sumObjectFields"
 translation_modifier = "including referenced non-object memory sizes in object totals"
 verdict = "allow"
 rationale = "Only changes how sizes are aggregated in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -54,6 +61,7 @@ flag = "-showSizes"
 translation_modifier = "showing the distribution of individual allocation sizes for each type"
 verdict = "allow"
 rationale = "Only adds more detail to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -61,6 +69,7 @@ flag = "-addresses"
 translation_modifier = "printing the address of each individual allocation"
 verdict = "allow"
 rationale = "Only adds address details to the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "heap"
@@ -68,3 +77,4 @@ flag = "-noContent"
 translation_modifier = "hiding the content descriptions of memory allocations"
 verdict = "allow"
 rationale = "Only reduces the information displayed."
+arity = "Boolean"

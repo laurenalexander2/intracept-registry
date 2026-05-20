@@ -1,0 +1,7 @@
+{
+  "kind": "invalid_enum_value",
+  "schema": "toolspec.json",
+  "field_path": "/effects/0",
+  "msg_contains": "levitates",
+  "valid_values": ["reads", "writes", "deletes", "network", "exec", "env", "unknown"]
+}

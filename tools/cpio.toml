@@ -5,6 +5,7 @@ path = "cpio"
 translation = "Copy files to and from archives."
 verdict = "allow"
 rationale = "Creates or extracts archive files, potentially overwriting existing files during extraction."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "cpio"
@@ -12,6 +13,7 @@ flag = "-i"
 translation_modifier = "extracting files from an archive"
 verdict = "allow"
 rationale = "Extracts archive contents to disk, which may overwrite existing files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -19,6 +21,7 @@ flag = "-o"
 translation_modifier = "creating a new archive from a list of files"
 verdict = "allow"
 rationale = "Writes a new archive to standard output; does not modify existing files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -26,6 +29,7 @@ flag = "-p"
 translation_modifier = "copying files directly to a destination directory"
 verdict = "allow"
 rationale = "Copies files to a target directory, potentially overwriting files at the destination."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -33,6 +37,7 @@ flag = "-d"
 translation_modifier = "creating directories as needed during extraction"
 verdict = "allow"
 rationale = "Ensures required directories exist; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -40,13 +45,15 @@ flag = "-t"
 translation_modifier = "listing archive contents without extracting"
 verdict = "allow"
 rationale = "Read-only operation that only displays filenames from the archive."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
 flag = "-u"
 translation_modifier = "overwriting newer files on disk with older archived versions"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Unconditionally replaces existing files regardless of modification time, which can cause data loss."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -54,6 +61,7 @@ flag = "-m"
 translation_modifier = "preserving original file modification times"
 verdict = "allow"
 rationale = "Only affects file timestamps; does not change what is extracted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -61,6 +69,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only adds verbose output listing each file processed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -68,13 +77,15 @@ flag = "-F"
 translation_modifier = "reading from or writing to a specified archive file instead of standard input or output"
 verdict = "allow"
 rationale = "Changes the archive source or destination; does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
 flag = "--insecure"
 translation_modifier = "allowing extraction through symbolic links and absolute paths"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Disables path safety checks, allowing files to be written anywhere on the filesystem via symbolic link or absolute path traversal."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -82,6 +93,7 @@ flag = "-L"
 translation_modifier = "following symbolic links and archiving the files they point to"
 verdict = "allow"
 rationale = "Changes which data is archived but does not add destructive capability."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "cpio"
@@ -89,3 +101,4 @@ flag = "-l"
 translation_modifier = "creating hard links instead of copying files"
 verdict = "allow"
 rationale = "Uses links instead of copies in pass-through mode; no data is destroyed."
+arity = "Boolean"

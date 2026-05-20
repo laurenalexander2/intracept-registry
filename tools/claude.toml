@@ -5,6 +5,7 @@ path = "claude"
 translation = "Run the Claude Code AI assistant in the terminal."
 verdict = "allow"
 rationale = "Starts an interactive AI session that can read, write, and execute code in the current directory."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "claude"
@@ -12,13 +13,15 @@ flag = "-p"
 translation_modifier = "printing a single response and exiting without interactive mode"
 verdict = "allow"
 rationale = "Runs in non-interactive mode; useful for scripting."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "claude"
 flag = "--dangerously-skip-permissions"
 translation_modifier = "bypassing all permission checks before executing actions"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Allows the AI to execute any tool without user approval, including destructive file and system operations."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "claude"
@@ -26,6 +29,7 @@ flag = "--model"
 translation_modifier = "using a specified AI model"
 verdict = "allow"
 rationale = "Selects which model to use; does not change available capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "claude"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "continuing the most recent conversation"
 verdict = "allow"
 rationale = "Resumes an existing session; does not change capabilities."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "claude"
@@ -40,3 +45,4 @@ flag = "-r"
 translation_modifier = "resuming a specific conversation by session ID"
 verdict = "allow"
 rationale = "Resumes an existing session; does not change capabilities."
+arity = "Boolean"

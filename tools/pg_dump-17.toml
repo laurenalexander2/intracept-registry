@@ -5,6 +5,7 @@ path = "pg_dump-17"
 translation = "Export a PostgreSQL 17 database into a script file or archive format."
 verdict = "allow"
 rationale = "Read-only export that does not modify the source database."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -12,6 +13,7 @@ flag = "-F"
 translation_modifier = "using a specified output format"
 verdict = "allow"
 rationale = "Changes the output format but does not affect the database."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -19,6 +21,7 @@ flag = "-f"
 translation_modifier = "writing output to a specified file"
 verdict = "allow"
 rationale = "Directs output to a file; may overwrite an existing file at that path."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -26,6 +29,7 @@ flag = "-t"
 translation_modifier = "only for the specified table"
 verdict = "allow"
 rationale = "Limits the dump scope to a single table."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -33,6 +37,7 @@ flag = "-s"
 translation_modifier = "exporting only the schema definitions, not the data"
 verdict = "allow"
 rationale = "Limits the dump to schema only; no data is exported."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -40,6 +45,7 @@ flag = "-a"
 translation_modifier = "exporting only the data, not the schema definitions"
 verdict = "allow"
 rationale = "Limits the dump to data only; no schema is exported."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -47,6 +53,7 @@ flag = "-c"
 translation_modifier = "including DROP commands before CREATE commands in the output"
 verdict = "allow"
 rationale = "The output file will contain destructive DROP statements that delete objects before recreating them."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -54,6 +61,7 @@ flag = "-C"
 translation_modifier = "including commands to create the database itself in the output"
 verdict = "allow"
 rationale = "Adds a CREATE DATABASE statement to the dump output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -61,6 +69,7 @@ flag = "-j"
 translation_modifier = "using multiple parallel jobs for faster dumping"
 verdict = "allow"
 rationale = "Increases dump speed with parallelism; does not change the output content."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_dump-17"
@@ -68,3 +77,4 @@ flag = "--clean"
 translation_modifier = "including SQL commands to drop existing objects before recreating them"
 verdict = "allow"
 rationale = "Adds DROP statements to the dump output; applying the dump will delete existing database objects."
+arity = "Boolean"

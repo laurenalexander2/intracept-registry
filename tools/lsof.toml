@@ -7,6 +7,7 @@ path = "lsof"
 translation = "List open files and the processes that opened them."
 verdict = "allow"
 rationale = "Read-only listing of open files, network connections, and associated processes."
+risk_class = "safe"
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 
@@ -16,6 +17,8 @@ flag = "-i"
 translation_modifier = "showing only network connections"
 verdict = "allow"
 rationale = "Filters to network-related entries; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -23,6 +26,8 @@ flag = "-p"
 translation_modifier = "showing only files opened by a specific process"
 verdict = "allow"
 rationale = "Filters by process ID; still read-only."
+arity = "Single"
+value_type = "Int"
 
 [[flag]]
 applies_to = "lsof"
@@ -30,6 +35,7 @@ flag = "-t"
 translation_modifier = "showing only process IDs without other details"
 verdict = "allow"
 rationale = "Simplifies output to process IDs only; commonly piped to kill but is itself read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -37,6 +43,8 @@ flag = "-u"
 translation_modifier = "showing only files opened by a specific user"
 verdict = "allow"
 rationale = "Filters by user; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -44,6 +52,8 @@ flag = "-c"
 translation_modifier = "showing only files opened by processes whose name starts with a given string"
 verdict = "allow"
 rationale = "Filters by command name prefix; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -51,6 +61,7 @@ flag = "-n"
 translation_modifier = "showing network addresses as numbers instead of resolving hostnames"
 verdict = "allow"
 rationale = "Skips DNS lookups for faster output; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -58,6 +69,7 @@ flag = "-P"
 translation_modifier = "showing port numbers instead of resolving service names"
 verdict = "allow"
 rationale = "Skips port name resolution; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -65,6 +77,7 @@ flag = "-a"
 translation_modifier = "requiring all filter conditions to match instead of any"
 verdict = "allow"
 rationale = "Changes filter logic from OR to AND; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -72,6 +85,7 @@ flag = "-U"
 translation_modifier = "showing only Unix domain socket files"
 verdict = "allow"
 rationale = "Filters to Unix domain sockets used for local inter-process communication; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -79,6 +93,8 @@ flag = "+D"
 translation_modifier = "searching an entire directory tree for open files"
 verdict = "allow"
 rationale = "Expands the search scope to a full directory tree; still read-only."
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "lsof"
@@ -86,6 +102,8 @@ flag = "+d"
 translation_modifier = "searching a single directory for open files without descending into subdirectories"
 verdict = "allow"
 rationale = "Searches one directory level; still read-only."
+arity = "Single"
+value_type = "Path"
 
 [[flag]]
 applies_to = "lsof"
@@ -93,6 +111,7 @@ flag = "-R"
 translation_modifier = "including the parent process ID in the output"
 verdict = "allow"
 rationale = "Adds parent process information; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -100,6 +119,7 @@ flag = "-N"
 translation_modifier = "showing only files accessed over the network file system"
 verdict = "allow"
 rationale = "Filters to NFS files; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -107,6 +127,8 @@ flag = "-s"
 translation_modifier = "filtering by connection state such as LISTEN or ESTABLISHED"
 verdict = "allow"
 rationale = "Narrows results to connections in a specific state; still read-only."
+arity = "Single"
+value_type = "String"
 
 [[flag]]
 applies_to = "lsof"
@@ -114,6 +136,7 @@ flag = "+r"
 translation_modifier = "repeating the listing at a regular interval until no open files are found"
 verdict = "allow"
 rationale = "Polls for open files in a loop; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -121,6 +144,7 @@ flag = "-r"
 translation_modifier = "repeating the listing at a regular interval indefinitely"
 verdict = "allow"
 rationale = "Continuously polls for open files; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "lsof"
@@ -128,3 +152,5 @@ flag = "-g"
 translation_modifier = "showing only files opened by processes in a specific process group"
 verdict = "allow"
 rationale = "Filters by process group ID; still read-only."
+arity = "Single"
+value_type = "Int"

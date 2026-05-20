@@ -5,11 +5,7 @@ path = "prettier"
 translation = "Format source code files according to consistent style rules."
 verdict = "allow"
 rationale = "By default prints formatted output to stdout without modifying files."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[flag]]
 applies_to = "prettier"
@@ -17,7 +13,7 @@ flag = "--write"
 translation_modifier = "overwriting files in place with the formatted output"
 verdict = "allow"
 rationale = "Modifies source files in place; changes are purely stylistic and easily reversible via version control."
-tag_modifiers.effect = ["read", "write"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -25,6 +21,7 @@ flag = "--check"
 translation_modifier = "checking whether files are already formatted without modifying them"
 verdict = "allow"
 rationale = "Read-only validation that exits with an error code if files need formatting."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -32,6 +29,7 @@ flag = "--single-quote"
 translation_modifier = "using single quotes instead of double quotes"
 verdict = "allow"
 rationale = "Changes a formatting preference; does not affect file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -39,6 +37,7 @@ flag = "--trailing-comma"
 translation_modifier = "controlling trailing comma style in multi-line expressions"
 verdict = "allow"
 rationale = "Changes a formatting preference; does not affect file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -46,6 +45,7 @@ flag = "--tab-width"
 translation_modifier = "using a specified number of spaces per indentation level"
 verdict = "allow"
 rationale = "Changes indentation width; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -53,6 +53,7 @@ flag = "--no-config"
 translation_modifier = "ignoring all configuration files"
 verdict = "allow"
 rationale = "Uses default formatting rules; does not change file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -60,6 +61,7 @@ flag = "--ignore-path"
 translation_modifier = "using a specified file to determine which paths to skip"
 verdict = "allow"
 rationale = "Changes which files are processed; does not alter formatting behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "prettier"
@@ -67,6 +69,7 @@ flag = "--cache"
 translation_modifier = "caching results to speed up subsequent runs"
 verdict = "allow"
 rationale = "Writes a cache file for performance; does not change formatting behavior."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -75,19 +78,11 @@ path = "prettier --check"
 translation = "Check whether source code files are already formatted according to style rules without modifying them."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to enforce consistent formatting."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "prettier --write"
 translation = "Format source code files in place, overwriting them with consistently styled output."
 verdict = "allow"
 rationale = "Rewrites files with purely stylistic changes that are trivially reversible via version control."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"

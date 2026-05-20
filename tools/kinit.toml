@@ -5,6 +5,7 @@ path = "kinit"
 translation = "Obtain a Kerberos ticket-granting ticket."
 verdict = "allow"
 rationale = "Acquires authentication credentials; does not modify any services or data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "kinit"
@@ -12,6 +13,7 @@ flag = "-R"
 translation_modifier = "renewing an existing ticket instead of obtaining a new one"
 verdict = "allow"
 rationale = "Extends the lifetime of a current credential; does not grant new access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -19,6 +21,7 @@ flag = "-k"
 translation_modifier = "authenticating using a keytab file instead of a password"
 verdict = "allow"
 rationale = "Uses a pre-shared key for authentication; commonly used in automated scripts."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -26,6 +29,7 @@ flag = "-f"
 translation_modifier = "requesting a forwardable ticket"
 verdict = "allow"
 rationale = "Allows the ticket to be forwarded to other hosts; does not change what is accessed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -33,6 +37,7 @@ flag = "-p"
 translation_modifier = "requesting a proxiable ticket"
 verdict = "allow"
 rationale = "Allows the ticket to be proxied; does not change what is accessed."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -40,6 +45,7 @@ flag = "-l"
 translation_modifier = "setting the ticket lifetime"
 verdict = "allow"
 rationale = "Controls how long the ticket remains valid; does not change access scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -47,6 +53,7 @@ flag = "-r"
 translation_modifier = "setting the maximum renewable lifetime for the ticket"
 verdict = "allow"
 rationale = "Controls the renewable window; does not change access scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -54,6 +61,7 @@ flag = "-c"
 translation_modifier = "storing the ticket in a specific credential cache"
 verdict = "allow"
 rationale = "Selects a non-default cache location; does not change the authentication."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -61,6 +69,7 @@ flag = "-t"
 translation_modifier = "using a specific keytab file for authentication"
 verdict = "allow"
 rationale = "Selects a non-default keytab; commonly used in automated environments."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -68,6 +77,7 @@ flag = "-A"
 translation_modifier = "requesting a ticket with no addresses"
 verdict = "allow"
 rationale = "Makes the ticket usable from any network address; does not change access scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -75,6 +85,7 @@ flag = "--anonymous"
 translation_modifier = "requesting an anonymous ticket"
 verdict = "allow"
 rationale = "Acquires a ticket for an anonymous principal; does not expose identity."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -82,6 +93,7 @@ flag = "--password-file"
 translation_modifier = "reading the password from a file instead of prompting"
 verdict = "allow"
 rationale = "Non-interactive password input; commonly used in automated scripts."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -89,6 +101,7 @@ flag = "-S"
 translation_modifier = "requesting a ticket for a specific service instead of the default"
 verdict = "allow"
 rationale = "Changes the target service; does not modify any service state."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "kinit"
@@ -96,3 +109,4 @@ flag = "-V"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Only increases the amount of output displayed."
+arity = "Boolean"

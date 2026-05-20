@@ -3,12 +3,14 @@
 [[command]]
 path = "dsimport"
 translation = "Import records into the macOS Directory Service."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Adds or modifies user accounts and groups in the directory."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "dsimport"
 flag = "--force"
 translation_modifier = "overwriting existing records without prompting"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Forces import overwriting existing directory service records."
+arity = "Boolean"

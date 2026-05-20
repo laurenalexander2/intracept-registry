@@ -5,6 +5,7 @@ path = "msguniq"
 translation = "Remove duplicate messages from a translation catalog file."
 verdict = "allow"
 rationale = "Deduplicates a PO file and writes to the terminal or a specified output file."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msguniq"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

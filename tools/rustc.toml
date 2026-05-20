@@ -5,6 +5,7 @@ path = "rustc"
 translation = "Compile Rust source code into an executable or library."
 verdict = "allow"
 rationale = "Compiles code locally; does not execute it or modify existing files beyond the output."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "rustc"
@@ -12,6 +13,7 @@ flag = "--test"
 translation_modifier = "building a test harness instead of a normal binary"
 verdict = "allow"
 rationale = "Changes the compilation target to a test binary; does not run the tests."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -19,6 +21,7 @@ flag = "-O"
 translation_modifier = "with optimizations enabled"
 verdict = "allow"
 rationale = "Increases optimization level; does not change the compilation model."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -26,6 +29,7 @@ flag = "--edition"
 translation_modifier = "using a specific Rust edition"
 verdict = "allow"
 rationale = "Selects the language edition; does not affect safety."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -33,6 +37,7 @@ flag = "-o"
 translation_modifier = "writing the output to a specific file"
 verdict = "allow"
 rationale = "Only changes the output destination."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -40,6 +45,7 @@ flag = "-g"
 translation_modifier = "including debugging information in the output"
 verdict = "allow"
 rationale = "Adds debug symbols; does not change program behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -47,6 +53,7 @@ flag = "-L"
 translation_modifier = "adding a directory to the library search path"
 verdict = "allow"
 rationale = "Only changes where the compiler looks for libraries."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -54,6 +61,7 @@ flag = "-l"
 translation_modifier = "linking against a specific native library"
 verdict = "allow"
 rationale = "Adds a library dependency; does not execute anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -61,6 +69,7 @@ flag = "--crate-type"
 translation_modifier = "specifying the type of output to produce"
 verdict = "allow"
 rationale = "Controls whether the output is a binary, library, or other format; does not affect safety."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -68,6 +77,7 @@ flag = "--target"
 translation_modifier = "cross-compiling for a different platform"
 verdict = "allow"
 rationale = "Changes which platform the output targets; does not execute anything."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -75,6 +85,7 @@ flag = "-V"
 translation_modifier = "printing the version and exiting"
 verdict = "allow"
 rationale = "Read-only version display; nothing is compiled."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -82,6 +93,7 @@ flag = "-A"
 translation_modifier = "allowing a specific compiler lint to pass without warning"
 verdict = "allow"
 rationale = "Suppresses a specific warning; does not change compiled output behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -89,6 +101,7 @@ flag = "-D"
 translation_modifier = "treating a specific compiler lint as an error"
 verdict = "allow"
 rationale = "Makes compilation stricter for a specific check; does not change the output when it succeeds."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -96,6 +109,7 @@ flag = "--explain"
 translation_modifier = "displaying a detailed explanation of a specific error code"
 verdict = "allow"
 rationale = "Read-only help text; nothing is compiled."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "rustc"
@@ -103,3 +117,4 @@ flag = "--emit"
 translation_modifier = "controlling which types of output files are produced"
 verdict = "allow"
 rationale = "Changes whether the compiler emits assembly, intermediate representation, object files, or a linked binary."
+arity = "Boolean"

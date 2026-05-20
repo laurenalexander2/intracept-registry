@@ -5,6 +5,7 @@ path = "sips"
 translation = "Process and modify raster image files and ColorSync color profiles."
 verdict = "allow"
 rationale = "Modifies image files in place by default; changes can be directed to a separate output with --out."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "sips"
@@ -12,6 +13,7 @@ flag = "-g"
 translation_modifier = "querying a property value without modifying the image"
 verdict = "allow"
 rationale = "Read-only property query; no modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -19,6 +21,7 @@ flag = "-s"
 translation_modifier = "setting a property value on the image"
 verdict = "allow"
 rationale = "Modifies image metadata in place; reversible by resetting the property."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -26,6 +29,7 @@ flag = "-z"
 translation_modifier = "resampling the image to a specified height and width"
 verdict = "allow"
 rationale = "Modifies image dimensions in place; original dimensions are lost without a backup."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -33,6 +37,7 @@ flag = "-Z"
 translation_modifier = "resampling so neither dimension exceeds a specified maximum"
 verdict = "allow"
 rationale = "Resizes image in place; original resolution is lost without a backup."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -40,6 +45,7 @@ flag = "-r"
 translation_modifier = "rotating the image by a specified number of degrees"
 verdict = "allow"
 rationale = "Modifies image orientation in place."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -47,6 +53,7 @@ flag = "-f"
 translation_modifier = "flipping the image horizontally or vertically"
 verdict = "allow"
 rationale = "Modifies image orientation in place."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -54,6 +61,7 @@ flag = "-c"
 translation_modifier = "cropping the image to a specified height and width"
 verdict = "allow"
 rationale = "Removes image content outside the crop area; irreversible without the original."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -61,6 +69,7 @@ flag = "-p"
 translation_modifier = "padding the image to a specified height and width"
 verdict = "allow"
 rationale = "Modifies image dimensions in place by adding padding."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -68,6 +77,7 @@ flag = "-o"
 translation_modifier = "writing output to a specified file or directory instead of modifying in place"
 verdict = "allow"
 rationale = "Directs output elsewhere, preserving the original file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -75,6 +85,7 @@ flag = "-j"
 translation_modifier = "executing a JavaScript file to process images"
 verdict = "allow"
 rationale = "Runs arbitrary JavaScript which may modify images or create new files."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -82,6 +93,7 @@ flag = "-d"
 translation_modifier = "deleting a property from the image"
 verdict = "allow"
 rationale = "Removes metadata from the image in place; the data is lost."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -89,6 +101,7 @@ flag = "-e"
 translation_modifier = "embedding a specified color profile in the image"
 verdict = "allow"
 rationale = "Modifies the image's embedded color profile in place."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -96,6 +109,7 @@ flag = "-E"
 translation_modifier = "embedding a color profile only if the image does not already have one"
 verdict = "allow"
 rationale = "Only modifies images that lack a profile; leaves existing profiles untouched."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -103,6 +117,7 @@ flag = "-m"
 translation_modifier = "converting the image colors to match a specified color profile"
 verdict = "allow"
 rationale = "Modifies pixel data in place to match the target profile."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -110,6 +125,7 @@ flag = "-i"
 translation_modifier = "adding a Finder icon to the image file"
 verdict = "allow"
 rationale = "Adds a custom icon resource; does not alter the image data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -117,6 +133,7 @@ flag = "-x"
 translation_modifier = "extracting the embedded color profile to a separate file"
 verdict = "allow"
 rationale = "Writes a profile file; does not modify the source image."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -124,6 +141,7 @@ flag = "--resampleWidth"
 translation_modifier = "resampling the image to a specified width"
 verdict = "allow"
 rationale = "Resizes image in place; original resolution is lost without a backup."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -131,6 +149,7 @@ flag = "--resampleHeight"
 translation_modifier = "resampling the image to a specified height"
 verdict = "allow"
 rationale = "Resizes image in place; original resolution is lost without a backup."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -138,6 +157,7 @@ flag = "--cropOffset"
 translation_modifier = "offsetting the crop area from the top-left corner"
 verdict = "allow"
 rationale = "Adjusts the position of a crop; only meaningful when combined with -c."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -145,6 +165,7 @@ flag = "--padColor"
 translation_modifier = "using a specified color for padding"
 verdict = "allow"
 rationale = "Controls the fill color when padding; only meaningful when combined with -p."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "sips"
@@ -152,3 +173,4 @@ flag = "--deleteColorManagementProperties"
 translation_modifier = "removing all color management metadata from the image"
 verdict = "allow"
 rationale = "Permanently removes color profile data from the image in place."
+arity = "Boolean"

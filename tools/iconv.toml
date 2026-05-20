@@ -5,6 +5,7 @@ path = "iconv"
 translation = "Convert text from one character encoding to another."
 verdict = "allow"
 rationale = "Reads input and writes converted text to the terminal; does not modify files in place."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "iconv"
@@ -12,6 +13,7 @@ flag = "-f"
 translation_modifier = "specifying the source character encoding"
 verdict = "allow"
 rationale = "Only sets which encoding to convert from."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iconv"
@@ -19,6 +21,7 @@ flag = "-t"
 translation_modifier = "specifying the destination character encoding"
 verdict = "allow"
 rationale = "Only sets which encoding to convert to."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iconv"
@@ -26,6 +29,7 @@ flag = "-l"
 translation_modifier = "listing all available character encodings"
 verdict = "allow"
 rationale = "Read-only display of supported encodings."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iconv"
@@ -33,6 +37,7 @@ flag = "-c"
 translation_modifier = "silently discarding characters that cannot be converted"
 verdict = "allow"
 rationale = "Only changes how unconvertible characters are handled in the output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iconv"
@@ -40,3 +45,4 @@ flag = "-s"
 translation_modifier = "suppressing warnings about characters that cannot be converted"
 verdict = "allow"
 rationale = "Only hides error messages; does not change the converted output."
+arity = "Boolean"

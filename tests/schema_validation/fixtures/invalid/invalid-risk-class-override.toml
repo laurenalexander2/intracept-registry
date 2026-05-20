@@ -1,0 +1,17 @@
+# Invalid: flag risk_class_override outside the locked enum.
+
+[[command]]
+path = "ovr-bad"
+translation = "Tool with a flag carrying a bogus override."
+verdict = "allow"
+rationale = "Base is fine; override is the violation."
+risk_class = "safe"
+
+[[flag]]
+applies_to = "ovr-bad"
+flag = "--yolo"
+translation_modifier = ""
+verdict = "ask"
+rationale = "Flag override value is not in the locked enum."
+arity = "Boolean"
+risk_class_override = "yolo"

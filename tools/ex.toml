@@ -5,6 +5,7 @@ path = "ex"
 translation = "Run the Vim text editor in command-line mode."
 verdict = "allow"
 rationale = "Edits files and can execute shell commands from within the editor."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ex"
@@ -12,6 +13,7 @@ flag = "-R"
 translation_modifier = "opening files in read-only mode"
 verdict = "allow"
 rationale = "Prevents accidental file overwrites by setting read-only mode."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ex"
@@ -19,3 +21,4 @@ flag = "-c"
 translation_modifier = "executing a command after loading the first file"
 verdict = "allow"
 rationale = "Runs an arbitrary Ex command which may modify files or invoke shell commands."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "xattr"
 translation = "Display, set, or remove extended attributes on files."
 verdict = "allow"
 rationale = "Can modify or delete extended attributes which may include security metadata like quarantine flags."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "xattr"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "displaying both attribute names and their values"
 verdict = "allow"
 rationale = "Read-only display of attribute names and values."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -19,6 +21,7 @@ flag = "-p"
 translation_modifier = "printing the value of a specific named attribute"
 verdict = "allow"
 rationale = "Read-only display of a single attribute value."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -26,20 +29,23 @@ flag = "-w"
 translation_modifier = "writing a value to a named attribute"
 verdict = "allow"
 rationale = "Modifies or creates an extended attribute; may change security metadata or quarantine flags."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
 flag = "-d"
 translation_modifier = "deleting a specific named attribute"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes a single extended attribute; deleting security metadata like quarantine flags may bypass Gatekeeper."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
 flag = "-c"
 translation_modifier = "clearing all extended attributes from the file"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Removes all extended attributes at once, including security metadata; may bypass Gatekeeper protections."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -47,6 +53,7 @@ flag = "-r"
 translation_modifier = "recursively through all files in subdirectories"
 verdict = "allow"
 rationale = "Widens the scope to an entire directory tree."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -54,6 +61,7 @@ flag = "-s"
 translation_modifier = "acting on the symbolic link itself rather than its target"
 verdict = "allow"
 rationale = "Changes which file is affected; does not widen scope."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -61,6 +69,7 @@ flag = "-v"
 translation_modifier = ""
 verdict = "allow"
 rationale = "Forces display of the file name even for a single file; cosmetic only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "xattr"
@@ -68,3 +77,4 @@ flag = "-x"
 translation_modifier = "displaying or accepting attribute values in hexadecimal format"
 verdict = "allow"
 rationale = "Changes the display or input format; does not affect the attribute data itself."
+arity = "Boolean"

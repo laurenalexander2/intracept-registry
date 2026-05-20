@@ -3,5 +3,6 @@
 [[command]]
 path = "dsenableroot"
 translation = "Enable or disable the root user account on macOS."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Enabling the root account creates a superuser login that bypasses normal security."
+risk_class = "novel"

@@ -5,6 +5,7 @@ path = "say"
 translation = "Convert text to audible speech."
 verdict = "allow"
 rationale = "Read-only text-to-speech conversion that only produces audio output."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "say"
@@ -12,6 +13,7 @@ flag = "-o"
 translation_modifier = "saving the audio to a file instead of playing it"
 verdict = "allow"
 rationale = "Writes an audio file to disk; trivially reversible by deleting the file."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -19,6 +21,7 @@ flag = "-v"
 translation_modifier = "using a specified voice"
 verdict = "allow"
 rationale = "Selects a voice for synthesis; no state change beyond audio output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -26,6 +29,7 @@ flag = "-f"
 translation_modifier = "reading text from a file"
 verdict = "allow"
 rationale = "Reads input from a file instead of command-line arguments; no state change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -33,6 +37,7 @@ flag = "-r"
 translation_modifier = "at a specified words-per-minute rate"
 verdict = "allow"
 rationale = "Controls speech rate; purely cosmetic adjustment to audio output."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -40,6 +45,7 @@ flag = "-n"
 translation_modifier = "sending audio over the network to a specified service"
 verdict = "allow"
 rationale = "Redirects audio to a network service; no destructive action."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -47,6 +53,7 @@ flag = "-a"
 translation_modifier = "playing through a specified audio device"
 verdict = "allow"
 rationale = "Routes audio to a particular device; no state change."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -54,6 +61,7 @@ flag = "-i"
 translation_modifier = "highlighting words interactively as they are spoken"
 verdict = "allow"
 rationale = "Adds visual highlighting during playback; purely cosmetic."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -61,6 +69,7 @@ flag = "--file-format"
 translation_modifier = "saving in a specified audio file format"
 verdict = "allow"
 rationale = "Controls the output file type; only relevant when used with -o."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -68,6 +77,7 @@ flag = "--data-format"
 translation_modifier = "encoding the audio data in a specified format"
 verdict = "allow"
 rationale = "Controls the audio encoding; only relevant when used with -o."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -75,6 +85,7 @@ flag = "--bit-rate"
 translation_modifier = "at a specified audio bit rate"
 verdict = "allow"
 rationale = "Controls output quality and file size; only relevant when used with -o."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "say"
@@ -82,3 +93,4 @@ flag = "--quality"
 translation_modifier = "at a specified audio converter quality level"
 verdict = "allow"
 rationale = "Controls encoding quality; only relevant when used with -o."
+arity = "Boolean"

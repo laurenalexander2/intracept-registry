@@ -5,6 +5,7 @@ path = "msgconv"
 translation = "Convert a translation catalog file to a different character encoding."
 verdict = "allow"
 rationale = "Converts encoding and writes to the terminal or a file; source file is not modified."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "msgconv"
@@ -12,3 +13,4 @@ flag = "--force"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Bypasses the overwrite prompt, silently replacing existing output files."
+arity = "Boolean"

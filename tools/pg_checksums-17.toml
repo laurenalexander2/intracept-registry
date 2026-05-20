@@ -5,6 +5,7 @@ path = "pg_checksums-17"
 translation = "Enable, disable, or verify data checksums in a PostgreSQL database cluster."
 verdict = "allow"
 rationale = "By default performs a read-only check; enabling or disabling checksums modifies data files."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_checksums-17"
@@ -12,6 +13,7 @@ flag = "-e"
 translation_modifier = "enabling data checksums on the cluster"
 verdict = "allow"
 rationale = "Modifies every data file in the cluster to add checksums; the server must be stopped."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_checksums-17"
@@ -19,3 +21,4 @@ flag = "-d"
 translation_modifier = "disabling data checksums on the cluster"
 verdict = "allow"
 rationale = "Removes checksum protection from data files, reducing corruption detection ability."
+arity = "Boolean"

@@ -5,6 +5,7 @@ path = "iostat"
 translation = "Display disk and CPU I/O statistics."
 verdict = "allow"
 rationale = "Read-only display of kernel I/O statistics."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "iostat"
@@ -12,6 +13,7 @@ flag = "-d"
 translation_modifier = "showing only device statistics"
 verdict = "allow"
 rationale = "Only filters the output to device information."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iostat"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "repeating the display a specific number of times"
 verdict = "allow"
 rationale = "Only controls how many times statistics are sampled."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "iostat"
@@ -26,3 +29,4 @@ flag = "-w"
 translation_modifier = "pausing a specified number of seconds between updates"
 verdict = "allow"
 rationale = "Only controls the sampling interval."
+arity = "Boolean"

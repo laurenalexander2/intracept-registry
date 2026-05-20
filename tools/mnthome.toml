@@ -5,6 +5,7 @@ path = "mnthome"
 translation = "Unmount and remount an AFP home directory with the correct user privileges."
 verdict = "allow"
 rationale = "Unmounts and remounts a network filesystem, which temporarily disrupts access to the home directory."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "mnthome"
@@ -12,6 +13,7 @@ flag = "-u"
 translation_modifier = "only unmounting the current home directory mount"
 verdict = "allow"
 rationale = "Unmounts the home directory without remounting, leaving it inaccessible until remounted."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mnthome"
@@ -19,6 +21,7 @@ flag = "-n"
 translation_modifier = "without force-unmounting the previous mount point"
 verdict = "allow"
 rationale = "Skips the forced unmount, which is a safer approach."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mnthome"
@@ -26,6 +29,7 @@ flag = "-m"
 translation_modifier = "at a specified alternative mount point"
 verdict = "allow"
 rationale = "Changes the mount location; no additional risk beyond the base command."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "mnthome"
@@ -33,3 +37,4 @@ flag = "-i"
 translation_modifier = "only displaying information about the AFP home mount point"
 verdict = "allow"
 rationale = "Read-only display of mount information."
+arity = "Boolean"

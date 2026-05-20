@@ -5,33 +5,21 @@ path = "ruff"
 translation = "Run the Ruff Python linter and formatter."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "ruff check"
 translation = "Analyze Python source code for lint errors and style violations."
 verdict = "allow"
 rationale = "Read-only static analysis that reports problems but does not modify files by default."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[command]]
 path = "ruff format"
 translation = "Format Python source code to a consistent style."
 verdict = "allow"
 rationale = "Reformats Python files in place; changes are purely stylistic and reversible via version control."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "ruff check"
@@ -39,7 +27,7 @@ flag = "--fix"
 translation_modifier = "automatically fixing problems that have safe corrections"
 verdict = "allow"
 rationale = "Modifies source files in place to apply auto-fixable lint rules."
-tag_modifiers.effect = ["read", "write"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff check"
@@ -47,6 +35,7 @@ flag = "--select"
 translation_modifier = "only checking specified rule codes"
 verdict = "allow"
 rationale = "Narrows which rules are checked; does not change file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff check"
@@ -54,6 +43,7 @@ flag = "--ignore"
 translation_modifier = "skipping specified rule codes"
 verdict = "allow"
 rationale = "Suppresses specific rules; does not change file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff check"
@@ -61,6 +51,7 @@ flag = "--output-format"
 translation_modifier = "using a specified output format for the results"
 verdict = "allow"
 rationale = "Changes output formatting; does not affect which rules are checked."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff format"
@@ -68,7 +59,7 @@ flag = "--check"
 translation_modifier = "checking whether files need formatting without modifying them"
 verdict = "allow"
 rationale = "Read-only validation that exits with an error code if files are not formatted."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff format"
@@ -76,7 +67,7 @@ flag = "--diff"
 translation_modifier = "showing what changes would be made without applying them"
 verdict = "allow"
 rationale = "Read-only diff output; no files are modified."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "ruff check"
@@ -84,8 +75,8 @@ flag = "--unsafe-fixes"
 translation_modifier = "including fixes that may change code behavior"
 verdict = "allow"
 rationale = "Applies fixes that could alter runtime semantics, not just style."
-tag_modifiers.effect = ["read", "write"]
-tag_modifiers.safety_override = true
+arity = "Boolean"
+risk_class_override = "priv_esc"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -94,19 +85,11 @@ path = "ruff check --fix"
 translation = "Analyze Python source code for lint errors and automatically fix all problems that have safe corrections."
 verdict = "allow"
 rationale = "Modifies source files in place but only applies auto-fix rules that are considered safe by default."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "safe"
 
 [[combo]]
 path = "ruff format --check"
 translation = "Check whether Python source files are already formatted without modifying them."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to enforce consistent formatting."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

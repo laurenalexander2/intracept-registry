@@ -3,8 +3,9 @@
 [[command]]
 path = "snmpusm"
 translation = "Manage SNMP user accounts on a network device."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Creates, deletes, or modifies SNMP user credentials on network devices; incorrect changes can lock out management access."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -12,6 +13,7 @@ flag = "-v"
 translation_modifier = "using a specific SNMP protocol version"
 verdict = "allow"
 rationale = "Only selects which version of the protocol to use."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -19,6 +21,7 @@ flag = "-c"
 translation_modifier = "authenticating with a specific community string"
 verdict = "allow"
 rationale = "Only specifies the credential used to authenticate."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -26,6 +29,7 @@ flag = "-CE"
 translation_modifier = "targeting a specific engine for user management"
 verdict = "allow"
 rationale = "Only specifies which engine's user table to manage."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -33,20 +37,23 @@ flag = "-Cp"
 translation_modifier = "setting a public value on the user entry"
 verdict = "allow"
 rationale = "Only sets a metadata field on the user entry."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
 flag = "-Ca"
 translation_modifier = "changing only the authentication key"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the authentication credential; an incorrect change can lock out management access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
 flag = "-Cx"
 translation_modifier = "changing only the encryption key"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies the encryption credential; an incorrect change can lock out encrypted management access."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -54,6 +61,7 @@ flag = "-Ck"
 translation_modifier = "using a raw key instead of a passphrase"
 verdict = "allow"
 rationale = "Only changes the format of the key input."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "snmpusm"
@@ -61,3 +69,4 @@ flag = "-Cw"
 translation_modifier = "creating the user in an inactive state that must be activated later"
 verdict = "allow"
 rationale = "Creates the user without immediately activating it, which is a safer approach."
+arity = "Boolean"

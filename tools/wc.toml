@@ -5,6 +5,7 @@ path = "wc"
 translation = "Count lines, words, and bytes in files."
 verdict = "allow"
 rationale = "Read-only operation that displays counts without modifying any files."
+risk_class = "safe"
 
 [[flag]]
 applies_to = "wc"
@@ -12,6 +13,7 @@ flag = "-l"
 translation_modifier = "counting only lines"
 verdict = "allow"
 rationale = "Restricts output to line counts; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "wc"
@@ -19,6 +21,7 @@ flag = "-w"
 translation_modifier = "counting only words"
 verdict = "allow"
 rationale = "Restricts output to word counts; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "wc"
@@ -26,6 +29,7 @@ flag = "-c"
 translation_modifier = "counting only bytes"
 verdict = "allow"
 rationale = "Restricts output to byte counts; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "wc"
@@ -33,6 +37,7 @@ flag = "-m"
 translation_modifier = "counting only characters"
 verdict = "allow"
 rationale = "Restricts output to character counts, which may differ from byte counts for multibyte encodings; still read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "wc"
@@ -40,3 +45,4 @@ flag = "-L"
 translation_modifier = "showing only the length of the longest line"
 verdict = "allow"
 rationale = "Reports the longest line length instead of standard counts; still read-only."
+arity = "Boolean"

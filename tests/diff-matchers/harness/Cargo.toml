@@ -1,0 +1,28 @@
+[package]
+name = "diff-matchers-harness"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Standalone (no [workspace] parent). Lives outside both intracept and the SDK
+# so that path-deps to a sibling repo don't break either repo's `cargo build
+# --workspace`. Run from CI and locally with both repos cloned as siblings:
+#
+#   cargo run --manifest-path tests/diff-matchers/harness/Cargo.toml -- \
+#     --corpus  tests/diff-matchers/corpus.jsonl \
+#     --snapshot tests/diff-matchers/cross-snapshot.jsonl
+#
+# Refresh the snapshot when behavior changes intentionally:
+#   ... -- ... --update
+[workspace]
+
+[[bin]]
+name = "diff-matchers"
+path = "src/main.rs"
+
+[dependencies]
+intracept-registry = { path = "../../../sdk/rust" }
+intracept-patterns = { path = "../../../../intracept/crates/patterns" }
+intracept-translator = { path = "../../../../intracept/crates/translator" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

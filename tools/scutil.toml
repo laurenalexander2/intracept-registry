@@ -5,42 +5,49 @@ path = "scutil"
 translation = "Manage system configuration parameters and network settings."
 verdict = "allow"
 rationale = "The bare command opens an interactive shell for querying the dynamic store; no changes without explicit subcommands."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --dns"
 translation = "Display the current DNS configuration."
 verdict = "allow"
 rationale = "Read-only display of DNS resolver settings."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --proxy"
 translation = "Display the current system proxy configuration."
 verdict = "allow"
 rationale = "Read-only display of proxy settings."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --get"
 translation = "Retrieve a system configuration preference such as the hostname."
 verdict = "allow"
 rationale = "Read-only query of a system preference value."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --set"
 translation = "Update a system configuration preference such as the hostname."
 verdict = "allow"
 rationale = "Changes system identity settings like ComputerName or HostName; reversible but affects network identity."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --nc"
 translation = "Monitor and interact with VPN network connections."
 verdict = "allow"
 rationale = "Can start, stop, or reconfigure VPN connections, affecting network connectivity."
+risk_class = "novel"
 
 [[command]]
 path = "scutil --renew"
 translation = "Trigger a re-evaluation of network configuration on a specified interface."
 verdict = "allow"
 rationale = "Forces network reconfiguration which may briefly disrupt connectivity on the interface."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "scutil"
@@ -48,6 +55,7 @@ flag = "-r"
 translation_modifier = "checking network reachability of a specified host"
 verdict = "allow"
 rationale = "Read-only network reachability check; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scutil"
@@ -55,6 +63,7 @@ flag = "-W"
 translation_modifier = "continuously watching for reachability changes"
 verdict = "allow"
 rationale = "Monitors reachability status over time; read-only."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scutil"
@@ -62,6 +71,7 @@ flag = "-w"
 translation_modifier = "waiting for a dynamic store key to appear"
 verdict = "allow"
 rationale = "Blocks until a key exists or times out; no state modification."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "scutil"
@@ -69,3 +79,4 @@ flag = "--prefs"
 translation_modifier = "opening an interactive interface to raw stored preferences"
 verdict = "allow"
 rationale = "Allows direct manipulation of system configuration preferences if commands are issued."
+arity = "Boolean"

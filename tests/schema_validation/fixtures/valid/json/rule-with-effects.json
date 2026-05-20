@@ -1,0 +1,22 @@
+{
+  "id": "00000000-0000-0000-0000-000000000002",
+  "version": 2,
+  "origin": "user-override",
+  "verdict": "warn",
+  "severity": "high",
+  "tags": {
+    "data_class": ["secrets"],
+    "surface": ["filesystem"],
+    "reversibility": ["impossible"]
+  },
+  "match": {
+    "tool": {"name": "rm"},
+    "flags": [
+      {"name": "--recursive"},
+      {"name": "--force"}
+    ],
+    "effects": {
+      "all_of": ["deletes"]
+    }
+  }
+}

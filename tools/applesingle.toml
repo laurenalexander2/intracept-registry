@@ -5,6 +5,7 @@ path = "applesingle"
 translation = "Encode or decode AppleSingle format files."
 verdict = "allow"
 rationale = "Converts file format without modifying the original."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "applesingle"
@@ -12,3 +13,4 @@ flag = "--overwrite"
 translation_modifier = "overwriting existing output files"
 verdict = "allow"
 rationale = "Replaces existing files without prompting."
+arity = "Boolean"

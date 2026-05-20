@@ -5,11 +5,7 @@ path = "black"
 translation = "Format Python source code to a consistent style."
 verdict = "allow"
 rationale = "Reformats Python files in place by default; changes are purely stylistic and reversible via version control."
-tags.scope = "local"
-tags.effect = ["read", "write"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[flag]]
 applies_to = "black"
@@ -17,7 +13,7 @@ flag = "--check"
 translation_modifier = "checking whether files need formatting without modifying them"
 verdict = "allow"
 rationale = "Read-only validation that exits with an error code if files are not formatted."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -25,7 +21,7 @@ flag = "--diff"
 translation_modifier = "showing what changes would be made without applying them"
 verdict = "allow"
 rationale = "Read-only diff output; no files are modified."
-tag_modifiers.effect = ["read"]
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -33,6 +29,7 @@ flag = "--line-length"
 translation_modifier = "using a specified maximum line length"
 verdict = "allow"
 rationale = "Changes a formatting preference; does not affect file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -40,6 +37,7 @@ flag = "--target-version"
 translation_modifier = "formatting for a specified Python version"
 verdict = "allow"
 rationale = "Changes which syntax features are used; does not affect file modification behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -47,6 +45,7 @@ flag = "--quiet"
 translation_modifier = "suppressing non-error output"
 verdict = "allow"
 rationale = "Reduces output verbosity; does not change formatting behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -54,6 +53,7 @@ flag = "--include"
 translation_modifier = "only formatting files matching a specified pattern"
 verdict = "allow"
 rationale = "Narrows which files are processed; does not change formatting behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "black"
@@ -61,6 +61,7 @@ flag = "--exclude"
 translation_modifier = "skipping files matching a specified pattern"
 verdict = "allow"
 rationale = "Narrows which files are processed; does not change formatting behavior."
+arity = "Boolean"
 
 # ── Combos ───────────────────────────────────────────────────────────────────
 
@@ -69,19 +70,11 @@ path = "black --check"
 translation = "Check whether Python source files need formatting without modifying them."
 verdict = "allow"
 rationale = "Read-only validation commonly used in CI pipelines to enforce consistent formatting."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"
 
 [[combo]]
 path = "black --check --diff"
 translation = "Check whether Python source files need formatting and show the exact changes that would be made, without modifying any files."
 verdict = "allow"
 rationale = "Combines format checking with a diff preview, providing full visibility into what black would change."
-tags.scope = "local"
-tags.effect = ["read"]
-tags.reversibility = "trivial"
-tags.target = ["filesystem"]
-tags.safety_override = false
+risk_class = "novel"

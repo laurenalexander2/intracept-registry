@@ -1,0 +1,35 @@
+# All three locked Phase 1 verdicts (allow/ask/warn) in one file.
+# Schema fixture for Phase 1; consumed by tests/schema_validation/spec.md case 12.
+
+[[command]]
+path = "ls"
+translation = "List directory contents."
+verdict = "allow"
+rationale = "Read-only directory listing."
+tags.scope = "local"
+tags.effect = ["read"]
+tags.reversibility = "trivial"
+tags.target = ["filesystem"]
+tags.safety_override = false
+
+[[command]]
+path = "npm install"
+translation = "Install JavaScript packages declared in package.json."
+verdict = "ask"
+rationale = "Executes arbitrary install scripts from third-party packages."
+tags.scope = "remote"
+tags.effect = ["read", "create", "execute"]
+tags.reversibility = "difficult"
+tags.target = ["package_registry", "filesystem"]
+tags.safety_override = false
+
+[[command]]
+path = "rm"
+translation = "Delete files or directories."
+verdict = "warn"
+rationale = "Removes filesystem entries; recovery is non-trivial without backup."
+tags.scope = "local"
+tags.effect = ["delete"]
+tags.reversibility = "difficult"
+tags.target = ["filesystem"]
+tags.safety_override = false

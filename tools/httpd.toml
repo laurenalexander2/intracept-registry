@@ -5,6 +5,7 @@ path = "httpd"
 translation = "Run the Apache HTTP web server."
 verdict = "allow"
 rationale = "Starts a network-accessible web server that serves files and executes server-side scripts."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "httpd"
@@ -12,6 +13,7 @@ flag = "-t"
 translation_modifier = "testing the configuration file syntax without starting the server"
 verdict = "allow"
 rationale = "Read-only syntax check that does not start the server."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "httpd"
@@ -19,6 +21,7 @@ flag = "-k"
 translation_modifier = "sending a control signal to a running server instance"
 verdict = "allow"
 rationale = "Can start, restart, or stop the web server process."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "httpd"
@@ -26,3 +29,4 @@ flag = "-X"
 translation_modifier = "running in debug mode with a single worker process"
 verdict = "allow"
 rationale = "Only changes the server's process model for debugging purposes."
+arity = "Boolean"

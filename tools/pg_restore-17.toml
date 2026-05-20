@@ -3,8 +3,9 @@
 [[command]]
 path = "pg_restore-17"
 translation = "Restore a PostgreSQL 17 database from an archive created by pg_dump."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Modifies a database by creating objects and loading data, potentially overwriting existing data."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -12,13 +13,15 @@ flag = "-d"
 translation_modifier = "restoring into a specified database"
 verdict = "allow"
 rationale = "Selects the target database; does not change the restore behavior."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
 flag = "-c"
 translation_modifier = "dropping existing database objects before recreating them"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes existing tables and other objects before restore, permanently destroying current data."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -26,13 +29,15 @@ flag = "-C"
 translation_modifier = "creating the target database before restoring into it"
 verdict = "allow"
 rationale = "Creates a new database, which consumes resources and may conflict with existing databases."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
 flag = "-a"
 translation_modifier = "restoring only the data, not the schema"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Loads data into existing tables, which may overwrite or duplicate existing rows."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -40,6 +45,7 @@ flag = "-s"
 translation_modifier = "restoring only the schema, not the data"
 verdict = "allow"
 rationale = "Creates database objects without loading data; may fail if objects already exist."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -47,6 +53,7 @@ flag = "-j"
 translation_modifier = "using multiple parallel jobs for faster restoration"
 verdict = "allow"
 rationale = "Increases restore speed with parallelism; does not change what is restored."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -54,6 +61,7 @@ flag = "-l"
 translation_modifier = "listing the archive contents without restoring anything"
 verdict = "allow"
 rationale = "Read-only display of the archive table of contents."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -61,6 +69,7 @@ flag = "-1"
 translation_modifier = "restoring everything in a single transaction that rolls back on error"
 verdict = "allow"
 rationale = "Adds atomicity, which is a safety-enhancing option."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -68,6 +77,7 @@ flag = "-e"
 translation_modifier = "stopping immediately on the first error"
 verdict = "allow"
 rationale = "Exits early on error rather than continuing with a partial restore."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -75,6 +85,7 @@ flag = "--if-exists"
 translation_modifier = "only dropping objects that actually exist when using the clean option"
 verdict = "allow"
 rationale = "Prevents errors from DROP commands on nonexistent objects; a safety enhancement."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
@@ -82,10 +93,12 @@ flag = "-t"
 translation_modifier = "restoring only the specified table"
 verdict = "allow"
 rationale = "Limits the restore scope to a single table."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "pg_restore-17"
 flag = "--clean"
 translation_modifier = "dropping existing database objects before recreating them"
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Deletes existing database objects before restoring; data loss if restore fails partway."
+arity = "Boolean"

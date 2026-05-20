@@ -1,0 +1,269 @@
+# tools/wget.toml
+
+[[command]]
+path = "wget"
+translation = "Download files from a server using HTTP, HTTPS, or FTP."
+verdict = "ask"
+rationale = "Performs network requests that download remote content to local files; can permanently overwrite existing files and may pull in untrusted data from across the network."
+risk_class = "net_egress"
+
+[[flag]]
+applies_to = "wget"
+flag = "-O"
+translation_modifier = "saving the response to a specified local file"
+verdict = "allow"
+rationale = "Writes remote content to a chosen local path, which could overwrite existing files."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "wget"
+flag = "--output-document"
+translation_modifier = "saving the response to a specified local file"
+verdict = "allow"
+rationale = "Long form of -O; writes remote content to a chosen local path."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "wget"
+flag = "-o"
+translation_modifier = "writing wget's own log messages to a specified file"
+verdict = "allow"
+rationale = "Redirects wget's log output to a file; does not affect what is downloaded."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "wget"
+flag = "-q"
+translation_modifier = "suppressing all progress and status output"
+verdict = "allow"
+rationale = "Hides informational output but does not change the operation."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--quiet"
+translation_modifier = "suppressing all progress and status output"
+verdict = "allow"
+rationale = "Long form of -q; hides informational output but does not change the operation."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "-c"
+translation_modifier = "continuing a previously partial download"
+verdict = "allow"
+rationale = "Resumes a partial download; does not change the operation's scope."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--continue"
+translation_modifier = "continuing a previously partial download"
+verdict = "allow"
+rationale = "Long form of -c; resumes a partial download from where it stopped."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "-r"
+translation_modifier = "recursively downloading linked pages and resources"
+verdict = "ask"
+rationale = "Crawls and downloads linked content from a remote site, potentially fetching many files and exposing the operator to mirror-large-trees risk."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--recursive"
+translation_modifier = "recursively downloading linked pages and resources"
+verdict = "ask"
+rationale = "Long form of -r; crawls and downloads many linked files from a remote site."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "-m"
+translation_modifier = "mirroring a remote site for offline browsing"
+verdict = "ask"
+rationale = "Enables a recursive, timestamping mirror that may download large amounts of remote content to local disk."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--mirror"
+translation_modifier = "mirroring a remote site for offline browsing"
+verdict = "ask"
+rationale = "Long form of -m; recursively mirrors a site to local disk."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "-P"
+translation_modifier = "saving downloads under a specified directory prefix"
+verdict = "allow"
+rationale = "Sets the output directory; writes go to a chosen filesystem location."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "wget"
+flag = "--directory-prefix"
+translation_modifier = "saving downloads under a specified directory prefix"
+verdict = "allow"
+rationale = "Long form of -P; sets the output directory for downloaded files."
+arity = "Single"
+value_type = "Path"
+
+[[flag]]
+applies_to = "wget"
+flag = "-N"
+translation_modifier = "only re-downloading files whose remote copy is newer"
+verdict = "allow"
+rationale = "Uses timestamping to skip up-to-date files; does not change the operation's scope."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--timestamping"
+translation_modifier = "only re-downloading files whose remote copy is newer"
+verdict = "allow"
+rationale = "Long form of -N; uses timestamping to avoid redundant downloads."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--no-check-certificate"
+translation_modifier = "skipping TLS certificate verification"
+verdict = "ask"
+rationale = "Disables server identity verification, exposing the connection to interception or man-in-the-middle attacks."
+arity = "Boolean"
+risk_class_override = "priv_esc"
+
+[[flag]]
+applies_to = "wget"
+flag = "--no-clobber"
+translation_modifier = "skipping any file that already exists locally"
+verdict = "allow"
+rationale = "Prevents overwriting existing files, reducing the risk of accidental data loss."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--user"
+translation_modifier = "authenticating with a specified username"
+verdict = "allow"
+rationale = "Provides a username to the server; credentials may be exposed if the connection is not encrypted."
+arity = "Single"
+value_type = "String"
+
+[[flag]]
+applies_to = "wget"
+flag = "--password"
+translation_modifier = "authenticating with a specified password"
+verdict = "ask"
+rationale = "Sends a password to the server on the command line, which may leak via process listings or shell history."
+arity = "Single"
+value_type = "String"
+risk_class_override = "secret_read"
+
+[[flag]]
+applies_to = "wget"
+flag = "--header"
+translation_modifier = "including a custom HTTP header"
+verdict = "allow"
+rationale = "Adds a header to the request; may carry authentication tokens but does not change the operation's scope."
+arity = "Repeated"
+value_type = "String"
+
+[[flag]]
+applies_to = "wget"
+flag = "--post-data"
+translation_modifier = "sending data in an HTTP POST body"
+verdict = "ask"
+rationale = "Transmits data to a remote server in a POST request, which may include sensitive information."
+arity = "Single"
+value_type = "String"
+
+[[flag]]
+applies_to = "wget"
+flag = "--method"
+translation_modifier = "using a specified HTTP method"
+verdict = "allow"
+rationale = "Changes the HTTP verb but does not inherently increase risk beyond the base command."
+arity = "Single"
+value_type = "String"
+
+[[flag]]
+applies_to = "wget"
+flag = "--tries"
+translation_modifier = "retrying the request a specified number of times on failure"
+verdict = "allow"
+rationale = "Sets retry count; does not change the operation's scope."
+arity = "Single"
+value_type = "Int"
+
+[[flag]]
+applies_to = "wget"
+flag = "--timeout"
+translation_modifier = "limiting the time allowed for connection, read, and DNS resolution"
+verdict = "allow"
+rationale = "Sets timeouts for network operations; does not change what data is transferred."
+arity = "Single"
+value_type = "Int"
+
+[[flag]]
+applies_to = "wget"
+flag = "--user-agent"
+translation_modifier = "identifying the client with a specified User-Agent string"
+verdict = "allow"
+rationale = "Changes the User-Agent header value; does not change the operation's scope."
+arity = "Single"
+value_type = "String"
+
+[[flag]]
+applies_to = "wget"
+flag = "-v"
+translation_modifier = "showing verbose transfer details"
+verdict = "allow"
+rationale = "Increases output detail for debugging; does not change the operation."
+arity = "Boolean"
+
+[[flag]]
+applies_to = "wget"
+flag = "--verbose"
+translation_modifier = "showing verbose transfer details"
+verdict = "allow"
+rationale = "Long form of -v; increases output detail for debugging."
+arity = "Boolean"
+
+# ── Combos ───────────────────────────────────────────────────────────────────
+
+[[combo]]
+path = "wget -O"
+translation = "Download remote content and save it under a chosen local filename."
+verdict = "ask"
+rationale = "Fetches data from a remote server and writes it to a specific local path, which could overwrite existing files."
+risk_class = "net_egress"
+
+[[combo]]
+path = "wget --no-check-certificate"
+translation = "Download remote content while skipping TLS certificate verification."
+verdict = "warn"
+rationale = "Disables server identity verification, exposing the connection to interception or man-in-the-middle attacks across the entire transfer."
+risk_class = "priv_esc"
+
+[[combo]]
+path = "wget -r"
+translation = "Recursively download linked pages and resources from a remote site."
+verdict = "ask"
+rationale = "Crawls and downloads linked content from a remote site, potentially fetching very large numbers of files."
+risk_class = "net_egress"
+
+[[combo]]
+path = "wget -m"
+translation = "Mirror an entire remote site to the local filesystem for offline browsing."
+verdict = "ask"
+rationale = "Enables a recursive, timestamping mirror that may download large amounts of remote content to local disk."
+risk_class = "net_egress"

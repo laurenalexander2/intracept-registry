@@ -3,8 +3,9 @@
 [[command]]
 path = "chroot"
 translation = "Run a command using a different root directory as the base of the file system."
-verdict = "require_approval"
+verdict = "ask"
 rationale = "Changes the visible file system root for a process, which can bypass normal file access boundaries."
+risk_class = "novel"
 
 [[flag]]
 applies_to = "chroot"
@@ -12,6 +13,7 @@ flag = "-u"
 translation_modifier = "running the command as a specified user"
 verdict = "allow"
 rationale = "Changes which user account the command runs under, altering its permissions inside the new root."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chroot"
@@ -19,6 +21,7 @@ flag = "-g"
 translation_modifier = "running the command with a specified group's permissions"
 verdict = "allow"
 rationale = "Changes the group permissions for the command, which may grant or restrict access to files in the new root."
+arity = "Boolean"
 
 [[flag]]
 applies_to = "chroot"
@@ -26,3 +29,4 @@ flag = "-G"
 translation_modifier = "running the command with multiple specified groups' permissions"
 verdict = "allow"
 rationale = "Assigns multiple group memberships to the command, potentially widening its access within the new root."
+arity = "Boolean"

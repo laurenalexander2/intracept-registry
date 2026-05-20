@@ -5,33 +5,39 @@ path = "streamlit"
 translation = "Run the Streamlit framework for building data applications in Python."
 verdict = "allow"
 rationale = "The bare command prints help text and modifies nothing."
+risk_class = "novel"
 
 [[command]]
 path = "streamlit run"
 translation = "Run a Python script as a Streamlit web application."
 verdict = "allow"
 rationale = "Executes a Python script and starts a web server; the script may have side effects."
+risk_class = "novel"
 
 [[command]]
 path = "streamlit hello"
 translation = "Run the built-in Streamlit demo application."
 verdict = "allow"
 rationale = "Starts a demo web server with no side effects beyond network listening."
+risk_class = "novel"
 
 [[command]]
 path = "streamlit cache"
 translation = "Manage the Streamlit data cache."
 verdict = "allow"
 rationale = "Manages temporary cache data; clearing the cache does not affect application logic."
+risk_class = "novel"
 
 [[command]]
 path = "streamlit config"
 translation = "Manage Streamlit configuration settings."
 verdict = "allow"
 rationale = "Views or modifies local configuration; trivially reversible."
+risk_class = "novel"
 
 [[command]]
 path = "streamlit init"
 translation = "Initialize a new Streamlit project."
 verdict = "allow"
 rationale = "Creates project scaffold files; does not modify existing files."
+risk_class = "novel"
